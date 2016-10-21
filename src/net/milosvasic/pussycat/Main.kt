@@ -5,6 +5,14 @@ package net.milosvasic.pussycat
  */
 fun main(args: Array<String>) {
     Runtime.getRuntime().addShutdownHook(Thread(Runnable { terminate() }))
+    for (arg in args) {
+        print("ARG ${arg}")
+        if (arg.trim() == "--adb") {
+
+        } else {
+
+        }
+    }
 }
 
 fun terminate() {
