@@ -7,19 +7,19 @@ import signal
 
 from common import pussycat_filter_file
 
-receiver = None
+process = None
 
 
 def signal_handler(signal, frame):
-    kill_receiver()
+    kill_process()
     print "\nBye, bye!"
     sys.exit(0)
 
 
-def kill_receiver():
-    if receiver:
-        print "Killing data receiver."
-        os.killpg(os.getpgid(receiver.pid), signal.SIGTERM)
+def kill_process():
+    if process:
+        print "Killing data receiving process."
+        os.killpg(os.getpgid(process.pid), signal.SIGTERM)
     else:
         print "No data receiver running."
 
@@ -40,15 +40,15 @@ signal.signal(signal.SIGINT, signal_handler)
 if sys.argv:
     for arg in sys.argv:
         if arg.strip() == '--adb':
-            receiver = subprocess.Popen("adb logcat | python receiver.py", stdin=subprocess.PIPE, shell=True)
+            process = subprocess.Popen("adb logcat | python receiver.py", stdin=subprocess.PIPE, shell=True)
         else:
             if arg.strip() != 'pussycat.py':
-                receiver = subprocess.Popen("cat " + arg + " | python receiver.py", stdin=subprocess.PIPE, shell=True)
+                process = subprocess.Popen("cat " + arg + " | python receiver.py", stdin=subprocess.PIPE, shell=True)
 
 while True:
     received = sys.stdin.readline().rstrip('\n')
     if received == '@@stop':
-        kill_receiver()
+        kill_process()
         break
     if received == '@@clear':
         print(chr(27) + "[2J")
