@@ -8,3 +8,11 @@ Sstatus: Under the development.
 ```
 sudo pip install termcolor
 ```
+
+## Usage:
+
+Open offline logcat file:
+```
+python pussycat.py samples/logcat01.txt
+```
+

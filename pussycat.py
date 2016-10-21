@@ -15,7 +15,7 @@ if sys.argv:
                     if line.__contains__(" I/"):
                         line = colored(line, 'cyan')
                     if line.__contains__(" W/"):
-                        line = colored(line, 'magenta')
+                        line = colored(line, 'yellow')
                     if line.__contains__(" E/"):
                         line = colored(line, 'red')
                     cprint(line)
