@@ -7,7 +7,6 @@ from termcolor import colored, cprint
 
 def handle_line(line):
     if line:
-        line = line.strip()
         if line.__contains__(" D/") or line.__contains__(" D "):
             line = colored(line, 'grey')
         if line.__contains__(" D/") or line.__contains__(" D "):
@@ -23,9 +22,9 @@ def handle_line(line):
         print "--- !"
 
 
-def worker():
+def receiver():
     while True:
-        line = sys.stdin.readline()
+        line = sys.stdin.readline().rstrip('\n')
         if line:
             handle_line(line)
         else:
@@ -33,7 +32,22 @@ def worker():
     return
 
 
-t = threading.Thread(target=worker)
+# def worker():
+#     while True:
+#         line = sys.stdin.readline()
+#         if line:
+#             handle_line(line)
+#         else:
+#             time.sleep(1)
+#     return
+
+
+t = threading.Thread(target=receiver())
 t.start()
 
-sys.exit()
+# while True:
+#     line = sys.stdin.readline()
+#     if line:
+#         print "COMMAND: " + line
+#
+# sys.exit()
