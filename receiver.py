@@ -34,6 +34,7 @@ class Receiver:
         if line.__contains__(" E/") or line.__contains__(" E "):
             cprint(colored(line, 'red'))
             return
+        print line
 
     def receiver(self):
         while True:
@@ -53,16 +54,14 @@ class Receiver:
                 if self.current_filter != '':
                     self.current_filter = ''
                     self.apply_filter()
-                else:
-                    time.sleep(1)
             else:
                 with open(pussycat_filter_file) as filter_file:
                     filter_to_apply = filter_file.readlines()
                     filter_file.close()
-                    if filter_to_apply == self.current_filter:
-                        time.sleep(1)
-                    self.current_filter = filter_to_apply
-                    self.apply_filter()
+                    if filter_to_apply != self.current_filter:
+                        self.current_filter = filter_to_apply
+                        self.apply_filter()
+            time.sleep(1)
 
     def apply_filter(self):
         self.refreshing = True
@@ -82,11 +81,13 @@ class Receiver:
         return True
 
     def start(self):
-        receiver_thread = threading.Thread(target=self.receiver())
-        receiver_thread.start()
+        reciever_thread = threading.Thread(target=self.receiver())
+        reciever_thread.daemon = True
+        reciever_thread.start()
 
-        data_filter_thread = threading.Thread(target=self.logcat_filter())
-        data_filter_thread.start()
+        logcat_thread = threading.Thread(target=self.logcat_filter())
+        logcat_thread.daemon = True
+        logcat_thread.start()
 
 
 receiver = Receiver()
