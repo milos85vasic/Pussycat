@@ -1,3 +1,10 @@
-# Pussycat - Android logcat viewer
+# Pussycat - Android logcat viewer V1.0
 
-Pussycat V1.0, status: under the development.
+Sstatus: Under the development.
+
+## Dependencies:
+
+- termcolor:
+```
+sudo pip install termcolor
+```

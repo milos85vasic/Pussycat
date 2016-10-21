@@ -1,6 +1,6 @@
 import sys
 
-from colors import Colors
+from termcolor import colored, cprint
 
 if sys.argv:
     for arg in sys.argv:
@@ -8,17 +8,17 @@ if sys.argv:
             for line in f:
                 if line:
                     line = line.strip()
-                    color = None
+                    if line.__contains__(" D/"):
+                        line = colored(line, 'grey')
+                    if line.__contains__(" D/"):
+                        line = colored(line, 'white')
                     if line.__contains__(" I/"):
-                        color = Colors.BLUE
+                        line = colored(line, 'cyan')
                     if line.__contains__(" W/"):
-                        color = Colors.WARNING
+                        line = colored(line, 'magenta')
                     if line.__contains__(" E/"):
-                        color = Colors.ERROR
-                    if color:
-                        print color + line + Colors.ENDC
-                    else:
-                        print line
+                        line = colored(line, 'red')
+                    cprint(line)
                 else:
                     print "--- !"
 else:
