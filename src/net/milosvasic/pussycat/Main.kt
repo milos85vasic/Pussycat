@@ -1,8 +1,13 @@
 package net.milosvasic.pussycat
 
 /**
- * Created by milosvasic on 10/21/16.
+ * Main application entry point
  */
 fun main(args: Array<String>) {
-    
+    Runtime.getRuntime().addShutdownHook(Thread(Runnable { terminate() }))
+}
+
+fun terminate() {
+    print("Bye, bye!")
+    System.exit(0)
 }
