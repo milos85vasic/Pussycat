@@ -14,7 +14,7 @@ class Receiver:
     current_filter = None
 
     def __init__(self):
-        self.data = list
+        self.data = list()
         self.refreshing = False
         self.current_filter = ''
 
@@ -67,10 +67,13 @@ class Receiver:
                 self.print_line(item)
         self.refreshing = False
 
-    def filter_ok(self, reveived):
+    def filter_ok(self, received):
         if self.current_filter != '':
-            # TODO: TBD.
-            pass
+            if self.current_filter.__contains__(","):
+                # TODO: TBD.
+                pass
+            else:
+                return received.__contains__(self.current_filter)
         return True
 
     def start(self):
