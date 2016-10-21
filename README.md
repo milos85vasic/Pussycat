@@ -9,6 +9,8 @@ Sstatus: Under the development.
 sudo pip install termcolor
 ```
 
+NOTE: Make sure you have adb set to your system path!
+
 ## Usage:
 
 Live logcat data:
