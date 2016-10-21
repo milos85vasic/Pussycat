@@ -1,6 +1,7 @@
 import sys
 
 import time
+import threading
 from termcolor import colored, cprint
 
 
@@ -22,11 +23,17 @@ def handle_line(line):
         print "--- !"
 
 
-while True:
-    line = sys.stdin.readline()
-    if line:
-        handle_line(line)
-    else:
-        time.sleep(1)
+def worker():
+    while True:
+        line = sys.stdin.readline()
+        if line:
+            handle_line(line)
+        else:
+            time.sleep(1)
+    return
+
+
+t = threading.Thread(target=worker)
+t.start()
 
 sys.exit()
