@@ -37,48 +37,48 @@ class Receiver:
             received = sys.stdin.readline().rstrip('\n')
             if received:
                 self.data.append(received)
-                if self.filter_ok(received) and not self.refreshing:
+                if not self.refreshing and self.filter_ok(received):
                     self.print_line(received)
             else:
                 time.sleep(1)
         return
 
     def logcat_filter(self):
-        global current_filter
         while True:
             if not os.path.isfile(pussycat_filter_file):
-                if current_filter != '':
-                    current_filter = ''
+                if self.current_filter != '':
+                    self.current_filter = ''
                     self.apply_filter()
             else:
                 with open(pussycat_filter_file) as filter_file:
                     filter_to_apply = filter_file.readlines()
                     filter_file.close()
-                    if filter_to_apply == current_filter:
+                    if filter_to_apply == self.current_filter:
                         pass
-                    current_filter = filter_to_apply
+                    self.current_filter = filter_to_apply
                     self.apply_filter()
         time.sleep(1)
 
     def apply_filter(self):
-        refreshing = True
+        self.refreshing = True
         print(chr(27) + "[2J")
-        for item in self.data:
+        for item in enumerate(self.data):
             if self.filter_ok(item):
                 self.print_line(item)
-        refreshing = False
+        self.refreshing = False
 
     def filter_ok(self, reveived):
-        if current_filter != '':
+        if self.current_filter != '':
+            # TODO: TBD.
             pass
         return True
 
     def start(self):
-        receiver = threading.Thread(target=self.receiver())
-        receiver.start()
+        receiver_thread = threading.Thread(target=self.receiver())
+        receiver_thread.start()
 
-        data_filter = threading.Thread(target=self.logcat_filter())
-        data_filter.start()
+        data_filter_thread = threading.Thread(target=self.logcat_filter())
+        data_filter_thread.start()
 
 
 receiver = Receiver()
