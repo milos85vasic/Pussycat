@@ -11,14 +11,12 @@ sudo pip install termcolor
 
 ## Usage:
 
-Pass logcat data stream using pipe.
-
 Live logcat data:
 ```
-adb logcat | python pussycat.py
+python pussycat.py --adb
 ```
 
 Or offline logcat file:
 ```
-cat samples/logcat01.txt | python pussycat.py
+python pussycat.py samples/logcat01.txt
 ```

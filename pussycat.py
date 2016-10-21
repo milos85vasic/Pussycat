@@ -1,53 +1,40 @@
+import os
 import sys
 
-import time
-import threading
-from termcolor import colored, cprint
+import subprocess
+
+import signal
+
+receiver = None
 
 
-def handle_line(line):
-    if line:
-        if line.__contains__(" D/") or line.__contains__(" D "):
-            line = colored(line, 'grey')
-        if line.__contains__(" D/") or line.__contains__(" D "):
-            line = colored(line, 'white')
-        if line.__contains__(" I/") or line.__contains__(" I "):
-            line = colored(line, 'cyan')
-        if line.__contains__(" W/") or line.__contains__(" W "):
-            line = colored(line, 'yellow')
-        if line.__contains__(" E/") or line.__contains__(" E "):
-            line = colored(line, 'red')
-        cprint(line)
+def signal_handler(signal, frame):
+    kill_receiver()
+    print "\nBye, bye!"
+    sys.exit(0)
+
+
+def kill_receiver():
+    if receiver:
+        print "Killing data receiver."
+        os.killpg(os.getpgid(receiver.pid), signal.SIGTERM)
     else:
-        print "--- !"
+        print "No data receiver running."
 
 
-def receiver():
-    while True:
-        line = sys.stdin.readline().rstrip('\n')
-        if line:
-            handle_line(line)
+signal.signal(signal.SIGINT, signal_handler)
+if sys.argv:
+    for arg in sys.argv:
+        if arg.strip() == '--adb':
+            receiver = subprocess.Popen("adb logcat | python receiver.py", stdin=subprocess.PIPE, shell=True)
         else:
-            time.sleep(1)
-    return
+            if arg.strip() != 'pussycat.py':
+                receiver = subprocess.Popen("cat " + arg + " | python receiver.py", stdin=subprocess.PIPE, shell=True)
 
+while True:
+    received = sys.stdin.readline().rstrip('\n')
+    if received == 'stop':
+        kill_receiver()
+        break
 
-# def worker():
-#     while True:
-#         line = sys.stdin.readline()
-#         if line:
-#             handle_line(line)
-#         else:
-#             time.sleep(1)
-#     return
-
-
-t = threading.Thread(target=receiver())
-t.start()
-
-# while True:
-#     line = sys.stdin.readline()
-#     if line:
-#         print "COMMAND: " + line
-#
-# sys.exit()
+sys.exit()
