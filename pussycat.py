@@ -12,6 +12,7 @@ process = None
 
 def signal_handler(signal, frame):
     kill_process()
+    clear_filter()
     print "\nBye, bye!"
     sys.exit(0)
 

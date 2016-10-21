@@ -53,15 +53,16 @@ class Receiver:
                 if self.current_filter != '':
                     self.current_filter = ''
                     self.apply_filter()
+                else:
+                    time.sleep(1)
             else:
                 with open(pussycat_filter_file) as filter_file:
                     filter_to_apply = filter_file.readlines()
                     filter_file.close()
                     if filter_to_apply == self.current_filter:
-                        pass
+                        time.sleep(1)
                     self.current_filter = filter_to_apply
                     self.apply_filter()
-        time.sleep(1)
 
     def apply_filter(self):
         self.refreshing = True
