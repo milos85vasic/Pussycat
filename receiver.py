@@ -19,22 +19,26 @@ class Receiver:
         self.current_filter = ''
 
     def print_line(self, line):
-        out = None
         if line.__contains__(" D/") or line.__contains__(" D "):
-            out = colored(line, 'grey')
+            cprint(colored(line, 'grey'))
+            return
         if line.__contains__(" D/") or line.__contains__(" D "):
-            out = colored(line, 'white')
+            cprint(colored(line, 'white'))
+            return
         if line.__contains__(" I/") or line.__contains__(" I "):
-            out = colored(line, 'cyan')
+            cprint(colored(line, 'cyan'))
+            return
         if line.__contains__(" W/") or line.__contains__(" W "):
-            out = colored(line, 'yellow')
+            cprint(colored(line, 'yellow'))
+            return
         if line.__contains__(" E/") or line.__contains__(" E "):
-            out = colored(line, 'red')
-        cprint(out)
+            cprint(colored(line, 'red'))
+            return
 
     def receiver(self):
         while True:
-            received = sys.stdin.readline().rstrip('\n')
+            received = sys.stdin.readline()
+            received = received.strip()
             if received:
                 self.data.append(received)
                 if not self.refreshing and self.filter_ok(received):
