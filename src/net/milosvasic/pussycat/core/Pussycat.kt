@@ -9,11 +9,11 @@ import java.io.File
 class Pussycat : LogcatActions {
 
     override fun live() {
-        throw UnsupportedOperationException("not implemented")
+        println("live")
     }
 
     override fun filesystem(file: File) {
-        throw UnsupportedOperationException("not implemented")
+        println("file system")
     }
 
 }
