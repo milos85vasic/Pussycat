@@ -20,3 +20,14 @@ Or offline logcat file:
 ```
 python pussycat.py samples/logcat01.txt
 ```
+
+## Commands:
+
+When pussycat is running and displaying your logcat data we may pass commands or filtering rules.
+
+- To stop and terminate pussycat:
+```
+--stop
+```
+
+- To filter content enter string + return

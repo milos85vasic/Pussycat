@@ -33,7 +33,7 @@ if sys.argv:
 
 while True:
     received = sys.stdin.readline().rstrip('\n')
-    if received == 'stop':
+    if received == 'pussycat stop':
         kill_receiver()
         break
 
