@@ -27,7 +27,27 @@ When pussycat is running and displaying your logcat data we may pass commands or
 
 - To stop and terminate pussycat:
 ```
---stop
+@@stop
 ```
 
-- To filter content enter string + return
+- To clear the current output on your screen:
+```
+@@clear
+```
+
+- To filter content enter filtering criteria, then press enter.
+
+Single string criteria (each logcat item must contain string we pass):
+```
+Some word
+```
+
+Multi string criteria (each logcat item must contain all of the strings we pass):
+```
+Some word, something else, 3th criteria
+```
+
+- To clear applied filter:
+```
+@@reset
+```
