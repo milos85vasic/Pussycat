@@ -15,6 +15,7 @@ Live logcat data:
 ```
 python pussycat.py --adb
 ```
+Live adb logcat is default if no argument passed!
 
 Or offline logcat file:
 ```

@@ -37,13 +37,22 @@ def clear_filter():
 
 
 signal.signal(signal.SIGINT, signal_handler)
+
+
+def adb():
+    global process
+    process = subprocess.Popen("adb logcat | python receiver.py", stdin=subprocess.PIPE, shell=True)
+
+
 if sys.argv:
     for arg in sys.argv:
         if arg.strip() == '--adb':
-            process = subprocess.Popen("adb logcat | python receiver.py", stdin=subprocess.PIPE, shell=True)
+            adb()
         else:
             if arg.strip() != 'pussycat.py':
                 process = subprocess.Popen("cat " + arg + " | python receiver.py", stdin=subprocess.PIPE, shell=True)
+    if not process:
+        adb()
 
 while True:
     received = sys.stdin.readline().rstrip('\n')
