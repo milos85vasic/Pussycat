@@ -1,9 +1,8 @@
 import os
 import sys
 
+from multiprocessing import Process
 import time
-import threading
-
 from termcolor import colored, cprint
 from common import pussycat_filter_file
 
@@ -46,7 +45,6 @@ class Receiver:
                     self.print_line(received)
             else:
                 time.sleep(1)
-        return
 
     def logcat_filter(self):
         while True:
@@ -81,13 +79,12 @@ class Receiver:
         return True
 
     def start(self):
-        reciever_thread = threading.Thread(target=self.receiver())
-        reciever_thread.daemon = True
-        reciever_thread.start()
-
-        logcat_thread = threading.Thread(target=self.logcat_filter())
-        logcat_thread.daemon = True
-        logcat_thread.start()
+        p1 = Process(target=self.receiver)
+        p2 = Process(target=self.logcat_filter)
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
 
 
 receiver = Receiver()
