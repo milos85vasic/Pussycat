@@ -18,13 +18,16 @@ Advanced Android logcat reading and filtering utility.
 
 Live logcat data:
 ```
-python pussycat.py --adb
+java -jar Pussycat.jar --adb
 ```
-Live adb logcat is default if no argument passed!
+or (live adb logcat is default if no argument passed)
+```
+java -jar Pussycat.jar
+```
 
-Or offline logcat file:
+Offline logcat file:
 ```
-python pussycat.py samples/logcat01.txt
+java -jar Pussycat.jar ~/samples/logcat01.txt
 ```
 
 ## Commands:
@@ -33,7 +36,7 @@ When pussycat is running and displaying your logcat data we may pass commands or
 
 - To stop and terminate pussycat:
 ```
-@@stop
+@@exit
 ```
 
 - To clear the current output on your screen:
@@ -50,10 +53,39 @@ Some word
 
 Multi string criteria (each logcat item must contain all of the strings we pass):
 ```
-Some word, something else, 3th criteria
+Some word && something else && 3th criteria
 ```
+
+Multi string criteria (logcat item must contain at least on of the strings we pass):
+```
+Some word || something else || 3th criteria
+```
+
+Multi string criteria with negation:
+```
+Something && !Something else
+```
+
+Multi string criteria with negation:
+```
+!Something || !Something else
+```
+
+and so on.
 
 - To clear applied filter:
 ```
 @@reset
 ```
+
+- To pause printing logs:
+```
+@@pause
+```
+
+- To resume printing logs:
+```
+@@resume
+```
+
+- To see current filtering rules just press enter.
