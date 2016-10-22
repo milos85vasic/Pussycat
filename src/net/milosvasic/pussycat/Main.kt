@@ -1,5 +1,6 @@
 package net.milosvasic.pussycat
 
+import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.core.Pussycat
 import net.milosvasic.pussycat.logging.ConsoleLogger
@@ -58,6 +59,6 @@ fun terminate() {
 }
 
 fun terminate(status: Int) {
-    logger.d(TAG, "Bye, bye!")
+    println("${Color.YELLOW}Bye, bye!${Color.RESET}")
     System.exit(status)
 }
