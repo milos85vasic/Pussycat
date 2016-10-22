@@ -17,4 +17,6 @@ interface PussycatActions {
 
     fun filter(filter: String)
 
+    fun printFilter(): String
+
 }

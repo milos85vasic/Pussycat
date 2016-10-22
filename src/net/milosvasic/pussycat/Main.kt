@@ -34,19 +34,21 @@ fun main(args: Array<String>) {
         }
     }
 
-    while (run) {
-        val line = readLine()
-        if (line != null && !line.isEmpty()) {
-            when (line) {
-                COMMAND.CLEAR.value -> println(27.toChar() + "[2J")
-                COMMAND.RESET.value -> pussy.filter()
-                COMMAND.STOP.value -> finish()
-                else -> pussy.filter(line)
+    Thread(Runnable {
+        while (run) {
+            val line = readLine()
+            if (line != null && !line.isEmpty()) {
+                when (line) {
+                    COMMAND.CLEAR.value -> println(27.toChar() + "[2J")
+                    COMMAND.RESET.value -> pussy.filter()
+                    COMMAND.STOP.value -> finish()
+                    else -> pussy.filter(line)
+                }
+            } else {
+                println("--- Pussycat, filter [ ${pussy.printFilter()} ] ---\n\n")
             }
-        } else {
-            println("--- Pussycat ---\n")
         }
-    }
+    }).start()
 }
 
 fun finish() {
