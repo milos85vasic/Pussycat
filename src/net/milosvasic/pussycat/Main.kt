@@ -37,7 +37,7 @@ fun main(args: Array<String>) {
         val line = readLine()
         if (line != null && !line.isEmpty()) {
             when (line) {
-                COMMAND.CLEAR.value -> Runtime.getRuntime().exec("clear")
+                COMMAND.CLEAR.value -> println(27.toChar() + "[2J")
                 COMMAND.RESET.value -> pussy.filter()
                 COMMAND.STOP.value -> finish()
                 else -> pussy.filter(line)
