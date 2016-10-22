@@ -1,15 +1,18 @@
 # Pussycat - Android logcat viewer V1.0
 
-Sstatus: Under the development.
+Advanced Android logcat reading utility.
+
+## Features
+
+- Log colors
+- Monitor live adb logcat
+- Read and filter offline logcat files stored on your filesystem
+- Advanced filtering
+- Pause / resume console printing
 
 ## Dependencies:
 
-- termcolor:
-```
-sudo pip install termcolor
-```
-
-NOTE: Make sure you have adb set to your system path!
+- Make sure you have adb set to your system path!
 
 ## Usage:
 
