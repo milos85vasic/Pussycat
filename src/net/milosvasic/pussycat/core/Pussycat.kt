@@ -17,7 +17,7 @@ class Pussycat : PussycatActions {
     }
 
     override fun stop() {
-        print("stop")
+        println("stop pussy")
     }
 
     override fun filter() {

@@ -34,9 +34,9 @@ fun main(args: Array<String>) {
         val line = readLine()
         if (line != null && !line.isEmpty()) {
             when (line) {
-                COMMAND.CLEAR.value -> Runtime.getRuntime().exec("cls")
+                COMMAND.CLEAR.value -> Runtime.getRuntime().exec("clear")
                 COMMAND.RESET.value -> pussy.filter()
-                COMMAND.STOP.value -> terminate()
+                COMMAND.STOP.value -> finish()
                 else -> pussy.filter(line)
             }
         } else {
@@ -45,12 +45,16 @@ fun main(args: Array<String>) {
     }
 }
 
+fun finish() {
+    run = false
+    pussy.stop()
+}
+
 fun terminate() {
     terminate(0)
 }
 
 fun terminate(status: Int) {
     println("Bye, bye!")
-    pussy.stop()
     System.exit(status)
 }
