@@ -4,13 +4,13 @@ package net.milosvasic.pussycat.color
  * Colors
  */
 object Color {
-    val ANSI_RESET = "\u001B[0m"
-    val ANSI_BLACK = "\u001B[30m"
-    val ANSI_RED = "\u001B[31m"
-    val ANSI_GREEN = "\u001B[32m"
-    val ANSI_YELLOW = "\u001B[33m"
-    val ANSI_BLUE = "\u001B[34m"
-    val ANSI_PURPLE = "\u001B[35m"
-    val ANSI_CYAN = "\u001B[36m"
-    val ANSI_WHITE = "\u001B[37m"
+    val RESET = "\u001B[0m"
+    val BLACK = "\u001B[30m"
+    val RED = "\u001B[31m"
+    val GREEN = "\u001B[32m"
+    val YELLOW = "\u001B[33m"
+    val BLUE = "\u001B[34m"
+    val PURPLE = "\u001B[35m"
+    val CYAN = "\u001B[36m"
+    val WHITE = "\u001B[37m"
 }
