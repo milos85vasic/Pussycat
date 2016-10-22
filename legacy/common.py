@@ -1,1 +1,0 @@
-pussycat_filter_file = "pussycat.filter"
