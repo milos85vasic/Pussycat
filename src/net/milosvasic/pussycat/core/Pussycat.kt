@@ -73,10 +73,24 @@ class Pussycat : PussycatActions {
             return line.contains(filter)
         }
         if (filter.contains("&&")) {
-
+            val lines = line.split("&&")
+            for (item in lines) {
+                val check = item.trim()
+                if (!line.contains(check)) {
+                    return false
+                }
+            }
+            return true
         }
         if (filter.contains("||")) {
-
+            val lines = line.split("||")
+            for (item in lines) {
+                val check = item.trim()
+                if (line.contains(check)) {
+                    return true
+                }
+            }
+            return false
         }
         return true
     }
@@ -84,13 +98,17 @@ class Pussycat : PussycatActions {
     private fun applyFilter() {
         refreshing.set(true)
         println(27.toChar() + "[2J")
-
-        logger.e(TAG, ">>>> " + data.size)
-
-        for (line in data) {
-            if (filterOk(line)) {
-                printLine(line)
+        if (data.isEmpty()) {
+            logger.w(TAG, "No data available, filter [ $filter ]")
+        } else {
+            var x = 0
+            for (line in data) {
+                if (filterOk(line)) {
+                    printLine(line)
+                    x++
+                }
             }
+            if (x == 0) logger.w(TAG, "No data matching, filter [ $filter ]")
         }
         refreshing.set(false)
     }

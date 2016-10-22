@@ -43,7 +43,7 @@ fun main(args: Array<String>) {
                 else -> pussy.filter(line)
             }
         } else {
-            pussy.filter()
+            println("--- Pussycat ---\n")
         }
     }
 }
