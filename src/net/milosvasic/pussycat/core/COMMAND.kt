@@ -4,7 +4,7 @@ package net.milosvasic.pussycat.core
  * Defines commands may be sent to Pussycat.
  */
 enum class COMMAND(val value: String) {
-    STOP("@@stop"),
+    EXIT("@@exit"),
     CLEAR("@@clear"),
     RESET("@@reset")
 }

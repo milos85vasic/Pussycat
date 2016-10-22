@@ -41,7 +41,7 @@ fun main(args: Array<String>) {
                 when (line) {
                     COMMAND.CLEAR.value -> println(27.toChar() + "[2J")
                     COMMAND.RESET.value -> pussy.filter()
-                    COMMAND.STOP.value -> finish()
+                    COMMAND.EXIT.value -> finish()
                     else -> pussy.filter(line)
                 }
             } else {

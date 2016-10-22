@@ -76,8 +76,14 @@ class Pussycat : PussycatActions {
             val params = filter.split("&&")
             for (item in params) {
                 val check = item.trim()
-                if (!line.contains(check)) {
-                    return false
+                if (line.startsWith("!")) {
+                    if (line.contains(check)) {
+                        return false
+                    }
+                } else {
+                    if (!line.contains(check)) {
+                        return false
+                    }
                 }
             }
             return true
@@ -86,8 +92,14 @@ class Pussycat : PussycatActions {
             val params = filter.split("||")
             for (item in params) {
                 val check = item.trim()
-                if (line.contains(check)) {
-                    return true
+                if (line.startsWith("!")) {
+                    if (!line.contains(check)) {
+                        return true
+                    }
+                } else {
+                    if (line.contains(check)) {
+                        return true
+                    }
                 }
             }
             return false
