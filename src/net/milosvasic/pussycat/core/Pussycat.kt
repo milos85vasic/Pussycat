@@ -15,11 +15,12 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class Pussycat : PussycatActions {
 
-    var filter = ""
-    val TAG = Pussycat::class
-    var run = AtomicBoolean(true)
-    var refreshing = AtomicBoolean(false)
-    val data = CopyOnWriteArrayList<String>()
+    private var filter = ""
+    private val TAG = Pussycat::class
+    private var run = AtomicBoolean(true)
+    private val paused = AtomicBoolean(false)
+    private var refreshing = AtomicBoolean(false)
+    private val data = CopyOnWriteArrayList<String>()
 
     override fun live() {
         Thread(Runnable {
@@ -55,6 +56,14 @@ class Pussycat : PussycatActions {
         run.set(false)
     }
 
+    override fun pause() {
+        paused.set(true)
+    }
+
+    override fun resume() {
+        applyFilter()
+    }
+
     override fun filter() {
         filter = ""
         applyFilter()
@@ -63,6 +72,10 @@ class Pussycat : PussycatActions {
     override fun filter(filter: String) {
         this.filter = filter
         applyFilter()
+    }
+
+    override fun clear() {
+        println(27.toChar() + "[2J")
     }
 
     private fun filterOk(line: String): Boolean {
@@ -109,7 +122,8 @@ class Pussycat : PussycatActions {
 
     private fun applyFilter() {
         refreshing.set(true)
-        println(27.toChar() + "[2J")
+        paused.set(false)
+        clear()
         if (data.isEmpty()) {
             logger.w(TAG, "No data available, filter [ $filter ]")
         } else {
@@ -126,6 +140,9 @@ class Pussycat : PussycatActions {
     }
 
     private fun printLine(line: String) {
+        if (paused.get()) {
+            return
+        }
         if (line.contains(" V/") || line.contains(" V ")) {
             println("${Color.WHITE}$line${Color.RESET}")
             return

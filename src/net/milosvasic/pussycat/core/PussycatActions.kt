@@ -13,10 +13,16 @@ interface PussycatActions {
 
     fun stop()
 
+    fun pause()
+
+    fun resume()
+
     fun filter()
 
     fun filter(filter: String)
 
     fun printFilter(): String
+
+    fun clear()
 
 }
