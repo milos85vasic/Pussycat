@@ -5,10 +5,16 @@ import java.io.File
 /**
  * Base action we may perform with logcat
  */
-interface LogcatActions {
+interface PussycatActions {
 
     fun live()
 
     fun filesystem(file: File)
+
+    fun stop()
+
+    fun filter()
+
+    fun filter(filter: String)
 
 }
