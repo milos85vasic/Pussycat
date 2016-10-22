@@ -84,6 +84,9 @@ class Pussycat : PussycatActions {
     private fun applyFilter() {
         refreshing.set(true)
         println(27.toChar() + "[2J")
+
+        logger.e(TAG, ">>>> " + data.size)
+
         for (line in data) {
             if (filterOk(line)) {
                 printLine(line)
