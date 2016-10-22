@@ -1,6 +1,7 @@
 package net.milosvasic.pussycat.core
 
 
+import net.milosvasic.pussycat.logger
 import java.io.File
 
 /**
@@ -8,24 +9,26 @@ import java.io.File
  */
 class Pussycat : PussycatActions {
 
+    val TAG = Pussycat::class
+
     override fun live() {
-        println("live")
+        logger.v(TAG, "live")
     }
 
     override fun filesystem(file: File) {
-        println("file system")
+        logger.v(TAG, "file system")
     }
 
     override fun stop() {
-        println("stop pussy")
+        logger.v(TAG, "stop pussy")
     }
 
     override fun filter() {
-        println("filter")
+        logger.v(TAG, "filter")
     }
 
     override fun filter(filter: String) {
-        println("filter $filter")
+        logger.v(TAG, "filter $filter")
     }
 
 }

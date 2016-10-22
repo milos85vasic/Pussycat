@@ -2,10 +2,13 @@ package net.milosvasic.pussycat
 
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.core.Pussycat
+import net.milosvasic.pussycat.logging.ConsoleLogger
 import java.io.File
 
-val pussy: Pussycat = Pussycat()
 var run = true
+val TAG = Pussycat::class
+val logger = ConsoleLogger()
+val pussy: Pussycat = Pussycat()
 
 /**
  * Main application entry point
@@ -23,7 +26,7 @@ fun main(args: Array<String>) {
                 if (logcat.exists()) {
                     pussy.filesystem(logcat)
                 } else {
-                    println("Logcat: $arg does not exist")
+                    logger.e(TAG, "Logcat: $arg does not exist")
                     terminate(1)
                 }
             }
@@ -55,6 +58,6 @@ fun terminate() {
 }
 
 fun terminate(status: Int) {
-    println("Bye, bye!")
+    logger.d(TAG, "Bye, bye!")
     System.exit(status)
 }
