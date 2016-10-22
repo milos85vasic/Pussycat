@@ -160,11 +160,15 @@ class Pussycat : PussycatActions {
     }
 
     private fun read(input: InputStream) {
-        var line: String
+        var line = ""
         val reader = InputStreamReader(input)
         val buffered = BufferedReader(reader)
         while (run.get()) {
-            line = buffered.readLine()
+            try {
+                line = buffered.readLine()
+            } catch (e: Exception) {
+                run.set(false)
+            }
             if (!Text.isEmpty(line)) {
                 line = line.trim()
                 if (!Text.isEmpty(line)) {

@@ -1,6 +1,6 @@
 # Pussycat - Android logcat viewer V1.0
 
-Advanced Android logcat reading utility.
+Advanced Android logcat reading and filtering utility.
 
 ## Features
 
