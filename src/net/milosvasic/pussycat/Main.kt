@@ -35,6 +35,7 @@ fun main(args: Array<String>) {
     }
 
     Thread(Runnable {
+        Thread.currentThread().name = "Commands thread"
         while (run) {
             val line = readLine()
             if (line != null && !line.isEmpty()) {

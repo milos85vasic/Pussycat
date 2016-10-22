@@ -4,9 +4,7 @@ package net.milosvasic.pussycat.core
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.logger
 import net.milosvasic.pussycat.utils.Text
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
+import java.io.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -24,32 +22,19 @@ class Pussycat : PussycatActions {
 
     override fun live() {
         Thread(Runnable {
-            var line: String
+            Thread.currentThread().name = "Live adb reading thread"
             val process = Runtime.getRuntime().exec("adb logcat")
             val input = process.inputStream
-            val buffered = BufferedReader(InputStreamReader(input))
-            while (run.get()) {
-                line = buffered.readLine()
-                if (!Text.isEmpty(line)) {
-                    line = line.trim()
-                    if (!Text.isEmpty(line)) {
-                        data.add(line)
-                        if (!refreshing.get() && filterOk(line)) {
-                            printLine(line)
-                        }
-                    } else {
-                        Thread.sleep(1000)
-                    }
-                } else {
-                    Thread.sleep(1000)
-                }
-            }
+            read(input)
             process.destroy()
         }).start()
     }
 
     override fun filesystem(file: File) {
-        logger.v(TAG, "file system")
+        Thread(Runnable {
+            Thread.currentThread().name = "Filesystem reading thread"
+            read(FileInputStream(file.absoluteFile))
+        }).start()
     }
 
     override fun stop() {
@@ -172,6 +157,31 @@ class Pussycat : PussycatActions {
         } else {
             return filter
         }
+    }
+
+    private fun read(input: InputStream) {
+        var line: String
+        val reader = InputStreamReader(input)
+        val buffered = BufferedReader(reader)
+        while (run.get()) {
+            line = buffered.readLine()
+            if (!Text.isEmpty(line)) {
+                line = line.trim()
+                if (!Text.isEmpty(line)) {
+                    data.add(line)
+                    if (!refreshing.get() && filterOk(line)) {
+                        printLine(line)
+                    }
+                } else {
+                    Thread.sleep(1000)
+                }
+            } else {
+                Thread.sleep(1000)
+            }
+        }
+        buffered.close()
+        reader.close()
+        input.close()
     }
 
 }
