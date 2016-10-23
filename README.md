@@ -2,6 +2,8 @@
 
 Advanced Android logcat reading and filtering utility.
 
+*TOOL IS CURRENTLY IN THE PHASE OF DEVELOPMENT, NOT YET DONE WITH THE IMPLEMENTATION*
+
 ## Features
 
 - Log colors

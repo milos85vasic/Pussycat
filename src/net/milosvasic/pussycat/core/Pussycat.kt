@@ -25,7 +25,7 @@ class Pussycat : PussycatActions {
             Thread.currentThread().name = "Live adb reading thread"
             val process = Runtime.getRuntime().exec("adb logcat")
             val input = process.inputStream
-            read(input)
+            readLive(input)
             process.destroy()
         }).start()
     }
@@ -33,7 +33,7 @@ class Pussycat : PussycatActions {
     override fun filesystem(file: File) {
         Thread(Runnable {
             Thread.currentThread().name = "Filesystem reading thread"
-            read(FileInputStream(file.absoluteFile))
+            readFilesystem(FileInputStream(file.absoluteFile))
         }).start()
     }
 
@@ -159,7 +159,7 @@ class Pussycat : PussycatActions {
         }
     }
 
-    private fun read(input: InputStream) {
+    private fun readLive(input: InputStream) {
         var line = ""
         val reader = InputStreamReader(input)
         val buffered = BufferedReader(reader)
@@ -181,6 +181,31 @@ class Pussycat : PussycatActions {
                 }
             } else {
                 Thread.sleep(1000)
+            }
+        }
+        buffered.close()
+        reader.close()
+        input.close()
+    }
+
+    private fun readFilesystem(input: InputStream) {
+        val reader = InputStreamReader(input)
+        val buffered = BufferedReader(reader)
+        var line = ""
+        while (run.get() && line != null) {
+            try {
+                line = buffered.readLine()
+            } catch (e: Exception) {
+                run.set(false)
+            }
+            if (!Text.isEmpty(line)) {
+                line = line.trim()
+                if (!Text.isEmpty(line)) {
+                    data.add(line)
+                    if (!refreshing.get() && filterOk(line)) {
+                        printLine(line)
+                    }
+                }
             }
         }
         buffered.close()
