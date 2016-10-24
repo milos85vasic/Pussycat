@@ -128,23 +128,23 @@ class Pussycat : PussycatActions {
         if (paused.get()) {
             return
         }
-        if (line.contains(" V/") || line.contains(" V ")) {
+        if (line.contains(LogcatTagType.V_LIVE) || line.contains(LogcatTagType.V_FILESYSTEM)) {
             println("${Color.WHITE}$line${Color.RESET}")
             return
         }
-        if (line.contains(" D/") || line.contains(" D ")) {
+        if (line.contains(LogcatTagType.D_LIVE) || line.contains(LogcatTagType.D_FILESYSTEM)) {
             println("${Color.YELLOW}$line${Color.RESET}")
             return
         }
-        if (line.contains(" I/") || line.contains(" I ")) {
+        if (line.contains(LogcatTagType.I_LIVE) || line.contains(LogcatTagType.I_FILESYSTEM)) {
             println("${Color.CYAN}$line${Color.RESET}")
             return
         }
-        if (line.contains(" W/") || line.contains(" W ")) {
+        if (line.contains(LogcatTagType.W_LIVE) || line.contains(LogcatTagType.W_FILESYSTEM)) {
             println("${Color.PURPLE}$line${Color.RESET}")
             return
         }
-        if (line.contains(" E/") || line.contains(" E ")) {
+        if (line.contains(LogcatTagType.E_LIVE) || line.contains(LogcatTagType.E_FILESYSTEM)) {
             println("${Color.RED}$line${Color.RESET}")
             return
         }
@@ -172,7 +172,7 @@ class Pussycat : PussycatActions {
             if (!Text.isEmpty(line)) {
                 line = line.trim()
                 if (!Text.isEmpty(line)) {
-                    data.add(line)
+                    addData(line)
                     if (!refreshing.get() && filterOk(line)) {
                         printLine(line)
                     }
@@ -201,7 +201,7 @@ class Pussycat : PussycatActions {
             if (!Text.isEmpty(line)) {
                 line = line.trim()
                 if (!Text.isEmpty(line)) {
-                    data.add(line)
+                    addData(line)
                     if (!refreshing.get() && filterOk(line)) {
                         printLine(line)
                     }
@@ -211,6 +211,58 @@ class Pussycat : PussycatActions {
         buffered.close()
         reader.close()
         input.close()
+    }
+
+    private fun addData(line: String) {
+        val tag = getTag(line)
+        if (tag != null) {
+            val firstTagOccurance = line.indexOf(tag)
+            var splited = line.substring(firstTagOccurance + tag.length, line.lastIndex + 1)
+            val classEnd = splited.indexOf(":")
+            splited = splited.substring(classEnd + 1, splited.lastIndex + 1)
+            if (splited.startsWith(" \t")) {
+                val replace = "${data.last()}\n$line"
+                data.set(data.lastIndex, replace)
+            } else {
+                data.add(line)
+            }
+        } else {
+            data.add(line)
+        }
+    }
+
+    private fun getTag(line: String): String? {
+        if (line.contains(LogcatTagType.V_LIVE)) {
+            return LogcatTagType.V_LIVE
+        }
+        if (line.contains(LogcatTagType.V_FILESYSTEM)) {
+            return LogcatTagType.V_FILESYSTEM
+        }
+        if (line.contains(LogcatTagType.D_LIVE)) {
+            return LogcatTagType.D_LIVE
+        }
+        if (line.contains(LogcatTagType.D_FILESYSTEM)) {
+            return LogcatTagType.D_FILESYSTEM
+        }
+        if (line.contains(LogcatTagType.I_LIVE)) {
+            return LogcatTagType.I_LIVE
+        }
+        if (line.contains(LogcatTagType.I_FILESYSTEM)) {
+            return LogcatTagType.I_FILESYSTEM
+        }
+        if (line.contains(LogcatTagType.W_LIVE)) {
+            return LogcatTagType.W_LIVE
+        }
+        if (line.contains(LogcatTagType.W_FILESYSTEM)) {
+            return LogcatTagType.W_FILESYSTEM
+        }
+        if (line.contains(LogcatTagType.E_LIVE)) {
+            return LogcatTagType.E_LIVE
+        }
+        if (line.contains(LogcatTagType.E_FILESYSTEM)) {
+            return LogcatTagType.E_FILESYSTEM
+        }
+        return null
     }
 
 }
