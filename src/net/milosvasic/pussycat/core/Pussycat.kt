@@ -16,6 +16,7 @@ class Pussycat : PussycatActions {
     private var filter = ""
     private val TAG = Pussycat::class
     private var run = AtomicBoolean(true)
+    private var color: String = Color.BLACK
     private val paused = AtomicBoolean(false)
     private var refreshing = AtomicBoolean(false)
     private val data = CopyOnWriteArrayList<String>()
@@ -129,26 +130,31 @@ class Pussycat : PussycatActions {
             return
         }
         if (line.contains(LogcatTagType.V_LIVE) || line.contains(LogcatTagType.V_FILESYSTEM)) {
-            println("${Color.WHITE}$line${Color.RESET}")
+            color = Color.WHITE
+            println("$color$line${Color.RESET}")
             return
         }
         if (line.contains(LogcatTagType.D_LIVE) || line.contains(LogcatTagType.D_FILESYSTEM)) {
-            println("${Color.YELLOW}$line${Color.RESET}")
+            color = Color.YELLOW
+            println("$color$line${Color.RESET}")
             return
         }
         if (line.contains(LogcatTagType.I_LIVE) || line.contains(LogcatTagType.I_FILESYSTEM)) {
-            println("${Color.CYAN}$line${Color.RESET}")
+            color = Color.CYAN
+            println("$color$line${Color.RESET}")
             return
         }
         if (line.contains(LogcatTagType.W_LIVE) || line.contains(LogcatTagType.W_FILESYSTEM)) {
-            println("${Color.PURPLE}$line${Color.RESET}")
+            color = Color.PURPLE
+            println("$color$line${Color.RESET}")
             return
         }
         if (line.contains(LogcatTagType.E_LIVE) || line.contains(LogcatTagType.E_FILESYSTEM)) {
-            println("${Color.RED}$line${Color.RESET}")
+            color = Color.RED
+            println("$color$line${Color.RESET}")
             return
         }
-        println(line)
+        println("\t$color$line${Color.RESET}")
     }
 
     override fun printFilter(): String {
@@ -227,7 +233,12 @@ class Pussycat : PussycatActions {
                 data.add(line)
             }
         } else {
-            data.add(line)
+            if (data.isEmpty()) {
+                data.add(line)
+            } else {
+                val replace = "${data.last()}\n\t$line"
+                data.set(data.lastIndex, replace)
+            }
         }
     }
 
