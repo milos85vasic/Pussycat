@@ -69,13 +69,24 @@ class Pussycat : PussycatActions {
             return true
         }
         if (!filter.contains("&&") && !filter.contains("||")) {
-            return line.containsIgnoreCase(filter)
+            if (filter.startsWith("!")) {
+                val check = filter.replace("!", "")
+                if (line.containsIgnoreCase(check)) {
+                    return false
+                }
+            } else {
+                if (!line.containsIgnoreCase(filter)) {
+                    return false
+                }
+            }
+            return true
         }
         if (filter.contains("&&")) {
             val params = filter.split("&&")
             for (item in params) {
-                val check = item.trim()
-                if (line.startsWith("!")) {
+                var check = item.trim()
+                if (check.startsWith("!")) {
+                    check = check.replace("!", "")
                     if (line.containsIgnoreCase(check)) {
                         return false
                     }
@@ -90,8 +101,9 @@ class Pussycat : PussycatActions {
         if (filter.contains("||")) {
             val params = filter.split("||")
             for (item in params) {
-                val check = item.trim()
-                if (line.startsWith("!")) {
+                var check = item.trim()
+                if (check.startsWith("!")) {
+                    check = check.replace("!", "")
                     if (!line.containsIgnoreCase(check)) {
                         return true
                     }
