@@ -239,8 +239,7 @@ class Pussycat : PussycatActions {
             val classEnd = splited.indexOf(":")
             splited = splited.substring(classEnd + 1, splited.lastIndex + 1)
             if (splited.startsWith(" \t")) {
-                val replace = "${data.last()}\n$line"
-                data.set(data.lastIndex, replace)
+                data[data.lastIndex] = "${data.last()}\n$line"
             } else {
                 data.add(line)
             }
@@ -249,7 +248,7 @@ class Pussycat : PussycatActions {
                 data.add(line)
             } else {
                 val replace = "${data.last()}\n\t$line"
-                data.set(data.lastIndex, replace)
+                data[data.lastIndex] = replace
             }
         }
     }
