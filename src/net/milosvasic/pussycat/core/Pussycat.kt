@@ -64,6 +64,25 @@ class Pussycat : PussycatActions {
         println(27.toChar() + "[2J")
     }
 
+    private fun applyFilter() {
+        refreshing.set(true)
+        paused.set(false)
+        clear()
+        if (data.isEmpty()) {
+            logger.w(TAG, "No data available, filter [ $filter ]")
+        } else {
+            var x = 0
+            for (line in data) {
+                if (filterOk(line)) {
+                    printLine(line)
+                    x++
+                }
+            }
+            if (x == 0) logger.w(TAG, "No data matching, filter [ $filter ]")
+        }
+        refreshing.set(false)
+    }
+
     private fun filterOk(line: String): Boolean {
         if (Text.isEmpty(filter)) {
             return true
@@ -116,25 +135,6 @@ class Pussycat : PussycatActions {
             return false
         }
         return true
-    }
-
-    private fun applyFilter() {
-        refreshing.set(true)
-        paused.set(false)
-        clear()
-        if (data.isEmpty()) {
-            logger.w(TAG, "No data available, filter [ $filter ]")
-        } else {
-            var x = 0
-            for (line in data) {
-                if (filterOk(line)) {
-                    printLine(line)
-                    x++
-                }
-            }
-            if (x == 0) logger.w(TAG, "No data matching, filter [ $filter ]")
-        }
-        refreshing.set(false)
     }
 
     private fun printLine(line: String) {
