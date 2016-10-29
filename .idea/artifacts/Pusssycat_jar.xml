@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="Pusssycat:jar">
+  <artifact type="jar" build-on-make="true" name="Pusssycat:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Pusssycat_jar</output-path>
     <root id="archive" name="Pusssycat.jar">
       <element id="module-output" name="Pusssycat" />

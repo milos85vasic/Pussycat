@@ -69,18 +69,18 @@ class Pussycat : PussycatActions {
             return true
         }
         if (!filter.contains("&&") && !filter.contains("||")) {
-            return line.contains(filter)
+            return line.containsIgnoreCase(filter)
         }
         if (filter.contains("&&")) {
             val params = filter.split("&&")
             for (item in params) {
                 val check = item.trim()
                 if (line.startsWith("!")) {
-                    if (line.contains(check)) {
+                    if (line.containsIgnoreCase(check)) {
                         return false
                     }
                 } else {
-                    if (!line.contains(check)) {
+                    if (!line.containsIgnoreCase(check)) {
                         return false
                     }
                 }
@@ -92,11 +92,11 @@ class Pussycat : PussycatActions {
             for (item in params) {
                 val check = item.trim()
                 if (line.startsWith("!")) {
-                    if (!line.contains(check)) {
+                    if (!line.containsIgnoreCase(check)) {
                         return true
                     }
                 } else {
-                    if (line.contains(check)) {
+                    if (line.containsIgnoreCase(check)) {
                         return true
                     }
                 }
@@ -129,27 +129,27 @@ class Pussycat : PussycatActions {
         if (paused.get()) {
             return
         }
-        if (line.contains(LogcatTagType.V_LIVE) || line.contains(LogcatTagType.V_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.V_LIVE) || line.containsIgnoreCase(LogcatTagType.V_FILESYSTEM)) {
             color = Color.WHITE
             println("$color$line${Color.RESET}")
             return
         }
-        if (line.contains(LogcatTagType.D_LIVE) || line.contains(LogcatTagType.D_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.D_LIVE) || line.containsIgnoreCase(LogcatTagType.D_FILESYSTEM)) {
             color = Color.YELLOW
             println("$color$line${Color.RESET}")
             return
         }
-        if (line.contains(LogcatTagType.I_LIVE) || line.contains(LogcatTagType.I_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.I_LIVE) || line.containsIgnoreCase(LogcatTagType.I_FILESYSTEM)) {
             color = Color.CYAN
             println("$color$line${Color.RESET}")
             return
         }
-        if (line.contains(LogcatTagType.W_LIVE) || line.contains(LogcatTagType.W_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.W_LIVE) || line.containsIgnoreCase(LogcatTagType.W_FILESYSTEM)) {
             color = Color.PURPLE
             println("$color$line${Color.RESET}")
             return
         }
-        if (line.contains(LogcatTagType.E_LIVE) || line.contains(LogcatTagType.E_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.E_LIVE) || line.containsIgnoreCase(LogcatTagType.E_FILESYSTEM)) {
             color = Color.RED
             println("$color$line${Color.RESET}")
             return
@@ -243,37 +243,41 @@ class Pussycat : PussycatActions {
     }
 
     private fun getTag(line: String): String? {
-        if (line.contains(LogcatTagType.V_LIVE)) {
+        if (line.containsIgnoreCase(LogcatTagType.V_LIVE)) {
             return LogcatTagType.V_LIVE
         }
-        if (line.contains(LogcatTagType.V_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.V_FILESYSTEM)) {
             return LogcatTagType.V_FILESYSTEM
         }
-        if (line.contains(LogcatTagType.D_LIVE)) {
+        if (line.containsIgnoreCase(LogcatTagType.D_LIVE)) {
             return LogcatTagType.D_LIVE
         }
-        if (line.contains(LogcatTagType.D_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.D_FILESYSTEM)) {
             return LogcatTagType.D_FILESYSTEM
         }
-        if (line.contains(LogcatTagType.I_LIVE)) {
+        if (line.containsIgnoreCase(LogcatTagType.I_LIVE)) {
             return LogcatTagType.I_LIVE
         }
-        if (line.contains(LogcatTagType.I_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.I_FILESYSTEM)) {
             return LogcatTagType.I_FILESYSTEM
         }
-        if (line.contains(LogcatTagType.W_LIVE)) {
+        if (line.containsIgnoreCase(LogcatTagType.W_LIVE)) {
             return LogcatTagType.W_LIVE
         }
-        if (line.contains(LogcatTagType.W_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.W_FILESYSTEM)) {
             return LogcatTagType.W_FILESYSTEM
         }
-        if (line.contains(LogcatTagType.E_LIVE)) {
+        if (line.containsIgnoreCase(LogcatTagType.E_LIVE)) {
             return LogcatTagType.E_LIVE
         }
-        if (line.contains(LogcatTagType.E_FILESYSTEM)) {
+        if (line.containsIgnoreCase(LogcatTagType.E_FILESYSTEM)) {
             return LogcatTagType.E_FILESYSTEM
         }
         return null
+    }
+
+    fun String.containsIgnoreCase(word: String): Boolean {
+        return this.toLowerCase().contains(word.toLowerCase())
     }
 
 }
