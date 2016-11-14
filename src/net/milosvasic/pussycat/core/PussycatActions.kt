@@ -2,9 +2,6 @@ package net.milosvasic.pussycat.core
 
 import java.io.File
 
-/**
- * Base action we may perform with logcat
- */
 interface PussycatActions {
 
     fun live()

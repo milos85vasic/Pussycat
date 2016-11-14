@@ -8,9 +8,7 @@ import java.io.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
-/**
- * Pussycat main class
- */
+
 class Pussycat : PussycatActions {
 
     private var filter = ""

@@ -1,12 +1,11 @@
-package net.milosvasic.pussycat.core
+package net.milosvasic.pussycat.core.commands
 
-/**
- * Defines commands may be sent to Pussycat.
- */
+
 enum class COMMAND(val value: String) {
     EXIT("@@exit"),
     PAUSE("@@pause"),
     RESUME("@@resume"),
     CLEAR("@@clear"),
-    RESET("@@reset")
+    RESET("@@reset"),
+    STATUS("@@status")
 }

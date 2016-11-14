@@ -1,8 +1,6 @@
 package net.milosvasic.pussycat.core
 
-/**
- * Tag types for live adb logcat and filesystem logcat dump.
- */
+
 object LogcatTagType {
     val V_LIVE = " V/"
     val V_FILESYSTEM = " V "

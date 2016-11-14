@@ -1,8 +1,5 @@
 package net.milosvasic.pussycat.color
 
-/**
- * Colors
- */
 object Color {
     val RESET = "\u001B[0m"
     val BLACK = "\u001B[30m"
