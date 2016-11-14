@@ -1,7 +1,5 @@
 package net.milosvasic.pussycat.core.commands
 
-import net.milosvasic.pussycat.finish
-import net.milosvasic.pussycat.pussy
 import java.util.concurrent.atomic.AtomicBoolean
 
 class ConsoleCommandsReceiver(val executor: CommandsExecutor) : CommandsReceiver(executor) {
@@ -15,7 +13,11 @@ class ConsoleCommandsReceiver(val executor: CommandsExecutor) : CommandsReceiver
             while (run.get()) {
                 val line = readLine()
                 if (line != null && !line.isEmpty()) {
-                    onReceive(COMMAND.valueOf(line))
+                    try {
+                        onReceive(COMMAND.valueOf(line))
+                    } catch (e: IllegalArgumentException) {
+                        
+                    }
                 } else {
                     onReceive(COMMAND.STATUS)
                 }
