@@ -7,10 +7,15 @@ import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.logging.Logger
 
 
-class CommandsExecutor(val actions: PussycatActions) : Execute<COMMAND> {
+class CommandsExecutor : Execute<COMMAND> {
 
     private val TAG = PussycatLegacy::class
     private var logger: Logger = ConsoleLogger()
+    private lateinit var actions: PussycatActions
+
+    fun init(actions: PussycatActions) {
+        this.actions = actions
+    }
 
     override fun execute(executable: COMMAND) {
         when (executable) {
