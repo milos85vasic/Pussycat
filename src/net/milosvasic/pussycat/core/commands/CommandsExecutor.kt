@@ -24,7 +24,7 @@ class CommandsExecutor : Execute<COMMAND> {
             COMMAND.RESET -> actions.filter()
             COMMAND.PAUSE -> actions.pause()
             COMMAND.RESUME -> actions.resume()
-            COMMAND.STATUS -> actions.printFilter()
+            COMMAND.STATUS -> actions.getFilter()
             else -> logger.w(TAG, "Unknown command: " + executable)
         }
     }

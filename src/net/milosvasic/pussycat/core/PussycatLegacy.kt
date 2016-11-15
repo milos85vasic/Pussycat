@@ -167,7 +167,7 @@ class PussycatLegacy : PussycatActions {
         println("\t$color$line${Color.RESET}")
     }
 
-    override fun printFilter(): String {
+    override fun getFilter(): String {
         if (Text.isEmpty(filter)) {
             return "No apply applied"
         } else {

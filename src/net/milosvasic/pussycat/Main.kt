@@ -48,7 +48,7 @@ fun main(args: Array<String>) {
                     else -> pussy.filter(line)
                 }
             } else {
-                println("--- PussycatLegacy, apply [ ${pussy.printFilter()} ] ---\n\n")
+                println("--- PussycatLegacy, apply [ ${pussy.getFilter()} ] ---\n\n")
             }
         }
     }).start()

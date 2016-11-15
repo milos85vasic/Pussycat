@@ -1,8 +1,8 @@
 package net.milosvasic.pussycat.core.common
 
 
-interface Filter<T> {
+interface Filter<in P> {
 
-    fun apply(pattern: T? = null)
+    fun apply(pattern: P? = null)
 
 }

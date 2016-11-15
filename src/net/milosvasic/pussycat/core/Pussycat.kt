@@ -3,17 +3,20 @@ package net.milosvasic.pussycat.core
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.commands.CommandsExecutor
 import java.util.concurrent.atomic.AtomicBoolean
-import net.milosvasic.pussycat.core.common.Filter
+import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.Data
+import net.milosvasic.pussycat.logger
+import net.milosvasic.pussycat.logging.ConsoleLogger
+import net.milosvasic.pussycat.utils.Text
 import java.io.File
+import java.util.concurrent.CopyOnWriteArrayList
 
 
-class Pussycat(
-        executor: CommandsExecutor,
-        filter: Filter<String>
-) : PussycatActions {
+class Pussycat(executor: CommandsExecutor, filter: DataFilter<CopyOnWriteArrayList<String>, String>) : PussycatActions {
 
+    private val TAG = Pussycat::class
     private val data = Data(filter)
+    private var logger = ConsoleLogger()
 
     init {
         executor.init(this)
@@ -53,8 +56,12 @@ class Pussycat(
 
     }
 
-    override fun printFilter(): String {
-        return ""
+    override fun getFilter(): String {
+        if (Text.isEmpty(data.getFilterPattern())) {
+            return "No apply applied"
+        } else {
+            return data.getFilterPattern()
+        }
     }
 
     override fun clear() {
