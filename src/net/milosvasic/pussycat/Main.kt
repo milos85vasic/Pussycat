@@ -2,14 +2,14 @@ package net.milosvasic.pussycat
 
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.commands.COMMAND
-import net.milosvasic.pussycat.core.Pussycat
+import net.milosvasic.pussycat.core.PussycatLegacy
 import net.milosvasic.pussycat.logging.ConsoleLogger
 import java.io.File
 
 var run = true
-val TAG = Pussycat::class
+val TAG = PussycatLegacy::class
 val logger = ConsoleLogger()
-val pussy: Pussycat = Pussycat()
+val pussy: PussycatLegacy = PussycatLegacy()
 
 /**
  * Main application entry point
@@ -48,7 +48,7 @@ fun main(args: Array<String>) {
                     else -> pussy.filter(line)
                 }
             } else {
-                println("--- Pussycat, filter [ ${pussy.printFilter()} ] ---\n\n")
+                println("--- PussycatLegacy, filter [ ${pussy.printFilter()} ] ---\n\n")
             }
         }
     }).start()

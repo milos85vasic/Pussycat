@@ -16,7 +16,7 @@ class ConsoleCommandsReceiver(val executor: CommandsExecutor) : CommandsReceiver
                     try {
                         onReceive(COMMAND.valueOf(line))
                     } catch (e: IllegalArgumentException) {
-                        
+                        ...
                     }
                 } else {
                     onReceive(COMMAND.STATUS)

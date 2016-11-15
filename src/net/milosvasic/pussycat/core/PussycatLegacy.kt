@@ -9,10 +9,10 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
 
-class Pussycat : PussycatActions {
+class PussycatLegacy : PussycatActions {
 
     private var filter = ""
-    private val TAG = Pussycat::class
+    private val TAG = PussycatLegacy::class
     private var run = AtomicBoolean(true)
     private var color: String = Color.BLACK
     private val paused = AtomicBoolean(false)
