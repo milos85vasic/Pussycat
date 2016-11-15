@@ -67,7 +67,7 @@ class PussycatLegacy : PussycatActions {
         paused.set(false)
         clear()
         if (data.isEmpty()) {
-            logger.w(TAG, "No data available, filter [ $filter ]")
+            logger.w(TAG, "No data available, apply [ $filter ]")
         } else {
             var x = 0
             for (line in data) {
@@ -76,7 +76,7 @@ class PussycatLegacy : PussycatActions {
                     x++
                 }
             }
-            if (x == 0) logger.w(TAG, "No data matching, filter [ $filter ]")
+            if (x == 0) logger.w(TAG, "No data matching, apply [ $filter ]")
         }
         refreshing.set(false)
     }
@@ -169,7 +169,7 @@ class PussycatLegacy : PussycatActions {
 
     override fun printFilter(): String {
         if (Text.isEmpty(filter)) {
-            return "No filter applied"
+            return "No apply applied"
         } else {
             return filter
         }

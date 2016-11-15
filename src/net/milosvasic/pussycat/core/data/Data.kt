@@ -7,8 +7,8 @@ class Data(val filter: Filter<String>) : Filter<String> {
 
     private val data = CopyOnWriteArrayList<String>()
 
-    override fun filter(pattern: String?) {
-        filter.filter(pattern)
+    override fun apply(pattern: String?) {
+        filter.apply(pattern)
     }
 
 }

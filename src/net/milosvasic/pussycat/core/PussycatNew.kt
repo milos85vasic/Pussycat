@@ -8,11 +8,11 @@ import net.milosvasic.pussycat.core.data.Data
 
 
 class PussycatNew(
-        val executor: CommandsExecutor,
-        val filter: Filter<String>
+        executor: CommandsExecutor,
+        filter: Filter<String>
 ) {
 
-    private val data: Data(filter)
+    private val data = Data(filter)
 
 
     private var run = AtomicBoolean(true)
