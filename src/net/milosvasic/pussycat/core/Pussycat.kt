@@ -7,7 +7,7 @@ import net.milosvasic.pussycat.core.common.Filter
 import net.milosvasic.pussycat.core.data.Data
 
 
-class PussycatNew(
+class Pussycat(
         executor: CommandsExecutor,
         filter: Filter<String>
 ) {
