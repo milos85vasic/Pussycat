@@ -18,7 +18,6 @@ abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWri
     protected var logger = ConsoleLogger()
     protected var color: String = Color.BLACK
     protected lateinit var data : DataAbstract
-    protected var refreshing = AtomicBoolean(false)
 
     override fun execute(executable: COMMAND, vararg params: String?) {
         when (executable) {

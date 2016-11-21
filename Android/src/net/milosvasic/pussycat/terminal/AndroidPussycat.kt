@@ -14,6 +14,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
 
     private val run = AtomicBoolean()
     protected val paused = AtomicBoolean(false)
+    protected var refreshing = AtomicBoolean(false)
 
     init {
         data = Data(this)
@@ -97,11 +98,11 @@ abstract class AndroidPussycat : PussycatAbstract() {
     }
 
     override fun stop() {
-
+        run.set(false)
     }
 
     override fun pause() {
-
+        paused.set(true)
     }
 
     override fun resume() {
@@ -109,7 +110,22 @@ abstract class AndroidPussycat : PussycatAbstract() {
     }
 
     override fun apply(data: CopyOnWriteArrayList<String>, pattern: String?) {
-        // TODO: Implement this.
+        refreshing.set(true)
+        paused.set(false)
+        clear()
+        if (data.isEmpty()) {
+            logger.w(TAG, "No data available, apply [ ${this.data.getFilterPattern()} ]")
+        } else {
+            var x = 0
+            for (line in data) {
+                if (this.data.filterOk(line)) {
+                    printLine(line)
+                    x++
+                }
+            }
+            if (x == 0) logger.w(TAG, "No data matching, apply [ ${this.data.getFilterPattern()} ]")
+        }
+        refreshing.set(false)
     }
 
     abstract protected fun printLine(line: String)
