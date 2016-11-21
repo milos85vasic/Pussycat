@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.terminal
 import net.milosvasic.pussycat.Pussycat
 import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.core.commands.COMMAND
+import java.io.File
 
 val TAG = Pussycat::class
 val logger = ConsoleLogger()
@@ -31,26 +32,14 @@ fun main(args: Array<String>) {
         }
     }).start()
 
-
-
-
-
-
-
     if (args.isEmpty()) {
-        pussy.live()
+        pussy.execute(COMMAND.LIVE)
     } else {
         for (arg in args) {
             if (arg.trim() == "--adb") {
-                pussy.live()
+                pussy.execute(COMMAND.LIVE)
             } else {
-                val logcat = File(arg)
-                if (logcat.exists()) {
-                    pussy.filesystem(logcat)
-                } else {
-                    logger.e(TAG, "Logcat: $arg does not exist")
-                    terminate(1)
-                }
+                pussy.execute(COMMAND.FILESYSTEM, arg)
             }
         }
     }
@@ -61,7 +50,7 @@ fun main(args: Array<String>) {
             val line = readLine()
             if (line != null && !line.isEmpty()) {
                 when (line) {
-                    COMMAND.EXIT.value -> finish()
+                    COMMAND.STOP.value -> finish()
                     COMMAND.CLEAR.value -> pussy.clear()
                     COMMAND.RESET.value -> pussy.filter()
                     COMMAND.PAUSE.value -> pussy.pause()

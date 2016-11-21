@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 import net.milosvasic.pussycat.core.common.Execute
 
 
-public class Pussycat() : Execute<COMMAND>, DataFilter<CopyOnWriteArrayList<String>, String> {
+public class Pussycat() : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<String>, String> {
 
     private val data = Data(this)
     private val TAG = Pussycat::class
@@ -23,8 +23,10 @@ public class Pussycat() : Execute<COMMAND>, DataFilter<CopyOnWriteArrayList<Stri
     private val paused = AtomicBoolean(false)
     private var refreshing = AtomicBoolean(false)
 
-    override fun execute(executable: COMMAND) {
+    override fun execute(executable: COMMAND, vararg params: String?) {
         when (executable) {
+            COMMAND.LIVE -> live()
+            COMMAND.FILESYSTEM -> filesystem(params)
             COMMAND.STOP -> stop()
             COMMAND.CLEAR -> clear()
             COMMAND.RESET -> filter()
@@ -32,6 +34,20 @@ public class Pussycat() : Execute<COMMAND>, DataFilter<CopyOnWriteArrayList<Stri
             COMMAND.RESUME -> resume()
             COMMAND.STATUS -> getFilter()
             else -> logger.w(TAG, "Unknown command: " + executable)
+        }
+    }
+
+    fun live() {
+
+    }
+
+    fun filesystem(vararg params: String?) {
+        val logcat = File(params[0] as String)
+        if (logcat.exists()) {
+
+        } else {
+            logger.e(TAG, "Logcat: ${logcat.absolutePath} does not exist")
+            stop()
         }
     }
 

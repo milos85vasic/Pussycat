@@ -1,7 +1,7 @@
 package net.milosvasic.pussycat.core.common
 
-interface Execute<T> {
+interface Execute<T, P> {
 
-    fun execute(executable: T)
+    fun execute(executable: T, vararg params: P?)
 
 }
