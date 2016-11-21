@@ -33,6 +33,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
             val reader = InputStreamReader(input)
             val buffered = BufferedReader(reader)
 
+            run.set(true)
             while (run.get()) {
                 try {
                     line = buffered.readLine()
@@ -62,9 +63,9 @@ abstract class AndroidPussycat : PussycatAbstract() {
     }
 
     override fun filesystem(params: Array<out String?>) {
+        run.set(false)
         val logcat = File(params[0] as String)
         if (logcat.exists()) {
-            run.set(false)
             Thread(Runnable {
                 Thread.currentThread().name = "Filesystem reading thread"
                 val input = FileInputStream(logcat.absoluteFile)
@@ -72,6 +73,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
                 val buffered = BufferedReader(reader)
                 var line = ""
 
+                run.set(true)
                 while (run.get() && line != null) {
                     try {
                         line = buffered.readLine()
