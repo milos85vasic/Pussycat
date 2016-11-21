@@ -1,6 +1,5 @@
 package net.milosvasic.pussycat
 
-import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.commands.COMMAND
 import java.util.concurrent.atomic.AtomicBoolean
 import net.milosvasic.pussycat.core.common.DataFilter
@@ -12,14 +11,11 @@ import java.util.concurrent.CopyOnWriteArrayList
 import net.milosvasic.pussycat.core.common.Execute
 
 
-public class Pussycat() : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<String>, String> {
+class Pussycat() : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<String>, String> {
 
     private val data = Data(this)
     private val TAG = Pussycat::class
     private var logger = ConsoleLogger()
-
-    private var run = AtomicBoolean(true)
-    private var color: String = Color.BLACK
     private val paused = AtomicBoolean(false)
     private var refreshing = AtomicBoolean(false)
 
@@ -41,7 +37,7 @@ public class Pussycat() : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayL
 
     }
 
-    fun filesystem(vararg params: String?) {
+    fun filesystem(params: Array<String?>) {
         val logcat = File(params[0] as String)
         if (logcat.exists()) {
 
