@@ -10,7 +10,7 @@ abstract class DataAbstract(val filter: DataFilter<CopyOnWriteArrayList<String>,
     protected val data = CopyOnWriteArrayList<String>()
 
     override fun apply(pattern: String?) {
-        this.pattern = pattern as String
+        this.pattern = pattern ?: ""
         filter.apply(data, pattern)
     }
 

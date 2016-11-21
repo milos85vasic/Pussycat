@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 fun main(args: Array<String>) {
 
-    val run = AtomicBoolean(true)
+    val run = AtomicBoolean(false)
     val pussy = TerminalPussycat()
 
     Runtime.getRuntime().addShutdownHook(Thread(Runnable {
@@ -18,12 +18,18 @@ fun main(args: Array<String>) {
 
     Thread(Runnable {
         Thread.currentThread().name = "Commands thread"
+        run.set(true)
         while (run.get()) {
-            val line = readLine()
+            var line = readLine()
             if (line != null && !line.isEmpty()) {
-                try {
-                    pussy.execute(COMMAND.valueOf(line))
-                } catch (e: IllegalArgumentException) {
+                if (line.startsWith("@@")) {
+                    val cmdParam = line.substring(2, line.lastIndex + 1).toUpperCase().trim()
+                    try {
+                        pussy.execute(COMMAND.valueOf(cmdParam))
+                    } catch (e: IllegalArgumentException) {
+                        pussy.filter(line)
+                    }
+                } else {
                     pussy.filter(line)
                 }
             } else {
