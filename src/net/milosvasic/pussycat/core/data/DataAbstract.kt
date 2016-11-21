@@ -18,6 +18,10 @@ abstract class DataAbstract(val filter: DataFilter<CopyOnWriteArrayList<String>,
         return pattern
     }
 
+    fun get(): CopyOnWriteArrayList<String> {
+        return data
+    }
+
     abstract fun addData(line: String)
 
 }

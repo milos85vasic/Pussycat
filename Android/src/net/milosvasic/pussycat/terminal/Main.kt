@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 fun main(args: Array<String>) {
 
-    val pussy = AndroidPussycat()
     val run = AtomicBoolean(true)
+    val pussy = TerminalPussycat()
 
     Runtime.getRuntime().addShutdownHook(Thread(Runnable {
         run.set(false)
