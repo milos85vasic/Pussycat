@@ -53,7 +53,7 @@ public class Pussycat() : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayL
 
     fun stop() {
 
-    } 
+    }
 
     fun pause() {
 
