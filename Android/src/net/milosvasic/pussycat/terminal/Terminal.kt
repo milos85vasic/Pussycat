@@ -1,6 +1,5 @@
 package net.milosvasic.pussycat.terminal
 
-import net.milosvasic.pussycat.Pussycat
 import net.milosvasic.pussycat.core.commands.COMMAND
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -8,7 +7,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Main application entry point
  */
 fun main(args: Array<String>) {
-    val pussy = Pussycat()
+
+    val pussy = AndroidPussycat()
     val run = AtomicBoolean(true)
 
     Runtime.getRuntime().addShutdownHook(Thread(Runnable {

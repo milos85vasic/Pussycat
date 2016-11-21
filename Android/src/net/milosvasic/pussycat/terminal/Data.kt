@@ -1,25 +1,14 @@
-package net.milosvasic.pussycat.core.data
+package net.milosvasic.pussycat.terminal
 
 import net.milosvasic.pussycat.core.LogcatTagType
-import java.util.concurrent.CopyOnWriteArrayList
-import net.milosvasic.pussycat.core.common.Filter
 import net.milosvasic.pussycat.core.common.DataFilter
+import net.milosvasic.pussycat.core.data.DataAbstract
+import net.milosvasic.pussycat.utils.Text
+import java.util.concurrent.CopyOnWriteArrayList
 
-class Data(val filter: DataFilter<CopyOnWriteArrayList<String>, String>) : Filter<String> {
+class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : DataAbstract(filter) {
 
-    private var pattern = ""
-    private val data = CopyOnWriteArrayList<String>()
-
-    override fun apply(pattern: String?) {
-        this.pattern = pattern as String
-        filter.apply(data, pattern)
-    }
-
-    fun getFilterPattern(): String {
-        return pattern
-    }
-
-    fun addData(line: String) {
+    override fun addData(line: String) {
         val tag = getTag(line)
         if (tag != null) {
             val firstTagOccurance = line.indexOf(tag)
@@ -39,6 +28,60 @@ class Data(val filter: DataFilter<CopyOnWriteArrayList<String>, String>) : Filte
                 data[data.lastIndex] = replace
             }
         }
+    }
+
+    override fun filterOk(line: String): Boolean {
+        if (Text.isEmpty(pattern)) {
+            return true
+        }
+        if (!pattern.contains("&&") && !pattern.contains("||")) {
+            if (pattern.startsWith("!")) {
+                val check = pattern.replace("!", "")
+                if (line.containsIgnoreCase(check)) {
+                    return false
+                }
+            } else {
+                if (!line.containsIgnoreCase(pattern)) {
+                    return false
+                }
+            }
+            return true
+        }
+        if (pattern.contains("&&")) {
+            val params = pattern.split("&&")
+            for (item in params) {
+                var check = item.trim()
+                if (check.startsWith("!")) {
+                    check = check.replace("!", "")
+                    if (line.containsIgnoreCase(check)) {
+                        return false
+                    }
+                } else {
+                    if (!line.containsIgnoreCase(check)) {
+                        return false
+                    }
+                }
+            }
+            return true
+        }
+        if (pattern.contains("||")) {
+            val params = pattern.split("||")
+            for (item in params) {
+                var check = item.trim()
+                if (check.startsWith("!")) {
+                    check = check.replace("!", "")
+                    if (!line.containsIgnoreCase(check)) {
+                        return true
+                    }
+                } else {
+                    if (line.containsIgnoreCase(check)) {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+        return true
     }
 
     private fun getTag(line: String): String? {
