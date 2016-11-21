@@ -32,7 +32,7 @@ public class Pussycat() : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayL
             COMMAND.RESET -> filter()
             COMMAND.PAUSE -> pause()
             COMMAND.RESUME -> resume()
-            COMMAND.STATUS -> getFilter()
+            COMMAND.STATUS -> logger.v(TAG, "--- PussycatLegacy, apply [ ${getFilter()} ] ---\n\n")
             else -> logger.w(TAG, "Unknown command: " + executable)
         }
     }
