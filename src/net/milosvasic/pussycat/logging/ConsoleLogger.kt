@@ -5,7 +5,7 @@ import java.io.PrintStream
 import java.util.*
 import kotlin.reflect.KClass
 
-class ConsoleLogger : Logger {
+public class ConsoleLogger : Logger {
 
     private var output: PrintStream? = null
     private val loggingPattern: String

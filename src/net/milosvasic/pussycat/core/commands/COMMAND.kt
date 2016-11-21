@@ -2,9 +2,11 @@ package net.milosvasic.pussycat.core.commands
 
 
 enum class COMMAND(val value: String) {
-    EXIT("@@exit"),
+    LIVE("@@live"),
+    FILESYSTEM("@@filesystem"),
     PAUSE("@@pause"),
     RESUME("@@resume"),
+    STOP("@@stop"),
     CLEAR("@@clear"),
     RESET("@@reset"),
     STATUS("@@status")

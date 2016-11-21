@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Pusssycat.iml" filepath="$PROJECT_DIR$/Pusssycat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Terminal/Terminal.iml" filepath="$PROJECT_DIR$/Terminal/Terminal.iml" />
     </modules>
   </component>
 </project>

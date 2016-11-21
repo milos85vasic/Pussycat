@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
 
-class PussycatLegacy : PussycatActions {
+class PussycatLegacy {
 
     private var filter = ""
     private val TAG = PussycatLegacy::class
