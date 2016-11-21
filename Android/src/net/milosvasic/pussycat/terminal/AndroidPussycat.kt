@@ -1,6 +1,7 @@
 package net.milosvasic.pussycat.terminal
 
 import net.milosvasic.pussycat.PussycatAbstract
+import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.utils.Text
 import java.io.BufferedReader
 import java.io.File
@@ -18,6 +19,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
 
     init {
         data = Data(this)
+        logger = ConsoleLogger()
         TAG = AndroidPussycat::class
     }
 
@@ -112,9 +114,9 @@ abstract class AndroidPussycat : PussycatAbstract() {
     override fun apply(data: CopyOnWriteArrayList<String>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
-        clear()
+        println(27.toChar() + "[2J")
         if (data.isEmpty()) {
-            logger.w(TAG, "No data available, apply [ ${this.data.getFilterPattern()} ]")
+            logger.w(TAG, "No data available [ filter: ${this.data.getFilterPattern()} ]")
         } else {
             var x = 0
             for (line in data) {
@@ -123,7 +125,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
                     x++
                 }
             }
-            if (x == 0) logger.w(TAG, "No data matching, apply [ ${this.data.getFilterPattern()} ]")
+            if (x == 0) logger.w(TAG, "No data matching [ filter: ${this.data.getFilterPattern()} ]")
         }
         refreshing.set(false)
     }

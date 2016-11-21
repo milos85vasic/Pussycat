@@ -2,22 +2,21 @@ package net.milosvasic.pussycat
 
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.commands.COMMAND
-import java.util.concurrent.atomic.AtomicBoolean
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.DataAbstract
-import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.utils.Text
 import java.util.concurrent.CopyOnWriteArrayList
 import net.milosvasic.pussycat.core.common.Execute
+import net.milosvasic.pussycat.logging.Logger
 import kotlin.reflect.KClass
 
 
 abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<String>, String> {
 
-    protected lateinit var TAG : KClass<*>
-    protected var logger = ConsoleLogger()
+    protected lateinit var TAG: KClass<*>
+    protected lateinit var logger: Logger
     protected var color: String = Color.BLACK
-    protected lateinit var data : DataAbstract
+    protected lateinit var data: DataAbstract
 
     override fun execute(executable: COMMAND, vararg params: String?) {
         when (executable) {
