@@ -1,6 +1,6 @@
 package net.milosvasic.pussycat.terminal
 
-import net.milosvasic.pussycat.core.LogcatTagType
+import net.milosvasic.pussycat.core.LOGCAT_TAG_TYPE
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.DataAbstract
 import net.milosvasic.pussycat.utils.Text
@@ -85,35 +85,35 @@ class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : DataAbstr
     }
 
     private fun getTag(line: String): String? {
-        if (line.containsIgnoreCase(LogcatTagType.V_LIVE)) {
-            return LogcatTagType.V_LIVE
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.V_LIVE)) {
+            return LOGCAT_TAG_TYPE.V_LIVE
         }
-        if (line.containsIgnoreCase(LogcatTagType.V_FILESYSTEM)) {
-            return LogcatTagType.V_FILESYSTEM
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.V_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.V_FILESYSTEM
         }
-        if (line.containsIgnoreCase(LogcatTagType.D_LIVE)) {
-            return LogcatTagType.D_LIVE
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.D_LIVE)) {
+            return LOGCAT_TAG_TYPE.D_LIVE
         }
-        if (line.containsIgnoreCase(LogcatTagType.D_FILESYSTEM)) {
-            return LogcatTagType.D_FILESYSTEM
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.D_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.D_FILESYSTEM
         }
-        if (line.containsIgnoreCase(LogcatTagType.I_LIVE)) {
-            return LogcatTagType.I_LIVE
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.I_LIVE)) {
+            return LOGCAT_TAG_TYPE.I_LIVE
         }
-        if (line.containsIgnoreCase(LogcatTagType.I_FILESYSTEM)) {
-            return LogcatTagType.I_FILESYSTEM
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.I_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.I_FILESYSTEM
         }
-        if (line.containsIgnoreCase(LogcatTagType.W_LIVE)) {
-            return LogcatTagType.W_LIVE
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.W_LIVE)) {
+            return LOGCAT_TAG_TYPE.W_LIVE
         }
-        if (line.containsIgnoreCase(LogcatTagType.W_FILESYSTEM)) {
-            return LogcatTagType.W_FILESYSTEM
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.W_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.W_FILESYSTEM
         }
-        if (line.containsIgnoreCase(LogcatTagType.E_LIVE)) {
-            return LogcatTagType.E_LIVE
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.E_LIVE)) {
+            return LOGCAT_TAG_TYPE.E_LIVE
         }
-        if (line.containsIgnoreCase(LogcatTagType.E_FILESYSTEM)) {
-            return LogcatTagType.E_FILESYSTEM
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.E_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.E_FILESYSTEM
         }
         return null
     }

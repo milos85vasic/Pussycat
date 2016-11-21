@@ -1,7 +1,7 @@
 package net.milosvasic.pussycat
 
 import net.milosvasic.pussycat.color.Color
-import net.milosvasic.pussycat.core.commands.COMMAND
+import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.DataAbstract
 import net.milosvasic.pussycat.utils.Text

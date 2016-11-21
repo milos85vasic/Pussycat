@@ -1,6 +1,6 @@
 package net.milosvasic.pussycat.terminal
 
-import net.milosvasic.pussycat.core.commands.COMMAND
+import net.milosvasic.pussycat.core.COMMAND
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**

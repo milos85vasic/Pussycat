@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.core.commands
+package net.milosvasic.pussycat.core
 
 
 enum class COMMAND(val value: String) {

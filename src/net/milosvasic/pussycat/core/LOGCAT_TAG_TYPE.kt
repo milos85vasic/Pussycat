@@ -1,7 +1,7 @@
 package net.milosvasic.pussycat.core
 
 
-object LogcatTagType {
+object LOGCAT_TAG_TYPE {
     val V_LIVE = " V/"
     val V_FILESYSTEM = " V "
     val D_LIVE = " D/"
