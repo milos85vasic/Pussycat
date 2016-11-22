@@ -106,14 +106,17 @@ abstract class AndroidPussycat : PussycatAbstract() {
 
     override fun stop() {
         run.set(false)
+        super.stop()
     }
 
     override fun pause() {
         paused.set(true)
+        super.pause()
     }
 
     override fun resume() {
         apply(data.get(), data.getFilterPattern())
+        super.resume()
     }
 
     override fun apply(data: CopyOnWriteArrayList<String>, pattern: String?) {

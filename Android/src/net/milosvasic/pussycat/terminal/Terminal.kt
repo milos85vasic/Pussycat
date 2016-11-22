@@ -1,7 +1,9 @@
 package net.milosvasic.pussycat.terminal
 
 import net.milosvasic.pussycat.core.COMMAND
+import net.milosvasic.pussycat.events.EVENT
 import java.util.concurrent.atomic.AtomicBoolean
+import net.milosvasic.pussycat.events.Events
 
 /**
  * Main application entry point
@@ -10,6 +12,16 @@ fun main(args: Array<String>) {
 
     val run = AtomicBoolean(false)
     val pussy = TerminalPussycat()
+
+    val listener = object : Events {
+        override fun onEvent(event: EVENT) {
+            when (event) {
+                EVENT.STOP -> println("STOPPING")
+            }
+        }
+    }
+
+    pussy.subscribe(listener)
 
     val commands = Thread(Runnable {
         Thread.currentThread().name = "Commands thread"
