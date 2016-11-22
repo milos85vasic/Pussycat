@@ -63,6 +63,9 @@ abstract class AndroidPussycat : PussycatAbstract() {
     }
 
     override fun filesystem(params: Array<out String?>) {
+        if (params.isEmpty()) {
+            return
+        }
         run.set(false)
         val logcat = File(params[0] as String)
         if (logcat.exists()) {
