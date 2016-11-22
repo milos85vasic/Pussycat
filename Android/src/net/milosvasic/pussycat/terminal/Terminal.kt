@@ -12,6 +12,8 @@ fun main(args: Array<String>) {
     val pussy = TerminalPussycat()
 
     Runtime.getRuntime().addShutdownHook(Thread(Runnable {
+        println("Bye, bye!")
+        pussy.execute(COMMAND.STOP)
         run.set(false)
         System.exit(0)
     }))
