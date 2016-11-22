@@ -11,7 +11,7 @@ import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.events.Events
 import net.milosvasic.pussycat.logging.Logger
 import kotlin.reflect.KClass
-import java.lang.ref.WeakReference
+import java.util.*
 
 
 abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<String>, String>, Events {
@@ -20,7 +20,7 @@ abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWri
     protected lateinit var logger: Logger
     protected var color: String = Color.BLACK
     protected lateinit var data: DataAbstract
-    protected val eventListeners: CopyOnWriteArrayList<WeakReference<Events>> = CopyOnWriteArrayList()
+    protected val listeners: MutableSet<Events> = Collections.synchronizedSet(HashSet<Events>())
 
     override fun execute(executable: COMMAND, vararg params: String?) {
         when (executable) {
@@ -65,32 +65,17 @@ abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWri
     }
 
     override fun onEvent(event: EVENT) {
-        for (reference in eventListeners) {
-            reference.get()?.onEvent(event)
+        for (listener in listeners) {
+            listener.onEvent(event)
         }
     }
 
     fun subscribe(listener: Events) {
-        val iterator = eventListeners.iterator()
-        while (iterator.hasNext()) {
-            val reference = iterator.next()
-            val refListener = reference.get()
-            if (refListener != null && refListener === listener) {
-                return
-            }
-        }
-        eventListeners.add(WeakReference<Events>(listener))
+        listeners.add(listener)
     }
 
     fun unsubscribe(listener: Events) {
-        val iterator = eventListeners.iterator()
-        while (iterator.hasNext()) {
-            val reference = iterator.next()
-            val refListener = reference.get()
-            if (refListener != null && refListener === listener) {
-                eventListeners.remove(reference)
-            }
-        }
+        listeners.remove(listener)
     }
 
     abstract protected fun live()

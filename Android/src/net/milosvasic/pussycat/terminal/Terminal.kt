@@ -5,23 +5,27 @@ import net.milosvasic.pussycat.events.EVENT
 import java.util.concurrent.atomic.AtomicBoolean
 import net.milosvasic.pussycat.events.Events
 
-/**
- * Main application entry point
- */
 fun main(args: Array<String>) {
 
     val run = AtomicBoolean(false)
     val pussy = TerminalPussycat()
 
+    val shutdown = fun() {
+        println("We are shutting down Pussycat.")
+        run.set(false)
+        System.`in`.close()
+        println("Bye, bye!")
+        System.exit(0)
+    }
+
     val listener = object : Events {
         override fun onEvent(event: EVENT) {
-            when (event) {
-                EVENT.STOP -> println("STOPPING")
+            if (event == EVENT.STOP) {
+                shutdown.invoke()
+                pussy.unsubscribe(this)
             }
         }
     }
-
-    pussy.subscribe(listener)
 
     val commands = Thread(Runnable {
         Thread.currentThread().name = "Commands thread"
@@ -46,15 +50,11 @@ fun main(args: Array<String>) {
     })
 
     val hook = Thread(Runnable {
-        println("We are shutting down Pussycat.")
         pussy.execute(COMMAND.STOP)
-        run.set(false)
-        System.`in`.close()
-        println("Bye, bye!")
-        System.exit(0)
     })
 
     Runtime.getRuntime().addShutdownHook(hook)
+    pussy.subscribe(listener)
     commands.start()
 
     if (args.isEmpty()) {
@@ -68,5 +68,6 @@ fun main(args: Array<String>) {
             }
         }
     }
+
 }
 
