@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class AndroidPussycat : PussycatAbstract() {
 
-    private val run = AtomicBoolean()
+    protected val run = AtomicBoolean()
     protected val paused = AtomicBoolean(false)
     protected var refreshing = AtomicBoolean(false)
 

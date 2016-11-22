@@ -11,18 +11,11 @@ fun main(args: Array<String>) {
     val run = AtomicBoolean(false)
     val pussy = TerminalPussycat()
 
-    Runtime.getRuntime().addShutdownHook(Thread(Runnable {
-        println("Bye, bye!")
-        pussy.execute(COMMAND.STOP)
-        run.set(false)
-        System.exit(0)
-    }))
-
-    Thread(Runnable {
+    val commands = Thread(Runnable {
         Thread.currentThread().name = "Commands thread"
         run.set(true)
         while (run.get()) {
-            var line = readLine()
+            val line = readLine()
             if (line != null && !line.isEmpty()) {
                 if (line.startsWith("@@")) {
                     val cmdParam = line.substring(2, line.lastIndex + 1).toUpperCase().trim()
@@ -38,7 +31,19 @@ fun main(args: Array<String>) {
                 pussy.execute(COMMAND.STATUS)
             }
         }
-    }).start()
+    })
+
+    val hook = Thread(Runnable {
+        println("We are shutting down Pussycat.")
+        pussy.execute(COMMAND.STOP)
+        run.set(false)
+        System.`in`.close()
+        println("Bye, bye!")
+        System.exit(0)
+    })
+
+    Runtime.getRuntime().addShutdownHook(hook)
+    commands.start()
 
     if (args.isEmpty()) {
         pussy.execute(COMMAND.LIVE)

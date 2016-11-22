@@ -27,7 +27,7 @@ abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWri
             COMMAND.RESET -> filter()
             COMMAND.PAUSE -> pause()
             COMMAND.RESUME -> resume()
-            COMMAND.STATUS -> logger.v(TAG, "Filter applied [ ${getFilter()} ]\n\n")
+            COMMAND.STATUS -> status()
             else -> logger.w(TAG, "Unknown command: " + executable)
         }
     }
@@ -41,6 +41,8 @@ abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWri
     abstract protected fun pause()
 
     abstract protected fun resume()
+
+    abstract protected fun status()
 
     fun filter() {
         data.apply()
