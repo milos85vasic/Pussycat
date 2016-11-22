@@ -5,6 +5,10 @@ import net.milosvasic.pussycat.core.LOGCAT_TAG_TYPE
 
 class TerminalPussycat : AndroidPussycat() {
 
+    override fun clear() {
+        println(27.toChar() + "[2J")
+    }
+
     override fun printLine(line: String) {
         if (paused.get()) {
             return

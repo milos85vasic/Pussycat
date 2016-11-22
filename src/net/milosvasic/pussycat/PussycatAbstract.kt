@@ -58,8 +58,6 @@ abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWri
         }
     }
 
-    fun clear() {
-        execute(COMMAND.RESET)
-    }
+    abstract protected fun clear()
 
 }

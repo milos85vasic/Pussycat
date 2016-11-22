@@ -9,5 +9,5 @@ enum class COMMAND {
     STOP,
     CLEAR,
     RESET,
-    STATUS;
+    STATUS
 }
