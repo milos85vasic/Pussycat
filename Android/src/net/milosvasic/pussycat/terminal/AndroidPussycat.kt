@@ -105,11 +105,17 @@ abstract class AndroidPussycat : PussycatAbstract() {
     }
 
     override fun stop() {
+        if (!run.get()) {
+            return
+        }
         run.set(false)
         super.stop()
     }
 
     override fun pause() {
+        if (paused.get()) {
+            return
+        }
         paused.set(true)
         super.pause()
     }
