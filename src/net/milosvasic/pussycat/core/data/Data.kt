@@ -29,21 +29,22 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
 
     override fun evaluate(line: String): Boolean {
         if (evaluable(pattern)) {
-            val elements = pattern.split(OPERATOR.OR.value)
-            if (elements.isEmpty()) {
+            if (!evaluable(pattern, OPERATOR.OR)) {
                 return evaluateAnd(line, pattern)
             } else {
+                val elements = pattern.split(OPERATOR.OR.value)
                 for (element in elements) {
                     if (evaluable(element, OPERATOR.AND)) {
-                        if (!evaluateAnd(line, element)) {
-                            return false
+                        if (evaluateAnd(line, element)) {
+                            return true
                         }
                     } else {
-                        if (!evaluateOr(line, element)) {
-                            return false
+                        if (evaluateOr(line, element)) {
+                            return true
                         }
                     }
                 }
+                return false
             }
         }
         return true
