@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.terminal
+package net.milosvasic.pussycat.android
 
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.logging.ConsoleLogger

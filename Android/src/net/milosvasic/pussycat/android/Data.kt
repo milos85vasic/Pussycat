@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.terminal
+package net.milosvasic.pussycat.android
 
 import net.milosvasic.pussycat.core.LOGCAT_TAG_TYPE
 import net.milosvasic.pussycat.core.common.DataFilter
