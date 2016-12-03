@@ -34,12 +34,13 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
             } else {
                 val elements = pattern.split(OPERATOR.OR.value)
                 for (element in elements) {
-                    if (evaluable(element, OPERATOR.AND)) {
-                        if (evaluateAnd(line, element)) {
+                    val trimmed = element.trim()
+                    if (evaluable(trimmed, OPERATOR.AND)) {
+                        if (evaluateAnd(line, trimmed)) {
                             return true
                         }
                     } else {
-                        if (evaluateOr(line, element)) {
+                        if (evaluateOr(line, trimmed)) {
                             return true
                         }
                     }
@@ -59,11 +60,21 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
     }
 
     private fun evaluable(elements: Array<String>): Boolean {
-        return elements.none { it.contains(OPERATOR.AND.value) || it.contains(OPERATOR.OR.value) }
+        for (element in elements) {
+            if (element.contains(OPERATOR.AND.value) || element.contains(OPERATOR.OR.value)) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun evaluable(elements: Array<String>, operator: OPERATOR): Boolean {
-        return elements.none { it.contains(operator.value) }
+        for (element in elements) {
+            if (element.contains(operator.value)) {
+                return true
+            }
+        }
+        return false
     }
 
     private fun evaluateAnd(line: String, pattern: String): Boolean {
