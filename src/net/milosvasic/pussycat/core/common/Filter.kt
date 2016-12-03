@@ -5,6 +5,6 @@ interface Filter<in P> {
 
     fun apply(pattern: P? = null)
 
-    fun filterOk(line: String): Boolean
+    fun evaluate(line: String): Boolean
 
 }

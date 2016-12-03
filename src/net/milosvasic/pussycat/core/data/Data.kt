@@ -1,7 +1,6 @@
 package net.milosvasic.pussycat.core.data
 
 import net.milosvasic.pussycat.core.common.DataFilter
-import net.milosvasic.pussycat.utils.Text
 import java.util.concurrent.CopyOnWriteArrayList
 
 abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : DataAbstract(filter) {
@@ -28,13 +27,49 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
         }
     }
 
-    override fun filterOk(line: String): Boolean {
-        if (Text.isEmpty(pattern)) {
-            return true
+    override fun evaluate(line: String): Boolean {
+        if (evaluable(pattern)) {
+            val elements = pattern.split(OPERATOR.OR.value)
+            if (elements.isEmpty()) {
+                return evaluateAnd(line, pattern)
+            } else {
+                for (element in elements) {
+                    if (evaluable(element, OPERATOR.AND)) {
+                        if (!evaluateAnd(line, element)) {
+                            return false
+                        }
+                    } else {
+                        if (!evaluateOr(line, element)) {
+                            return false
+                        }
+                    }
+                }
+            }
         }
-        if (!pattern.contains("&&") && !pattern.contains("||")) {
-            if (pattern.startsWith("!")) {
-                val check = pattern.replace("!", "")
+        return true
+    }
+
+    private fun evaluable(element: String): Boolean {
+        return evaluable(Array(1, { element }))
+    }
+
+    private fun evaluable(element: String, operator: OPERATOR): Boolean {
+        return evaluable(Array(1, { element }), operator)
+    }
+
+    private fun evaluable(elements: Array<String>): Boolean {
+        return elements.none { it.contains(OPERATOR.AND.value) || it.contains(OPERATOR.OR.value) }
+    }
+
+    private fun evaluable(elements: Array<String>, operator: OPERATOR): Boolean {
+        return elements.none { it.contains(operator.value) }
+    }
+
+    private fun evaluateAnd(line: String, pattern: String): Boolean {
+        val ands = pattern.split(OPERATOR.AND.value)
+        for (element in ands) {
+            if (element.startsWith(OPERATOR.NOT.value)) {
+                val check = element.replace(OPERATOR.NOT.value, "")
                 if (line.containsIgnoreCase(check)) {
                     return false
                 }
@@ -43,43 +78,26 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
                     return false
                 }
             }
-            return true
-        }
-        if (pattern.contains("&&")) {
-            val params = pattern.split("&&")
-            for (item in params) {
-                var check = item.trim()
-                if (check.startsWith("!")) {
-                    check = check.replace("!", "")
-                    if (line.containsIgnoreCase(check)) {
-                        return false
-                    }
-                } else {
-                    if (!line.containsIgnoreCase(check)) {
-                        return false
-                    }
-                }
-            }
-            return true
-        }
-        if (pattern.contains("||")) {
-            val params = pattern.split("||")
-            for (item in params) {
-                var check = item.trim()
-                if (check.startsWith("!")) {
-                    check = check.replace("!", "")
-                    if (!line.containsIgnoreCase(check)) {
-                        return true
-                    }
-                } else {
-                    if (line.containsIgnoreCase(check)) {
-                        return true
-                    }
-                }
-            }
-            return false
         }
         return true
+    }
+
+    private fun evaluateOr(line: String, pattern: String): Boolean {
+        val params = pattern.split(OPERATOR.OR.value)
+        for (item in params) {
+            var check = item.trim()
+            if (check.startsWith(OPERATOR.NOT.value)) {
+                check = check.replace(OPERATOR.NOT.value, "")
+                if (!line.containsIgnoreCase(check)) {
+                    return true
+                }
+            } else {
+                if (line.containsIgnoreCase(check)) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     fun String.containsIgnoreCase(word: String): Boolean {

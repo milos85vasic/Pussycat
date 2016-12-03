@@ -45,7 +45,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
                     line = line.trim()
                     if (!Text.isEmpty(line)) {
                         data.addData(line)
-                        if (!refreshing.get() && data.filterOk(line)) {
+                        if (!refreshing.get() && data.evaluate(line)) {
                             printLine(line)
                         }
                     } else {
@@ -88,7 +88,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
                         line = line.trim()
                         if (!Text.isEmpty(line)) {
                             data.addData(line)
-                            if (!refreshing.get() && data.filterOk(line)) {
+                            if (!refreshing.get() && data.evaluate(line)) {
                                 printLine(line)
                             }
                         }
@@ -136,7 +136,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
         } else {
             var x = 0
             for (line in data) {
-                if (this.data.filterOk(line)) {
+                if (this.data.evaluate(line)) {
                     printLine(line)
                     x++
                 }
