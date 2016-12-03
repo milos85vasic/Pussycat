@@ -28,6 +28,9 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
     }
 
     override fun evaluate(line: String): Boolean {
+        if (pattern.isEmpty()) {
+            return true
+        }
         if (evaluable(pattern)) {
             if (!evaluable(pattern, OPERATOR.OR)) {
                 return evaluateAnd(line, pattern)
@@ -47,8 +50,9 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
                 }
                 return false
             }
+        } else {
+            return line.containsIgnoreCase(pattern)
         }
-        return true
     }
 
     private fun evaluable(element: String): Boolean {
