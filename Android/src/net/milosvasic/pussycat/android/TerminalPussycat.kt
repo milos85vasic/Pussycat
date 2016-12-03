@@ -1,7 +1,7 @@
 package net.milosvasic.pussycat.android
 
 import net.milosvasic.pussycat.color.Color
-import net.milosvasic.pussycat.core.LOGCAT_TAG_TYPE
+import net.milosvasic.pussycat.android.data.LOGCAT_TAG_TYPE
 
 class TerminalPussycat : AndroidPussycat() {
 

@@ -1,6 +1,6 @@
 package net.milosvasic.pussycat.android
 
-import net.milosvasic.pussycat.core.LOGCAT_TAG_TYPE
+import net.milosvasic.pussycat.android.data.LOGCAT_TAG_TYPE
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.DataAbstract
 import net.milosvasic.pussycat.utils.Text

@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.core
+package net.milosvasic.pussycat.android.data
 
 
 object LOGCAT_TAG_TYPE {
