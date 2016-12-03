@@ -128,6 +128,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
     override fun apply(data: CopyOnWriteArrayList<String>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
+        run.set(true)
         println(27.toChar() + "[2J")
         if (data.isEmpty()) {
             logger.w(TAG, "No data available [ filter: ${this.data.getFilterPattern()} ]")
