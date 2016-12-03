@@ -1,6 +1,7 @@
 package net.milosvasic.pussycat.android
 
 import net.milosvasic.pussycat.PussycatAbstract
+import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.utils.Text
 import java.io.BufferedReader
@@ -18,7 +19,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
     protected var refreshing = AtomicBoolean(false)
 
     init {
-        data = Data(this)
+        data = AndroidData(this)
         logger = ConsoleLogger()
         TAG = AndroidPussycat::class
     }
