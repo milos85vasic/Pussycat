@@ -83,6 +83,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
                         line = buffered.readLine()
                     } catch (e: Exception) {
                         run.set(false)
+                        break
                     }
                     if (!Text.isEmpty(line)) {
                         line = line.trim()
