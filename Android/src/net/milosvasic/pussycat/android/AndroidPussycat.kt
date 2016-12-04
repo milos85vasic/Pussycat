@@ -1,7 +1,11 @@
 package net.milosvasic.pussycat.android
 
+import com.android.ddmlib.AndroidDebugBridge
+import com.android.ddmlib.IDevice
+import com.sun.xml.internal.bind.v2.model.core.ID
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.data.AndroidData
+import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.utils.Text
 import java.io.BufferedReader
@@ -15,10 +19,13 @@ import java.util.concurrent.atomic.AtomicBoolean
 abstract class AndroidPussycat : PussycatAbstract() {
 
     protected val run = AtomicBoolean()
+    protected var device: IDevice?
     protected val paused = AtomicBoolean(false)
     protected var refreshing = AtomicBoolean(false)
+    protected lateinit var deviceCHangeListener: AndroidDebugBridge.IDeviceChangeListener
 
     init {
+        device = null
         data = AndroidData(this)
         logger = ConsoleLogger()
         TAG = AndroidPussycat::class
@@ -28,6 +35,39 @@ abstract class AndroidPussycat : PussycatAbstract() {
         run.set(false)
         Thread(Runnable {
             Thread.currentThread().name = "Live adb reading thread"
+            deviceCHangeListener = object : AndroidDebugBridge.IDeviceChangeListener {
+                override fun deviceChanged(iDevice: IDevice?, changeMask: Int) {
+                    println("Device changed [ $iDevice ]")
+                    assignDevice()
+                }
+
+                override fun deviceConnected(iDevice: IDevice?) {
+                    println("Device connected [ $iDevice ]")
+                    assignDevice()
+                }
+
+                override fun deviceDisconnected(iDevice: IDevice?) {
+                    println("Device disconnected [ $iDevice ]")
+                }
+            }
+            AndroidDebugBridge.init(false)
+            val debugBridge = AndroidDebugBridge.createBridge("adb", true)
+            if (debugBridge == null) {
+                logger.e(TAG, "Invalid ADB path")
+            }
+            AndroidDebugBridge.addDeviceChangeListener(deviceCHangeListener)
+
+//            AndroidDebugBridge.addDeviceChangeListener(AndroidDebugBridge.IDeviceChangeListener)
+//            val devices = AndroidDeviceStore.getInstance()
+//                    .getDevices()
+//
+//            for (d in devices) {
+//                System.out.println(d.getSerialNumber())
+//            }
+//            val device = devices.pollFirst()
+//            System.out.println(device.getName())
+
+
             val process = Runtime.getRuntime().exec("adb logcat")
             val input = process.inputStream
             var line = ""
@@ -145,6 +185,41 @@ abstract class AndroidPussycat : PussycatAbstract() {
             if (x == 0) logger.w(TAG, "No data matching [ filter: ${this.data.getFilterPattern()} ]")
         }
         refreshing.set(false)
+    }
+
+    private fun assignDevice() {
+        val devices = mutableListOf<IDevice>()
+        devices.addAll(AndroidDebugBridge.getBridge().devices)
+        if (!devices.isEmpty()) {
+            if (devices.size > 1) {
+                println("More than one device connected. Use @@Choose command to select device.")
+                for (x in devices.indices) {
+                    println("[ $x ] ${devices[x]}")
+                }
+            } else {
+                choseDevice(AndroidDebugBridge.getBridge().devices[0])
+            }
+        } else {
+            println("No devices connected.")
+        }
+    }
+
+    private fun choseDevice(iDevice: IDevice?) {
+        if (device != null) {
+            val existingDevice: IDevice = device as IDevice
+            if (iDevice == existingDevice) {
+                println("Device is the same.")
+            } else {
+                println("We connected new device.")
+            }
+        } else {
+            device = iDevice
+            if (!data.get().isEmpty()) {
+                data.get().clear()
+                execute(COMMAND.CLEAR)
+            }
+            println("We connected new device.")
+        }
     }
 
     abstract protected fun printLine(line: String)
