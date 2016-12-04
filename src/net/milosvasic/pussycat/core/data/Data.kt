@@ -6,31 +6,17 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 abstract class Data<T>(filter: DataFilter<CopyOnWriteArrayList<T>, String>) : DataAbstract<T>(filter) {
 
-    protected fun evaluable(element: String): Boolean {
-        return evaluable(Array(1, { element }))
+    protected fun evaluable(element: T): Boolean {
+        return evaluable(listOf(element))
     }
 
-    protected fun evaluable(element: String, operator: OPERATOR): Boolean {
-        return evaluable(Array(1, { element }), operator)
+    protected fun evaluable(element: T, operator: OPERATOR): Boolean {
+        return evaluable(listOf(element), operator)
     }
 
-    protected fun evaluable(elements: Array<String>): Boolean {
-        for (element in elements) {
-            if (element.contains(OPERATOR.AND.value) || element.contains(OPERATOR.OR.value)) {
-                return true
-            }
-        }
-        return false
-    }
+    protected abstract fun evaluable(elements: List<T>): Boolean
 
-    protected fun evaluable(elements: Array<String>, operator: OPERATOR): Boolean {
-        for (element in elements) {
-            if (element.contains(operator.value)) {
-                return true
-            }
-        }
-        return false
-    }
+    protected abstract fun evaluable(elements: List<T>, operator: OPERATOR): Boolean
 
     protected fun evaluateAnd(line: String, pattern: String): Boolean {
         val ands = pattern.split(OPERATOR.AND.value)

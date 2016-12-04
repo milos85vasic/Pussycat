@@ -31,17 +31,17 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String
         }
         if (evaluable(pattern)) {
             if (!evaluable(pattern, OPERATOR.OR)) {
-                return evaluateAnd(line, pattern)
+                return evaluateAnd(message, pattern)
             } else {
                 val elements = pattern.split(OPERATOR.OR.value)
                 for (element in elements) {
                     val trimmed = element.trim()
                     if (evaluable(trimmed, OPERATOR.AND)) {
-                        if (evaluateAnd(line, trimmed)) {
+                        if (evaluateAnd(message, trimmed)) {
                             return true
                         }
                     } else {
-                        if (evaluateOr(line, trimmed)) {
+                        if (evaluateOr(message, trimmed)) {
                             return true
                         }
                     }
@@ -61,6 +61,24 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String
             }
             return true
         }
+    }
+
+    override fun evaluable(elements: List<LogCatMessage>): Boolean {
+        for (element in elements) {
+            if (element.contains(OPERATOR.AND.value) || element.contains(OPERATOR.OR.value)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun evaluable(elements: List<LogCatMessage>, operator: OPERATOR): Boolean {
+        for (element in elements) {
+            if (element.contains(operator.value)) {
+                return true
+            }
+        }
+        return false
     }
 
     override fun getTag(message: LogCatMessage): LOG_LEVEL? {

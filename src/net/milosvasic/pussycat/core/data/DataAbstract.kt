@@ -4,7 +4,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 import net.milosvasic.pussycat.core.common.Filter
 import net.milosvasic.pussycat.core.common.DataFilter
 
-abstract class DataAbstract<T>(val filter: DataFilter<CopyOnWriteArrayList<T>, String>) : Filter<String> {
+abstract class DataAbstract<T>(val filter: DataFilter<CopyOnWriteArrayList<T>, String>) : Filter<String, T> {
 
     protected var pattern = ""
     protected val data = CopyOnWriteArrayList<T>()

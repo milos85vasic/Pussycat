@@ -15,6 +15,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
+import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -78,31 +79,8 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         if (logcat.exists()) {
             Thread(Runnable {
                 Thread.currentThread().name = "Filesystem reading thread"
-                val input = FileInputStream(logcat.absoluteFile)
-                val reader = InputStreamReader(input)
-                val buffered = BufferedReader(reader)
-                var line = ""
-
-                while (line != null) {
-                    try {
-                        line = buffered.readLine()
-                    } catch (e: Exception) {
-                        break
-                    }
-                    if (!Text.isEmpty(line)) {
-                        line = line.trim()
-                        if (!Text.isEmpty(line)) {
-                            data.addData(line)
-                            if (!refreshing.get() && data.evaluate(line)) {
-                                printLine(line)
-                            }
-                        }
-                    }
-                }
-
-                buffered.close()
-                reader.close()
-                input.close()
+                val lines = logcat.readLines()
+                data.addData(Array(lines.size, { i -> lines[i] }))
             }).start()
         } else {
             logger.e(TAG, "Logcat: ${logcat.absoluteFile} does not exist")

@@ -1,10 +1,10 @@
 package net.milosvasic.pussycat.core.common
 
 
-interface Filter<in P> {
+interface Filter<in P, in M> {
 
     fun apply(pattern: P? = null)
 
-    fun evaluate(line: String): Boolean
+    fun evaluate(message: M): Boolean
 
 }
