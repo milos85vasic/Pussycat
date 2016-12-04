@@ -10,7 +10,7 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun printLine(line: String) {
-        if (paused.get() || !run.get()) {
+        if (paused.get()) {
             return
         }
         if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.V_LIVE) || line.containsIgnoreCase(LOGCAT_TAG_TYPE.V_FILESYSTEM)) {
@@ -42,9 +42,7 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun status() {
-        if (run.get()) {
-            logger.v(TAG, "Filter applied [ ${getFilter()} ]\n\n")
-        }
+        logger.v(TAG, "Filter applied [ ${getFilter()} ]\n\n")
     }
 
     fun String.containsIgnoreCase(word: String): Boolean {

@@ -4,10 +4,10 @@ import java.util.concurrent.CopyOnWriteArrayList
 import net.milosvasic.pussycat.core.common.Filter
 import net.milosvasic.pussycat.core.common.DataFilter
 
-abstract class DataAbstract(val filter: DataFilter<CopyOnWriteArrayList<String>, String>) : Filter<String> {
+abstract class DataAbstract<T>(val filter: DataFilter<CopyOnWriteArrayList<T>, String>) : Filter<String> {
 
     protected var pattern = ""
-    protected val data = CopyOnWriteArrayList<String>()
+    protected val data = CopyOnWriteArrayList<T>()
 
     override fun apply(pattern: String?) {
         this.pattern = pattern ?: ""
@@ -18,10 +18,10 @@ abstract class DataAbstract(val filter: DataFilter<CopyOnWriteArrayList<String>,
         return pattern
     }
 
-    fun get(): CopyOnWriteArrayList<String> {
+    fun get(): CopyOnWriteArrayList<T> {
         return data
     }
 
-    abstract fun addData(line: String)
+    abstract fun addData(message: T)
 
 }

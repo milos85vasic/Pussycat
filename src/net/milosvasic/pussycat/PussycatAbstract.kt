@@ -7,6 +7,7 @@ import net.milosvasic.pussycat.core.data.DataAbstract
 import net.milosvasic.pussycat.utils.Text
 import java.util.concurrent.CopyOnWriteArrayList
 import net.milosvasic.pussycat.core.common.Execute
+import net.milosvasic.pussycat.core.data.Data
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.events.Events
 import net.milosvasic.pussycat.logging.Logger
@@ -14,12 +15,12 @@ import kotlin.reflect.KClass
 import java.util.*
 
 
-abstract class PussycatAbstract : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<String>, String>, Events {
+abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<T>, String>, Events {
 
     protected lateinit var TAG: KClass<*>
     protected lateinit var logger: Logger
     protected var color: String = Color.BLACK
-    protected lateinit var data: DataAbstract
+    protected lateinit var data: D
     protected val listeners: MutableSet<Events> = Collections.synchronizedSet(HashSet<Events>())
 
     override fun execute(executable: COMMAND, vararg params: String?) {

@@ -19,9 +19,8 @@ import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
 
-abstract class AndroidPussycat : PussycatAbstract() {
+abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() {
 
-    protected val run = AtomicBoolean()
     protected var device: IDevice?
     protected val paused = AtomicBoolean(false)
     protected var refreshing = AtomicBoolean(false)
@@ -30,8 +29,11 @@ abstract class AndroidPussycat : PussycatAbstract() {
 
     protected val logcatListener = LogCatListener { messages ->
         if (messages != null) {
-            for (message in messages) {
-                println(">>>> ${message.logLevel}, ${message.appName}, ${message.message}")
+            data.addData(messages)
+            if (!refreshing.get()) {
+                for (message in messages) {
+                    if (data.evaluate(message)) printLine(message)
+                }
             }
         }
     }
@@ -44,7 +46,6 @@ abstract class AndroidPussycat : PussycatAbstract() {
     }
 
     override fun live() {
-        run.set(false)
         Thread(Runnable {
             Thread.currentThread().name = "Live adb reading thread"
             deviceChangeListener = object : AndroidDebugBridge.IDeviceChangeListener {
@@ -66,40 +67,6 @@ abstract class AndroidPussycat : PussycatAbstract() {
                 logger.e(TAG, "Invalid ADB path")
             }
             AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
-
-
-            val process = Runtime.getRuntime().exec("adb logcat")
-            val input = process.inputStream
-            var line = ""
-            val reader = InputStreamReader(input)
-            val buffered = BufferedReader(reader)
-
-            run.set(true)
-            while (run.get()) {
-                try {
-                    line = buffered.readLine()
-                } catch (e: Exception) {
-                    run.set(false)
-                }
-                if (!Text.isEmpty(line)) {
-                    line = line.trim()
-                    if (!Text.isEmpty(line)) {
-                        data.addData(line)
-                        if (!refreshing.get() && data.evaluate(line)) {
-                            printLine(line)
-                        }
-                    } else {
-                        Thread.sleep(1000)
-                    }
-                } else {
-                    Thread.sleep(1000)
-                }
-            }
-
-            buffered.close()
-            reader.close()
-            input.close()
-            process.destroy()
         }).start()
     }
 
@@ -107,7 +74,6 @@ abstract class AndroidPussycat : PussycatAbstract() {
         if (params.isEmpty()) {
             return
         }
-        run.set(false)
         val logcat = File(params[0] as String)
         if (logcat.exists()) {
             Thread(Runnable {
@@ -117,12 +83,10 @@ abstract class AndroidPussycat : PussycatAbstract() {
                 val buffered = BufferedReader(reader)
                 var line = ""
 
-                run.set(true)
-                while (run.get() && line != null) {
+                while (line != null) {
                     try {
                         line = buffered.readLine()
                     } catch (e: Exception) {
-                        run.set(false)
                         break
                     }
                     if (!Text.isEmpty(line)) {
@@ -147,10 +111,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
     }
 
     override fun stop() {
-        if (!run.get()) {
-            return
-        }
-        run.set(false)
+        stopLogsReceiving()
         super.stop()
     }
 
@@ -170,7 +131,6 @@ abstract class AndroidPussycat : PussycatAbstract() {
     override fun apply(data: CopyOnWriteArrayList<String>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
-        run.set(true)
         println(27.toChar() + "[2J")
         if (data.isEmpty()) {
             logger.w(TAG, "No data available [ filter: ${this.data.getFilterPattern()} ]")
@@ -237,6 +197,6 @@ abstract class AndroidPussycat : PussycatAbstract() {
         logcatTask?.removeLogCatListener(logcatListener)
     }
 
-    abstract protected fun printLine(line: String)
+    abstract protected fun printLine(line: LogCatMessage)
 
 }
