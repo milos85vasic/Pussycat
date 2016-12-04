@@ -2,6 +2,9 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
+import com.android.ddmlib.logcat.LogCatListener
+import com.android.ddmlib.logcat.LogCatMessage
+import com.android.ddmlib.logcat.LogCatReceiverTask
 import com.sun.xml.internal.bind.v2.model.core.ID
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.data.AndroidData
@@ -22,7 +25,16 @@ abstract class AndroidPussycat : PussycatAbstract() {
     protected var device: IDevice?
     protected val paused = AtomicBoolean(false)
     protected var refreshing = AtomicBoolean(false)
-    protected lateinit var deviceCHangeListener: AndroidDebugBridge.IDeviceChangeListener
+    protected var logcatTask: LogCatReceiverTask? = null
+    protected lateinit var deviceChangeListener: AndroidDebugBridge.IDeviceChangeListener
+
+    protected val logcatListener = LogCatListener { messages ->
+        if (messages != null) {
+            for (message in messages) {
+                println(">>>> ${message.logLevel}, ${message.appName}, ${message.message}")
+            }
+        }
+    }
 
     init {
         device = null
@@ -35,7 +47,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
         run.set(false)
         Thread(Runnable {
             Thread.currentThread().name = "Live adb reading thread"
-            deviceCHangeListener = object : AndroidDebugBridge.IDeviceChangeListener {
+            deviceChangeListener = object : AndroidDebugBridge.IDeviceChangeListener {
                 override fun deviceChanged(iDevice: IDevice?, changeMask: Int) {
                 }
 
@@ -53,17 +65,7 @@ abstract class AndroidPussycat : PussycatAbstract() {
             if (debugBridge == null) {
                 logger.e(TAG, "Invalid ADB path")
             }
-            AndroidDebugBridge.addDeviceChangeListener(deviceCHangeListener)
-
-//            AndroidDebugBridge.addDeviceChangeListener(AndroidDebugBridge.IDeviceChangeListener)
-//            val devices = AndroidDeviceStore.getInstance()
-//                    .getDevices()
-//
-//            for (d in devices) {
-//                System.out.println(d.getSerialNumber())
-//            }
-//            val device = devices.pollFirst()
-//            System.out.println(device.getName())
+            AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
 
 
             val process = Runtime.getRuntime().exec("adb logcat")
@@ -214,12 +216,25 @@ abstract class AndroidPussycat : PussycatAbstract() {
         }
         if (connect) {
             device = iDevice
+            stopLogsReceiving()
             if (!data.get().isEmpty()) {
                 data.get().clear()
                 execute(COMMAND.CLEAR)
             }
+            startLogsReceiving()
             println("We connected new device.")
         }
+    }
+
+    private fun startLogsReceiving() {
+        logcatTask = LogCatReceiverTask(device)
+        logcatTask?.addLogCatListener(logcatListener)
+        logcatTask?.run()
+    }
+
+    private fun stopLogsReceiving() {
+        logcatTask?.stop()
+        logcatTask?.removeLogCatListener(logcatListener)
     }
 
     abstract protected fun printLine(line: String)
