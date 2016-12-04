@@ -37,8 +37,6 @@ abstract class AndroidPussycat : PussycatAbstract() {
             Thread.currentThread().name = "Live adb reading thread"
             deviceCHangeListener = object : AndroidDebugBridge.IDeviceChangeListener {
                 override fun deviceChanged(iDevice: IDevice?, changeMask: Int) {
-                    println("Device changed [ $iDevice ]")
-                    assignDevice()
                 }
 
                 override fun deviceConnected(iDevice: IDevice?) {
@@ -205,14 +203,16 @@ abstract class AndroidPussycat : PussycatAbstract() {
     }
 
     private fun choseDevice(iDevice: IDevice?) {
+        var connect = true
         if (device != null) {
+            val connectedDevice = iDevice as IDevice
             val existingDevice: IDevice = device as IDevice
-            if (iDevice == existingDevice) {
+            if (connectedDevice.serialNumber == existingDevice.serialNumber) {
                 println("Device is the same.")
-            } else {
-                println("We connected new device.")
+                connect = false
             }
-        } else {
+        }
+        if (connect) {
             device = iDevice
             if (!data.get().isEmpty()) {
                 data.get().clear()
