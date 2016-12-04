@@ -51,7 +51,17 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
                 return false
             }
         } else {
-            return line.containsIgnoreCase(pattern)
+            if (pattern.startsWith(OPERATOR.NOT.value)) {
+                val check = pattern.replace(OPERATOR.NOT.value, "")
+                if (line.containsIgnoreCase(check)) {
+                    return false
+                }
+            } else {
+                if (!line.containsIgnoreCase(pattern)) {
+                    return false
+                }
+            }
+            return true
         }
     }
 
@@ -84,13 +94,14 @@ abstract class Data(filter: DataFilter<CopyOnWriteArrayList<String>, String>) : 
     private fun evaluateAnd(line: String, pattern: String): Boolean {
         val ands = pattern.split(OPERATOR.AND.value)
         for (element in ands) {
-            if (element.startsWith(OPERATOR.NOT.value)) {
-                val check = element.replace(OPERATOR.NOT.value, "")
+            var check = element.trim()
+            if (check.startsWith(OPERATOR.NOT.value)) {
+                check = check.replace(OPERATOR.NOT.value, "")
                 if (line.containsIgnoreCase(check)) {
                     return false
                 }
             } else {
-                if (!line.containsIgnoreCase(pattern)) {
+                if (!line.containsIgnoreCase(check)) {
                     return false
                 }
             }
