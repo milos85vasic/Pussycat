@@ -57,11 +57,16 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 }
             }
             AndroidDebugBridge.init(false)
-            val debugBridge = AndroidDebugBridge.createBridge("adb", true)
-            if (debugBridge == null) {
-                logger.e(TAG, "Invalid ADB path")
+            try {
+                val debugBridge = AndroidDebugBridge.createBridge("adb", true)
+                if (debugBridge == null) {
+                    logger.e(TAG, "Invalid ADB path")
+                } else {
+                    AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
+                }
+            } catch (e: Exception) {
+                logger.e(TAG, "ADB error: $e")
             }
-            AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
         }).start()
     }
 
