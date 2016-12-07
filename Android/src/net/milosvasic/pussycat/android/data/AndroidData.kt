@@ -10,13 +10,13 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String>) : StringData<LogCatMessage>(filter) {
 
-    fun addData(lines: Array<String>) {
-        val parser = LogCatMessageParser()
-        val messages = parser.processLogLines(lines, null)
+    fun addData(messages: Collection<LogCatMessage>) {
         data.addAll(messages)
     }
 
-    fun addData(messages: Collection<LogCatMessage>) {
+    fun addData(lines: Array<String>) {
+        val parser = LogCatMessageParser()
+        val messages = parser.processLogLines(lines, null)
         data.addAll(messages)
     }
 
@@ -33,4 +33,5 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String
     override fun LogCatMessage.containsIgnoreCase(word: String): Boolean {
         return message.containsIgnoreCase(word)
     }
+
 }

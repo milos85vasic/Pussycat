@@ -3,11 +3,10 @@ package net.milosvasic.pussycat
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.core.common.DataFilter
-import net.milosvasic.pussycat.core.data.DataAbstract
+import net.milosvasic.pussycat.core.data.Data
 import net.milosvasic.pussycat.utils.Text
 import java.util.concurrent.CopyOnWriteArrayList
 import net.milosvasic.pussycat.core.common.Execute
-import net.milosvasic.pussycat.core.data.Data
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.events.Events
 import net.milosvasic.pussycat.logging.Logger

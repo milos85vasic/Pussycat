@@ -1,10 +1,27 @@
 package net.milosvasic.pussycat.core.data
 
+import java.util.concurrent.CopyOnWriteArrayList
+import net.milosvasic.pussycat.core.common.Filter
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.logging.LOG_LEVEL
-import java.util.concurrent.CopyOnWriteArrayList
 
-abstract class Data<T>(filter: DataFilter<CopyOnWriteArrayList<T>, String>) : DataAbstract<T>(filter) {
+abstract class Data<T>(val filter: DataFilter<CopyOnWriteArrayList<T>, String>) : Filter<String, T> {
+
+    protected var pattern = ""
+    protected val data = CopyOnWriteArrayList<T>()
+
+    override fun apply(pattern: String?) {
+        this.pattern = pattern ?: ""
+        filter.apply(data, pattern)
+    }
+
+    fun getFilterPattern(): String {
+        return pattern
+    }
+
+    fun get(): CopyOnWriteArrayList<T> {
+        return data
+    }
 
     protected fun evaluable(pattern: String): Boolean {
         return evaluable(listOf(pattern))
@@ -13,6 +30,8 @@ abstract class Data<T>(filter: DataFilter<CopyOnWriteArrayList<T>, String>) : Da
     protected fun evaluable(pattern: String, operator: OPERATOR): Boolean {
         return evaluable(listOf(pattern), operator)
     }
+
+    abstract fun addData(message: T)
 
     protected abstract fun evaluable(elements: List<String>): Boolean
 
