@@ -20,9 +20,11 @@ fun main(args: Array<String>) {
 
     val listener = object : Events {
         override fun onEvent(event: EVENT) {
-            if (event == EVENT.STOP) {
-                shutdown.invoke()
-                pussy.unsubscribe(this)
+            when (event) {
+                EVENT.STOP -> {
+                    pussy.unsubscribe(this)
+                    shutdown.invoke()
+                }
             }
         }
     }
