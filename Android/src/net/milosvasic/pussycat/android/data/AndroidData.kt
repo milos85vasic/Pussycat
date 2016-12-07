@@ -4,16 +4,11 @@ import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
 import com.android.ddmlib.logcat.LogCatMessageParser
 import net.milosvasic.pussycat.core.common.DataFilter
-import net.milosvasic.pussycat.core.data.Data
-import net.milosvasic.pussycat.core.data.OPERATOR
+import net.milosvasic.pussycat.core.data.StringData
 import net.milosvasic.pussycat.logging.LOG_LEVEL
 import java.util.concurrent.CopyOnWriteArrayList
 
-class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String>) : Data<LogCatMessage>(filter) {
-
-    override fun addData(message: LogCatMessage) {
-        data.add(message)
-    }
+class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String>) : StringData<LogCatMessage>(filter) {
 
     fun addData(lines: Array<String>) {
         val parser = LogCatMessageParser()
@@ -23,62 +18,6 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String
 
     fun addData(messages: Collection<LogCatMessage>) {
         data.addAll(messages)
-    }
-
-    override fun evaluate(message: LogCatMessage): Boolean {
-        if (pattern.isEmpty()) {
-            return true
-        }
-        if (evaluable(pattern)) {
-            if (!evaluable(pattern, OPERATOR.OR)) {
-                return evaluateAnd(message, pattern)
-            } else {
-                val elements = pattern.split(OPERATOR.OR.value)
-                for (element in elements) {
-                    val trimmed = element.trim()
-                    if (evaluable(trimmed, OPERATOR.AND)) {
-                        if (evaluateAnd(message, trimmed)) {
-                            return true
-                        }
-                    } else {
-                        if (evaluateOr(message, trimmed)) {
-                            return true
-                        }
-                    }
-                }
-                return false
-            }
-        } else {
-            if (pattern.startsWith(OPERATOR.NOT.value)) {
-                val check = pattern.replace(OPERATOR.NOT.value, "")
-                if (line.containsIgnoreCase(check)) {
-                    return false
-                }
-            } else {
-                if (!line.containsIgnoreCase(pattern)) {
-                    return false
-                }
-            }
-            return true
-        }
-    }
-
-    override fun evaluable(elements: List<LogCatMessage>): Boolean {
-        for (element in elements) {
-            if (element.contains(OPERATOR.AND.value) || element.contains(OPERATOR.OR.value)) {
-                return true
-            }
-        }
-        return false
-    }
-
-    override fun evaluable(elements: List<LogCatMessage>, operator: OPERATOR): Boolean {
-        for (element in elements) {
-            if (element.contains(operator.value)) {
-                return true
-            }
-        }
-        return false
     }
 
     override fun getTag(message: LogCatMessage): LOG_LEVEL? {
@@ -91,4 +30,7 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String
         }
     }
 
+    override fun LogCatMessage.containsIgnoreCase(word: String): Boolean {
+        return message.containsIgnoreCase(word)
+    }
 }
