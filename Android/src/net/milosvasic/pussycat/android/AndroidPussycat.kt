@@ -5,17 +5,11 @@ import com.android.ddmlib.IDevice
 import com.android.ddmlib.logcat.LogCatListener
 import com.android.ddmlib.logcat.LogCatMessage
 import com.android.ddmlib.logcat.LogCatReceiverTask
-import com.sun.xml.internal.bind.v2.model.core.ID
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
-import net.milosvasic.pussycat.utils.Text
-import java.io.BufferedReader
 import java.io.File
-import java.io.FileInputStream
-import java.io.InputStreamReader
-import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -106,7 +100,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         super.resume()
     }
 
-    override fun apply(data: CopyOnWriteArrayList<String>, pattern: String?) {
+    override fun apply(data: CopyOnWriteArrayList<LogCatMessage>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
         println(27.toChar() + "[2J")
