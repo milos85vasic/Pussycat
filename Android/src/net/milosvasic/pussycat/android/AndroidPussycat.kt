@@ -75,6 +75,11 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 Thread.currentThread().name = "Filesystem reading thread"
                 val lines = logcat.readLines()
                 data.addData(Array(lines.size, { i -> lines[i] }))
+                if (!refreshing.get()) {
+                    for (message in data.get()) {
+                        if (data.evaluate(message)) printLine(message)
+                    }
+                }
             }).start()
         } else {
             logger.e(TAG, "Logcat: ${logcat.absoluteFile} does not exist")
