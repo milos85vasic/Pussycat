@@ -78,8 +78,30 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         if (logcat.exists()) {
             Thread(Runnable {
                 Thread.currentThread().name = "Filesystem reading thread"
-                val lines = logcat.readLines()
-                data.addData(Array(lines.size, { i -> lines[i] }))
+                val rawLines = logcat.readLines()
+                val parsedLines = mutableListOf<String>()
+                for (line in rawLines) {
+                    val tag = getTag(line)
+                    if (tag != null) {
+                        val firstTagOccurance = line.indexOf(tag)
+                        var splited = line.substring(firstTagOccurance + tag.length, line.lastIndex + 1)
+                        val classEnd = splited.indexOf(":")
+                        splited = splited.substring(classEnd + 1, splited.lastIndex + 1)
+                        if (splited.startsWith(" \t")) {
+                            parsedLines[parsedLines.lastIndex] = "${parsedLines.last()}\n$line"
+                        } else {
+                            parsedLines.add(line)
+                        }
+                    } else {
+                        if (parsedLines.isEmpty()) {
+                            parsedLines.add(line)
+                        } else {
+                            val replace = "${parsedLines.last()}\n\t$line"
+                            parsedLines[parsedLines.lastIndex] = replace
+                        }
+                    }
+                }
+                data.addData(Array(parsedLines.size, { i -> parsedLines[i] }))
                 if (!refreshing.get()) {
                     for (message in data.get()) {
                         if (data.evaluate(message)) printLine(message)
@@ -128,6 +150,8 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         }
         refreshing.set(false)
     }
+
+    abstract protected fun printLine(line: LogCatMessage)
 
     private fun assignDevice() {
         val devices = mutableListOf<IDevice>()
@@ -179,6 +203,55 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         logcatTask?.removeLogCatListener(logcatListener)
     }
 
-    abstract protected fun printLine(line: LogCatMessage)
+    private fun getTag(line: String): String? {
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.V_LIVE)) {
+            return LOGCAT_TAG_TYPE.V_LIVE
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.V_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.V_FILESYSTEM
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.D_LIVE)) {
+            return LOGCAT_TAG_TYPE.D_LIVE
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.D_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.D_FILESYSTEM
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.I_LIVE)) {
+            return LOGCAT_TAG_TYPE.I_LIVE
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.I_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.I_FILESYSTEM
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.W_LIVE)) {
+            return LOGCAT_TAG_TYPE.W_LIVE
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.W_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.W_FILESYSTEM
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.E_LIVE)) {
+            return LOGCAT_TAG_TYPE.E_LIVE
+        }
+        if (line.containsIgnoreCase(LOGCAT_TAG_TYPE.E_FILESYSTEM)) {
+            return LOGCAT_TAG_TYPE.E_FILESYSTEM
+        }
+        return null
+    }
+
+    private object LOGCAT_TAG_TYPE {
+        val V_LIVE = " V/"
+        val V_FILESYSTEM = " V "
+        val D_LIVE = " D/"
+        val D_FILESYSTEM = " D "
+        val I_LIVE = " I/"
+        val I_FILESYSTEM = " I "
+        val W_LIVE = " W/"
+        val W_FILESYSTEM = " W "
+        val E_LIVE = " E/"
+        val E_FILESYSTEM = " E "
+    }
+
+    fun String.containsIgnoreCase(word: String): Boolean {
+        return this.toLowerCase().contains(word.toLowerCase())
+    }
 
 }
