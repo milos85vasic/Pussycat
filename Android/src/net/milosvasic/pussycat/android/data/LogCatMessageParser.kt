@@ -15,11 +15,11 @@ class LogCatMessageParser {
     private var mCurTime = "?:??"
 
     private val terminalDumpPattern = Pattern.compile(
-            "\\d+-\\d+\\s+\\d+:\\d+:\\d+.\\d+\\s+\\d+\\s+\\d+\\s+\\w\\s+(.*):\\s+(((.|\n)*?)|\\s+)"
+            "(\\d+-\\d+)(\\s+\\d+:\\d+:\\d+.\\d+)\\s+\\d+\\s+\\d+\\s+\\w\\s+(.*):\\s+(((.|\n)*?)|\\s+)"
     )
 
     private val terminalDumpPatternCropped = Pattern.compile(
-            "\\d+-\\d+\\s+\\d+:\\d+:\\d+.\\d+\\s+\\d+\\s+\\d+\\s+\\w\\s+(.*):"
+            "(\\d+-\\d+)(\\s+\\d+:\\d+:\\d+.\\d+)\\s+\\d+\\s+\\d+\\s+\\w\\s+(.*):"
     )
 
     private val patterns = listOf<Pattern>(
@@ -43,6 +43,10 @@ class LogCatMessageParser {
                 val matcher = pattern.matcher(line.trim())
                 if (matcher.matches()) {
                     matched = true
+
+                    for (x in 0..matcher.groupCount()) {
+                        println(">>> ${matcher.group(x)}")
+                    }
                     break
                 }
             }
