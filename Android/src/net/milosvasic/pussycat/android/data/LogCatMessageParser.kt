@@ -31,8 +31,12 @@ class LogCatMessageParser {
      * Note: the tag should be trimmed as it may have spaces at the end.
      */
     private val sLogHeaderPattern = Pattern.compile(
-            "\\d+-\\d+\\s\\d+:\\d+:\\d+.\\d+"
+            "\\d+-\\d+\\s+\\d+:\\d+:\\d+.\\d+\\s+\\d+\\s+\\d+\\s+\\w\\s+(.*):\\s+(.*)"
     )
+
+//    private val sLogHeaderPattern = Pattern.compile(
+//            "^\\[\\s(\\d\\d-\\d\\d\\s\\d\\d:\\d\\d:\\d\\d\\.\\d+)" + "\\s+(\\d*):\\s*(\\S+)\\s([VDIWEAF])/(.*)\\]$"
+//    )
 
 
     fun processLogLines(lines: Array<String>, device: IDevice?): List<LogCatMessage> {
