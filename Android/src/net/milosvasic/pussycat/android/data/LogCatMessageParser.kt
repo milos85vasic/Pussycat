@@ -31,7 +31,7 @@ class LogCatMessageParser {
      * Note: the tag should be trimmed as it may have spaces at the end.
      */
     private val sLogHeaderPattern = Pattern.compile(
-            "\\d+-\\d+\\s+\\d+:\\d+:\\d+.\\d+\\s+\\d+\\s+\\d+\\s+\\w\\s+(.*):\\s+(.*)"
+            "\\d+-\\d+\\s+\\d+:\\d+:\\d+.\\d+\\s+\\d+\\s+\\d+\\s+\\w\\s+(.*):\\s+(((.|\n)*?)|\\s+)"
     )
 
 //    private val sLogHeaderPattern = Pattern.compile(
@@ -47,9 +47,9 @@ class LogCatMessageParser {
                 continue
             }
 
-            val matcher = sLogHeaderPattern.matcher(line)
+            val matcher = sLogHeaderPattern.matcher(line.trim())
             if (matcher.matches()) {
-                println("MATCHING")
+//                println("MATCHING")
 
 //                mCurTime = matcher.group(1)
 //                mCurPid = matcher.group(2)
@@ -61,7 +61,7 @@ class LogCatMessageParser {
 //                    mCurLogLevel = Log.LogLevel.ASSERT
 //                }
             } else {
-                println("NO MATCHES")
+                println("NO MATCHES $line")
 //                var pkgName = "" //$NON-NLS-1$
 //                val pid = Ints.tryParse(mCurPid)
 //                if (pid != null && device != null) {
