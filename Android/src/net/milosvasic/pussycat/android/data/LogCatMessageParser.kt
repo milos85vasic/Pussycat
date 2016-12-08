@@ -31,7 +31,8 @@ class LogCatMessageParser {
      * Note: the tag should be trimmed as it may have spaces at the end.
      */
     private val sLogHeaderPattern = Pattern.compile(
-            "^\\[\\s(\\d\\d-\\d\\d\\s\\d\\d:\\d\\d:\\d\\d\\.\\d+)" + "\\s+(\\d*):\\s*(\\S+)\\s([VDIWEAF])/(.*)\\]$")
+            "\\d+-\\d+\\s\\d+:\\d+:\\d+.\\d+"
+    )
 
 
     fun processLogLines(lines: Array<String>, device: IDevice?): List<LogCatMessage> {
@@ -44,24 +45,27 @@ class LogCatMessageParser {
 
             val matcher = sLogHeaderPattern.matcher(line)
             if (matcher.matches()) {
-                mCurTime = matcher.group(1)
-                mCurPid = matcher.group(2)
-                mCurTid = matcher.group(3)
-                mCurLogLevel = Log.LogLevel.getByLetterString(matcher.group(4))
-                mCurTag = matcher.group(5).trim { it <= ' ' }
+                println("MATCHING")
 
-                if (mCurLogLevel == null && matcher.group(4) == "F") {
-                    mCurLogLevel = Log.LogLevel.ASSERT
-                }
+//                mCurTime = matcher.group(1)
+//                mCurPid = matcher.group(2)
+//                mCurTid = matcher.group(3)
+//                mCurLogLevel = Log.LogLevel.getByLetterString(matcher.group(4))
+//                mCurTag = matcher.group(5).trim { it <= ' ' }
+//
+//                if (mCurLogLevel == null && matcher.group(4) == "F") {
+//                    mCurLogLevel = Log.LogLevel.ASSERT
+//                }
             } else {
-                var pkgName = "" //$NON-NLS-1$
-                val pid = Ints.tryParse(mCurPid)
-                if (pid != null && device != null) {
-                    pkgName = device.getClientName(pid)
-                }
-                val m = LogCatMessage(mCurLogLevel, mCurPid, mCurTid,
-                        pkgName, mCurTag, mCurTime, line)
-                messages.add(m)
+                println("NO MATCHES")
+//                var pkgName = "" //$NON-NLS-1$
+//                val pid = Ints.tryParse(mCurPid)
+//                if (pid != null && device != null) {
+//                    pkgName = device.getClientName(pid)
+//                }
+//                val m = LogCatMessage(mCurLogLevel, mCurPid, mCurTid,
+//                        pkgName, mCurTag, mCurTime, line)
+//                messages.add(m)
             }
         }
 
