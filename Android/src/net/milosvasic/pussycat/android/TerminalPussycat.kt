@@ -2,6 +2,7 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
+import com.sun.tools.javac.util.StringUtils
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
@@ -60,17 +61,56 @@ class TerminalPussycat : AndroidPussycat() {
         subscribe(listener)
         commands.start()
 
-        if (args.isEmpty()) {
-            execute(COMMAND.LIVE)
-        } else {
-            for (arg in args) {
-                if (arg.trim() == "--adb") {
-                    execute(COMMAND.LIVE)
-                } else {
-                    execute(COMMAND.FILESYSTEM, arg)
+        var adb = true
+        var file: String = ""
+        for (arg in args) {
+            var parsedArg: String
+            try {
+                parsedArg = getArgumentOption(arg.trim())
+            } catch (e: Exception) {
+                println("Error parsing arguments: $arg\n" + e.message)
+                adb = false
+                execute(COMMAND.STOP)
+                break
+            }
+            when (parsedArg) {
+                "--adb" -> adb = true
+                "--filesystem" -> {
+                    adb = false
+                    file = getArgumentValue(arg)
+                }
+                else -> {
                 }
             }
         }
+        if (adb) {
+            execute(COMMAND.LIVE)
+        } else {
+            execute(COMMAND.FILESYSTEM, file)
+        }
+    }
+
+    fun getArgumentOption(arg: String): String {
+        var occurances = 0
+        for (char in arg) {
+            if (char == '=') {
+                occurances++
+            }
+        }
+        if (occurances > 1) {
+            throw IllegalArgumentException("'=' is contained on more than 1 places.")
+        }
+        if (occurances == 1) {
+            return arg.substring(0, arg.indexOf('='))
+        }
+        return arg
+    }
+
+    fun getArgumentValue(arg: String): String {
+        if (arg.contains('=')) {
+            return arg.substring(arg.indexOf('=') + 1)
+        }
+        return arg
     }
 
     override fun clear() {
