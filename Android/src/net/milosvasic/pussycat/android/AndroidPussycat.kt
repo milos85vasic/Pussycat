@@ -87,7 +87,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 }
             }).start()
         } else {
-            logger.e(TAG, "Logcat: ${logcat.absoluteFile} does not exist")
+            println("Logcat: ${logcat.absoluteFile} does not exist")
             stop()
         }
     }
