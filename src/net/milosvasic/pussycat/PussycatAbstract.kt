@@ -46,7 +46,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
 
     fun getFilter(): String {
         if (Text.isEmpty(data.getFilterPattern())) {
-            return "No apply applied"
+            return "No filter applied"
         } else {
             return data.getFilterPattern()
         }
