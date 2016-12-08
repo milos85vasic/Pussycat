@@ -2,7 +2,6 @@ package net.milosvasic.pussycat.android.data
 
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
-import com.android.ddmlib.logcat.LogCatMessageParser
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.StringData
 import net.milosvasic.pussycat.logging.LOG_LEVEL
