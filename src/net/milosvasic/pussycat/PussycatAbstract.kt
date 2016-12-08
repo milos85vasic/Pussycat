@@ -78,6 +78,8 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
         listeners.remove(listener)
     }
 
+    abstract fun start(args: Array<String>)
+
     abstract protected fun live()
 
     abstract protected fun filesystem(params: Array<out String?>)
