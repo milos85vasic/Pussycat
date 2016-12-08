@@ -40,7 +40,7 @@ class LogCatMessageParser {
             }
             var matched = false
             for (pattern in patterns) {
-                val matcher = pattern.matcher(line.trim().replace("\n", ""))
+                val matcher = pattern.matcher(line.trim())
                 if (matcher.matches()) {
                     matched = true
 
