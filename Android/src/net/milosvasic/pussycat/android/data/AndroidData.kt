@@ -15,7 +15,7 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String
 
     fun addData(lines: Array<String>) {
         val parser = LogCatMessageParser()
-        val messages = parser.processLogLines(lines, null)
+        val messages = parser.processLogLines(lines)
         data.addAll(messages)
     }
 
