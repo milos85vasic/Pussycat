@@ -8,12 +8,6 @@ import java.util.regex.Pattern
 
 class LogCatMessageParser {
 
-    private var mCurLogLevel: Log.LogLevel? = Log.LogLevel.WARN
-    private var mCurPid = "?"
-    private var mCurTid = "?"
-    private var mCurTag = "?"
-    private var mCurTime = "?:??"
-
     private val terminalDumpPattern = Pattern.compile(
             "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\w)\\s+(.+?):(.+?)"
     )
@@ -43,7 +37,25 @@ class LogCatMessageParser {
                 val matcher = pattern.matcher(line.trim())
                 if (matcher.matches()) {
                     matched = true
-
+                    var logLevel = Log.LogLevel.getByLetterString(matcher.group(5))
+                    if (logLevel == null && matcher.group(5) == "F") {
+                        logLevel = Log.LogLevel.ASSERT
+                    }
+                    val logMessage = if (matcher.groupCount() == 7) {
+                        matcher.group(7)
+                    } else {
+                        ""
+                    }
+                    val m = LogCatMessage(
+                            logLevel,
+                            matcher.group(3),
+                            matcher.group(4),
+                            matcher.group(6),
+                            matcher.group(6),
+                            matcher.group(2),
+                            logMessage
+                    )
+                    messages.add(m)
 
 //                    for (x in 0..matcher.groupCount()) {
 //                        println(">>> ${matcher.group(x)}")
@@ -52,9 +64,16 @@ class LogCatMessageParser {
                 }
             }
             if (!matched) {
-                println("NO MATCHES $line")
-            } else {
-
+                val m = LogCatMessage(
+                        Log.LogLevel.VERBOSE,
+                        "?",
+                        "?",
+                        "?",
+                        "?",
+                        "?",
+                        line
+                )
+                messages.add(m)
             }
 
 
