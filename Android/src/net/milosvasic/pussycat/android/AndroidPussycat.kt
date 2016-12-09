@@ -135,7 +135,17 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
     private fun assignDevice() {
         val devices = mutableListOf<IDevice>()
-        devices.addAll(AndroidDebugBridge.getBridge().devices)
+        val bridge = AndroidDebugBridge.getBridge()
+        var timeOut: Long = 30 * 1000
+        val sleepTime: Long = 1000
+        while (!bridge.hasInitialDeviceList() && timeOut > 0) {
+            Thread.sleep(sleepTime)
+            timeOut -= sleepTime
+        }
+        if (timeOut <= 0 && !bridge.hasInitialDeviceList()) {
+            throw RuntimeException("Timeout getting device list.", null)
+        }
+        devices.addAll(bridge.devices)
         if (!devices.isEmpty()) {
             if (devices.size > 1) {
                 stopLogsReceiving()
