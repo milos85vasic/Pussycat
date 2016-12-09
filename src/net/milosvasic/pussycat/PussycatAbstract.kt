@@ -22,7 +22,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     protected lateinit var data: D
     protected val listeners: MutableSet<Events> = Collections.synchronizedSet(HashSet<Events>())
 
-    override fun execute(executable: COMMAND, vararg params: String?) {
+    override fun execute(executable: COMMAND, params: Array<String>) {
         when (executable) {
             COMMAND.LIVE -> live()
             COMMAND.FILESYSTEM -> filesystem(params)
@@ -34,6 +34,10 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
             COMMAND.STATUS -> status()
             else -> executeOther(executable, params)
         }
+    }
+
+    override fun execute(executable: COMMAND) {
+        execute(executable, emptyArray())
     }
 
     fun filter() {

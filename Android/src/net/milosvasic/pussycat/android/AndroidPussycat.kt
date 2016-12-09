@@ -198,7 +198,12 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         }
         val arg: Int? = params[0]?.toInt()
         if (arg != null) {
-            choseDevice(AndroidDebugBridge.getBridge().devices[arg])
+            val bridgedDevice = AndroidDebugBridge.getBridge().devices
+            if (bridgedDevice.size > arg) {
+                choseDevice(bridgedDevice[arg])
+            } else {
+                println("No device to choose at position $arg")
+            }
         } else {
             println(messageInvalid)
         }

@@ -38,9 +38,18 @@ class TerminalPussycat : AndroidPussycat() {
                 val line = readLine()
                 if (line != null && !line.isEmpty()) {
                     if (line.startsWith("@@")) {
-                        val cmdParam = line.substring(2, line.lastIndex + 1).toUpperCase().trim()
+                        var cmdParam = ""
+                        val cmdParams = mutableListOf<String>()
+                        val rawParam = line.substring(2, line.lastIndex + 1).toUpperCase().trim()
+                        if (rawParam.contains(" ")) {
+                            val params = rawParam.split(" ")
+                            cmdParam = params[0]
+                            cmdParams.add(params[1])
+                        } else {
+                            cmdParam = rawParam
+                        }
                         try {
-                            execute(COMMAND.valueOf(cmdParam))
+                            execute(COMMAND.valueOf(cmdParam), Array(cmdParams.size, { i -> cmdParams[i] }))
                         } catch (e: IllegalArgumentException) {
                             filter(line)
                         }
@@ -86,7 +95,7 @@ class TerminalPussycat : AndroidPussycat() {
         if (adb) {
             execute(COMMAND.LIVE)
         } else {
-            execute(COMMAND.FILESYSTEM, file)
+            execute(COMMAND.FILESYSTEM, arrayOf(file))
         }
     }
 
