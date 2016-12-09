@@ -26,8 +26,8 @@ class LogCatMessageParser {
 //    )
 
 
-    fun processLogLines(lines: Array<String>): List<LogCatMessage> {
-        val messages = ArrayList<LogCatMessage>(lines.size)
+    fun processLogLines(lines: Array<String>): Collection<LogCatMessage> {
+        val messages = TreeMap<String, LogCatMessage>()
         for (line in lines) {
             if (line.isEmpty()) {
                 continue
@@ -55,7 +55,22 @@ class LogCatMessageParser {
                             matcher.group(2).trim(),
                             logMessage.trim()
                     )
-                    messages.add(m)
+                    val identifier = "${m.time}_${m.pid}_${m.tid}"
+                    val existing = messages[identifier]
+                    if (existing != null) {
+                        val newMessage = LogCatMessage(
+                                m.logLevel,
+                                m.pid,
+                                m.tid,
+                                m.appName,
+                                m.tag,
+                                m.time,
+                                "${existing.message}\n\t${m.message}"
+                        )
+                        messages[identifier] = newMessage
+                    } else {
+                        messages.put(identifier, m)
+                    }
 
 //                    for (x in 0..matcher.groupCount()) {
 //                        println(">>> ${matcher.group(x)}")
@@ -64,44 +79,10 @@ class LogCatMessageParser {
                 }
             }
             if (!matched) {
-                val m = LogCatMessage(
-                        Log.LogLevel.VERBOSE,
-                        "?",
-                        "?",
-                        "?",
-                        "?",
-                        "?",
-                        line
-                )
-                messages.add(m)
+                println("Pussycat, log not matched: [ $line ]")
             }
-
-
-//            if (matcher.matches()) {
-//                println("MATCHING")
-
-//                mCurTime = matcher.group(1)
-//                mCurPid = matcher.group(2)
-//                mCurTid = matcher.group(3)
-//                mCurLogLevel = Log.LogLevel.getByLetterString(matcher.group(4))
-//                mCurTag = matcher.group(5).trim { it <= ' ' }
-//
-//                if (mCurLogLevel == null && matcher.group(4) == "F") {
-//                    mCurLogLevel = Log.LogLevel.ASSERT
-//                }
-//            } else {
-//                println("NO MATCHES $line")
-//                var pkgName = "" //$NON-NLS-1$
-//                val pid = Ints.tryParse(mCurPid)
-//                if (pid != null && device != null) {
-//                    pkgName = device.getClientName(pid)
-//                }
-//                val m = LogCatMessage(mCurLogLevel, mCurPid, mCurTid,
-//                        pkgName, mCurTag, mCurTime, line)
-//                messages.add(m)
-//            }
         }
-        return messages
+        return messages.values
     }
 
 }
