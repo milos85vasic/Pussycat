@@ -117,36 +117,37 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun printLine(line: LogCatMessage) {
+        val message = "${line.time} [ pid: ${line.pid} tid: ${line.tid} ][ ${line.appName} ][ ${line.tag} ]: ${line.message}"
         if (paused.get()) {
             return
         }
         when (line.logLevel) {
             Log.LogLevel.VERBOSE -> {
                 color = Color.WHITE
-                println("$color$line${Color.RESET}")
+                println("$color$message${Color.RESET}")
                 return
             }
             Log.LogLevel.DEBUG -> {
                 color = Color.YELLOW
-                println("$color$line${Color.RESET}")
+                println("$color$message${Color.RESET}")
                 return
             }
             Log.LogLevel.INFO -> {
                 color = Color.CYAN
-                println("$color$line${Color.RESET}")
+                println("$color$message${Color.RESET}")
                 return
             }
             Log.LogLevel.WARN -> {
                 color = Color.PURPLE
-                println("$color$line${Color.RESET}")
+                println("$color$message${Color.RESET}")
                 return
             }
             Log.LogLevel.ERROR -> {
                 color = Color.RED
-                println("$color$line${Color.RESET}")
+                println("$color$message${Color.RESET}")
                 return
             }
-            else -> println("\t$color$line${Color.RESET}")
+            else -> println("\t$color$message${Color.RESET}")
         }
 
     }

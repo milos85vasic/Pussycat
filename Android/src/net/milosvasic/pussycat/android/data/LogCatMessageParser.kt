@@ -48,12 +48,12 @@ class LogCatMessageParser {
                     }
                     val m = LogCatMessage(
                             logLevel,
-                            matcher.group(3),
-                            matcher.group(4),
-                            matcher.group(6),
-                            matcher.group(6),
-                            matcher.group(2),
-                            logMessage
+                            matcher.group(3).trim(),
+                            matcher.group(4).trim(),
+                            matcher.group(6).trim(),
+                            matcher.group(6).trim(),
+                            matcher.group(2).trim(),
+                            logMessage.trim()
                     )
                     messages.add(m)
 
