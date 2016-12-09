@@ -10,5 +10,6 @@ enum class COMMAND {
     CLEAR,
     RESET,
     STATUS,
-    CHOOSE
+    CHOOSE,
+    DEVICES
 }

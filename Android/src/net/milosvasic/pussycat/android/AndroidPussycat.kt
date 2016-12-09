@@ -9,7 +9,6 @@ import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
-import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
@@ -44,6 +43,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     override fun executeOther(executable: COMMAND, params: Array<out String?>) {
         when (executable) {
             COMMAND.CHOOSE -> chooseDevice(params)
+            COMMAND.DEVICES -> showDevices()
             else -> super.executeOther(executable, params)
         }
     }
@@ -56,12 +56,12 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 }
 
                 override fun deviceConnected(iDevice: IDevice?) {
-                    println("Device connected [ $iDevice ]")
+                    printLine("Device connected [ $iDevice ]")
                     assignDevice()
                 }
 
                 override fun deviceDisconnected(iDevice: IDevice?) {
-                    println("Device disconnected [ $iDevice ]")
+                    printLine("Device disconnected [ $iDevice ]")
                     assignDevice() // For example we had 2 connected device, 1 left connected.
                 }
             }
@@ -97,7 +97,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 }
             }).start()
         } else {
-            println("Logcat: ${logcat.absoluteFile} does not exist")
+            printLine("Logcat: ${logcat.absoluteFile} does not exist")
             stop()
         }
     }
@@ -123,9 +123,9 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     override fun apply(data: CopyOnWriteArrayList<LogCatMessage>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
-        println(27.toChar() + "[2J")
+        printLine(27.toChar() + "[2J")
         if (data.isEmpty()) {
-            logger.w(TAG, "No data available [ filter: ${this.data.getFilterPattern()} ]")
+            printLine("No data available [ filter: ${this.data.getFilterPattern()} ]")
         } else {
             var x = 0
             for (line in data) {
@@ -139,6 +139,8 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         refreshing.set(false)
     }
 
+    abstract protected fun printLine(text: String)
+
     abstract protected fun printLine(line: LogCatMessage)
 
     private fun assignDevice() {
@@ -151,22 +153,32 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             timeOut -= sleepTime
         }
         if (timeOut <= 0 && !bridge.hasInitialDeviceList()) {
-            println("Timeout getting device list.")
+            printLine("Timeout getting device list.")
         }
         devices.addAll(bridge.devices)
         if (!devices.isEmpty()) {
             if (devices.size > 1) {
                 stopLogsReceiving()
-                println("More than one device connected. Use @@Choose command to select device.")
+                printLine("More than one device connected. Use @@Choose command to select device.")
                 for (x in devices.indices) {
-                    println("[ $x ] ${devices[x]}")
+                    printLine("[ $x ] ${devices[x]}")
                 }
             } else {
                 choseDevice(AndroidDebugBridge.getBridge().devices[0])
             }
         } else {
-            println("No devices connected.")
+            printLine("No devices connected.")
             stopLogsReceiving()
+        }
+    }
+
+    private fun showDevices() {
+        val devices = mutableListOf<IDevice>()
+        val bridge = AndroidDebugBridge.getBridge()
+        devices.addAll(bridge.devices)
+        printLine("Available devices:")
+        for (x in devices.indices) {
+            printLine("[ $x ] ${devices[x]}")
         }
     }
 
@@ -176,7 +188,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             val connectedDevice = iDevice as IDevice
             val existingDevice: IDevice = device as IDevice
             if (connectedDevice.serialNumber == existingDevice.serialNumber) {
-                println("Device is the same.")
+                printLine("Device is the same.")
                 cleanup = false
             }
         }
@@ -186,14 +198,14 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             data.get().clear()
             execute(COMMAND.CLEAR)
         }
-        println("Device is ready [ $device ]")
+        printLine("Device is ready [ $device ]")
         startLogsReceiving()
     }
 
     private fun chooseDevice(params: Array<out String?>) {
         val messageInvalid = "Invalid arguments passed for @@${COMMAND.CHOOSE} command."
         if (params.isEmpty()) {
-            println(messageInvalid)
+            printLine(messageInvalid)
             return
         }
         val arg: Int? = params[0]?.toInt()
@@ -202,10 +214,10 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             if (bridgedDevice.size > arg) {
                 choseDevice(bridgedDevice[arg])
             } else {
-                println("No device to choose at position $arg")
+                printLine("No device to choose at position $arg")
             }
         } else {
-            println(messageInvalid)
+            printLine(messageInvalid)
         }
     }
 

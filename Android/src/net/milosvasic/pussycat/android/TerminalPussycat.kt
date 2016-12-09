@@ -126,6 +126,10 @@ class TerminalPussycat : AndroidPussycat() {
         println(27.toChar() + "[2J")
     }
 
+    override fun printLine(text: String) {
+        println(text)
+    }
+
     override fun printLine(line: LogCatMessage) {
         var appName = line.appName
         if (Text.isEmpty(appName)) {
