@@ -6,6 +6,7 @@ import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.events.Events
+import net.milosvasic.pussycat.utils.Text
 import java.util.concurrent.atomic.AtomicBoolean
 
 class TerminalPussycat : AndroidPussycat() {
@@ -117,7 +118,11 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun printLine(line: LogCatMessage) {
-        val message = "${line.time} [ pid: ${line.pid} tid: ${line.tid} ][ ${line.appName} ]: ${line.message}"
+        var appName = line.appName
+        if (Text.isEmpty(appName)) {
+            appName = "---"
+        }
+        val message = "${line.time} [ pid: ${line.pid} tid: ${line.tid} ][ $appName ][ ${line.tag} ]: ${line.message}"
         if (paused.get()) {
             return
         }
