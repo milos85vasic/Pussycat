@@ -54,7 +54,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
                 override fun deviceDisconnected(iDevice: IDevice?) {
                     println("Device disconnected [ $iDevice ]")
-                    stopLogsReceiving()
+                    assignDevice() // For example we had 2 connected device, 1 left connected.
                 }
             }
             AndroidDebugBridge.init(false)
@@ -138,6 +138,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         devices.addAll(AndroidDebugBridge.getBridge().devices)
         if (!devices.isEmpty()) {
             if (devices.size > 1) {
+                stopLogsReceiving()
                 println("More than one device connected. Use @@Choose command to select device.")
                 for (x in devices.indices) {
                     println("[ $x ] ${devices[x]}")
@@ -166,7 +167,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             data.get().clear()
             execute(COMMAND.CLEAR)
         }
-        println("Device is ready.")
+        println("Device is ready [ $device ]")
         startLogsReceiving()
     }
 
