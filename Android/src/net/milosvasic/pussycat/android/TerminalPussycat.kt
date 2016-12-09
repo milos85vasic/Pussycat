@@ -117,7 +117,7 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun printLine(line: LogCatMessage) {
-        val message = "${line.time} [ pid: ${line.pid} tid: ${line.tid} ][ ${line.appName} ][ ${line.tag} ]: ${line.message}"
+        val message = "${line.time} [ pid: ${line.pid} tid: ${line.tid} ][ ${line.appName} ]: ${line.message}"
         if (paused.get()) {
             return
         }
