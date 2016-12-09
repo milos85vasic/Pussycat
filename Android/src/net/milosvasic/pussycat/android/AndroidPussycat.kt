@@ -143,7 +143,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             timeOut -= sleepTime
         }
         if (timeOut <= 0 && !bridge.hasInitialDeviceList()) {
-            throw RuntimeException("Timeout getting device list.", null)
+            println("Timeout getting device list.")
         }
         devices.addAll(bridge.devices)
         if (!devices.isEmpty()) {
@@ -158,6 +158,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             }
         } else {
             println("No devices connected.")
+            stopLogsReceiving()
         }
     }
 
