@@ -7,9 +7,15 @@ import java.util.regex.Matcher
 
 class LogCatMessageParser {
 
+    var lastMessage: LogCatMessage? = null
+
     companion object {
+        val UNKNOWN_VALUE = "unknown"
         val TERMINAL_DUMP_PATTERN = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\w)\\s+(.+?):(.+?)"
         val TERMINAL_DUMP_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\w)\\s+(.+?):"
+        val ANDROID_STUDIO_DUMP_PATTERN = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)(.+?):(.+?)"
+        val ANDROID_STUDIO_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)(.+?):"
+        val ANDROID_STUDIO_PATTERN_STACKTRACE = "(.+?)"
     }
 
     private val terminalDumpPattern = LogCatMessagePattern(TERMINAL_DUMP_PATTERN, object : LogCatMessageObtain {
@@ -52,9 +58,65 @@ class LogCatMessageParser {
         }
     })
 
+    private val androidStudioDumpPattern = LogCatMessagePattern(ANDROID_STUDIO_DUMP_PATTERN, object : LogCatMessageObtain {
+        override fun getMessage(matcher: Matcher): LogCatMessage {
+            var logLevel = Log.LogLevel.getByLetterString(matcher.group(5))
+            if (logLevel == null && matcher.group(5) == "F") {
+                logLevel = Log.LogLevel.ASSERT
+            }
+            val logMessage = if (matcher.groupCount() == 7) {
+                matcher.group(7)
+            } else {
+                ""
+            }
+            return LogCatMessage(
+                    logLevel,
+                    matcher.group(3).trim(),
+                    matcher.group(4).trim(),
+                    matcher.group(6).trim(),
+                    matcher.group(6).trim(),
+                    matcher.group(2).trim(),
+                    logMessage.trim()
+            )
+        }
+    })
+    private val androidStudioDumpPatternCropped = LogCatMessagePattern(ANDROID_STUDIO_PATTERN_CROPPED, object : LogCatMessageObtain {
+        override fun getMessage(matcher: Matcher): LogCatMessage {
+            var logLevel = Log.LogLevel.getByLetterString(matcher.group(5))
+            if (logLevel == null && matcher.group(5) == "F") {
+                logLevel = Log.LogLevel.ASSERT
+            }
+            return LogCatMessage(
+                    logLevel,
+                    matcher.group(3).trim(),
+                    matcher.group(4).trim(),
+                    matcher.group(6).trim(),
+                    matcher.group(6).trim(),
+                    matcher.group(2).trim(),
+                    ""
+            )
+        }
+    })
+    private val androidStudioDumpPatternStacktrace = LogCatMessagePattern(ANDROID_STUDIO_PATTERN_STACKTRACE, object : LogCatMessageObtain {
+        override fun getMessage(matcher: Matcher): LogCatMessage {
+            return LogCatMessage(
+                    lastMessage?.logLevel.let { Log.LogLevel.VERBOSE },
+                    lastMessage?.pid.let { UNKNOWN_VALUE },
+                    lastMessage?.tid.let { UNKNOWN_VALUE },
+                    lastMessage?.appName.let { UNKNOWN_VALUE },
+                    lastMessage?.tag.let { UNKNOWN_VALUE },
+                    lastMessage?.time.let { UNKNOWN_VALUE },
+                    matcher.group(1).trim()
+            )
+        }
+    })
+
     private val patterns = listOf(
             terminalDumpPattern,
-            terminalDumpPatternCropped
+            terminalDumpPatternCropped,
+            androidStudioDumpPattern,
+            androidStudioDumpPatternCropped,
+            androidStudioDumpPatternStacktrace
     )
 
     fun processLogLines(lines: Array<String>): Collection<LogCatMessage> {
@@ -69,32 +131,29 @@ class LogCatMessageParser {
                 val matcher = pattern.matcher(line.trim())
                 if (matcher.matches()) {
                     matched = true
-                    val m = logCatPattern.getMessage(matcher)
-                    val identifier = "${m.time}_${m.pid}_${m.tid}"
+                    val message = logCatPattern.getMessage(matcher)
+                    val identifier = "${message.time}_${message.pid}_${message.tid}"
                     val existing = messages[identifier]
                     if (existing != null) {
                         val newMessage = LogCatMessage(
-                                m.logLevel,
-                                m.pid,
-                                m.tid,
-                                m.appName,
-                                m.tag,
-                                m.time,
-                                "${existing.message}\n\t${m.message}"
+                                message.logLevel,
+                                message.pid,
+                                message.tid,
+                                message.appName,
+                                message.tag,
+                                message.time,
+                                "${existing.message}\n\t${message.message}"
                         )
                         messages[identifier] = newMessage
                     } else {
-                        messages.put(identifier, m)
+                        lastMessage = message
+                        messages.put(identifier, message)
                     }
-
-//                    for (x in 0..matcher.groupCount()) {
-//                        println(">>> ${matcher.group(x)}")
-//                    }
                     break
                 }
             }
             if (!matched) {
-                println("Pussycat, log not matched: [ $line ]")
+                println("Pussycat: log not matched,\n\t$line\n")
             }
         }
         return messages.values
