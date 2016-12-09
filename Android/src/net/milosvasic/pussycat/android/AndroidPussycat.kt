@@ -62,6 +62,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 if (debugBridge == null) {
                     logger.e(TAG, "Invalid ADB path")
                 } else {
+                    assignDevice()
                     AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
                 }
             } catch (e: Exception) {
