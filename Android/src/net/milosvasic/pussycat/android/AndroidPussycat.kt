@@ -54,6 +54,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
                 override fun deviceDisconnected(iDevice: IDevice?) {
                     println("Device disconnected [ $iDevice ]")
+                    stopLogsReceiving()
                 }
             }
             AndroidDebugBridge.init(false)
@@ -150,31 +151,31 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     }
 
     private fun choseDevice(iDevice: IDevice?) {
-        var connect = true
+        var cleanup = true
         if (device != null) {
             val connectedDevice = iDevice as IDevice
             val existingDevice: IDevice = device as IDevice
             if (connectedDevice.serialNumber == existingDevice.serialNumber) {
                 println("Device is the same.")
-                connect = false
+                cleanup = false
             }
         }
-        if (connect) {
-            device = iDevice
-            stopLogsReceiving()
-            if (!data.get().isEmpty()) {
-                data.get().clear()
-                execute(COMMAND.CLEAR)
-            }
-            startLogsReceiving()
-            println("We connected new device.")
+        device = iDevice
+        stopLogsReceiving()
+        if (!data.get().isEmpty() && cleanup) {
+            data.get().clear()
+            execute(COMMAND.CLEAR)
         }
+        println("Device is ready.")
+        startLogsReceiving()
     }
 
     private fun startLogsReceiving() {
-        logcatTask = LogCatReceiverTask(device)
-        logcatTask?.addLogCatListener(logcatListener)
-        logcatTask?.run()
+        Thread(Runnable {
+            logcatTask = LogCatReceiverTask(device)
+            logcatTask?.addLogCatListener(logcatListener)
+            logcatTask?.run()
+        }).start()
     }
 
     private fun stopLogsReceiving() {
