@@ -9,6 +9,7 @@ import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
+import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
@@ -38,6 +39,13 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         data = AndroidData(this)
         logger = ConsoleLogger()
         TAG = AndroidPussycat::class
+    }
+
+    override fun executeOther(executable: COMMAND, params: Array<out String?>) {
+        when (executable) {
+            COMMAND.CHOOSE -> chooseDevice(params)
+            else -> super.executeOther(executable, params)
+        }
     }
 
     override fun live() {
@@ -180,6 +188,20 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         }
         println("Device is ready [ $device ]")
         startLogsReceiving()
+    }
+
+    private fun chooseDevice(params: Array<out String?>) {
+        val messageInvalid = "Invalid arguments passed for @@${COMMAND.CHOOSE} command."
+        if (params.isEmpty()) {
+            println(messageInvalid)
+            return
+        }
+        val arg: Int? = params[0]?.toInt()
+        if (arg != null) {
+            choseDevice(AndroidDebugBridge.getBridge().devices[arg])
+        } else {
+            println(messageInvalid)
+        }
     }
 
     private fun startLogsReceiving() {

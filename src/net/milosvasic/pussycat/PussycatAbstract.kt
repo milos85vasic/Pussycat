@@ -32,7 +32,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
             COMMAND.PAUSE -> pause()
             COMMAND.RESUME -> resume()
             COMMAND.STATUS -> status()
-            else -> logger.w(TAG, "Unknown command: " + executable)
+            else -> executeOther(executable, params)
         }
     }
 
@@ -62,6 +62,10 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
 
     open protected fun resume() {
         onEvent(EVENT.RESUME)
+    }
+
+    open protected fun executeOther(executable: COMMAND, params: Array<out String?>) {
+        logger.w(TAG, "Unknown command: " + executable)
     }
 
     override fun onEvent(event: EVENT) {
