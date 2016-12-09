@@ -15,7 +15,7 @@ class LogCatMessageParser {
         val TERMINAL_DUMP_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\w)\\s+(.+?):"
         val ANDROID_STUDIO_DUMP_PATTERN = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)(.+?):(.+?)"
         val ANDROID_STUDIO_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)(.+?):"
-        val ANDROID_STUDIO_PATTERN_STACKTRACE = "(.+?)"
+        val ANDROID_STUDIO_PATTERN_STACKTRACE = "\\s+(.+?)"
     }
 
     private val terminalDumpPattern = LogCatMessagePattern(TERMINAL_DUMP_PATTERN, object : LogCatMessageObtain {
@@ -99,13 +99,37 @@ class LogCatMessageParser {
     })
     private val androidStudioDumpPatternStacktrace = LogCatMessagePattern(ANDROID_STUDIO_PATTERN_STACKTRACE, object : LogCatMessageObtain {
         override fun getMessage(matcher: Matcher): LogCatMessage {
+            var logLevel = lastMessage?.logLevel
+            if (logLevel == null) {
+                logLevel = Log.LogLevel.VERBOSE
+            }
+            var pid = lastMessage?.pid
+            if (pid == null) {
+                pid = UNKNOWN_VALUE
+            }
+            var tid = lastMessage?.tid
+            if (tid == null) {
+                tid = UNKNOWN_VALUE
+            }
+            var appName = lastMessage?.appName
+            if (appName == null) {
+                appName = "app $UNKNOWN_VALUE"
+            }
+            var tag = lastMessage?.tag
+            if (tag == null) {
+                tag = "tag $UNKNOWN_VALUE"
+            }
+            var time = lastMessage?.time
+            if (time == null) {
+                time = "time $UNKNOWN_VALUE"
+            }
             return LogCatMessage(
-                    lastMessage?.logLevel.let { Log.LogLevel.VERBOSE },
-                    lastMessage?.pid.let { UNKNOWN_VALUE },
-                    lastMessage?.tid.let { UNKNOWN_VALUE },
-                    lastMessage?.appName.let { UNKNOWN_VALUE },
-                    lastMessage?.tag.let { UNKNOWN_VALUE },
-                    lastMessage?.time.let { UNKNOWN_VALUE },
+                    logLevel,
+                    pid,
+                    tid,
+                    appName,
+                    tag,
+                    time,
                     matcher.group(1).trim()
             )
         }
@@ -120,7 +144,7 @@ class LogCatMessageParser {
     )
 
     fun processLogLines(lines: Array<String>): Collection<LogCatMessage> {
-        val messages = TreeMap<String, LogCatMessage>()
+        val messages = LinkedHashMap<String, LogCatMessage>()
         for (line in lines) {
             if (line.isEmpty()) {
                 continue
@@ -128,7 +152,7 @@ class LogCatMessageParser {
             var matched = false
             for (logCatPattern in patterns) {
                 val pattern = logCatPattern.compile()
-                val matcher = pattern.matcher(line.trim())
+                val matcher = pattern.matcher(line)
                 if (matcher.matches()) {
                     matched = true
                     val message = logCatPattern.getMessage(matcher)
