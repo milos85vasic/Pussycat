@@ -40,13 +40,13 @@ class TerminalPussycat : AndroidPussycat() {
                     if (line.startsWith("@@")) {
                         var cmdParam : String
                         val cmdParams = mutableListOf<String>()
-                        val rawParam = line.substring(2, line.lastIndex + 1).toUpperCase().trim()
+                        val rawParam = line.substring(2, line.lastIndex + 1).trim()
                         if (rawParam.contains(" ")) {
                             val params = rawParam.split(" ")
-                            cmdParam = params[0]
+                            cmdParam = params[0].toUpperCase()
                             cmdParams.add(params[1])
                         } else {
-                            cmdParam = rawParam
+                            cmdParam = rawParam.toUpperCase()
                         }
                         try {
                             execute(COMMAND.valueOf(cmdParam), Array(cmdParams.size, { i -> cmdParams[i] }))
