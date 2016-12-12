@@ -19,6 +19,11 @@ abstract class Data<T>(val filter: DataFilter<LinkedHashMap<String, T>, String>)
         return pattern
     }
 
+    fun clear() {
+        data.clear()
+        pattern = ""
+    }
+
     fun get(): LinkedHashMap<String, T> {
         return data
     }

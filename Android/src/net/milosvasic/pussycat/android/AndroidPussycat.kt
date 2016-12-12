@@ -20,7 +20,21 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     protected val paused = AtomicBoolean(false)
     protected var refreshing = AtomicBoolean(false)
     protected var logcatTask: LogCatReceiverTask? = null
-    protected lateinit var deviceChangeListener: AndroidDebugBridge.IDeviceChangeListener
+
+    protected var deviceChangeListener: AndroidDebugBridge.IDeviceChangeListener = object : AndroidDebugBridge.IDeviceChangeListener {
+        override fun deviceChanged(iDevice: IDevice?, changeMask: Int) {
+        }
+
+        override fun deviceConnected(iDevice: IDevice?) {
+            printLine("Device connected [ $iDevice ]")
+            assignDevice()
+        }
+
+        override fun deviceDisconnected(iDevice: IDevice?) {
+            printLine("Device disconnected [ $iDevice ]")
+            assignDevice() // For example we had 2 connected device, 1 left connected.
+        }
+    }
 
     protected val logcatListener = LogCatListener { messages ->
         if (messages != null) {
@@ -51,26 +65,17 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     override fun live() {
         Thread(Runnable {
             Thread.currentThread().name = "Live adb reading thread"
-            deviceChangeListener = object : AndroidDebugBridge.IDeviceChangeListener {
-                override fun deviceChanged(iDevice: IDevice?, changeMask: Int) {
-                }
-
-                override fun deviceConnected(iDevice: IDevice?) {
-                    printLine("Device connected [ $iDevice ]")
-                    assignDevice()
-                }
-
-                override fun deviceDisconnected(iDevice: IDevice?) {
-                    printLine("Device disconnected [ $iDevice ]")
-                    assignDevice() // For example we had 2 connected device, 1 left connected.
-                }
+            try {
+                AndroidDebugBridge.init(false)
+            } catch (e: IllegalStateException) {
+                // Android debug bridge is already initialized.
             }
-            AndroidDebugBridge.init(false)
             try {
                 val debugBridge = AndroidDebugBridge.createBridge("adb", true)
                 if (debugBridge == null) {
                     logger.e(TAG, "Invalid ADB path")
                 } else {
+                    data.clear()
                     assignDevice()
                     AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
                 }
@@ -89,6 +94,9 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             Thread(Runnable {
                 Thread.currentThread().name = "Filesystem reading thread"
                 val lines = logcat.readLines()
+                logcatTask?.removeLogCatListener(logcatListener)
+                AndroidDebugBridge.removeDeviceChangeListener(deviceChangeListener)
+                data.clear()
                 data.addData(Array(lines.size, { i -> lines[i] }))
                 if (!refreshing.get()) {
                     for (message in data.get().values) {
