@@ -178,6 +178,8 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                     }
                     if (logLevel != null) {
                         data.setLogLevel(logLevel)
+                    } else {
+                        printLine("Invalid parameter: $param")
                     }
                 }
             }
