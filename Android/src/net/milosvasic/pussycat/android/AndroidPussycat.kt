@@ -170,7 +170,12 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 null -> printLogLevel()
                 "clear" -> data.clearLogLevel()
                 else -> {
-                    val logLevel = Log.LogLevel.getByLetter(param[0].toUpperCase())
+                    val logLevel: Log.LogLevel?
+                    if (param.length == 1) {
+                        logLevel = Log.LogLevel.getByLetter(param[0].toUpperCase())
+                    } else {
+                        logLevel = Log.LogLevel.getByString(param.toLowerCase())
+                    }
                     if (logLevel != null) {
                         data.setLogLevel(logLevel)
                     }
