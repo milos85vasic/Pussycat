@@ -11,6 +11,7 @@ import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
+import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -130,7 +131,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     override fun apply(data: LinkedHashMap<String, LogCatMessage>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
-        printLine(27.toChar() + "[2J")
+        clear()
         if (data.isEmpty()) {
             printLine("No data available [ filter: ${this.data.getFilterPattern()} ]")
         } else {
@@ -150,7 +151,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                     }
                 }
             }
-            if (x == 0) logger.w(TAG, "No data matching parameter [ filter: ${this.data.getFilterPattern()} ][ log level: ${printLogLevelValue()} ]")
+            if (x == 0) logger.w(TAG, "No data matching parameter [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
         }
         refreshing.set(false)
     }
@@ -159,30 +160,28 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
     abstract protected fun printLine(line: LogCatMessage)
 
+    protected abstract fun getPrintableLogLevelValue(): String
+
+    protected abstract fun getPrintableFilterValue(): String
+
     private fun filterByLogLevel(params: Array<out String?>) {
         if (!params.isEmpty()) {
-            val logLetter = params[0]
-            if (logLetter != null) {
-                val logLevel = Log.LogLevel.getByLetter(logLetter[0].toUpperCase())
-                if (logLevel != null) {
-                    data.setLogLevel(logLevel)
-                } else {
-                    data.clearLogLevel()
+            val param = params[0]
+            when (param) {
+                null -> printLogLevel()
+                "clear" -> data.clearLogLevel()
+                else -> {
+                    val logLevel = Log.LogLevel.getByLetter(param[0].toUpperCase())
+                    if (logLevel != null) {
+                        data.setLogLevel(logLevel)
+                    }
                 }
             }
         }
     }
 
     private fun printLogLevel() {
-        printLine("Pussycat, log level [ ${printLogLevelValue()} ]")
-    }
-
-    private fun printLogLevelValue(): String {
-        val logLevel = data.getLogLevel()
-        if (logLevel != null) {
-            return logLevel.stringValue.toUpperCase()
-        }
-        return "NOT SET"
+        printLine("Pussycat, log level [ ${getPrintableLogLevelValue()} ]")
     }
 
     private fun assignDevice() {
@@ -273,14 +272,13 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     }
 
     private fun waitForDevices(bridge: AndroidDebugBridge) {
-        var timeOut: Long = 30 * 1000
         val sleepTime: Long = 1000
-        var timeOut1 = timeOut
-        while (!bridge.hasInitialDeviceList() && timeOut1 > 0) {
+        var timeOut: Long = 30 * 1000
+        while (!bridge.hasInitialDeviceList() && timeOut > 0) {
             Thread.sleep(sleepTime)
-            timeOut1 -= sleepTime
+            timeOut -= sleepTime
         }
-        if (timeOut1 <= 0 && !bridge.hasInitialDeviceList()) {
+        if (timeOut <= 0 && !bridge.hasInitialDeviceList()) {
             printLine("Timeout getting device list.")
         }
     }

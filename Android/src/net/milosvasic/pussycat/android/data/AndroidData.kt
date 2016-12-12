@@ -16,12 +16,13 @@ class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, Strin
         apply(pattern)
     }
 
-    fun getLogLevel(): Log.LogLevel? {
-        return logLevel
-    }
-
     fun clearLogLevel() {
         logLevel = null
+        apply(pattern)
+    }
+
+    fun getLogLevel(): Log.LogLevel? {
+        return logLevel
     }
 
     override fun addData(message: LogCatMessage) {
