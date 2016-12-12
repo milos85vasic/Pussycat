@@ -132,7 +132,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         paused.set(false)
         clear()
         if (data.isEmpty()) {
-            printLine("No data available [ filter: ${this.data.getFilterPattern()} ]")
+            printLine("Pussycat, no data available [ filter: ${this.data.getFilterPattern()} ]")
         } else {
             var x = 0
             fun printLineAndIncrement(line: LogCatMessage) {
@@ -150,7 +150,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                     }
                 }
             }
-            if (x == 0) printLine("No data matching parameters [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
+            if (x == 0) printLine("Pussycat, no data matching parameters [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
         }
         refreshing.set(false)
     }
@@ -159,9 +159,9 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
     abstract protected fun printLine(line: LogCatMessage)
 
-    protected abstract fun getPrintableLogLevelValue(): String
+    abstract protected fun getPrintableLogLevelValue(): String
 
-    protected abstract fun getPrintableFilterValue(): String
+    abstract protected fun getPrintableFilterValue(): String
 
     private fun filterByLogLevel(params: Array<out String?>) {
         if (!params.isEmpty()) {
