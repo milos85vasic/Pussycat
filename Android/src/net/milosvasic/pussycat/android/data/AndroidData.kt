@@ -4,10 +4,25 @@ import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.StringData
-import net.milosvasic.pussycat.logging.LOG_LEVEL
+import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.util.*
 
 class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, String>) : StringData<LogCatMessage>(filter) {
+
+    private var logLevel: Log.LogLevel? = null
+
+    fun setLogLevel(level: Log.LogLevel) {
+        logLevel = level
+        apply(pattern)
+    }
+
+    fun getLogLevel(): Log.LogLevel? {
+        return logLevel
+    }
+
+    fun clearLogLevel() {
+        logLevel = null
+    }
 
     override fun addData(message: LogCatMessage) {
         val identifier = getIdentifier(message)
@@ -46,13 +61,13 @@ class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, Strin
         return "${message.time}_${message.pid}_${message.tid}"
     }
 
-    override fun getTag(message: LogCatMessage): LOG_LEVEL? {
+    override fun getTag(message: LogCatMessage): LOG_TYPE? {
         return when (message.logLevel) {
-            Log.LogLevel.DEBUG -> LOG_LEVEL.DEBUG
-            Log.LogLevel.INFO -> LOG_LEVEL.INFORMATION
-            Log.LogLevel.WARN -> LOG_LEVEL.WARNING
-            Log.LogLevel.ERROR -> LOG_LEVEL.ERROR
-            else -> LOG_LEVEL.VERBOSE
+            Log.LogLevel.DEBUG -> LOG_TYPE.DEBUG
+            Log.LogLevel.INFO -> LOG_TYPE.INFORMATION
+            Log.LogLevel.WARN -> LOG_TYPE.WARNING
+            Log.LogLevel.ERROR -> LOG_TYPE.ERROR
+            else -> LOG_TYPE.VERBOSE
         }
     }
 

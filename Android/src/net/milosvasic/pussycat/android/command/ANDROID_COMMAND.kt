@@ -8,12 +8,12 @@ class ANDROID_COMMAND(value: String) : COMMAND(value) {
         val PARENT = COMMAND
         val CHOOSE = COMMAND("CHOOSE")
         val DEVICES = COMMAND("DEVICES")
-        val TAG = COMMAND("TAG")
+        val LOG_LEVEL = COMMAND("LOG_LEVEL")
 
         init {
             COMMAND.add(CHOOSE.value)
             COMMAND.add(DEVICES.value)
-            COMMAND.add(TAG.value)
+            COMMAND.add(LOG_LEVEL.value)
         }
 
         fun get(toFind: String): COMMAND {

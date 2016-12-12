@@ -2,6 +2,7 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
+import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatListener
 import com.android.ddmlib.logcat.LogCatMessage
 import com.android.ddmlib.logcat.LogCatReceiverTask
@@ -59,7 +60,12 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         when (executable) {
             ANDROID_COMMAND.CHOOSE -> chooseDevice(params)
             ANDROID_COMMAND.DEVICES -> showDevices()
-            ANDROID_COMMAND.TAG -> filterByTag(params)
+            ANDROID_COMMAND.LOG_LEVEL ->
+                if (params.isEmpty()) {
+                    printLogLevel()
+                } else {
+                    filterByLogLevel(params)
+                }
             else -> super.executeOther(executable, params)
         }
     }
@@ -129,10 +135,19 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             printLine("No data available [ filter: ${this.data.getFilterPattern()} ]")
         } else {
             var x = 0
+            fun printLineAndIncrement(line: LogCatMessage) {
+                printLine(line)
+                x++
+            }
             for (line in data.values) {
                 if (this.data.evaluate(line)) {
-                    printLine(line)
-                    x++
+                    if (this.data.getLogLevel() != null) {
+                        if (line.logLevel == this.data.getLogLevel()) {
+                            printLineAndIncrement(line)
+                        }
+                    } else {
+                        printLineAndIncrement(line)
+                    }
                 }
             }
             if (x == 0) logger.w(TAG, "No data matching [ filter: ${this.data.getFilterPattern()} ]")
@@ -144,8 +159,27 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
     abstract protected fun printLine(line: LogCatMessage)
 
-    private fun filterByTag(params: Array<out String?>) {
+    private fun filterByLogLevel(params: Array<out String?>) {
+        if (!params.isEmpty()) {
+            val logLetter = params[0]
+            if (logLetter != null) {
+                val logLevel = Log.LogLevel.getByLetter(logLetter[0].toUpperCase())
+                if (logLevel != null) {
+                    data.setLogLevel(logLevel)
+                } else {
+                    data.clearLogLevel()
+                }
+            }
+        }
+    }
 
+    private fun printLogLevel() {
+        val logLevel = data.getLogLevel()
+        if (logLevel != null) {
+            printLine("Pussycat, log level [ ${logLevel.stringValue.toUpperCase()} ]")
+        } else {
+            printLine("Pussycat, log level not set.")
+        }
     }
 
     private fun assignDevice() {

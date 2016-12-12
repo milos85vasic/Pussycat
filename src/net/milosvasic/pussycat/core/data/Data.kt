@@ -2,7 +2,7 @@ package net.milosvasic.pussycat.core.data
 
 import net.milosvasic.pussycat.core.common.Filter
 import net.milosvasic.pussycat.core.common.DataFilter
-import net.milosvasic.pussycat.logging.LOG_LEVEL
+import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.util.*
 
 abstract class Data<T>(val filter: DataFilter<LinkedHashMap<String, T>, String>) : Filter<String, T> {
@@ -46,7 +46,7 @@ abstract class Data<T>(val filter: DataFilter<LinkedHashMap<String, T>, String>)
 
     protected abstract fun evaluateOr(line: T, pattern: String): Boolean
 
-    protected abstract fun getTag(message: T): LOG_LEVEL?
+    protected abstract fun getTag(message: T): LOG_TYPE?
 
     protected abstract fun getIdentifier(message: T): String
 

@@ -16,23 +16,23 @@ public class ConsoleLogger : Logger {
     }
 
     override fun v(tag: KClass<*>, message: String) {
-        output!!.println(String.format(loggingPattern, Color.WHITE, LOG_LEVEL.VERBOSE, Date(), tag.simpleName, message, Color.RESET))
+        output!!.println(String.format(loggingPattern, Color.WHITE, LOG_TYPE.VERBOSE, Date(), tag.simpleName, message, Color.RESET))
     }
 
     override fun d(tag: KClass<*>, message: String) {
-        output!!.println(String.format(loggingPattern, Color.YELLOW, LOG_LEVEL.DEBUG, Date(), tag.simpleName, message, Color.RESET))
+        output!!.println(String.format(loggingPattern, Color.YELLOW, LOG_TYPE.DEBUG, Date(), tag.simpleName, message, Color.RESET))
     }
 
     override fun i(tag: KClass<*>, message: String) {
-        output!!.println(String.format(loggingPattern, Color.CYAN, LOG_LEVEL.INFORMATION, Date(), tag.simpleName, message, Color.RESET))
+        output!!.println(String.format(loggingPattern, Color.CYAN, LOG_TYPE.INFORMATION, Date(), tag.simpleName, message, Color.RESET))
     }
 
     override fun w(tag: KClass<*>, message: String) {
-        output!!.println(String.format(loggingPattern, Color.PURPLE, LOG_LEVEL.WARNING, Date(), tag.simpleName, message, Color.RESET))
+        output!!.println(String.format(loggingPattern, Color.PURPLE, LOG_TYPE.WARNING, Date(), tag.simpleName, message, Color.RESET))
     }
 
     override fun e(tag: KClass<*>, message: String) {
-        output!!.println(String.format(loggingPattern, Color.RED, LOG_LEVEL.ERROR, Date(), tag.simpleName, message, Color.RESET))
+        output!!.println(String.format(loggingPattern, Color.RED, LOG_TYPE.ERROR, Date(), tag.simpleName, message, Color.RESET))
     }
 
 }
