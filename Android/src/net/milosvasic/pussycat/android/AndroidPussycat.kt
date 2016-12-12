@@ -6,6 +6,7 @@ import com.android.ddmlib.logcat.LogCatListener
 import com.android.ddmlib.logcat.LogCatMessage
 import com.android.ddmlib.logcat.LogCatReceiverTask
 import net.milosvasic.pussycat.PussycatAbstract
+import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
@@ -56,8 +57,8 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
     override fun executeOther(executable: COMMAND, params: Array<out String?>) {
         when (executable) {
-            COMMAND.CHOOSE -> chooseDevice(params)
-            COMMAND.DEVICES -> showDevices()
+            ANDROID_COMMAND.CHOOSE -> chooseDevice(params)
+            ANDROID_COMMAND.DEVICES -> showDevices()
             else -> super.executeOther(executable, params)
         }
     }
@@ -65,22 +66,13 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     override fun live() {
         Thread(Runnable {
             Thread.currentThread().name = "Live adb reading thread"
-            try {
-                AndroidDebugBridge.init(false)
-            } catch (e: IllegalStateException) {
-                // Android debug bridge is already initialized.
-            }
-            try {
-                val debugBridge = AndroidDebugBridge.createBridge("adb", true)
-                if (debugBridge == null) {
-                    logger.e(TAG, "Invalid ADB path")
-                } else {
-                    data.clear()
-                    assignDevice()
-                    AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
-                }
-            } catch (e: Exception) {
-                logger.e(TAG, "ADB error: $e")
+            var debugBridge = initAndroidDebugBridge()
+            if (debugBridge == null) {
+                logger.e(TAG, "Invalid ADB path")
+            } else {
+                data.clear()
+                assignDevice()
+                AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
             }
         }).start()
     }
@@ -154,15 +146,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     private fun assignDevice() {
         val devices = mutableListOf<IDevice>()
         val bridge = AndroidDebugBridge.getBridge()
-        var timeOut: Long = 30 * 1000
-        val sleepTime: Long = 1000
-        while (!bridge.hasInitialDeviceList() && timeOut > 0) {
-            Thread.sleep(sleepTime)
-            timeOut -= sleepTime
-        }
-        if (timeOut <= 0 && !bridge.hasInitialDeviceList()) {
-            printLine("Timeout getting device list.")
-        }
+        waitForDevices(bridge)
         devices.addAll(bridge.devices)
         if (!devices.isEmpty()) {
             if (devices.size > 1) {
@@ -182,11 +166,19 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
     private fun showDevices() {
         val devices = mutableListOf<IDevice>()
-        val bridge = AndroidDebugBridge.getBridge()
-        devices.addAll(bridge.devices)
-        printLine("Available devices:")
-        for (x in devices.indices) {
-            printLine("[ $x ] ${devices[x]}")
+        var bridge = AndroidDebugBridge.getBridge()
+        if (bridge == null) {
+            bridge = initAndroidDebugBridge()
+            waitForDevices(bridge)
+        }
+        if (bridge.devices != null && !bridge.devices.isEmpty()) {
+            devices.addAll(bridge.devices)
+            printLine("Available devices:")
+            for (x in devices.indices) {
+                printLine("[ $x ] ${devices[x]}")
+            }
+        } else {
+            printLine("No devices connected.")
         }
     }
 
@@ -211,7 +203,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     }
 
     private fun chooseDevice(params: Array<out String?>) {
-        val messageInvalid = "Invalid arguments passed for @@${COMMAND.CHOOSE} command."
+        val messageInvalid = "Invalid arguments passed for @@${ANDROID_COMMAND.CHOOSE} command."
         if (params.isEmpty()) {
             printLine(messageInvalid)
             return
@@ -226,6 +218,28 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             }
         } else {
             printLine(messageInvalid)
+        }
+    }
+
+    private fun initAndroidDebugBridge(): AndroidDebugBridge? {
+        try {
+            AndroidDebugBridge.init(false)
+        } catch (e: IllegalStateException) {
+            // Android debug bridge is already initialized.
+        }
+        return AndroidDebugBridge.createBridge("adb", true)
+    }
+
+    private fun waitForDevices(bridge: AndroidDebugBridge) {
+        var timeOut: Long = 30 * 1000
+        val sleepTime: Long = 1000
+        var timeOut1 = timeOut
+        while (!bridge.hasInitialDeviceList() && timeOut1 > 0) {
+            Thread.sleep(sleepTime)
+            timeOut1 -= sleepTime
+        }
+        if (timeOut1 <= 0 && !bridge.hasInitialDeviceList()) {
+            printLine("Timeout getting device list.")
         }
     }
 

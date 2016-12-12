@@ -2,6 +2,7 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
+import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
@@ -38,7 +39,7 @@ class TerminalPussycat : AndroidPussycat() {
                 val line = readLine()
                 if (line != null && !line.isEmpty()) {
                     if (line.startsWith("@@")) {
-                        var cmdParam : String
+                        var cmdParam: String
                         val cmdParams = mutableListOf<String>()
                         val rawParam = line.substring(2, line.lastIndex + 1).trim()
                         if (rawParam.contains(" ")) {
@@ -48,22 +49,23 @@ class TerminalPussycat : AndroidPussycat() {
                         } else {
                             cmdParam = rawParam.toUpperCase()
                         }
-                        try {
-                            execute(COMMAND.valueOf(cmdParam), Array(cmdParams.size, { i -> cmdParams[i] }))
-                        } catch (e: IllegalArgumentException) {
+                        val cmd = ANDROID_COMMAND.get(cmdParam)
+                        if (cmd != ANDROID_COMMAND.PARENT.UNKNOWN) {
+                            execute(cmd, Array(cmdParams.size, { i -> cmdParams[i] }))
+                        } else {
                             filter(line)
                         }
                     } else {
                         filter(line)
                     }
                 } else {
-                    execute(COMMAND.STATUS)
+                    execute(ANDROID_COMMAND.PARENT.STATUS)
                 }
             }
         })
 
         val hook = Thread(Runnable {
-            execute(COMMAND.STOP)
+            execute(ANDROID_COMMAND.PARENT.STOP)
         })
 
         Runtime.getRuntime().addShutdownHook(hook)
@@ -79,7 +81,7 @@ class TerminalPussycat : AndroidPussycat() {
             } catch (e: Exception) {
                 println("Error parsing arguments: $arg\n" + e.message)
                 adb = false
-                execute(COMMAND.STOP)
+                execute(ANDROID_COMMAND.PARENT.STOP)
                 break
             }
             when (parsedArg) {
@@ -93,9 +95,9 @@ class TerminalPussycat : AndroidPussycat() {
             }
         }
         if (adb) {
-            execute(COMMAND.LIVE)
+            execute(ANDROID_COMMAND.PARENT.LIVE)
         } else {
-            execute(COMMAND.FILESYSTEM, arrayOf(file))
+            execute(ANDROID_COMMAND.PARENT.FILESYSTEM, arrayOf(file))
         }
     }
 
