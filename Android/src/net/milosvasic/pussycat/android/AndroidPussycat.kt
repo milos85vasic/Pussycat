@@ -11,7 +11,6 @@ import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
-import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -151,7 +150,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                     }
                 }
             }
-            if (x == 0) logger.w(TAG, "No data matching parameter [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
+            if (x == 0) printLine("No data matching parameters [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
         }
         refreshing.set(false)
     }
