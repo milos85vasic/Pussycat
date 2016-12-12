@@ -59,6 +59,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         when (executable) {
             ANDROID_COMMAND.CHOOSE -> chooseDevice(params)
             ANDROID_COMMAND.DEVICES -> showDevices()
+            ANDROID_COMMAND.TAG -> filterByTag(params)
             else -> super.executeOther(executable, params)
         }
     }
@@ -142,6 +143,10 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     abstract protected fun printLine(text: String)
 
     abstract protected fun printLine(line: LogCatMessage)
+
+    private fun filterByTag(params: Array<out String?>) {
+
+    }
 
     private fun assignDevice() {
         val devices = mutableListOf<IDevice>()

@@ -4,7 +4,6 @@ import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.color.Color
-import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.events.Events
 import net.milosvasic.pussycat.utils.Text
