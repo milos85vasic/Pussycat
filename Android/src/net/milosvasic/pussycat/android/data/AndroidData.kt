@@ -5,18 +5,45 @@ import com.android.ddmlib.logcat.LogCatMessage
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.StringData
 import net.milosvasic.pussycat.logging.LOG_LEVEL
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.*
 
-class AndroidData(filter: DataFilter<CopyOnWriteArrayList<LogCatMessage>, String>) : StringData<LogCatMessage>(filter) {
+class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, String>) : StringData<LogCatMessage>(filter) {
+
+    override fun addData(message: LogCatMessage) {
+        val identifier = getIdentifier(message)
+        val existing = data[identifier]
+        if (existing != null) {
+            val newMessage = LogCatMessage(
+                    message.logLevel,
+                    message.pid,
+                    message.tid,
+                    message.appName,
+                    message.tag,
+                    message.time,
+                    "${existing.message}\n\t${message.message}"
+            )
+            data[identifier] = newMessage
+        } else {
+            data.put(identifier, message)
+        }
+    }
 
     fun addData(messages: Collection<LogCatMessage>) {
-        data.addAll(messages)
+        for (message in messages) {
+            addData(message)
+        }
     }
 
     fun addData(lines: Array<String>) {
         val parser = LogCatMessageParser()
         val messages = parser.processLogLines(lines)
-        data.addAll(messages)
+        for (message in messages) {
+            addData(message)
+        }
+    }
+
+    override fun getIdentifier(message: LogCatMessage): String {
+        return "${message.time}_${message.pid}_${message.tid}"
     }
 
     override fun getTag(message: LogCatMessage): LOG_LEVEL? {

@@ -10,7 +10,7 @@ import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
 import java.io.File
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -91,7 +91,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 val lines = logcat.readLines()
                 data.addData(Array(lines.size, { i -> lines[i] }))
                 if (!refreshing.get()) {
-                    for (message in data.get()) {
+                    for (message in data.get().values) {
                         if (data.evaluate(message)) printLine(message)
                     }
                 }
@@ -120,7 +120,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         super.resume()
     }
 
-    override fun apply(data: CopyOnWriteArrayList<LogCatMessage>, pattern: String?) {
+    override fun apply(data: LinkedHashMap<String, LogCatMessage>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
         printLine(27.toChar() + "[2J")
@@ -128,7 +128,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             printLine("No data available [ filter: ${this.data.getFilterPattern()} ]")
         } else {
             var x = 0
-            for (line in data) {
+            for (line in data.values) {
                 if (this.data.evaluate(line)) {
                     printLine(line)
                     x++

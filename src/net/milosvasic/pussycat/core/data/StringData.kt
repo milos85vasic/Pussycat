@@ -1,14 +1,11 @@
 package net.milosvasic.pussycat.core.data
 
 import net.milosvasic.pussycat.core.common.DataFilter
+import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 
-abstract class StringData<T>(filter: DataFilter<CopyOnWriteArrayList<T>, String>) : Data<T>(filter) {
-
-    override fun addData(message: T) {
-        data.add(message)
-    }
+abstract class StringData<T>(filter: DataFilter<LinkedHashMap<String, T>, String>) : Data<T>(filter) {
 
     override fun evaluate(message: T): Boolean {
         if (pattern.isEmpty()) {

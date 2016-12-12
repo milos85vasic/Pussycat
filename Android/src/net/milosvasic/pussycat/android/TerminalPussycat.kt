@@ -38,7 +38,7 @@ class TerminalPussycat : AndroidPussycat() {
                 val line = readLine()
                 if (line != null && !line.isEmpty()) {
                     if (line.startsWith("@@")) {
-                        var cmdParam = ""
+                        var cmdParam : String
                         val cmdParams = mutableListOf<String>()
                         val rawParam = line.substring(2, line.lastIndex + 1).toUpperCase().trim()
                         if (rawParam.contains(" ")) {

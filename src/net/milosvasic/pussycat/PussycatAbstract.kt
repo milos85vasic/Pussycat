@@ -14,7 +14,7 @@ import kotlin.reflect.KClass
 import java.util.*
 
 
-abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<T>, String>, Events {
+abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<LinkedHashMap<String, T>, String>, Events {
 
     protected lateinit var TAG: KClass<*>
     protected lateinit var logger: Logger
