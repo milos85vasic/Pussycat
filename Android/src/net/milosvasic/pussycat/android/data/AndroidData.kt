@@ -57,7 +57,7 @@ class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, Strin
     }
 
     override fun LogCatMessage.containsIgnoreCase(word: String): Boolean {
-        return message.containsIgnoreCase(word)
+        return message.containsIgnoreCase(word) || appName.containsIgnoreCase(word) || tag.containsIgnoreCase(word)
     }
 
 }
