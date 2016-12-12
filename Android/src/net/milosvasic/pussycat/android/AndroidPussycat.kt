@@ -150,7 +150,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                     }
                 }
             }
-            if (x == 0) logger.w(TAG, "No data matching [ filter: ${this.data.getFilterPattern()} ]")
+            if (x == 0) logger.w(TAG, "No data matching parameter [ filter: ${this.data.getFilterPattern()} ][ log level: ${printLogLevelValue()} ]")
         }
         refreshing.set(false)
     }
@@ -174,12 +174,15 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
     }
 
     private fun printLogLevel() {
+        printLine("Pussycat, log level [ ${printLogLevelValue()} ]")
+    }
+
+    private fun printLogLevelValue(): String {
         val logLevel = data.getLogLevel()
         if (logLevel != null) {
-            printLine("Pussycat, log level [ ${logLevel.stringValue.toUpperCase()} ]")
-        } else {
-            printLine("Pussycat, log level not set.")
+            return logLevel.stringValue.toUpperCase()
         }
+        return "NOT SET"
     }
 
     private fun assignDevice() {
