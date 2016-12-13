@@ -12,6 +12,7 @@ import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
+import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -162,7 +163,26 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             println("Pussycat, export [ STARTED ]")
             val gson = Gson()
             val json = gson.toJson(data)
-
+            val root: File
+            val destination: File
+            if (params.isEmpty() || Text.isEmpty(params[0])) {
+                val home = System.getProperty("user.home")
+                root = File("$home${File.separator}Pussycat")
+            } else {
+                root = File(params[0])
+            }
+            if (!root.exists()) {
+                if (!root.mkdirs()) {
+                    printLine("Couldn't create directory [ ${root.absolutePath} ]")
+                    return@Runnable
+                }
+            }
+            if (root.absolutePath.endsWith(".json")) {
+                destination = root
+            } else {
+                destination = File(root.absolutePath, "export_${System.currentTimeMillis()}.json")
+            }
+            destination.writeText(json)
             println("Pussycat, export [ COMPLETED ]")
         }).start()
     }
