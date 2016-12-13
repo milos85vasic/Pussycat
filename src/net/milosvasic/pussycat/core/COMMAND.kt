@@ -15,6 +15,7 @@ open class COMMAND(val value: String) {
         val CLEAR = COMMAND("CLEAR")
         val RESET = COMMAND("RESET")
         val STATUS = COMMAND("STATUS")
+        val EXPORT = COMMAND("EXPORT")
 
         init {
             list.add(UNKNOWN)
@@ -26,6 +27,7 @@ open class COMMAND(val value: String) {
             list.add(CLEAR)
             list.add(RESET)
             list.add(STATUS)
+            list.add(EXPORT)
         }
 
         fun get(toFind: String): COMMAND {

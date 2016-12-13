@@ -1,5 +1,6 @@
 package net.milosvasic.pussycat
 
+
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.core.common.DataFilter
@@ -32,6 +33,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
             COMMAND.PAUSE -> pause()
             COMMAND.RESUME -> resume()
             COMMAND.STATUS -> status()
+            COMMAND.EXPORT -> export(params)
             else -> executeOther(executable, params)
         }
     }
@@ -87,5 +89,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     abstract protected fun status()
 
     abstract protected fun clear()
+
+    abstract protected fun export(params: Array<out String?>)
 
 }

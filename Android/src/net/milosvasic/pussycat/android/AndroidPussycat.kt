@@ -1,5 +1,6 @@
 package net.milosvasic.pussycat.android
 
+import com.google.gson.Gson
 import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.Log
@@ -153,6 +154,17 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             if (x == 0) printLine("Pussycat, no data matching parameters [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
         }
         refreshing.set(false)
+    }
+
+    override fun export(params: Array<out String?>) {
+        Thread(Runnable {
+            Thread.currentThread().name = "Exporting thread."
+            println("Pussycat, export [ STARTED ]")
+            val gson = Gson()
+            val json = gson.toJson(data)
+
+            println("Pussycat, export [ COMPLETED ]")
+        }).start()
     }
 
     abstract protected fun printLine(text: String)
