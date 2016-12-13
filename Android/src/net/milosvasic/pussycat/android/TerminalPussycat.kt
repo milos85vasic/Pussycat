@@ -175,7 +175,7 @@ class TerminalPussycat : AndroidPussycat() {
         printLine("Pussycat [ filter: ${getPrintableFilterValue()} ][ log level: ${getPrintableLogLevelValue()} ]")
     }
 
-    override protected fun getPrintableLogLevelValue(): String {
+    override fun getPrintableLogLevelValue(): String {
         val logLevel = data.getLogLevel()
         if (logLevel != null) {
             return logLevel.stringValue.toUpperCase()
@@ -183,7 +183,7 @@ class TerminalPussycat : AndroidPussycat() {
         return "NOT SET"
     }
 
-    override protected fun getPrintableFilterValue(): String {
+    override fun getPrintableFilterValue(): String {
         val pattern = data.getFilterPattern()
         if (!Text.isEmpty(pattern)) {
             return pattern
