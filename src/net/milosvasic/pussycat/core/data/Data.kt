@@ -5,9 +5,9 @@ import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.util.*
 
-abstract class Data<T>(val filter: DataFilter<LinkedHashMap<String, T>, String>) : Filter<String, T> {
+abstract class Data<T>(@Transient val filter: DataFilter<LinkedHashMap<String, T>, String>) : Filter<String, T> {
 
-    protected var pattern = ""
+    @Transient protected var pattern = ""
     protected val data = LinkedHashMap<String, T>()
 
     override fun apply(pattern: String?) {

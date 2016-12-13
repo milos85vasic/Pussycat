@@ -9,7 +9,7 @@ import java.util.*
 
 class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, String>) : StringData<LogCatMessage>(filter) {
 
-    private var logLevel: Log.LogLevel? = null
+    @Transient private var logLevel: Log.LogLevel? = null
 
     fun setLogLevel(level: Log.LogLevel) {
         logLevel = level
