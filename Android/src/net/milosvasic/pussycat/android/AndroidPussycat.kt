@@ -16,6 +16,7 @@ import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
+import com.github.salomonbrys.kotson.*
 
 
 abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() {
@@ -77,7 +78,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             Thread.currentThread().name = "Live adb reading thread"
             var debugBridge = initAndroidDebugBridge()
             if (debugBridge == null) {
-                logger.e(TAG, "Invalid ADB path")
+                printLine("Pussycat, invalid ADB path")
             } else {
                 data.clear()
                 assignDevice()
@@ -98,7 +99,21 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 logcatTask?.removeLogCatListener(logcatListener)
                 AndroidDebugBridge.removeDeviceChangeListener(deviceChangeListener)
                 data.clear()
-                data.addData(Array(lines.size, { i -> lines[i] }))
+                if (lines[0].startsWith("{\"data\"")) {
+                    try {
+                        val gson = Gson()
+                        val builder = StringBuilder()
+                        for (line in lines) {
+                            builder.append(line)
+                        }
+                        val androidData = gson.fromJson<AndroidData>(builder.toString())
+                        data.addData(androidData.get().values)
+                    } catch (e: Exception) {
+                        printLine("Error parsing data: ${e.message}")
+                    }
+                } else {
+                    data.addData(Array(lines.size, { i -> lines[i] }))
+                }
                 if (!refreshing.get()) {
                     for (message in data.get().values) {
                         if (data.evaluate(message)) printLine(message)
