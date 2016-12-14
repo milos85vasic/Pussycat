@@ -83,6 +83,9 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 data.clear()
                 assignDevice()
                 AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener)
+                if (paused.get()) {
+                    paused.set(false)
+                }
             }
         }).start()
     }
@@ -114,6 +117,9 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
                 } else {
                     data.addData(Array(lines.size, { i -> lines[i] }))
                 }
+                if (paused.get()) {
+                    paused.set(false)
+                }
                 if (!refreshing.get()) {
                     for (message in data.get().values) {
                         if (data.evaluate(message)) printLine(message)
@@ -122,7 +128,6 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             }).start()
         } else {
             printLine("Logcat: ${logcat.absoluteFile} does not exist")
-            stop()
         }
     }
 
@@ -149,7 +154,13 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         paused.set(false)
         clear()
         if (data.isEmpty()) {
-            printLine("Pussycat, no data available [ filter: ${this.data.getFilterPattern()} ]")
+            val noDataMessage: String
+            if (Text.isEmpty(this.data.getFilterPattern())) {
+                noDataMessage = "no filter applied"
+            } else {
+                noDataMessage = "filter: ${this.data.getFilterPattern()}"
+            }
+            printLine("Pussycat, no data available [ $noDataMessage ]")
         } else {
             var x = 0
             fun printLineAndIncrement(line: LogCatMessage) {
