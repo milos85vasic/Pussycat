@@ -164,24 +164,26 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             val gson = Gson()
             val json = gson.toJson(data)
             val root: File
+            var name: String
             val destination: File
             if (params.isEmpty() || Text.isEmpty(params[0])) {
-                val home = System.getProperty("user.home")
-                root = File("$home${File.separator}Pussycat")
+                name = "export_${System.currentTimeMillis()}.json"
             } else {
-                root = File(params[0])
+                name = params[0]?.trim()?.replace(File.separator, "_") as String
+                if (!name.endsWith(".json")) {
+                    name = "$name.json"
+                }
             }
+            val home = System.getProperty("user.home")
+            root = File("$home${File.separator}Pussycat")
             if (!root.exists()) {
                 if (!root.mkdirs()) {
                     printLine("Couldn't create directory [ ${root.absolutePath} ]")
                     return@Runnable
                 }
             }
-            if (root.absolutePath.endsWith(".json")) {
-                destination = root
-            } else {
-                destination = File(root.absolutePath, "export_${System.currentTimeMillis()}.json")
-            }
+            destination = File(root.absolutePath, name)
+            println("Pussycat, saving to destination [ ${destination.absolutePath} ]")
             destination.writeText(json)
             println("Pussycat, export [ COMPLETED ]")
         }).start()
