@@ -2,7 +2,6 @@ package net.milosvasic.pussycat.android.data
 
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
-import java.io.Serializable
 
 class AndroidLogCatMessage(
         val logLevel: Log.LogLevel,

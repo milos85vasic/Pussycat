@@ -6,6 +6,8 @@
       <element id="module-output" name="Pusssycat" />
       <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-runtime.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-reflect.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/gson-2.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/kotson-2.4.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Android/libs/ddmlib.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Android/libs/guava-20.0.jar" path-in-jar="/" />
     </root>

@@ -4,8 +4,8 @@ import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatListener
-import com.android.ddmlib.logcat.LogCatMessage
 import com.android.ddmlib.logcat.LogCatReceiverTask
+import com.google.gson.Gson
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
@@ -17,8 +17,7 @@ import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
-import java.io.FileOutputStream
-import java.io.ObjectOutputStream
+import com.github.salomonbrys.kotson.*
 
 
 abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidData>() {
@@ -108,13 +107,22 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 logcatTask?.removeLogCatListener(logcatListener)
                 AndroidDebugBridge.removeDeviceChangeListener(deviceChangeListener)
                 data.clear()
-
                 if (paused.get()) {
                     paused.set(false)
                 }
-
                 if (logcat.extension == FILE_EXTENSION) {
-
+                    val gson = Gson()
+                    logcat.forEachLine { line ->
+                        try {
+                            val message: AndroidLogCatMessage = gson.fromJson<AndroidLogCatMessage>(line)
+                            data.addData(message)
+                            if (!refreshing.get() && data.evaluate(message)) {
+                                printLine(message)
+                            }
+                        } catch (e: Exception) {
+                            printLine("Pussycat, error parsing line [ ${e.message} ]")
+                        }
+                    }
                 } else {
                     var messageIndex = 0
                     var lastIdentifier = ""
@@ -217,13 +225,23 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 }
             }
             destination = File(root.absolutePath, name)
-            println("Pussycat, saving to destination [ ${destination.absolutePath} ]")
-            try {
-                val fout = FileOutputStream(destination)
-                val out = ObjectOutputStream(fout)
-                out.writeObject(data.get())
-            } catch (e: Exception) {
-                printLine("Pussycat, error saving data: $e")
+            if (destination.exists()) {
+                printLine("Pussycat, file already exists [ ${destination.absolutePath} ]. Skipping.")
+            } else {
+                println("Pussycat, saving to destination [ ${destination.absolutePath} ]")
+                val gson = Gson()
+                try {
+                    val values = data.get().values
+                    for ((index, message) in values.withIndex()) {
+                        var json = gson.toJson(message)
+                        if (index < values.size - 1) {
+                            json += "\n"
+                        }
+                        destination.appendText(json)
+                    }
+                } catch (e: Exception) {
+                    printLine("Pussycat, error saving data: $e")
+                }
             }
             println("Pussycat, export [ COMPLETED ]")
         }).start()
