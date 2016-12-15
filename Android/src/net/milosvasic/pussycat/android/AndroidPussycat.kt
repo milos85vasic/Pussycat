@@ -110,42 +110,37 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 if (paused.get()) {
                     paused.set(false)
                 }
+                val loadingMessage = "Pussycat, loading data. Please wait."
+                val fileSizeInBytes = logcat.length()
+                var loadingSuccess = true
+                var bytesLoaded = 0
+                fun countBytes(line: String) {
+                    bytesLoaded += line.toByteArray().size
+                    val percents = (bytesLoaded * 100) / fileSizeInBytes
+                    printLine("$loadingMessage [ $percents% ]")
+                }
                 if (logcat.extension == FILE_EXTENSION) {
                     val gson = Gson()
                     logcat.forEachLine { line ->
+                        var message: AndroidLogCatMessage
                         try {
-                            val message: AndroidLogCatMessage = gson.fromJson<AndroidLogCatMessage>(line)
-                            data.addData(message)
-                            if (!refreshing.get() && data.evaluate(message)) {
-                                printLine(message)
-                            }
+                            message = gson.fromJson<AndroidLogCatMessage>(line)
                         } catch (e: Exception) {
-                            printLine("Pussycat, error parsing line [ ${e.message} ]")
+                            loadingSuccess = false
+                            message = AndroidLogCatMessage(Log.LogLevel.ERROR, "ERROR", "ERROR", "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", e.toString())
                         }
+                        data.addData(message)
+                        countBytes(line)
                     }
                 } else {
-                    var messageIndex = 0
-                    var lastIdentifier = ""
                     logcat.forEachLine { line ->
                         data.addData(Array(1, { i -> line }))
-                        try {
-                            val message: AndroidLogCatMessage = data.get().values.last()
-                            val newIdentifier = LogCatMessageParser.getIdentifier(message)
-                            if (!refreshing.get() && data.evaluate(message)) {
-                                if (lastIdentifier == newIdentifier) {
-                                    messageIndex++
-                                    val lines = message.msg.split("\n")
-                                    printLine(lines[messageIndex], message.logLevel)
-                                } else {
-                                    messageIndex = 0
-                                    printLine(message)
-                                }
-                            }
-                            lastIdentifier = newIdentifier
-                        } catch (e: Exception) {
-                            printLine("Pussycat, error: ${e.message}")
-                        }
+                        countBytes(line)
                     }
+                }
+                apply(data.get(), "")
+                if (!loadingSuccess) {
+                    printLine("\nPussycat, serialization problems detected during data loading. Some logcat lines may missing.\n")
                 }
             }).start()
         } else {

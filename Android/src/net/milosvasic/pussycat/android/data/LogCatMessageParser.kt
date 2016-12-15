@@ -181,7 +181,8 @@ class LogCatMessageParser {
                 }
             }
             if (!matched) {
-                println("Pussycat: log not matched,\n\t$line\n")
+                val message = AndroidLogCatMessage(Log.LogLevel.ERROR, "ERROR", "ERROR", "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", "Log not matched,\n\t$line\n")
+                messages.put(System.currentTimeMillis().toString(), message)
             }
         }
         return messages.values
