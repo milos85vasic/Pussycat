@@ -10,7 +10,6 @@ import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
-import net.milosvasic.pussycat.android.data.LogCatMessageParser
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.utils.Text

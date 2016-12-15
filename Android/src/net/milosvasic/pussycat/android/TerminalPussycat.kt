@@ -7,11 +7,19 @@ import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.events.Events
 import net.milosvasic.pussycat.utils.Text
+import java.io.BufferedWriter
+import java.io.FileDescriptor
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
+import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.atomic.AtomicBoolean
 
 class TerminalPussycat : AndroidPussycat() {
 
     val run = AtomicBoolean(false)
+    var printThread: Thread? = null
+    val queue = LinkedBlockingQueue<String>()
+    val out = BufferedWriter(OutputStreamWriter(FileOutputStream(FileDescriptor.out), "ASCII"), 512)
 
     override fun start(args: Array<String>) {
         val shutdown = fun() {
@@ -128,7 +136,20 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun printLine(text: String) {
-        println(text)
+        queue.add(text)
+        if (printThread == null) {
+            printThread = Thread(Runnable {
+                Thread.currentThread().name = "Printing thread"
+                while (!Thread.currentThread().isInterrupted) {
+                    val item = queue.poll()
+                    if (item != null) {
+                        out.write("$item\n")
+                        out.flush()
+                    }
+                }
+            })
+            printThread?.start()
+        }
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
