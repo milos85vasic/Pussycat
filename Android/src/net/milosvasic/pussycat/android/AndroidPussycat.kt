@@ -128,19 +128,23 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                     var lastIdentifier = ""
                     logcat.forEachLine { line ->
                         data.addData(Array(1, { i -> line }))
-                        val message = data.get().values.last()
-                        val newIdentifier = LogCatMessageParser.getIdentifier(message)
-                        if (!refreshing.get() && data.evaluate(message)) {
-                            if (lastIdentifier == newIdentifier) {
-                                messageIndex++
-                                val lines = message.msg.split("\n")
-                                printLine(lines[messageIndex], message.logLevel)
-                            } else {
-                                messageIndex = 0
-                                printLine(message)
+                        try {
+                            val message: AndroidLogCatMessage = data.get().values.last()
+                            val newIdentifier = LogCatMessageParser.getIdentifier(message)
+                            if (!refreshing.get() && data.evaluate(message)) {
+                                if (lastIdentifier == newIdentifier) {
+                                    messageIndex++
+                                    val lines = message.msg.split("\n")
+                                    printLine(lines[messageIndex], message.logLevel)
+                                } else {
+                                    messageIndex = 0
+                                    printLine(message)
+                                }
                             }
+                            lastIdentifier = newIdentifier
+                        } catch (e: Exception) {
+                            printLine("Pussycat, error: ${e.message}")
                         }
-                        lastIdentifier = newIdentifier
                     }
                 }
             }).start()
