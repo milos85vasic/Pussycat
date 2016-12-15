@@ -1,7 +1,6 @@
 package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
-import com.android.ddmlib.logcat.LogCatMessage
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.color.Color
@@ -16,10 +15,10 @@ class TerminalPussycat : AndroidPussycat() {
 
     override fun start(args: Array<String>) {
         val shutdown = fun() {
-            println("We are shutting down Pussycat.")
+            printLine("We are shutting down Pussycat.")
             run.set(false)
             System.`in`.close()
-            println("Bye, bye!")
+            printLine("Bye, bye!")
             System.exit(0)
         }
 
@@ -79,7 +78,7 @@ class TerminalPussycat : AndroidPussycat() {
             try {
                 parsedArg = getArgumentOption(arg.trim())
             } catch (e: Exception) {
-                println("Error parsing arguments: $arg\n" + e.message)
+                printLine("Error parsing arguments: $arg\n" + e.message)
                 adb = false
                 execute(ANDROID_COMMAND.PARENT.STOP)
                 break
@@ -125,7 +124,7 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun clear() {
-        println(27.toChar() + "[2J")
+        printLine(27.toChar() + "[2J")
     }
 
     override fun printLine(text: String) {
@@ -148,30 +147,30 @@ class TerminalPussycat : AndroidPussycat() {
         when (logLevel) {
             Log.LogLevel.VERBOSE -> {
                 color = Color.WHITE
-                println("$color$text${Color.RESET}")
+                printLine("$color$text${Color.RESET}")
                 return
             }
             Log.LogLevel.DEBUG -> {
                 color = Color.YELLOW
-                println("$color$text${Color.RESET}")
+                printLine("$color$text${Color.RESET}")
                 return
             }
             Log.LogLevel.INFO -> {
                 color = Color.CYAN
-                println("$color$text${Color.RESET}")
+                printLine("$color$text${Color.RESET}")
                 return
             }
             Log.LogLevel.WARN -> {
                 color = Color.PURPLE
-                println("$color$text${Color.RESET}")
+                printLine("$color$text${Color.RESET}")
                 return
             }
             Log.LogLevel.ERROR -> {
                 color = Color.RED
-                println("$color$text${Color.RESET}")
+                printLine("$color$text${Color.RESET}")
                 return
             }
-            else -> println("\t$color$text${Color.RESET}")
+            else -> printLine("\t$color$text${Color.RESET}")
         }
     }
 
