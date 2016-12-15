@@ -117,6 +117,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 fun countBytes(line: String) {
                     bytesLoaded += line.toByteArray().size
                     val percents = (bytesLoaded * 100) / fileSizeInBytes
+                    clear()
                     printLine("$loadingMessage [ $percents% ]")
                 }
                 if (logcat.extension == FILE_EXTENSION) {
