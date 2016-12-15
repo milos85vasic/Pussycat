@@ -110,15 +110,15 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 if (paused.get()) {
                     paused.set(false)
                 }
-                val loadingMessage = "Pussycat, loading data. Please wait."
                 val fileSizeInBytes = logcat.length()
                 var loadingSuccess = true
-                var bytesLoaded = 0
+                var bytesLoaded: Double = .0
                 fun countBytes(line: String) {
-                    bytesLoaded += line.toByteArray().size
-                    val percents = (bytesLoaded * 100) / fileSizeInBytes
+                    bytesLoaded += line.toByteArray().size / 1024.0
+                    val percent: Double = (bytesLoaded * 100.0) / (fileSizeInBytes / 1024.0)
                     clear()
-                    printLine("$loadingMessage [ $percents% ]")
+                    val s = String.format("%.2f", percent)
+                    printLine("Pussycat, loading data. Please wait. [ $s % ]")
                 }
                 if (logcat.extension == FILE_EXTENSION) {
                     val gson = Gson()
