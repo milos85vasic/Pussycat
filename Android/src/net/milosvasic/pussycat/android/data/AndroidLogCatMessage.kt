@@ -12,7 +12,7 @@ class AndroidLogCatMessage(
         val tag: String,
         val time: String,
         val msg: String
-) : Serializable {
+) {
 
     companion object {
         fun getFrom(message: LogCatMessage): AndroidLogCatMessage {
