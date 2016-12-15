@@ -1,6 +1,5 @@
 package net.milosvasic.pussycat.android
 
-import com.google.gson.Gson
 import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.Log
@@ -10,21 +9,28 @@ import com.android.ddmlib.logcat.LogCatReceiverTask
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
+import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
+import net.milosvasic.pussycat.android.data.LogCatMessageParser
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
-import com.github.salomonbrys.kotson.*
+import java.io.FileOutputStream
+import java.io.ObjectOutputStream
 
 
-abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() {
+abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidData>() {
 
     protected var device: IDevice?
     protected val paused = AtomicBoolean(false)
     protected var refreshing = AtomicBoolean(false)
     protected var logcatTask: LogCatReceiverTask? = null
+
+    companion object {
+        val FILE_EXTENSION = "psct"
+    }
 
     protected var deviceChangeListener: AndroidDebugBridge.IDeviceChangeListener = object : AndroidDebugBridge.IDeviceChangeListener {
         override fun deviceChanged(iDevice: IDevice?, changeMask: Int) {
@@ -46,7 +52,8 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             data.addData(messages)
             if (!refreshing.get()) {
                 for (message in messages) {
-                    if (data.evaluate(message)) printLine(message)
+                    val androidMessage = AndroidLogCatMessage.getFrom(message)
+                    if (data.evaluate(androidMessage)) printLine(androidMessage)
                 }
             }
         }
@@ -98,31 +105,34 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         if (logcat.exists()) {
             Thread(Runnable {
                 Thread.currentThread().name = "Filesystem reading thread"
-                val lines = logcat.readLines()
                 logcatTask?.removeLogCatListener(logcatListener)
                 AndroidDebugBridge.removeDeviceChangeListener(deviceChangeListener)
                 data.clear()
-                if (lines[0].startsWith("{\"data\"")) {
-                    try {
-                        val gson = Gson()
-                        val builder = StringBuilder()
-                        for (line in lines) {
-                            builder.append(line)
-                        }
-                        val androidData = gson.fromJson<AndroidData>(builder.toString())
-                        data.addData(androidData.get().values)
-                    } catch (e: Exception) {
-                        printLine("Error parsing data: ${e.message}")
-                    }
-                } else {
-                    data.addData(Array(lines.size, { i -> lines[i] }))
-                }
+
                 if (paused.get()) {
                     paused.set(false)
                 }
-                if (!refreshing.get()) {
-                    for (message in data.get().values) {
-                        if (data.evaluate(message)) printLine(message)
+
+                if (logcat.extension == FILE_EXTENSION) {
+
+                } else {
+                    var messageIndex = 0
+                    var lastIdentifier = ""
+                    logcat.forEachLine { line ->
+                        data.addData(Array(1, { i -> line }))
+                        val message = data.get().values.last()
+                        val newIdentifier = LogCatMessageParser.getIdentifier(message)
+                        if (!refreshing.get() && data.evaluate(message)) {
+                            if (lastIdentifier == newIdentifier) {
+                                messageIndex++
+                                val lines = message.msg.split("\n")
+                                printLine(lines[messageIndex], message.logLevel)
+                            } else {
+                                messageIndex = 0
+                                printLine(message)
+                            }
+                        }
+                        lastIdentifier = newIdentifier
                     }
                 }
             }).start()
@@ -149,7 +159,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         super.resume()
     }
 
-    override fun apply(data: LinkedHashMap<String, LogCatMessage>, pattern: String?) {
+    override fun apply(data: LinkedHashMap<String, AndroidLogCatMessage>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
         clear()
@@ -163,7 +173,7 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             printLine("Pussycat, no data available [ $noDataMessage ]")
         } else {
             var x = 0
-            fun printLineAndIncrement(line: LogCatMessage) {
+            fun printLineAndIncrement(line: AndroidLogCatMessage) {
                 printLine(line)
                 x++
             }
@@ -187,17 +197,15 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
         Thread(Runnable {
             Thread.currentThread().name = "Exporting thread."
             println("Pussycat, export [ STARTED ]")
-            val gson = Gson()
-            val json = gson.toJson(data)
             val root: File
             var name: String
             val destination: File
             if (params.isEmpty() || Text.isEmpty(params[0])) {
-                name = "export_${System.currentTimeMillis()}.json"
+                name = "export_${System.currentTimeMillis()}.$FILE_EXTENSION"
             } else {
                 name = params[0]?.trim()?.replace(File.separator, "_") as String
-                if (!name.endsWith(".json")) {
-                    name = "$name.json"
+                if (!name.endsWith(".$FILE_EXTENSION")) {
+                    name = "$name.$FILE_EXTENSION"
                 }
             }
             val home = System.getProperty("user.home")
@@ -210,14 +218,22 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
             }
             destination = File(root.absolutePath, name)
             println("Pussycat, saving to destination [ ${destination.absolutePath} ]")
-            destination.writeText(json)
+            try {
+                val fout = FileOutputStream(destination)
+                val out = ObjectOutputStream(fout)
+                out.writeObject(data.get())
+            } catch (e: Exception) {
+                printLine("Pussycat, error saving data: $e")
+            }
             println("Pussycat, export [ COMPLETED ]")
         }).start()
     }
 
     abstract protected fun printLine(text: String)
 
-    abstract protected fun printLine(line: LogCatMessage)
+    abstract protected fun printLine(text: String, logLevel: Log.LogLevel)
+
+    abstract protected fun printLine(line: AndroidLogCatMessage)
 
     abstract protected fun getPrintableLogLevelValue(): String
 

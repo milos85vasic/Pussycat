@@ -11,7 +11,7 @@ class LogCatMessagePattern(val regex: String, val messageObtain: LogCatMessageOb
         return Pattern.compile(regex)
     }
 
-    fun getMessage(matcher: Matcher): LogCatMessage {
+    fun getMessage(matcher: Matcher): AndroidLogCatMessage {
         return messageObtain.getMessage(matcher)
     }
 

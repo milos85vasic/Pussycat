@@ -7,7 +7,7 @@ import net.milosvasic.pussycat.core.data.StringData
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.util.*
 
-class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, String>) : StringData<LogCatMessage>(filter) {
+class AndroidData(filter: DataFilter<LinkedHashMap<String, AndroidLogCatMessage>, String>) : StringData<AndroidLogCatMessage>(filter) {
 
     @Transient private var logLevel: Log.LogLevel? = null
 
@@ -25,18 +25,18 @@ class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, Strin
         return logLevel
     }
 
-    override fun addData(message: LogCatMessage) {
+    override fun addData(message: AndroidLogCatMessage) {
         val identifier = getIdentifier(message)
         val existing = data[identifier]
         if (existing != null) {
-            val newMessage = LogCatMessage(
+            val newMessage = AndroidLogCatMessage(
                     message.logLevel,
                     message.pid,
                     message.tid,
                     message.appName,
                     message.tag,
                     message.time,
-                    "${existing.message}\n\t${message.message}"
+                    "${existing.msg}\n\t${message.msg}"
             )
             data[identifier] = newMessage
         } else {
@@ -46,7 +46,7 @@ class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, Strin
 
     fun addData(messages: Collection<LogCatMessage>) {
         for (message in messages) {
-            addData(message)
+            addData(AndroidLogCatMessage.getFrom(message))
         }
     }
 
@@ -58,11 +58,11 @@ class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, Strin
         }
     }
 
-    override fun getIdentifier(message: LogCatMessage): String {
-        return "${message.time}_${message.pid}_${message.tid}"
+    override fun getIdentifier(message: AndroidLogCatMessage): String {
+        return LogCatMessageParser.getIdentifier(message)
     }
 
-    override fun getTag(message: LogCatMessage): LOG_TYPE? {
+    override fun getTag(message: AndroidLogCatMessage): LOG_TYPE? {
         return when (message.logLevel) {
             Log.LogLevel.DEBUG -> LOG_TYPE.DEBUG
             Log.LogLevel.INFO -> LOG_TYPE.INFORMATION
@@ -72,8 +72,8 @@ class AndroidData(filter: DataFilter<LinkedHashMap<String, LogCatMessage>, Strin
         }
     }
 
-    override fun LogCatMessage.containsIgnoreCase(word: String): Boolean {
-        return message.containsIgnoreCase(word) || appName.containsIgnoreCase(word) || tag.containsIgnoreCase(word)
+    override fun AndroidLogCatMessage.containsIgnoreCase(word: String): Boolean {
+        return msg.containsIgnoreCase(word) || appName.containsIgnoreCase(word) || tag.containsIgnoreCase(word)
     }
 
 }

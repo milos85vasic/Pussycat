@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.android
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
+import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.events.Events
@@ -131,44 +132,47 @@ class TerminalPussycat : AndroidPussycat() {
         println(text)
     }
 
-    override fun printLine(line: LogCatMessage) {
+    override fun printLine(line: AndroidLogCatMessage) {
         var appName = line.appName
         if (Text.isEmpty(appName)) {
-            appName = "---"
+            appName = "-"
         }
-        val message = "${line.time} [ pid: ${line.pid} tid: ${line.tid} ][ $appName ][ ${line.tag} ]: ${line.message}"
+        val message = "${line.time} [ pid: ${line.pid} tid: ${line.tid} ][ $appName ][ ${line.tag} ]: ${line.msg}"
+        printLine(message, line.logLevel)
+    }
+
+    override fun printLine(text: String, logLevel: Log.LogLevel) {
         if (paused.get()) {
             return
         }
-        when (line.logLevel) {
+        when (logLevel) {
             Log.LogLevel.VERBOSE -> {
                 color = Color.WHITE
-                println("$color$message${Color.RESET}")
+                println("$color$text${Color.RESET}")
                 return
             }
             Log.LogLevel.DEBUG -> {
                 color = Color.YELLOW
-                println("$color$message${Color.RESET}")
+                println("$color$text${Color.RESET}")
                 return
             }
             Log.LogLevel.INFO -> {
                 color = Color.CYAN
-                println("$color$message${Color.RESET}")
+                println("$color$text${Color.RESET}")
                 return
             }
             Log.LogLevel.WARN -> {
                 color = Color.PURPLE
-                println("$color$message${Color.RESET}")
+                println("$color$text${Color.RESET}")
                 return
             }
             Log.LogLevel.ERROR -> {
                 color = Color.RED
-                println("$color$message${Color.RESET}")
+                println("$color$text${Color.RESET}")
                 return
             }
-            else -> println("\t$color$message${Color.RESET}")
+            else -> println("\t$color$text${Color.RESET}")
         }
-
     }
 
     override fun status() {

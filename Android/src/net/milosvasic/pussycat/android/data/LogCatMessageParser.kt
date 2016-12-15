@@ -7,7 +7,7 @@ import java.util.regex.Matcher
 
 class LogCatMessageParser {
 
-    var lastMessage: LogCatMessage? = null
+    var lastMessage: AndroidLogCatMessage? = null
 
     companion object {
         val UNKNOWN_VALUE = "unknown"
@@ -16,10 +16,14 @@ class LogCatMessageParser {
         val ANDROID_STUDIO_DUMP_PATTERN = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)/(.+?):(.+?)"
         val ANDROID_STUDIO_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)/(.+?):"
         val ANDROID_STUDIO_PATTERN_STACKTRACE = "\\s+(.+?)"
+
+        fun getIdentifier(message: AndroidLogCatMessage): String {
+            return "${message.time}_${message.pid}_${message.tid}"
+        }
     }
 
     private val terminalDumpPattern = LogCatMessagePattern(TERMINAL_DUMP_PATTERN, object : LogCatMessageObtain {
-        override fun getMessage(matcher: Matcher): LogCatMessage {
+        override fun getMessage(matcher: Matcher): AndroidLogCatMessage {
             var logLevel = Log.LogLevel.getByLetterString(matcher.group(5))
             if (logLevel == null && matcher.group(5) == "F") {
                 logLevel = Log.LogLevel.ASSERT
@@ -29,7 +33,7 @@ class LogCatMessageParser {
             } else {
                 ""
             }
-            return LogCatMessage(
+            return AndroidLogCatMessage(
                     logLevel,
                     matcher.group(3).trim(),
                     matcher.group(4).trim(),
@@ -41,12 +45,12 @@ class LogCatMessageParser {
         }
     })
     private val terminalDumpPatternCropped = LogCatMessagePattern(TERMINAL_DUMP_PATTERN_CROPPED, object : LogCatMessageObtain {
-        override fun getMessage(matcher: Matcher): LogCatMessage {
+        override fun getMessage(matcher: Matcher): AndroidLogCatMessage {
             var logLevel = Log.LogLevel.getByLetterString(matcher.group(5))
             if (logLevel == null && matcher.group(5) == "F") {
                 logLevel = Log.LogLevel.ASSERT
             }
-            return LogCatMessage(
+            return AndroidLogCatMessage(
                     logLevel,
                     matcher.group(3).trim(),
                     matcher.group(4).trim(),
@@ -59,7 +63,7 @@ class LogCatMessageParser {
     })
 
     private val androidStudioDumpPattern = LogCatMessagePattern(ANDROID_STUDIO_DUMP_PATTERN, object : LogCatMessageObtain {
-        override fun getMessage(matcher: Matcher): LogCatMessage {
+        override fun getMessage(matcher: Matcher): AndroidLogCatMessage {
             var logLevel = Log.LogLevel.getByLetterString(matcher.group(5))
             if (logLevel == null && matcher.group(5) == "F") {
                 logLevel = Log.LogLevel.ASSERT
@@ -69,7 +73,7 @@ class LogCatMessageParser {
             } else {
                 ""
             }
-            return LogCatMessage(
+            return AndroidLogCatMessage(
                     logLevel,
                     matcher.group(3).trim(),
                     matcher.group(4).trim(),
@@ -81,12 +85,12 @@ class LogCatMessageParser {
         }
     })
     private val androidStudioDumpPatternCropped = LogCatMessagePattern(ANDROID_STUDIO_PATTERN_CROPPED, object : LogCatMessageObtain {
-        override fun getMessage(matcher: Matcher): LogCatMessage {
+        override fun getMessage(matcher: Matcher): AndroidLogCatMessage {
             var logLevel = Log.LogLevel.getByLetterString(matcher.group(5))
             if (logLevel == null && matcher.group(5) == "F") {
                 logLevel = Log.LogLevel.ASSERT
             }
-            return LogCatMessage(
+            return AndroidLogCatMessage(
                     logLevel,
                     matcher.group(3).trim(),
                     matcher.group(4).trim(),
@@ -98,7 +102,7 @@ class LogCatMessageParser {
         }
     })
     private val androidStudioDumpPatternStacktrace = LogCatMessagePattern(ANDROID_STUDIO_PATTERN_STACKTRACE, object : LogCatMessageObtain {
-        override fun getMessage(matcher: Matcher): LogCatMessage {
+        override fun getMessage(matcher: Matcher): AndroidLogCatMessage {
             var logLevel = lastMessage?.logLevel
             if (logLevel == null) {
                 logLevel = Log.LogLevel.VERBOSE
@@ -123,7 +127,7 @@ class LogCatMessageParser {
             if (time == null) {
                 time = "time $UNKNOWN_VALUE"
             }
-            return LogCatMessage(
+            return AndroidLogCatMessage(
                     logLevel,
                     pid,
                     tid,
@@ -143,8 +147,8 @@ class LogCatMessageParser {
             androidStudioDumpPatternStacktrace
     )
 
-    fun processLogLines(lines: Array<String>): Collection<LogCatMessage> {
-        val messages = LinkedHashMap<String, LogCatMessage>()
+    fun processLogLines(lines: Array<String>): Collection<AndroidLogCatMessage> {
+        val messages = LinkedHashMap<String, AndroidLogCatMessage>()
         for (line in lines) {
             if (line.isEmpty()) {
                 continue
@@ -156,17 +160,17 @@ class LogCatMessageParser {
                 if (matcher.matches()) {
                     matched = true
                     val message = logCatPattern.getMessage(matcher)
-                    val identifier = "${message.time}_${message.pid}_${message.tid}"
+                    val identifier = getIdentifier(message)
                     val existing = messages[identifier]
                     if (existing != null) {
-                        val newMessage = LogCatMessage(
+                        val newMessage = AndroidLogCatMessage(
                                 message.logLevel,
                                 message.pid,
                                 message.tid,
                                 message.appName,
                                 message.tag,
                                 message.time,
-                                "${existing.message}\n\t${message.message}"
+                                "${existing.msg}\n\t${message.msg}"
                         )
                         messages[identifier] = newMessage
                     } else {
