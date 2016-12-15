@@ -330,11 +330,11 @@ abstract class AndroidPussycat : PussycatAbstract<LogCatMessage, AndroidData>() 
 
     private fun initAndroidDebugBridge(): AndroidDebugBridge? {
         try {
-            AndroidDebugBridge.init(false)
+            AndroidDebugBridge.initIfNeeded(false)
         } catch (e: IllegalStateException) {
             // Android debug bridge is already initialized.
         }
-        return AndroidDebugBridge.createBridge("adb", true)
+        return AndroidDebugBridge.createBridge("adb", false)
     }
 
     private fun waitForDevices(bridge: AndroidDebugBridge) {
