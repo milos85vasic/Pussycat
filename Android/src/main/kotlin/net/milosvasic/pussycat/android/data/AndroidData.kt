@@ -7,7 +7,7 @@ import net.milosvasic.pussycat.core.data.StringData
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.util.*
 
-class AndroidData(filter: DataFilter<LinkedHashMap<String, AndroidLogCatMessage>, String>) : StringData<AndroidLogCatMessage>(filter) {
+class AndroidData(filter: DataFilter<MutableMap<String, AndroidLogCatMessage>, String>) : StringData<AndroidLogCatMessage>(filter) {
 
     @Transient private var logLevel: Log.LogLevel? = null
 

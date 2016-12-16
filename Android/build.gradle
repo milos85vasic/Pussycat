@@ -1,10 +1,11 @@
 buildscript {
+    ext.kotlin_version = "1.0.5-3"
     repositories {
         jcenter()
         mavenCentral()
     }
     dependencies.classpath "com.android.tools.build:gradle:2.1.0"
-    dependencies.classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.5+"
+    dependencies.classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 }
 
 apply plugin: "kotlin"
@@ -22,11 +23,11 @@ dependencies {
     compile "junit:junit:4.12"
     testCompile "junit:junit:4.12"
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.5+"
-    compile "org.jetbrains.kotlin:kotlin-reflect:1.0.5+"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    testCompile "org.jetbrains.kotlin:kotlin-test:1.0.5+"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.5+"
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
     compile project(':Pussycat')
     compile files('libs/ddmlib.jar')

@@ -5,10 +5,10 @@ import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.util.*
 
-abstract class Data<T>(val filter: DataFilter<LinkedHashMap<String, T>, String>) : Filter<String, T> {
+abstract class Data<T>(val filter: DataFilter<MutableMap<String, T>, String>) : Filter<String, T> {
 
     protected var pattern = ""
-    protected val data = LinkedHashMap<String, T>()
+    protected val data: MutableMap<String, T> = Collections.synchronizedMap(LinkedHashMap<String, T>())
 
     override fun apply(pattern: String?) {
         this.pattern = pattern ?: ""
@@ -20,11 +20,11 @@ abstract class Data<T>(val filter: DataFilter<LinkedHashMap<String, T>, String>)
     }
 
     fun clear() {
-        data.clear()
+        data.keys.clear()
         pattern = ""
     }
 
-    fun get(): LinkedHashMap<String, T> {
+    fun get(): MutableMap<String, T> {
         return data
     }
 

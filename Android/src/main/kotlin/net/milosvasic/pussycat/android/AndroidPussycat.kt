@@ -14,7 +14,6 @@ import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.logging.ConsoleLogger
 import net.milosvasic.pussycat.utils.Text
 import java.io.File
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
 
@@ -165,7 +164,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         super.resume()
     }
 
-    override fun apply(data: LinkedHashMap<String, AndroidLogCatMessage>, pattern: String?) {
+    override fun apply(data: MutableMap<String, AndroidLogCatMessage>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
         clear()
@@ -334,7 +333,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         device = iDevice
         stopLogsReceiving()
         if (!data.get().isEmpty() && cleanup) {
-            data.get().clear()
+            data.clear()
             execute(COMMAND.CLEAR)
         }
         printLine("Device is ready [ $device ]")

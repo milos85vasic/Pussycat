@@ -5,7 +5,7 @@ import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 
-abstract class StringData<T>(filter: DataFilter<LinkedHashMap<String, T>, String>) : Data<T>(filter) {
+abstract class StringData<T>(filter: DataFilter<MutableMap<String, T>, String>) : Data<T>(filter) {
 
     override fun evaluate(message: T): Boolean {
         if (pattern.isEmpty()) {
