@@ -228,13 +228,17 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 println("Pussycat, saving to destination [ ${destination.absolutePath} ]")
                 val gson = Gson()
                 try {
+                    var index = 0
                     val values = data.get().values
-                    for ((index, message) in values.withIndex()) {
+                    val iterator = data.get().values.iterator()
+                    while(iterator.hasNext()){
+                        val message = iterator.next()
                         var json = gson.toJson(message)
                         if (index < values.size - 1) {
                             json += "\n"
                         }
                         destination.appendText(json)
+                        index++
                     }
                 } catch (e: Exception) {
                     printLine("Pussycat, error saving data: $e")

@@ -151,7 +151,7 @@ class LogCatMessageParser {
     )
 
     fun processLogLines(lines: Array<String>): Collection<AndroidLogCatMessage> {
-        val messages = LinkedHashMap<String, AndroidLogCatMessage>()
+        val messages = Collections.synchronizedMap(LinkedHashMap<String, AndroidLogCatMessage>())
         for (line in lines) {
             if (line.isEmpty()) {
                 continue
