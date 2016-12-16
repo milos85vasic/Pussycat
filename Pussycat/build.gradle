@@ -1,10 +1,14 @@
 buildscript {
+    ext.kotlin_version = '1.0.5-3'
     repositories {
         jcenter()
         mavenCentral()
     }
     dependencies.classpath "com.android.tools.build:gradle:2.1.0"
     dependencies.classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 }
 
 apply plugin: "kotlin"
@@ -26,4 +30,8 @@ dependencies {
 
     testCompile "org.jetbrains.kotlin:kotlin-test:1.0.5+"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.5+"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
 }

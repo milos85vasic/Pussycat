@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android/Android.iml" filepath="$PROJECT_DIR$/Android/Android.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/Apache/Apache.iml" filepath="$PROJECT_DIR$/Apache/Apache.iml" group="Core" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Core/Pussycat.iml" filepath="$PROJECT_DIR$/.idea/modules/Core/Pussycat.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Android/Android.iml" filepath="$PROJECT_DIR$/.idea/modules/Android/Android.iml" group="Android" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Android/Android_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Android/Android_main.iml" group="Android" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Android/Android_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Android/Android_test.iml" group="Android" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Apache/Apache.iml" filepath="$PROJECT_DIR$/.idea/modules/Apache/Apache.iml" group="Apache" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Apache/Apache_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Apache/Apache_main.iml" group="Apache" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Apache/Apache_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Apache/Apache_test.iml" group="Apache" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Pussycat/Pussycat.iml" filepath="$PROJECT_DIR$/.idea/modules/Pussycat/Pussycat.iml" group="Pussycat" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Pussycat/Pussycat_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Pussycat/Pussycat_main.iml" group="Pussycat" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Pussycat/Pussycat_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Pussycat/Pussycat_test.iml" group="Pussycat" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pusssycat.iml" filepath="$PROJECT_DIR$/.idea/modules/pusssycat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pusssycat_main.iml" filepath="$PROJECT_DIR$/.idea/modules/pusssycat_main.iml" group="pusssycat" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pusssycat_test.iml" filepath="$PROJECT_DIR$/.idea/modules/pusssycat_test.iml" group="pusssycat" />
     </modules>
   </component>
 </project>
