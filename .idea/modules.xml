@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Android/Android.iml" filepath="$PROJECT_DIR$/Android/Android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Apache/Apache.iml" filepath="$PROJECT_DIR$/Apache/Apache.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Pusssycat.iml" filepath="$PROJECT_DIR$/Pusssycat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android/Android.iml" filepath="$PROJECT_DIR$/Android/Android.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/Apache/Apache.iml" filepath="$PROJECT_DIR$/Apache/Apache.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Core/Pussycat.iml" filepath="$PROJECT_DIR$/.idea/modules/Core/Pussycat.iml" group="Core" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies.classpath "com.android.tools.build:gradle:2.1.0"
+    dependencies.classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.5+"
+}
+
+apply plugin: "kotlin"
+apply plugin: "java"
+apply plugin: "application"
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+
+    compile "junit:junit:4.12"
+    testCompile "junit:junit:4.12"
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.0.5+"
+    compile "org.jetbrains.kotlin:kotlin-reflect:1.0.5+"
+
+    testCompile "org.jetbrains.kotlin:kotlin-test:1.0.5+"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:1.0.5+"
+
+    compile project(':Pussycat')
+    compile files('libs/ddmlib.jar')
+    compile "com.google.code.gson:gson:2.8.0"
+    compile "com.github.salomonbrys.kotson:kotson:2.3.0"
+    compile "com.google.guava:guava:20.0"
+}
+
+mainClassName = "net.milosvasic.pussycat.android.MainKt"
+
+jar {
+    manifest {
+        attributes "Main-Class": "net.milosvasic.pussycat.android.MainKt"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
