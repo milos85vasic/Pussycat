@@ -115,7 +115,6 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 fun countBytes(line: String) {
                     bytesLoaded += line.toByteArray().size / 1024.0
                     val percent: Double = (bytesLoaded * 100.0) / (fileSizeInBytes / 1024.0)
-                    clear()
                     val s = String.format("%.2f", percent)
                     printLine("Pussycat, loading data. Please wait. [ $s % ]")
                 }
