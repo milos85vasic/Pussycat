@@ -1,6 +1,5 @@
 package net.milosvasic.pussycat.android.application
 
-import net.milosvasic.pussycat.android.application.Application
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 import org.junit.Assert
@@ -13,14 +12,14 @@ abstract class ApplicationTestAbstract {
     lateinit var expectedType: APPLICATION_TYPE
 
     @Test
-    fun testApplication() {
+    open fun testApplication() {
         val app = Application(params)
         app.pussy?.configuration?.exitOnStop = false
         Thread(Runnable {
             app.start()
             Assert.assertEquals(app.type, expectedType)
         }).start()
-        Thread.sleep(5000)
+        Thread.sleep(3000)
         Assert.assertEquals(app.pussy?.getPussycatMode(), expectedMode)
         app.stop()
     }
