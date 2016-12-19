@@ -16,6 +16,7 @@ import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
+import java.util.concurrent.CopyOnWriteArrayList
 
 
 abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidData>() {
@@ -164,7 +165,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         super.resume()
     }
 
-    override fun apply(data: MutableMap<String, AndroidLogCatMessage>, pattern: String?) {
+    override fun apply(data: CopyOnWriteArrayList<AndroidLogCatMessage>, pattern: String?) {
         refreshing.set(true)
         paused.set(false)
         clear()
@@ -182,7 +183,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 printLine(line)
                 x++
             }
-            for (line in data.values) {
+            for (line in data) {
                 if (this.data.evaluate(line)) {
                     if (this.data.getLogLevel() != null) {
                         if (line.logLevel == this.data.getLogLevel()) {
@@ -229,12 +230,9 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 val gson = Gson()
                 try {
                     var index = 0
-                    val values = data.get().values
-                    val iterator = data.get().values.iterator()
-                    while(iterator.hasNext()){
-                        val message = iterator.next()
+                    for (message in data.get()) {
                         var json = gson.toJson(message)
-                        if (index < values.size - 1) {
+                        if (index < data.get().size - 1) {
                             json += "\n"
                         }
                         destination.appendText(json)

@@ -11,9 +11,10 @@ import net.milosvasic.pussycat.events.Events
 import net.milosvasic.pussycat.logging.Logger
 import kotlin.reflect.KClass
 import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
 
-abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<MutableMap<String, T>, String>, Events {
+abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<T>, String>, Events {
 
     protected lateinit var TAG: KClass<*>
     protected lateinit var logger: Logger

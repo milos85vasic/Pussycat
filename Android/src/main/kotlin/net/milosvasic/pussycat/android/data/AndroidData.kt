@@ -6,8 +6,9 @@ import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.StringData
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
-class AndroidData(filter: DataFilter<MutableMap<String, AndroidLogCatMessage>, String>) : StringData<AndroidLogCatMessage>(filter) {
+class AndroidData(filter: DataFilter<CopyOnWriteArrayList<AndroidLogCatMessage>, String>) : StringData<AndroidLogCatMessage>(filter) {
 
     @Transient private var logLevel: Log.LogLevel? = null
 
@@ -26,21 +27,26 @@ class AndroidData(filter: DataFilter<MutableMap<String, AndroidLogCatMessage>, S
     }
 
     override fun addData(message: AndroidLogCatMessage) {
-        val identifier = getIdentifier(message)
-        val existing = data[identifier]
-        if (existing != null) {
-            val newMessage = AndroidLogCatMessage(
-                    message.logLevel,
-                    message.pid,
-                    message.tid,
-                    message.appName,
-                    message.tag,
-                    message.time,
-                    "${existing.msg}\n\t${message.msg}"
-            )
-            data[identifier] = newMessage
+        if (!data.isEmpty()) {
+            val identifier = getIdentifier(message)
+            val existing = data.last();
+            val existingIdentifier = getIdentifier(existing)
+            if (existing != null && identifier == existingIdentifier) {
+                val newMessage = AndroidLogCatMessage(
+                        message.logLevel,
+                        message.pid,
+                        message.tid,
+                        message.appName,
+                        message.tag,
+                        message.time,
+                        "${existing.msg}\n\t${message.msg}"
+                )
+                data[data.lastIndex] = newMessage
+            } else {
+                data.add(message)
+            }
         } else {
-            data.put(identifier, message)
+            data.add(message)
         }
     }
 

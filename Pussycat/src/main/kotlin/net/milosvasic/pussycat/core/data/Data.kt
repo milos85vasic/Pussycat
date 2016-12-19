@@ -3,12 +3,12 @@ package net.milosvasic.pussycat.core.data
 import net.milosvasic.pussycat.core.common.Filter
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.logging.LOG_TYPE
-import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
-abstract class Data<T>(val filter: DataFilter<MutableMap<String, T>, String>) : Filter<String, T> {
+abstract class Data<T>(val filter: DataFilter<CopyOnWriteArrayList<T>, String>) : Filter<String, T> {
 
     protected var pattern = ""
-    protected val data: MutableMap<String, T> = Collections.synchronizedMap(LinkedHashMap<String, T>())
+    protected val data = CopyOnWriteArrayList<T>()
 
     override fun apply(pattern: String?) {
         this.pattern = pattern ?: ""
@@ -20,11 +20,11 @@ abstract class Data<T>(val filter: DataFilter<MutableMap<String, T>, String>) : 
     }
 
     fun clear() {
-        data.keys.clear()
+        data.clear()
         pattern = ""
     }
 
-    fun get(): MutableMap<String, T> {
+    fun get(): CopyOnWriteArrayList<T> {
         return data
     }
 
