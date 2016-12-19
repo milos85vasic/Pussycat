@@ -6,10 +6,10 @@ import org.junit.Assert
 import org.junit.Test
 
 
-class ApplicationTestTerminalFilesystemParams2 : ApplicationTestAbstract() {
+class ApplicationTestTerminalFilesystemParams3  : ApplicationTestAbstract() {
 
     init {
-        params = arrayOf("--terminal", "--filesystem=")
+        params = arrayOf("--terminal", "--filesystem===")
         expectedType = APPLICATION_TYPE.CLI
     }
 

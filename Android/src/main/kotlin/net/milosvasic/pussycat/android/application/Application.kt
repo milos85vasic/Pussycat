@@ -17,7 +17,6 @@ open class Application() : ApplicationAbstract() {
                 type = APPLICATION_TYPE.CLI
             }
         }
-
         if (type == APPLICATION_TYPE.CLI) {
             pussy = TerminalPussycat()
             pussy?.start(args)

@@ -6,10 +6,10 @@ import org.junit.Assert
 import org.junit.Test
 
 
-class ApplicationTestTerminalFilesystemParams2 : ApplicationTestAbstract() {
+class ApplicationTestTerminalFilesystemParams4  : ApplicationTestAbstract() {
 
     init {
-        params = arrayOf("--terminal", "--filesystem=")
+        params = arrayOf("--terminal", "--filesystem=../samples/android/testing_parser.txt")
         expectedType = APPLICATION_TYPE.CLI
     }
 
