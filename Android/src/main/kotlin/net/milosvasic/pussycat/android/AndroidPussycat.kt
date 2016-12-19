@@ -16,6 +16,7 @@ import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
+import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 import java.util.concurrent.CopyOnWriteArrayList
 
 
@@ -91,6 +92,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 if (paused.get()) {
                     paused.set(false)
                 }
+                mode = PUSSYCAT_MODE.LIVE
             }
         }).start()
     }
@@ -109,6 +111,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 if (paused.get()) {
                     paused.set(false)
                 }
+                mode = PUSSYCAT_MODE.FILESYSTEM
                 val fileSizeInBytes = logcat.length()
                 var loadingSuccess = true
                 var bytesLoaded: Double = .0

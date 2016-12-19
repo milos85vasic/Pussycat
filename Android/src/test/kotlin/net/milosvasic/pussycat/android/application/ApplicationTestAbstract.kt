@@ -1,20 +1,19 @@
-package net.milosvasic.pussycat.android
+package net.milosvasic.pussycat.android.application
 
 import net.milosvasic.pussycat.android.application.Application
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
+import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 import org.junit.Assert
 import org.junit.Test
 
+abstract class ApplicationTestAbstract {
 
-class ApplicationTestGuiParam : ApplicationTestAbstract() {
-
-    init {
-        params = arrayOf("--gui")
-        expectedType = APPLICATION_TYPE.GUI
-    }
+    lateinit var params: Array<String>
+    var expectedMode: PUSSYCAT_MODE? = null
+    lateinit var expectedType: APPLICATION_TYPE
 
     @Test
-    override fun testApplication() {
+    fun testApplication() {
         val app = Application(params)
         app.pussy?.configuration?.exitOnStop = false
         Thread(Runnable {
@@ -22,6 +21,7 @@ class ApplicationTestGuiParam : ApplicationTestAbstract() {
             Assert.assertEquals(app.type, expectedType)
         }).start()
         Thread.sleep(5000)
+        Assert.assertEquals(app.pussy?.getPussycatMode(), expectedMode)
         app.stop()
     }
 

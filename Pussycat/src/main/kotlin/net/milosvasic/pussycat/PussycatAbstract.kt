@@ -1,6 +1,7 @@
 package net.milosvasic.pussycat
 
 
+import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.core.common.DataFilter
@@ -16,10 +17,11 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<T>, String>, Events {
 
+    protected lateinit var data: D
     protected lateinit var TAG: KClass<*>
     protected lateinit var logger: Logger
     protected var color: String = Color.BLACK
-    protected lateinit var data: D
+    protected var mode : PUSSYCAT_MODE? = null
     val configuration = PussycatConfiguration()
     protected val listeners: MutableSet<Events> = Collections.synchronizedSet(HashSet<Events>())
 
@@ -78,6 +80,10 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
 
     fun unsubscribe(listener: Events) {
         listeners.remove(listener)
+    }
+
+    fun getPussycatMode(): PUSSYCAT_MODE? {
+        return mode
     }
 
     abstract fun start(args: Array<String>)
