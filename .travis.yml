@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - oraclejdk8
+
+notifications:
+  slack: milosvasic:IsV7dDUUEyrO69tIFfPYqe1O
+
+script:
+  - ./gradlew clean
+  - ./gradlew assemble
+  - ./gradlew test
