@@ -1,9 +1,12 @@
 package net.milosvasic.pussycat
 
+import net.milosvasic.pussycat.terminal.Printer
+
 
 class PussycatConfiguration {
 
     var exitOnStop = true
+    var terminalPriner: Printer? = null
     private var exitRoutine: Runnable? = null
 
     fun getExitRoutine() = Runnable {
