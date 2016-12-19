@@ -8,17 +8,17 @@ Advanced Android logcat reading and filtering utility.
 
 ## Features
 
-*TDB.*
+*TBD.*
 
 ## Dependencies:
 
 - Make sure you have adb set to your system path!
-- *TDB.*
+- *TBD.*
 
 ## Usage:
 
-*TDB.*
+*TBD.*
 
 ## Commands:
 
-*TDB.*
+*TBD.*
