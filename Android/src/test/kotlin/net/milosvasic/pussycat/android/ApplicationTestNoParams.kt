@@ -15,9 +15,10 @@ class ApplicationTestNoParams : ApplicationTestAbstract() {
     @Test
     override fun testApplication() {
         val app = Application()
-        val type = app.start(params)
-        Assert.assertEquals(type, expectedType)
-        Thread.sleep(3000)
+        Thread(Runnable {
+            val type = app.start(params)
+            Assert.assertEquals(type, expectedType)
+        }).start()
         app.stop()
     }
 

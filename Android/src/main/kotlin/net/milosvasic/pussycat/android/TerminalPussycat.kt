@@ -43,7 +43,12 @@ class TerminalPussycat : AndroidPussycat() {
             Thread.currentThread().name = "Commands thread"
             run.set(true)
             while (run.get()) {
-                val line = readLine()
+                var line: String? = null
+                try {
+                    line = readLine()
+                } catch (e: Exception) {
+                    printLine("Pussycat, error reading line: $e")
+                }
                 if (line != null && !line.isEmpty()) {
                     if (line.startsWith("@@")) {
                         var cmdParam: String
