@@ -1,5 +1,6 @@
 package net.milosvasic.pussycat.android.application
 
+import net.milosvasic.pussycat.android.terminal.BlackHoleTerminalPrinter
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 import net.milosvasic.pussycat.core.COMMAND
@@ -19,6 +20,7 @@ class ApplicationTestModesToggling : ApplicationTestAbstract() {
     override fun testApplication() {
         val app = Application(params)
         app.pussy?.configuration?.exitOnStop = false
+        app.pussy?.configuration?.terminalPriner = BlackHoleTerminalPrinter()
         Thread(Runnable {
             app.start()
             Assert.assertEquals(app.type, expectedType)
