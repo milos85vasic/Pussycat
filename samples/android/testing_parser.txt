@@ -1,0 +1,45 @@
+12-08 11:04:07.025  8816  8816 W Atfwd_Sendcmd: AtCmdFwd service not published, waiting... retryCnt : 5
+12-08 11:04:25.135 10539 10554 V CoreServiceTest: Asserting connect events [ connected: 1 ][ disconnected: 1 ]
+12-08 11:04:25.138 10539 10554 V CoreServiceTest: Core service test [ EXECUTED ]
+12-08 11:04:25.142 10539 10554 I TestRunner: failed: testCoreService(net.milosvasic.test.service.CoreServiceTest)
+12-08 11:04:25.143 10539 10554 I TestRunner: ----- begin exception -----
+12-08 11:04:25.146 10539 10554 I TestRunner: junit.framework.AssertionFailedError
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at junit.framework.Assert.fail(Assert.java:48)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at junit.framework.Assert.assertTrue(Assert.java:20)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at junit.framework.Assert.assertTrue(Assert.java:27)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at net.milosvasic.test.service.CoreServiceTest.testCoreService(CoreServiceTest.java:149)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at java.lang.reflect.Method.invoke(Native Method)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at android.support.test.internal.runner.TestExecutor.execute(TestExecutor.java:59)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at android.support.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:262)
+12-08 11:04:25.146 10539 10554 I TestRunner: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1932)
+12-08 11:04:25.146 10539 10554 I TestRunner: ----- end exception -----
+12-08 11:04:25.153 10539 10554 I TestRunner: finished: testCoreService(net.milosvasic.test.service.CoreServiceTest)
+12-08 11:04:25.158 10539 10539 I MonitoringInstrumentation: Activities that are still in CREATED to STOPPED: 0
+12-08 11:04:25.159 10539 10554 I TestRunner: run finished: 1 tests, 1 failed, 0 ignored
+12-08 11:04:25.257 10539 10554 I MonitoringInstrumentation: waitForActivitiesToComplete() took: 0ms
+12-08 11:04:25.257 10539 10539 I MonitoringInstrumentation: Activities that are still in CREATED to STOPPED: 0
