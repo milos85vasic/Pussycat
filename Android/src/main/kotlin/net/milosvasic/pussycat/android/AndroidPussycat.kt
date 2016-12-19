@@ -129,7 +129,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                             message = gson.fromJson<AndroidLogCatMessage>(line)
                         } catch (e: Exception) {
                             loadingSuccess = false
-                            message = AndroidLogCatMessage(Log.LogLevel.ERROR, "ERROR", "ERROR", "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", e.toString())
+                            message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", e.toString())
                         }
                         data.addData(message)
                         countBytes(line)

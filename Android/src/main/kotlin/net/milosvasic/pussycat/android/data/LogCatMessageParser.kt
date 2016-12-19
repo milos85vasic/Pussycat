@@ -5,7 +5,7 @@ import com.android.ddmlib.logcat.LogCatMessage
 import java.util.*
 import java.util.regex.Matcher
 import java.util.LinkedHashMap
-
+import javax.print.attribute.IntegerSyntax
 
 
 class LogCatMessageParser {
@@ -38,8 +38,8 @@ class LogCatMessageParser {
             }
             return AndroidLogCatMessage(
                     logLevel,
-                    matcher.group(3).trim(),
-                    matcher.group(4).trim(),
+                    Integer.valueOf(matcher.group(3).trim()),
+                    Integer.valueOf(matcher.group(4).trim()),
                     matcher.group(6).trim(),
                     matcher.group(6).trim(),
                     matcher.group(2).trim(),
@@ -55,8 +55,8 @@ class LogCatMessageParser {
             }
             return AndroidLogCatMessage(
                     logLevel,
-                    matcher.group(3).trim(),
-                    matcher.group(4).trim(),
+                    Integer.valueOf(matcher.group(3).trim()),
+                    Integer.valueOf(matcher.group(4).trim()),
                     matcher.group(6).trim(),
                     matcher.group(6).trim(),
                     matcher.group(2).trim(),
@@ -78,8 +78,8 @@ class LogCatMessageParser {
             }
             return AndroidLogCatMessage(
                     logLevel,
-                    matcher.group(3).trim(),
-                    matcher.group(4).trim(),
+                    Integer.valueOf(matcher.group(3).trim()),
+                    Integer.valueOf(matcher.group(4).trim()),
                     matcher.group(6).trim(),
                     matcher.group(6).trim(),
                     matcher.group(2).trim(),
@@ -95,8 +95,8 @@ class LogCatMessageParser {
             }
             return AndroidLogCatMessage(
                     logLevel,
-                    matcher.group(3).trim(),
-                    matcher.group(4).trim(),
+                    Integer.valueOf(matcher.group(3).trim()),
+                    Integer.valueOf(matcher.group(4).trim()),
                     matcher.group(6).trim(),
                     matcher.group(6).trim(),
                     matcher.group(2).trim(),
@@ -112,11 +112,11 @@ class LogCatMessageParser {
             }
             var pid = lastMessage?.pid
             if (pid == null) {
-                pid = UNKNOWN_VALUE
+                pid = -1
             }
             var tid = lastMessage?.tid
             if (tid == null) {
-                tid = UNKNOWN_VALUE
+                tid = -1
             }
             var appName = lastMessage?.appName
             if (appName == null) {
@@ -184,7 +184,7 @@ class LogCatMessageParser {
                 }
             }
             if (!matched) {
-                val message = AndroidLogCatMessage(Log.LogLevel.ERROR, "ERROR", "ERROR", "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", "Log not matched,\n\t$line\n")
+                val message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", "Log not matched,\n\t$line\n")
                 messages.put(System.currentTimeMillis().toString(), message)
             }
         }

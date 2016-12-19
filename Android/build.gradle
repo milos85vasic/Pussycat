@@ -30,10 +30,9 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
     compile project(':Pussycat')
-    compile files('libs/ddmlib.jar')
+    compile 'com.android.tools.ddms:ddmlib:25.2.0'
     compile "com.google.code.gson:gson:2.8.0"
     compile "com.github.salomonbrys.kotson:kotson:2.3.0"
-    compile "com.google.guava:guava:20.0"
 }
 
 mainClassName = "net.milosvasic.pussycat.android.MainKt"

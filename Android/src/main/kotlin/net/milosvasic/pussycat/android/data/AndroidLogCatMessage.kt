@@ -5,8 +5,8 @@ import com.android.ddmlib.logcat.LogCatMessage
 
 class AndroidLogCatMessage(
         val logLevel: Log.LogLevel,
-        val pid: String,
-        val tid: String,
+        val pid: Int,
+        val tid: Int,
         val appName: String,
         val tag: String,
         val time: String,
@@ -21,7 +21,7 @@ class AndroidLogCatMessage(
                     message.tid,
                     message.appName,
                     message.tag,
-                    message.time,
+                    message.timestamp.toString(),
                     message.message
             )
         }
