@@ -14,11 +14,11 @@ class ApplicationTestTerminalFilesystemParams1 : ApplicationTestAbstract() {
 
     @Test
     override fun testApplication() {
-        val app = Application()
+        val app = Application(params)
+        app.pussy?.configuration?.exitOnStop = false
         Thread(Runnable {
-            val type = app.start(params)
-            Assert.assertEquals(type, expectedType)
-            app.pussy?.configuration?.exitOnStop = false
+            app.start()
+            Assert.assertEquals(app.type, expectedType)
         }).start()
         Thread.sleep(5000)
         app.stop()

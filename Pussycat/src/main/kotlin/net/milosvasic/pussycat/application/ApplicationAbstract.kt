@@ -1,8 +1,8 @@
 package net.milosvasic.pussycat.application
 
-abstract class ApplicationAbstract {
+abstract class ApplicationAbstract(val args: Array<String>) {
 
-    abstract fun start(args: Array<String>): APPLICATION_TYPE?
+    abstract fun start()
 
     abstract fun stop()
 

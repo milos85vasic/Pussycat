@@ -6,12 +6,13 @@ import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.ApplicationAbstract
 import net.milosvasic.pussycat.core.COMMAND
 
-open class Application() : ApplicationAbstract() {
+open class Application(args: Array<String>) : ApplicationAbstract(args) {
 
+    var type: APPLICATION_TYPE? = null
     var pussy: AndroidPussycat? = null
 
-    override fun start(args: Array<String>): APPLICATION_TYPE {
-        var type = APPLICATION_TYPE.GUI
+    init {
+        type = APPLICATION_TYPE.GUI
         for (arg in args) {
             if (arg.trim() == "--terminal") {
                 type = APPLICATION_TYPE.CLI
@@ -19,11 +20,13 @@ open class Application() : ApplicationAbstract() {
         }
         if (type == APPLICATION_TYPE.CLI) {
             pussy = TerminalPussycat()
-            pussy?.start(args)
         } else {
-            // TODO: Start GUI
+            // TODO: Create gui instance.
         }
-        return type
+    }
+
+    override fun start() {
+        pussy?.start(args)
     }
 
     override fun stop() {
