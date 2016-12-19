@@ -20,6 +20,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     protected lateinit var logger: Logger
     protected var color: String = Color.BLACK
     protected lateinit var data: D
+    val configuration = PussycatConfiguration()
     protected val listeners: MutableSet<Events> = Collections.synchronizedSet(HashSet<Events>())
 
     override fun execute(executable: COMMAND, params: Array<String>) {

@@ -21,20 +21,21 @@ class TerminalPussycat : AndroidPussycat() {
     val queue = LinkedBlockingQueue<String>()
     val out = BufferedWriter(OutputStreamWriter(FileOutputStream(FileDescriptor.out), "ASCII"), 512)
 
-    override fun start(args: Array<String>) {
-        val shutdown = fun() {
+    init {
+        configuration.setExitRoutine(Runnable {
             printLine("We are shutting down Pussycat.")
             run.set(false)
             System.`in`.close()
             printLine("Bye, bye!")
-            System.exit(0)
-        }
+        })
+    }
 
+    override fun start(args: Array<String>) {
         val listener = object : Events {
             override fun onEvent(event: EVENT) {
                 if (event == EVENT.STOP) {
                     unsubscribe(this)
-                    shutdown.invoke()
+                    configuration.getExitRoutine().run()
                 }
             }
         }
