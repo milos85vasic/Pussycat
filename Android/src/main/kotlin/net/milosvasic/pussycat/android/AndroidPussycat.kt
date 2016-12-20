@@ -17,11 +17,10 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
+import sun.plugin2.liveconnect.JavaClass
 import java.util.concurrent.CopyOnWriteArrayList
 import java.io.BufferedReader
 import java.io.InputStreamReader
-
-
 
 
 abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidData>() {
@@ -221,14 +220,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                     name = "$name.$FILE_EXTENSION"
                 }
             }
-            val home = System.getProperty("user.home")
-            root = File("$home${File.separator}Pussycat")
-            if (!root.exists()) {
-                if (!root.mkdirs()) {
-                    printLine("Couldn't create directory [ ${root.absolutePath} ]")
-                    return@Runnable
-                }
-            }
+            root = getPussycatHome()
             destination = File(root.absolutePath, name)
             if (destination.exists()) {
                 printLine("Pussycat, file already exists [ ${destination.absolutePath} ]. Skipping.")
@@ -376,14 +368,25 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         }
         var bridge: AndroidDebugBridge? = null
         try {
-            bridge = AndroidDebugBridge.createBridge("adbss", false)
+            bridge = AndroidDebugBridge.createBridge("adb", false)
         } catch (e: Exception) {
             printLine("Pussycat, error occurred while creating debug bridge: $e")
         }
         if (bridge == null) {
-            printLine("Pussycat, adb not found in your system path. Using local adb version.")
+            printLine("Pussycat, adb not found in your system path. We will try to use local pussycat adb binary.")
+            val localAdbName = "local_adb"
+            val root = getPussycatHome()
+            val localAdb = File(root.absolutePath, localAdbName)
+            if (!localAdb.exists()) {
+                printLine("Pussycat, initializing local pussycat adb binary.")
+                val input = javaClass.classLoader.getResourceAsStream(localAdbName)
+                localAdb.writeBytes(input.readBytes())
+                input.close()
+                localAdb.setExecutable(true)
+                printLine("Pussycat, local pussycat adb binary initialized.")
+            }
             try {
-                bridge = AndroidDebugBridge.createBridge("tools/local_adb", false)
+                bridge = AndroidDebugBridge.createBridge(localAdb.absolutePath, false)
             } catch (e: Exception) {
                 printLine("Pussycat, error occurred while creating alternative debug bridge: $e")
             }
@@ -414,6 +417,17 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
     private fun stopLogsReceiving() {
         logcatTask?.stop()
         logcatTask?.removeLogCatListener(logcatListener)
+    }
+
+    private fun getPussycatHome(): File {
+        val home = System.getProperty("user.home")
+        val root = File("$home${File.separator}Pussycat")
+        if (!root.exists()) {
+            if (!root.mkdirs()) {
+                printLine("Couldn't create directory [ ${root.absolutePath} ]")
+            }
+        }
+        return root
     }
 
 }

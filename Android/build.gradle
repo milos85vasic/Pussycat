@@ -47,12 +47,3 @@ jar {
     }
 }
 
-task copyAdb(type: Copy) {
-    from "../tools"
-    into "build/libs/tools"
-}
-
-task copySamples(type: Copy) {
-    from "../samples/android"
-    into "build/libs/samples/android"
-}
