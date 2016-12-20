@@ -1,5 +1,6 @@
 package net.milosvasic.pussycat.android.application
 
+import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.terminal.BlackHoleTerminalPrinter
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
@@ -29,14 +30,12 @@ class ApplicationTestModesToggling : ApplicationTestAbstract() {
         Assert.assertEquals(app.pussy?.getPussycatMode(), expectedMode)
         for (x in 0..10) {
             if (x % 2 == 0) {
-                val file: String
                 if (x >= 5) {
-                    file = "$x.txt"
+                    app.pussy?.execute(COMMAND.FILESYSTEM, arrayOf("./$x.txt"))
                 } else {
-                    file = "testing_parser.txt"
                     expectedMode = PUSSYCAT_MODE.FILESYSTEM
+                    app.pussy?.execute(COMMAND.FILESYSTEM, arrayOf(localSample.absolutePath))
                 }
-                app.pussy?.execute(COMMAND.FILESYSTEM, arrayOf("../samples/android/$file"))
             } else {
                 app.pussy?.execute(COMMAND.LIVE)
                 expectedMode = PUSSYCAT_MODE.LIVE

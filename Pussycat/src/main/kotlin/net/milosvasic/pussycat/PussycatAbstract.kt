@@ -10,6 +10,7 @@ import net.milosvasic.pussycat.core.common.Execute
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.events.Events
 import net.milosvasic.pussycat.logging.Logger
+import java.io.File
 import kotlin.reflect.KClass
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
@@ -24,6 +25,17 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     protected var mode : PUSSYCAT_MODE? = null
     val configuration = PussycatConfiguration()
     protected val listeners: MutableSet<Events> = Collections.synchronizedSet(HashSet<Events>())
+
+    companion object {
+        fun getPussycatHome(): File {
+            val home = System.getProperty("user.home")
+            val root = File("$home${File.separator}Pussycat")
+            if (!root.exists()) {
+                root.mkdirs()
+            }
+            return root
+        }
+    }
 
     override fun execute(executable: COMMAND, params: Array<String>) {
         when (executable) {
@@ -97,5 +109,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     abstract protected fun clear()
 
     abstract protected fun export(params: Array<out String?>)
+
+    abstract protected fun printLine(text: String)
 
 }

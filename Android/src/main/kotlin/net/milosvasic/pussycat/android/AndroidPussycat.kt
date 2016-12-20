@@ -17,10 +17,7 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
-import sun.plugin2.liveconnect.JavaClass
 import java.util.concurrent.CopyOnWriteArrayList
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 
 abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidData>() {
@@ -245,8 +242,6 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         }).start()
     }
 
-    abstract protected fun printLine(text: String)
-
     abstract protected fun printLine(text: String, logLevel: Log.LogLevel)
 
     abstract protected fun printLine(line: AndroidLogCatMessage)
@@ -417,17 +412,6 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
     private fun stopLogsReceiving() {
         logcatTask?.stop()
         logcatTask?.removeLogCatListener(logcatListener)
-    }
-
-    private fun getPussycatHome(): File {
-        val home = System.getProperty("user.home")
-        val root = File("$home${File.separator}Pussycat")
-        if (!root.exists()) {
-            if (!root.mkdirs()) {
-                printLine("Couldn't create directory [ ${root.absolutePath} ]")
-            }
-        }
-        return root
     }
 
 }
