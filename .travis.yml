@@ -8,4 +8,6 @@ notifications:
 script:
   - ./gradlew clean
   - ./gradlew assemble
+  - ./gradlew android:copyAdb
+  - ./gradlew android:copySamples
   - ./gradlew test

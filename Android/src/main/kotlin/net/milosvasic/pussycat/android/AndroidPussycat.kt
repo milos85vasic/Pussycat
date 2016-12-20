@@ -18,6 +18,10 @@ import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 import java.util.concurrent.CopyOnWriteArrayList
+import java.io.BufferedReader
+import java.io.InputStreamReader
+
+
 
 
 abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidData>() {
@@ -370,7 +374,21 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         } catch (e: IllegalStateException) {
             // Android debug bridge is already initialized.
         }
-        return AndroidDebugBridge.createBridge("adb", false)
+        var bridge: AndroidDebugBridge? = null
+        try {
+            bridge = AndroidDebugBridge.createBridge("adbss", false)
+        } catch (e: Exception) {
+            printLine("Pussycat, error occurred while creating debug bridge: $e")
+        }
+        if (bridge == null) {
+            printLine("Pussycat, adb not found in your system path. Using local adb version.")
+            try {
+                bridge = AndroidDebugBridge.createBridge("tools/local_adb", false)
+            } catch (e: Exception) {
+                printLine("Pussycat, error occurred while creating alternative debug bridge: $e")
+            }
+        }
+        return bridge
     }
 
     private fun waitForDevices(bridge: AndroidDebugBridge) {
