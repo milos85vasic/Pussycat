@@ -11,6 +11,7 @@ import java.io.File
 
 abstract class ApplicationTestAbstract {
 
+    var waitingTime : Long = 3000
     lateinit var localSample : File
     lateinit var params: Array<String>
     var expectedMode: PUSSYCAT_MODE? = null
@@ -39,11 +40,12 @@ abstract class ApplicationTestAbstract {
         val app = Application(params)
         app.pussy?.configuration?.exitOnStop = false
         app.pussy?.configuration?.terminalPriner = BlackHoleTerminalPrinter()
+        app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 2
         Thread(Runnable {
             app.start()
             Assert.assertEquals(app.type, expectedType)
         }).start()
-        Thread.sleep(3000)
+        Thread.sleep(waitingTime)
         Assert.assertEquals(app.pussy?.getPussycatMode(), expectedMode)
         app.stop()
     }

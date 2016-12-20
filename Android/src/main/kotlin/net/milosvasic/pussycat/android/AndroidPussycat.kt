@@ -391,7 +391,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
 
     private fun waitForDevices(bridge: AndroidDebugBridge) {
         val sleepTime: Long = 1000
-        var timeOut: Long = 30 * 1000
+        var timeOut: Long = configuration.waitingForDevicesTimeoutInSeconds * sleepTime
         while (!bridge.hasInitialDeviceList() && timeOut > 0) {
             Thread.sleep(sleepTime)
             timeOut -= sleepTime

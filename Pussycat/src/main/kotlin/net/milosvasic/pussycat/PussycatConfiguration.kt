@@ -8,6 +8,7 @@ class PussycatConfiguration {
     var exitOnStop = true
     var terminalPriner: Printer? = null
     private var exitRoutine: Runnable? = null
+    var waitingForDevicesTimeoutInSeconds = 30
 
     fun getExitRoutine() = Runnable {
         exitRoutine?.run()
