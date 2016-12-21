@@ -22,7 +22,7 @@ class ApplicationTestModesToggling : ApplicationTestAbstract() {
         var pussycatModeToExpect = PUSSYCAT_MODE.LIVE
 
         app.pussy?.configuration?.exitOnStop = false
-        app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 2
+        app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 1
         app.pussy?.configuration?.terminalPriner = BlackHoleTerminalPrinter()
 
         app.start()

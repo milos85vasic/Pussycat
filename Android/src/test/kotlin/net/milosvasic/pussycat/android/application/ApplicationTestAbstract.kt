@@ -40,7 +40,7 @@ abstract class ApplicationTestAbstract {
         val app = Application(params)
         app.pussy?.configuration?.exitOnStop = false
         app.pussy?.configuration?.terminalPriner = BlackHoleTerminalPrinter()
-        app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 2
+        app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 1
         Thread(Runnable {
             app.start()
             Assert.assertEquals(app.type, expectedType)
