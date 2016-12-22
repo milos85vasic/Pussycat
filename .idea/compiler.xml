@@ -6,10 +6,8 @@
       <module name="Android_test" target="1.8" />
       <module name="Apache_main" target="1.8" />
       <module name="Apache_test" target="1.8" />
-      <module name="Core_main" target="1.8" />
-      <module name="Core_test" target="1.8" />
-      <module name="pusssycat_main" target="1.8" />
-      <module name="pusssycat_test" target="1.8" />
+      <module name="Pussycat-Pussycat_main" target="1.8" />
+      <module name="Pussycat-Pussycat_test" target="1.8" />
       <module name="Pussycat_main" target="1.8" />
       <module name="Pussycat_test" target="1.8" />
     </bytecodeTargetLevel>

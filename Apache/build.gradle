@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = "1.0.5-3"
+    ext.kotlin_version = '1.0.6'
     repositories {
         jcenter()
         mavenCentral()
@@ -15,3 +15,7 @@ repositories {
     jcenter()
     mavenCentral()
 }
+
+dependencies.compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+sourceSets.main.java.srcDirs += 'src/main/kotlin'
