@@ -82,7 +82,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
     override fun live() {
         Thread(Runnable {
             Thread.currentThread().name = "Live adb reading thread"
-            var debugBridge = initAndroidDebugBridge()
+            val debugBridge = initAndroidDebugBridge()
             if (debugBridge == null) {
                 printLine("Pussycat, invalid ADB path")
             } else {
@@ -370,7 +370,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         if (bridge == null) {
             printLine("Pussycat, adb not found in your system path. We will try to use local pussycat adb binary.")
             val osString = System.getProperty("os.name").toLowerCase()
-            var os: String
+            val os: String
             if (osString.contains("mac")) {
                 os = "macos"
             } else if (osString.contains("linux")) {
@@ -380,12 +380,12 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
             } else {
                 os = "unknown"
             }
-            val localAdbName = "adb/$os/local_adb"
+            val localAdbResource = "adb/$os/local_adb"
             val root = getPussycatHome()
-            val localAdb = File(root.absolutePath, localAdbName)
+            val localAdb = File(root.absolutePath, "local_adb")
             if (!localAdb.exists()) {
                 printLine("Pussycat, initializing local pussycat adb binary.")
-                val input = javaClass.classLoader.getResourceAsStream(localAdbName)
+                val input = javaClass.classLoader.getResourceAsStream(localAdbResource)
                 localAdb.writeBytes(input.readBytes())
                 input.close()
                 localAdb.setExecutable(true)
