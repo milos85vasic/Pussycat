@@ -11,6 +11,7 @@ import javax.print.attribute.IntegerSyntax
 class LogCatMessageParser {
 
     var lastMessage: AndroidLogCatMessage? = null
+    private val listeners = HashSet<LogCatMessageParserMatcherListener>()
 
     companion object {
         val UNKNOWN_VALUE = "unknown"
@@ -176,9 +177,11 @@ class LogCatMessageParser {
                                 "${existing.msg}\n\t${message.msg}"
                         )
                         messages[identifier] = newMessage
+                        notify(true, newMessage)
                     } else {
                         lastMessage = message
                         messages.put(identifier, message)
+                        notify(true, message)
                     }
                     break
                 }
@@ -186,9 +189,24 @@ class LogCatMessageParser {
             if (!matched) {
                 val message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", "Log not matched,\n\t$line\n")
                 messages.put(System.currentTimeMillis().toString(), message)
+                notify(false, message)
             }
         }
         return messages.values
+    }
+
+    fun subscribe(listener: LogCatMessageParserMatcherListener) {
+        listeners.add(listener)
+    }
+
+    fun unsubscribe(listener: LogCatMessageParserMatcherListener) {
+        listeners.remove(listener)
+    }
+
+    fun notify(success: Boolean, message: AndroidLogCatMessage) {
+        for (listener in listeners) {
+            listener.onMatch(success, message)
+        }
     }
 
 }

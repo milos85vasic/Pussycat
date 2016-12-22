@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.android
+package net.milosvasic.pussycat.android.parser
 
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.data.LogCatMessageParser
@@ -7,19 +7,45 @@ import org.junit.Before
 import org.junit.Test
 import java.util.ArrayList
 import com.sun.org.apache.xalan.internal.utils.SecuritySupport.getContextClassLoader
+import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
+import net.milosvasic.pussycat.android.data.LogCatMessageParserMatcherListener
 import net.milosvasic.pussycat.utils.Text
+import org.junit.After
 import java.io.*
 
 
 class LogCatMessageParserTest {
 
+    var failed = 0
+    var currentResource = ""
     val parser = LogCatMessageParser()
     var resources = mutableListOf<String>()
 
+    val listener = object : LogCatMessageParserMatcherListener {
+        override fun onMatch(success: Boolean, message: AndroidLogCatMessage?) {
+            if (currentResource == "to_fail.txt") {
+                if (success) {
+                    Assert.fail("We expected resource to fail.")
+                } else {
+                    failed++
+                }
+            } else {
+                val msg = message?.msg as String
+                for (item in ParsingFailureIgnoreList.list) {
+                    if (msg.contains(item)) {
+                        return
+                    }
+                }
+                if (!success) Assert.fail(message?.msg)
+            }
+        }
+    }
+
     @Before
-    fun beforeTestApplication() {
-        val resources = getResourceFiles("samples/android/parser")
-        Assert.assertTrue(resources.size == 3)
+    fun beforeTestParser() {
+        parser.subscribe(listener)
+        resources.addAll(getResourceFiles("samples/android/parser"))
+        Assert.assertTrue(resources.size == 4)
         for (resource in resources) {
             val root = PussycatAbstract.getPussycatHome()
             val localSample = File(root.absolutePath, resource)
@@ -38,11 +64,18 @@ class LogCatMessageParserTest {
     @Test
     fun testParser() {
         for (resource in resources) {
-            val resourceFile = File(PussycatAbstract.getPussycatHome(), resource)
+            currentResource = resource
+            val resourceFile = File(PussycatAbstract.Companion.getPussycatHome(), resource)
             val lines = resourceFile.readLines()
             val messages = parser.processLogLines(Array(lines.size, { i -> lines[i] }))
             Assert.assertFalse(messages.isEmpty())
         }
+        Assert.assertEquals(failed, 3)
+    }
+
+    @After
+    fun afterTestParser() {
+        parser.unsubscribe(listener)
     }
 
     private fun getResourceFiles(path: String): List<String> {
