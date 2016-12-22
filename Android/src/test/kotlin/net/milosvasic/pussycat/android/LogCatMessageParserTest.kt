@@ -19,7 +19,7 @@ class LogCatMessageParserTest {
     @Before
     fun beforeTestApplication() {
         val resources = getResourceFiles("samples/android/parser")
-        Assert.assertTrue(resources.size == 2)
+        Assert.assertTrue(resources.size == 3)
         for (resource in resources) {
             val root = PussycatAbstract.getPussycatHome()
             val localSample = File(root.absolutePath, resource)
