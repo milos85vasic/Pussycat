@@ -6,8 +6,7 @@ object ParsingFailureIgnoreList {
     val list = listOf(
             "* daemon not running. starting it now on port",
             "* daemon started successfully *",
-            "--------- beginning of system",
-            "--------- beginning of main"
+            "--------- "
     )
 
 }
