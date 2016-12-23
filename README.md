@@ -1,8 +1,8 @@
-# Pussycat - Android logcat viewer V1.0
+# Pussycat for Android V1.0
 
-Advanced Android logcat reading and filtering utility.
+Android logcat reading and filtering utility.
 
-*TOOL IS CURRENTLY IN THE PHASE OF DEVELOPMENT, NOT YET DONE WITH THE IMPLEMENTATION*
+*THE TOOL IS CURRENTLY IN THE PHASE OF DEVELOPMENT*
 
 ## Features
 
@@ -10,7 +10,7 @@ Advanced Android logcat reading and filtering utility.
 
 ## Dependencies:
 
-- Make sure you have adb set to your system path!
+- Make sure you have adb set to your system path, otherwise Pussycat will use default ADB. 
 - *TBD.*
 
 ## Usage:
