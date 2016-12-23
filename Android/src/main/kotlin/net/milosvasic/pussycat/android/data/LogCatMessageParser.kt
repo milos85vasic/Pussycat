@@ -1,12 +1,12 @@
 package net.milosvasic.pussycat.android.data
 
 import com.android.ddmlib.Log
+import com.android.ddmlib.logcat.LogCatHeader
 import com.android.ddmlib.logcat.LogCatMessage
+import com.android.ddmlib.logcat.LogCatTimestamp
 import java.util.*
 import java.util.regex.Matcher
 import java.util.LinkedHashMap
-import javax.print.attribute.IntegerSyntax
-
 
 class LogCatMessageParser {
 
@@ -20,6 +20,8 @@ class LogCatMessageParser {
         val ANDROID_STUDIO_DUMP_PATTERN = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)/(.+?):(.+?)"
         val ANDROID_STUDIO_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)/(.+?):"
         val ANDROID_STUDIO_PATTERN_STACKTRACE = "\\s+(.+?)"
+        val ACER_Z520_PATTERN = ""
+        val DEFAULT_HEAD_PATTERN = "^\\[\\s(\\d\\d-\\d\\d\\s\\d\\d:\\d\\d:\\d\\d\\.\\d+)\\s+(\\d*):\\s*(\\S+)\\s([VDIWEAF])/(.*[^\\s])\\s+\\]$"
 
         fun getIdentifier(message: AndroidLogCatMessage): String {
             return "${message.time}_${message.pid}_${message.tid}"
@@ -143,12 +145,15 @@ class LogCatMessageParser {
         }
     })
 
+    private val defaultHeadPattern = DefaultLogCatMessageHeaderPattern(DEFAULT_HEAD_PATTERN, DefaultLogCatMessageHeaderMessageObtain())
+
     private val patterns = listOf(
             terminalDumpPattern,
             terminalDumpPatternCropped,
             androidStudioDumpPattern,
             androidStudioDumpPatternCropped,
-            androidStudioDumpPatternStacktrace
+            androidStudioDumpPatternStacktrace,
+            defaultHeadPattern
     )
 
     fun processLogLines(lines: Array<String>): Collection<AndroidLogCatMessage> {
@@ -187,11 +192,36 @@ class LogCatMessageParser {
                 }
             }
             if (!matched) {
-                val message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", "Log not matched,\n\t$line\n")
-                messages.put(System.currentTimeMillis().toString(), message)
-                notify(false, message)
+                val header = defaultHeadPattern.defaultMessageObtain.lastHeader
+                if (header != null) {
+                    val identifier = "${header.timestamp}_${header.pid}_${header.tid}"
+                    val existing = messages[identifier]
+                    if (existing != null) {
+                        val newMessage = AndroidLogCatMessage(
+                                header.logLevel,
+                                header.pid,
+                                header.tid,
+                                header.appName,
+                                header.tag,
+                                header.timestamp.toString(),
+                                "${existing.msg}\n\t$line"
+                        )
+                        messages[identifier] = newMessage
+                        notify(true, newMessage)
+                    } else {
+                        val message = AndroidLogCatMessage.getFrom(LogCatMessage(header, line))
+                        lastMessage = message
+                        messages.put(identifier, message)
+                        notify(true, message)
+                    }
+                } else {
+                    val message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", "Log not matched,\n\t$line\n")
+                    messages.put(System.currentTimeMillis().toString(), message)
+                    notify(false, message)
+                }
             }
         }
+        defaultHeadPattern.defaultMessageObtain.lastHeader = null
         return messages.values
     }
 
@@ -206,6 +236,45 @@ class LogCatMessageParser {
     fun notify(success: Boolean, message: AndroidLogCatMessage) {
         for (listener in listeners) {
             listener.onMatch(success, message)
+        }
+    }
+
+    private class DefaultLogCatMessageHeaderPattern(regex: String, val defaultMessageObtain: DefaultLogCatMessageHeaderMessageObtain) : LogCatMessagePattern(regex, defaultMessageObtain)
+
+    private class DefaultLogCatMessageHeaderMessageObtain : LogCatMessageObtain {
+        var lastHeader: LogCatHeader? = null
+
+        override fun getMessage(matcher: Matcher): AndroidLogCatMessage {
+            var pid = -1
+            try {
+                pid = Integer.parseInt(matcher.group(2))
+            } catch (ignored: NumberFormatException) {
+            }
+
+            var tid = -1
+            try {
+                tid = Integer.decode(matcher.group(3))!!
+            } catch (ignored: NumberFormatException) {
+            }
+
+            val pkgName: String = "?"
+            var logLevel: Log.LogLevel? = Log.LogLevel.getByLetterString(matcher.group(4))
+            if (logLevel == null && matcher.group(4) == "F") {
+                logLevel = Log.LogLevel.ASSERT
+            }
+            if (logLevel == null) {
+                logLevel = Log.LogLevel.WARN
+            }
+
+            lastHeader = LogCatHeader(
+                    logLevel,
+                    pid,
+                    tid,
+                    pkgName,
+                    matcher.group(5),
+                    LogCatTimestamp.fromString(matcher.group(1))
+            )
+            return AndroidLogCatMessage.getFrom(LogCatMessage(lastHeader, ""))
         }
     }
 
