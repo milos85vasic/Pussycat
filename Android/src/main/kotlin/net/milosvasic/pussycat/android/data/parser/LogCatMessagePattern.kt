@@ -1,5 +1,6 @@
-package net.milosvasic.pussycat.android.data
+package net.milosvasic.pussycat.android.data.parser
 
+import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 

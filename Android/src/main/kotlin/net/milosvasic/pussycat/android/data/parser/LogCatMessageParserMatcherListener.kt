@@ -1,4 +1,6 @@
-package net.milosvasic.pussycat.android.data
+package net.milosvasic.pussycat.android.data.parser
+
+import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 
 
 interface LogCatMessageParserMatcherListener {

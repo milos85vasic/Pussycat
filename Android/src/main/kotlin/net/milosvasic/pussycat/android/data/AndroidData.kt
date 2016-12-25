@@ -2,15 +2,16 @@ package net.milosvasic.pussycat.android.data
 
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
+import net.milosvasic.pussycat.android.data.parser.LogCatMessageParser
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.StringData
 import net.milosvasic.pussycat.logging.LOG_TYPE
-import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 class AndroidData(filter: DataFilter<CopyOnWriteArrayList<AndroidLogCatMessage>, String>) : StringData<AndroidLogCatMessage>(filter) {
 
-    @Transient private var logLevel: Log.LogLevel? = null
+    private val parser = LogCatMessageParser()
+    private var logLevel: Log.LogLevel? = null
 
     fun setLogLevel(level: Log.LogLevel) {
         logLevel = level
@@ -57,7 +58,6 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<AndroidLogCatMessage>,
     }
 
     fun addData(lines: Array<String>) {
-        val parser = LogCatMessageParser()
         val messages = parser.processLogLines(lines)
         for (message in messages) {
             addData(message)
