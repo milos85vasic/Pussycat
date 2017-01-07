@@ -19,7 +19,7 @@ class LogCatMessageParser {
         val ANDROID_STUDIO_DUMP_PATTERN = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)/(.+?):(.+?)"
         val ANDROID_STUDIO_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)/(.+?):"
         val ANDROID_STUDIO_PATTERN_STACKTRACE = "\\s+(.+?)"
-        val ACER_Z520_PATTERN = "(\\w)/(.+?).+?(\\w+).:\\s+(.+?)"
+        val ACER_Z520_PATTERN = "(\\w)/(\\w+).+?(\\w+).:\\s+(.+?)"
         val DEFAULT_HEAD_PATTERN = "^\\[\\s(\\d\\d-\\d\\d\\s\\d\\d:\\d\\d:\\d\\d\\.\\d+)\\s+(\\d*):\\s*(\\S+)\\s([VDIWEAF])/(.*[^\\s])\\s+\\]$"
 
         fun getIdentifier(message: AndroidLogCatMessage): String {
