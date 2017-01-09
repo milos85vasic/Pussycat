@@ -6,6 +6,7 @@ import net.milosvasic.pussycat.android.data.parser.LogCatMessageParser
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.StringData
 import net.milosvasic.pussycat.logging.LOG_TYPE
+import net.milosvasic.pussycat.utils.Text
 import java.util.concurrent.CopyOnWriteArrayList
 
 class AndroidData(filter: DataFilter<CopyOnWriteArrayList<AndroidLogCatMessage>, String>) : StringData<AndroidLogCatMessage>(filter) {
@@ -29,6 +30,9 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<AndroidLogCatMessage>,
 
     override fun addData(message: AndroidLogCatMessage) {
         if (!data.isEmpty()) {
+            if (Text.isEmpty(message.msg)) {
+                return
+            }
             val identifier = getIdentifier(message)
             val existing = data.last();
             val existingIdentifier = getIdentifier(existing)
