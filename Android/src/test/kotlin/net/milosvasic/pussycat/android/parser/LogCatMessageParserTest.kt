@@ -16,28 +16,19 @@ import java.io.*
 
 class LogCatMessageParserTest {
 
-    var failed = 0
     var currentResource = ""
     val parser = LogCatMessageParser()
     var resources = mutableListOf<String>()
 
     val listener = object : LogCatMessageParserMatcherListener {
         override fun onMatch(success: Boolean, message: AndroidLogCatMessage?) {
-            if (currentResource == "to_fail.txt") {
-                if (success) {
-                    Assert.fail("We expected resource to fail.")
-                } else {
-                    failed++
+            val msg = message?.msg as String
+            for (item in ParsingFailureIgnoreList.list) {
+                if (msg.contains(item)) {
+                    return
                 }
-            } else {
-                val msg = message?.msg as String
-                for (item in ParsingFailureIgnoreList.list) {
-                    if (msg.contains(item)) {
-                        return
-                    }
-                }
-                if (!success) Assert.fail(message?.msg)
             }
+            if (!success) Assert.fail(message?.msg)
         }
     }
 
@@ -45,7 +36,7 @@ class LogCatMessageParserTest {
     fun beforeTestParser() {
         parser.subscribe(listener)
         resources.addAll(getResourceFiles("samples/android/parser"))
-        Assert.assertTrue(resources.size == 10)
+        Assert.assertTrue(resources.size == 9)
         for (resource in resources) {
             val root = PussycatAbstract.getPussycatHome()
             val localSample = File(root.absolutePath, resource)
@@ -70,7 +61,6 @@ class LogCatMessageParserTest {
             val messages = parser.processLogLines(Array(lines.size, { i -> lines[i] }))
             Assert.assertFalse(messages.isEmpty())
         }
-        Assert.assertEquals(failed, 3)
     }
 
     @After
