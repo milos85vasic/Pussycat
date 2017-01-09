@@ -222,7 +222,7 @@ class LogCatMessageParser {
             if (!matched) {
                 val header = defaultHeadPattern.defaultMessageObtain.lastHeader
                 if (header != null) {
-                    val identifier = "${header.timestamp}_${header.pid}_${header.tid}"
+                    val identifier = "${header.timestamp}_${header.pid}_${header.tid}_${header.appName}_${header.tag}"
                     val existing = messages[identifier]
                     if (existing != null) {
                         val newMessage = AndroidLogCatMessage(
