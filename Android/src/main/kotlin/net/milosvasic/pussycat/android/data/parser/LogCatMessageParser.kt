@@ -20,6 +20,7 @@ class LogCatMessageParser {
         val ANDROID_STUDIO_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)/(.+?):"
         val ANDROID_STUDIO_PATTERN_STACKTRACE = "\\s+(.+?)"
         val ACER_Z520_PATTERN = "(\\w)/(\\w+).+?(\\w+).:\\s+(.+?)"
+        val ACER_Z520_PATTERN2 = "(\\w)/(\\s+).+?(\\w+).:\\s+(.+?)"
         val DEFAULT_HEAD_PATTERN = "^\\[\\s(\\d\\d-\\d\\d\\s\\d\\d:\\d\\d:\\d\\d\\.\\d+)\\s+(\\d*):\\s*(\\S+)\\s([VDIWEAF])/(.*[^\\s])\\s+\\]$"
 
         fun getIdentifier(message: AndroidLogCatMessage): String {
@@ -144,7 +145,7 @@ class LogCatMessageParser {
         }
     })
 
-    private val acerZ520Pattern = LogCatMessagePattern(ACER_Z520_PATTERN, object : LogCatMessageObtain {
+    val acerMessageObtain = object : LogCatMessageObtain {
         override fun getMessage(matcher: Matcher): AndroidLogCatMessage {
             var logLevel = Log.LogLevel.getByLetterString(matcher.group(1))
             if (logLevel == null && matcher.group(1) == "F") {
@@ -165,7 +166,10 @@ class LogCatMessageParser {
                     logMessage.trim()
             )
         }
-    })
+    }
+
+    private val acerZ520Pattern = LogCatMessagePattern(ACER_Z520_PATTERN, acerMessageObtain)
+    private val acerZ520Pattern2 = LogCatMessagePattern(ACER_Z520_PATTERN2, acerMessageObtain)
 
     private val defaultLogCatMessageHeaderMessageObtain = DefaultLogCatMessageHeaderMessageObtain()
     private val defaultHeadPattern = DefaultLogCatMessageHeaderPattern(DEFAULT_HEAD_PATTERN, defaultLogCatMessageHeaderMessageObtain)
@@ -177,7 +181,8 @@ class LogCatMessageParser {
             androidStudioDumpPatternCropped,
             androidStudioDumpPatternStacktrace,
             defaultHeadPattern,
-            acerZ520Pattern
+            acerZ520Pattern,
+            acerZ520Pattern2
     )
 
     fun processLogLines(lines: Array<String>): Collection<AndroidLogCatMessage> {
