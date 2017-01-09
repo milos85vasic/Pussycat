@@ -18,14 +18,11 @@ class DefaultLogCatMessageHeaderMessageObtain : LogCatMessageObtain {
             pid = Integer.parseInt(matcher.group(2))
         } catch (ignored: NumberFormatException) {
         }
-
         var tid = -1
         try {
             tid = Integer.decode(matcher.group(3))!!
         } catch (ignored: NumberFormatException) {
         }
-
-        val pkgName: String = "?"
         var logLevel: Log.LogLevel? = Log.LogLevel.getByLetterString(matcher.group(4))
         if (logLevel == null && matcher.group(4) == "F") {
             logLevel = Log.LogLevel.ASSERT
@@ -33,12 +30,11 @@ class DefaultLogCatMessageHeaderMessageObtain : LogCatMessageObtain {
         if (logLevel == null) {
             logLevel = Log.LogLevel.WARN
         }
-
         lastHeader = LogCatHeader(
                 logLevel,
                 pid,
                 tid,
-                pkgName,
+                matcher.group(5),
                 matcher.group(5),
                 LogCatTimestamp.fromString(matcher.group(1))
         )
