@@ -162,7 +162,7 @@ class TerminalPussycat : AndroidPussycat() {
             tid = "[ tid: ${line.tid} ]"
         }
         var tag = ""
-        if (!Text.isEmpty(tag) && line.tag != line.appName) {
+        if (!Text.isEmpty(line.tag)) {
             tag = "[ ${line.tag} ]"
         }
         val message = "$time$pid$tid$appName$tag: ${line.msg}"
