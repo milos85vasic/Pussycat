@@ -146,10 +146,26 @@ class TerminalPussycat : AndroidPussycat() {
 
     override fun printLine(line: AndroidLogCatMessage) {
         var appName = line.appName
-        if (Text.isEmpty(appName)) {
-            appName = "-"
+        if (!Text.isEmpty(appName)) {
+            appName = "[ $appName ]"
         }
-        val message = "${line.time} [ pid: ${line.pid} tid: ${line.tid} ][ $appName ][ ${line.tag} ]: ${line.msg}"
+        var time = line.time
+        if (!Text.isEmpty(time)) {
+            time = "$time "
+        }
+        var pid = ""
+        if (line.pid > 0) {
+            pid = "[ pid: ${line.pid} ]"
+        }
+        var tid = ""
+        if (line.tid > 0) {
+            tid = "[ tid: ${line.tid} ]"
+        }
+        var tag = ""
+        if (!Text.isEmpty(tag) && line.tag != line.appName) {
+            tag = "[ ${line.tag} ]"
+        }
+        val message = "$time$pid$tid$appName$tag: ${line.msg}"
         printLine(message, line.logLevel)
     }
 

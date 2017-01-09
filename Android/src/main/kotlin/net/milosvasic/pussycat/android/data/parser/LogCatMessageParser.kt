@@ -13,7 +13,6 @@ class LogCatMessageParser {
     private val listeners = HashSet<LogCatMessageParserMatcherListener>()
 
     companion object {
-        val UNKNOWN_VALUE = "unknown"
         val TERMINAL_DUMP_PATTERN = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\w)\\s+(.+?):(.+?)"
         val TERMINAL_DUMP_PATTERN_CROPPED = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)\\s+(\\d+)\\s+(\\w)\\s+(.+?):"
         val ANDROID_STUDIO_DUMP_PATTERN = "(\\d+-\\d+)\\s+(\\d+:\\d+:\\d+.\\d+)\\s+(\\d+)-(\\d+).+?\\s+(\\w)/(.+?):(.+?)"
@@ -123,15 +122,15 @@ class LogCatMessageParser {
             }
             var appName = lastMessage?.appName
             if (appName == null) {
-                appName = "app $UNKNOWN_VALUE"
+                appName = ""
             }
             var tag = lastMessage?.tag
             if (tag == null) {
-                tag = "tag $UNKNOWN_VALUE"
+                tag = ""
             }
             var time = lastMessage?.time
             if (time == null) {
-                time = "time $UNKNOWN_VALUE"
+                time = ""
             }
             return AndroidLogCatMessage(
                     logLevel,
@@ -162,7 +161,7 @@ class LogCatMessageParser {
                     -1,
                     matcher.group(2).trim(),
                     matcher.group(2).trim(),
-                    UNKNOWN_VALUE,
+                    "",
                     logMessage.trim()
             )
         }
