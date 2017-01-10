@@ -66,6 +66,13 @@ class LogCatMessageParserTest {
     @After
     fun afterTestParser() {
         parser.unsubscribe(listener)
+        for (resource in resources) {
+            val root = PussycatAbstract.getPussycatHome()
+            val localSample = File(root.absolutePath, resource)
+            Assert.assertTrue(localSample.exists())
+            localSample.delete()
+            Assert.assertFalse(localSample.exists())
+        }
     }
 
     private fun getResourceFiles(path: String): List<String> {
