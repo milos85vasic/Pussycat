@@ -6,6 +6,7 @@ buildscript {
     }
     dependencies.classpath "com.android.tools.build:gradle:2.1.0"
     dependencies.classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    dependencies.classpath "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 
 apply plugin: "kotlin"
