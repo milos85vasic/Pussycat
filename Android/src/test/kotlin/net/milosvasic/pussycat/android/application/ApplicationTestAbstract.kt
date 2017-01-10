@@ -4,6 +4,7 @@ import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.terminal.BlackHoleTerminalPrinter
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -15,11 +16,11 @@ abstract class ApplicationTestAbstract {
     lateinit var localSample : File
     lateinit var params: Array<String>
     var expectedMode: PUSSYCAT_MODE? = null
+    val localFileName = "testing_parser.txt"
     lateinit var expectedType: APPLICATION_TYPE
 
     @Before
     fun beforeTestApplication() {
-        val localFileName = "testing_parser.txt"
         val root = PussycatAbstract.getPussycatHome()
         localSample = File(root.absolutePath, localFileName)
         if (!localSample.exists()) {
@@ -48,6 +49,15 @@ abstract class ApplicationTestAbstract {
         Thread.sleep(waitingTime)
         Assert.assertEquals(app.pussy?.getPussycatMode(), expectedMode)
         app.stop()
+    }
+
+    @After
+    fun afterTestParser() {
+        val root = PussycatAbstract.getPussycatHome()
+        val localSample = File(root.absolutePath, localFileName)
+        Assert.assertTrue(localSample.exists())
+        localSample.delete()
+        Assert.assertFalse(localSample.exists())
     }
 
 }
