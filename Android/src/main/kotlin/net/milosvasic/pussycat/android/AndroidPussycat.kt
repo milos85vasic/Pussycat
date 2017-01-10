@@ -371,18 +371,20 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
             printLine("Pussycat, adb not found in your system path. We will try to use local pussycat adb binary.")
             val osString = System.getProperty("os.name").toLowerCase()
             val os: String
+            var adbFile = "local_adb"
             if (osString.contains("mac")) {
                 os = "macos"
             } else if (osString.contains("linux")) {
                 os = "linux"
             } else if (osString.contains("windows")) {
                 os = "windows"
+                adbFile = "local_adb.exe"
             } else {
                 os = "unknown"
             }
-            val localAdbResource = "adb/$os/local_adb"
+            val localAdbResource = "adb/$os/$adbFile"
             val root = getPussycatHome()
-            val localAdb = File(root.absolutePath, "local_adb")
+            val localAdb = File(root.absolutePath, adbFile)
             if (!localAdb.exists()) {
                 printLine("Pussycat, initializing local pussycat adb binary.")
                 val input = javaClass.classLoader.getResourceAsStream(localAdbResource)
