@@ -44,10 +44,10 @@ abstract class ApplicationTestAbstract {
         app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 1
         Thread(Runnable {
             app.start()
-            Assert.assertEquals(app.type, expectedType)
+            Assert.assertEquals(expectedType, app.type)
         }).start()
         Thread.sleep(waitingTime)
-        Assert.assertEquals(app.pussy?.getPussycatMode(), expectedMode)
+        Assert.assertEquals(expectedMode, app.pussy?.getPussycatMode())
         app.stop()
     }
 
