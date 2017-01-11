@@ -1,6 +1,7 @@
 package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
+import net.milosvasic.pussycat.Messages
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.color.Color
@@ -25,10 +26,10 @@ class TerminalPussycat : AndroidPussycat() {
 
     init {
         configuration.setExitRoutine(Runnable {
-            printLine("We are shutting down Pussycat.")
+            printLine(Messages.PUSSYCAT_SHUTDOWN)
             run.set(false)
             System.`in`.close()
-            printLine("Bye, bye!")
+            printLine(Messages.BYE_BYE)
         })
         configuration.terminalPriner = TerminalPrinter()
     }
@@ -51,7 +52,7 @@ class TerminalPussycat : AndroidPussycat() {
                 try {
                     line = readLine()
                 } catch (e: Exception) {
-                    printLine("Pussycat, error reading line: $e")
+                    printLine("Pussycat, ${Messages.ERROR_READING_LINE}: $e")
                 }
                 if (line != null && !line.isEmpty()) {
                     if (line.startsWith("@@")) {
@@ -216,7 +217,7 @@ class TerminalPussycat : AndroidPussycat() {
         if (logLevel != null) {
             return logLevel.stringValue.toUpperCase()
         }
-        return "NOT SET"
+        return Messages.NOT_SET
     }
 
     override fun getPrintableFilterValue(): String {
@@ -224,7 +225,7 @@ class TerminalPussycat : AndroidPussycat() {
         if (!Text.isEmpty(pattern)) {
             return pattern
         }
-        return "NOT SET"
+        return Messages.NOT_SET
     }
 
 }

@@ -126,7 +126,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                     bytesLoaded += line.toByteArray().size / 1024.0
                     val percent: Double = (bytesLoaded * 100.0) / (fileSizeInBytes / 1024.0)
                     val s = String.format("%.2f", percent)
-                    printLine("Pussycat, loading data. Please wait. [ $s % ]")
+                    printLine("Pussycat, ${Messages.LOADING_DATA} [ $s % ]")
                 }
                 if (logcat.extension == FILE_EXTENSION) {
                     val gson = Gson()

@@ -22,15 +22,13 @@ class FilterTest {
     val linesPrinted = AtomicInteger()
     val testSets = HashMap<String, Int>()
     var resources = mutableListOf<String>()
+    val FILTER_TEST_PRINT_TAG = "FilterTestPrint"
 
     val printLineCallback = object : PrintLineCallback {
         override fun printLine(text: String?) {
             if (text != null) {
-                if (!text.contains(Messages.NO_DATA_MATCHING_PARAMETERS) && !text.contains(TerminalPussycat.TERMINAL_CLEAR)) {
-                    val got = linesPrinted.incrementAndGet()
-                    println("[ $got ] >> $text")
-                } else {
-                    println(text)
+                if (text.contains(FILTER_TEST_PRINT_TAG)) {
+                    linesPrinted.incrementAndGet()
                 }
             } else {
                 Assert.fail("We received null text!")

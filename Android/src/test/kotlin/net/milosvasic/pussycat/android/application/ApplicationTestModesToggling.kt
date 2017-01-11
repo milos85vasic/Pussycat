@@ -27,54 +27,54 @@ class ApplicationTestModesToggling : ApplicationTestAbstract() {
 
         app.start()
         Thread.sleep(waitingTime)
-        Assert.assertEquals(app.type, expectedType)
-        Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+        Assert.assertEquals(expectedType, app.type)
+        Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
 
         for (x in 0..3) {
             app.pussy?.execute(COMMAND.FILESYSTEM, arrayOf("./not_existing.txt"))
             Thread.sleep(waitingTime)
-            Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+            Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
 
             Assert.assertTrue(localSample.exists())
             app.pussy?.execute(COMMAND.FILESYSTEM, arrayOf(localSample.absolutePath))
             pussycatModeToExpect = PUSSYCAT_MODE.FILESYSTEM
             Thread.sleep(waitingTime)
-            Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+            Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
 
             app.pussy?.execute(COMMAND.LIVE)
             pussycatModeToExpect = PUSSYCAT_MODE.LIVE
             Thread.sleep(waitingTime)
-            Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+            Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
         }
 
         for (x in 0..3) {
             app.pussy?.execute(COMMAND.LIVE)
             pussycatModeToExpect = PUSSYCAT_MODE.LIVE
             Thread.sleep(waitingTime)
-            Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+            Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
 
             Assert.assertTrue(localSample.exists())
             app.pussy?.execute(COMMAND.FILESYSTEM, arrayOf(localSample.absolutePath))
             pussycatModeToExpect = PUSSYCAT_MODE.FILESYSTEM
             Thread.sleep(waitingTime)
-            Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+            Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
 
             app.pussy?.execute(COMMAND.FILESYSTEM, arrayOf("./not_existing.txt"))
             Thread.sleep(waitingTime)
-            Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+            Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
         }
 
         for (x in 0..4) {
             app.pussy?.execute(COMMAND.LIVE)
             pussycatModeToExpect = PUSSYCAT_MODE.LIVE
             Thread.sleep(waitingTime)
-            Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+            Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
 
             Assert.assertTrue(localSample.exists())
             app.pussy?.execute(COMMAND.FILESYSTEM, arrayOf(localSample.absolutePath))
             pussycatModeToExpect = PUSSYCAT_MODE.FILESYSTEM
             Thread.sleep(waitingTime)
-            Assert.assertEquals(app.pussy?.getPussycatMode(), pussycatModeToExpect)
+            Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
         }
 
         app.stop()
