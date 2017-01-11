@@ -56,6 +56,7 @@ class FilterTest {
         testSets.put("Lion && zion", 1)
         testSets.put("Zion && Lion", 1)
         testSets.put("Zion && zion", 1)
+        testSets.put("vehicle", 2)
 
         resources.addAll(Files.getResourceFiles("samples/android/filter"))
         Assert.assertTrue(resources.size == 1)

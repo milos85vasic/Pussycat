@@ -8,3 +8,9 @@
 12-08 15:06:26.146 10539 10554 I Logic: Do you like milk
 12-08 16:06:26.146 10539 10554 I Logic: How it is big?
 12-08 17:06:26.146 10539 10554 I Logic: Lion zion
+12-08 11:04:25.146 10539 10554 I TestRunner: Big stacktrace
+12-08 11:04:25.146 10539 10554 I TestRunner: 	Airplane is flying
+12-08 11:04:25.146 10539 10554 I TestRunner: 	Car is a vehicle
+12-08 11:04:25.146 10539 10554 I TestRunner: 	Bus is a vehicle
+12-08 11:04:25.146 10539 10554 I TestRunner: 	And so on ...
+12-08 11:04:26.146 10539 10554 I Logic: Vehicles ...
