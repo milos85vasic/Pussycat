@@ -30,7 +30,9 @@ class LogicTest {
 
     @Before
     fun beforeTestLogic() {
-        testSets.put("Lion", 2)
+        testSets.put("Lion", 3)
+        testSets.put("Cow", 2)
+        testSets.put("Elephant", 2)
 
         resources.addAll(Files.getResourceFiles("samples/android/logic"))
         Assert.assertTrue(resources.size == 1)
