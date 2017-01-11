@@ -33,6 +33,10 @@ class FilterTest {
         testSets.put("Lion", 3)
         testSets.put("Cow", 2)
         testSets.put("Elephant", 2)
+        testSets.put("Lion || Elephant", 5)
+        testSets.put("Elephant || Lion", 5)
+        testSets.put("lion || elephant", 5)
+        testSets.put("phant || Lion", 5)
 
         resources.addAll(Files.getResourceFiles("samples/android/filter"))
         Assert.assertTrue(resources.size == 1)
@@ -64,7 +68,7 @@ class FilterTest {
                 app.start()
                 Assert.assertEquals(app.type, APPLICATION_TYPE.CLI)
             }).start()
-            Thread.sleep(1500)
+            Thread.sleep(500)
 
             for ((key, value) in testSets) {
                 linesPrinted.set(0)
