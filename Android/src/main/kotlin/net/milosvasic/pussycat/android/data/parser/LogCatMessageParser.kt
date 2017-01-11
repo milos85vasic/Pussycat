@@ -261,7 +261,6 @@ class LogCatMessageParser {
                 }
             }
         }
-//        defaultHeadPattern.defaultMessageObtain.lastHeader = null
         return messages.values
     }
 
