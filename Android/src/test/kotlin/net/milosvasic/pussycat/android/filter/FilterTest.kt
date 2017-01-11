@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.android.logic
+package net.milosvasic.pussycat.android.filter
 
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.application.Application
@@ -15,7 +15,7 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 
-class LogicTest {
+class FilterTest {
 
     val linesPrinted = AtomicInteger()
     val testSets = HashMap<String, Int>()
@@ -29,18 +29,18 @@ class LogicTest {
     }
 
     @Before
-    fun beforeTestLogic() {
+    fun beforeTestFilter() {
         testSets.put("Lion", 3)
         testSets.put("Cow", 2)
         testSets.put("Elephant", 2)
 
-        resources.addAll(Files.getResourceFiles("samples/android/logic"))
+        resources.addAll(Files.getResourceFiles("samples/android/filter"))
         Assert.assertTrue(resources.size == 1)
         val root = PussycatAbstract.getPussycatHome()
         for (resource in resources) {
             val localSample = File(root.absolutePath, resource)
             if (!localSample.exists()) {
-                val input = javaClass.classLoader.getResourceAsStream("samples/android/logic/$resource")
+                val input = javaClass.classLoader.getResourceAsStream("samples/android/filter/$resource")
                 localSample.writeBytes(input.readBytes())
                 input.close()
             }
@@ -52,13 +52,13 @@ class LogicTest {
     }
 
     @Test
-    fun testLogic() {
+    fun testFilter() {
         for (resource in resources) {
             val resourceFile = File(PussycatAbstract.Companion.getPussycatHome(), resource)
             val params = arrayOf("--terminal", "--filesystem=${resourceFile.absolutePath}")
             val app = Application(params)
             app.pussy?.configuration?.exitOnStop = false
-            app.pussy?.configuration?.terminalPriner = TestLogicTerminalPrinter(printLineCallback)
+            app.pussy?.configuration?.terminalPriner = FilterTestTerminalPrinter(printLineCallback)
             app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 1
             Thread(Runnable {
                 app.start()
@@ -79,7 +79,7 @@ class LogicTest {
     }
 
     @After
-    fun afterTestLogic() {
+    fun afterTestFilter() {
         for (resource in resources) {
             val root = PussycatAbstract.getPussycatHome()
             val localSample = File(root.absolutePath, resource)
@@ -89,7 +89,7 @@ class LogicTest {
         }
     }
 
-    class TestLogicTerminalPrinter(val callback: PrintLineCallback) : Printer {
+    class FilterTestTerminalPrinter(val callback: PrintLineCallback) : Printer {
         override fun printLine(text: String?) {
             callback.printLine(text)
         }
