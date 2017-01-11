@@ -14,7 +14,6 @@ import org.junit.Before
 import org.junit.Test
 import java.io.File
 import java.util.*
-import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 
