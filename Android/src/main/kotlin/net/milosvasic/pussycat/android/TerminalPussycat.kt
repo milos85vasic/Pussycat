@@ -19,6 +19,10 @@ class TerminalPussycat : AndroidPussycat() {
 
     val run = AtomicBoolean(false)
 
+    companion object {
+        val TERMINAL_CLEAR = 27.toChar() + "[2J"
+    }
+
     init {
         configuration.setExitRoutine(Runnable {
             printLine("We are shutting down Pussycat.")
@@ -137,7 +141,7 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun clear() {
-        printLine(27.toChar() + "[2J")
+        printLine(TERMINAL_CLEAR)
     }
 
     override fun printLine(text: String) {

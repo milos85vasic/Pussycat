@@ -1,6 +1,8 @@
 package net.milosvasic.pussycat.android.filter
 
+import net.milosvasic.pussycat.Messages
 import net.milosvasic.pussycat.PussycatAbstract
+import net.milosvasic.pussycat.android.TerminalPussycat
 import net.milosvasic.pussycat.android.application.Application
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
@@ -12,6 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import java.io.File
 import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 
@@ -23,8 +26,16 @@ class FilterTest {
 
     val printLineCallback = object : PrintLineCallback {
         override fun printLine(text: String?) {
-            val got = linesPrinted.incrementAndGet()
-            println("[ $got ] >> $text")
+            if (text != null) {
+                if (!text.contains(Messages.NO_DATA_MATCHING_PARAMETERS) && !text.contains(TerminalPussycat.TERMINAL_CLEAR)) {
+                    val got = linesPrinted.incrementAndGet()
+                    println("[ $got ] >> $text")
+                } else {
+                    println(text)
+                }
+            } else {
+                Assert.fail("We received null text!")
+            }
         }
     }
 
@@ -37,6 +48,11 @@ class FilterTest {
         testSets.put("Elephant || Lion", 5)
         testSets.put("lion || elephant", 5)
         testSets.put("phant || Lion", 5)
+        testSets.put("cow || zion", 3)
+        testSets.put("cow && zion", 0)
+        testSets.put("Lion && zion", 1)
+        testSets.put("Zion && Lion", 1)
+        testSets.put("Zion && zion", 1)
 
         resources.addAll(Files.getResourceFiles("samples/android/filter"))
         Assert.assertTrue(resources.size == 1)
@@ -73,7 +89,7 @@ class FilterTest {
             for ((key, value) in testSets) {
                 linesPrinted.set(0)
                 app.pussy?.filter(key)
-                Assert.assertEquals(value + 1, linesPrinted.get())
+                Assert.assertEquals(value, linesPrinted.get())
                 linesPrinted.set(0)
             }
 

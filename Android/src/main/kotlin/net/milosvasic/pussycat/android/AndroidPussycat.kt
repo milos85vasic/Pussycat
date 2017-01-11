@@ -17,6 +17,7 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
 import com.sun.org.apache.xalan.internal.utils.SecuritySupport
+import net.milosvasic.pussycat.Messages
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 import net.milosvasic.pussycat.utils.Files
 import java.io.BufferedReader
@@ -203,7 +204,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                     }
                 }
             }
-            if (x == 0) printLine("Pussycat, no data matching parameters [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
+            if (x == 0) printLine("Pussycat, ${Messages.NO_DATA_MATCHING_PARAMETERS} [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
         }
         refreshing.set(false)
     }
