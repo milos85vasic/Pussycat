@@ -9,6 +9,7 @@ import java.util.ArrayList
 import com.sun.org.apache.xalan.internal.utils.SecuritySupport.getContextClassLoader
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.android.data.parser.LogCatMessageParserMatcherListener
+import net.milosvasic.pussycat.utils.Files
 import net.milosvasic.pussycat.utils.Text
 import org.junit.After
 import java.io.*
@@ -35,7 +36,7 @@ class LogCatMessageParserTest {
     @Before
     fun beforeTestParser() {
         parser.subscribe(listener)
-        resources.addAll(getResourceFiles("samples/android/parser"))
+        resources.addAll(Files.getResourceFiles("samples/android/parser"))
         Assert.assertTrue(resources.size == 9)
         for (resource in resources) {
             val root = PussycatAbstract.getPussycatHome()
@@ -73,30 +74,6 @@ class LogCatMessageParserTest {
             localSample.delete()
             Assert.assertFalse(localSample.exists())
         }
-    }
-
-    private fun getResourceFiles(path: String): List<String> {
-        val filenames = ArrayList<String>()
-        getResourceAsStream(path).use({ input ->
-            BufferedReader(InputStreamReader(input)).use { br ->
-                var resource: String
-                resource = br.readLine()
-                while (!Text.isEmpty(resource)) {
-                    filenames.add(resource)
-                    try {
-                        resource = br.readLine()
-                    } catch (e: Exception) {
-                        resource = ""
-                    }
-                }
-            }
-        })
-        return filenames
-    }
-
-    private fun getResourceAsStream(resource: String): InputStream {
-        val input = getContextClassLoader().getResourceAsStream(resource)
-        return input ?: javaClass.getResourceAsStream(resource)
     }
 
 }

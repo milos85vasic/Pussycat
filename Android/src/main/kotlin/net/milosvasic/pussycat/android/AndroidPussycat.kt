@@ -16,7 +16,13 @@ import net.milosvasic.pussycat.utils.Text
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
+import com.sun.org.apache.xalan.internal.utils.SecuritySupport
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
+import net.milosvasic.pussycat.utils.Files
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 
@@ -371,30 +377,32 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
             printLine("Pussycat, adb not found in your system path. We will try to use local pussycat adb binary.")
             val osString = System.getProperty("os.name").toLowerCase()
             val os: String
-            var adbFile = "local_adb"
+            var extension = ""
             if (osString.contains("mac")) {
                 os = "macos"
             } else if (osString.contains("linux")) {
                 os = "linux"
             } else if (osString.contains("windows")) {
                 os = "windows"
-                adbFile = "local_adb.exe"
+                extension = ".exe"
             } else {
                 os = "unknown"
             }
-            val localAdbResource = "adb/$os/$adbFile"
             val root = getPussycatHome()
-            val localAdb = File(root.absolutePath, adbFile)
-            if (!localAdb.exists()) {
-                printLine("Pussycat, initializing local pussycat adb binary.")
-                val input = javaClass.classLoader.getResourceAsStream(localAdbResource)
-                localAdb.writeBytes(input.readBytes())
-                input.close()
-                localAdb.setExecutable(true)
-                printLine("Pussycat, local pussycat adb binary initialized.")
+            val resources = Files.getResourceFiles("adb/$os/")
+            for (resource in resources) {
+                val localFile = File(root.absolutePath, resource)
+                if (!localFile.exists()) {
+                    printLine("Pussycat, initializing [ ${localFile.name} ]")
+                    val input = javaClass.classLoader.getResourceAsStream(resource)
+                    localFile.writeBytes(input.readBytes())
+                    input.close()
+                    localFile.setExecutable(true)
+                    printLine("Pussycat, initialized [ ${localFile.name} ]")
+                }
             }
             try {
-                bridge = AndroidDebugBridge.createBridge(localAdb.absolutePath, false)
+                bridge = AndroidDebugBridge.createBridge("${root.absolutePath}${File.pathSeparator}local_adb$extension", false)
             } catch (e: Exception) {
                 printLine("Pussycat, error occurred while creating alternative debug bridge: $e")
             }
