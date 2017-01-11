@@ -38,8 +38,8 @@ class LogCatMessageParserTest {
         parser.subscribe(listener)
         resources.addAll(Files.getResourceFiles("samples/android/parser"))
         Assert.assertTrue(resources.size == 9)
+        val root = PussycatAbstract.getPussycatHome()
         for (resource in resources) {
-            val root = PussycatAbstract.getPussycatHome()
             val localSample = File(root.absolutePath, resource)
             if (!localSample.exists()) {
                 val input = javaClass.classLoader.getResourceAsStream("samples/android/parser/$resource")

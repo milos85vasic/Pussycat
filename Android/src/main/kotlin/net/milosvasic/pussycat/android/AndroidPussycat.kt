@@ -388,13 +388,14 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
             } else {
                 os = "unknown"
             }
+            val resourcesPath = "adb/$os/"
+            val resources = Files.getResourceFiles(resourcesPath)
             val root = getPussycatHome()
-            val resources = Files.getResourceFiles("adb/$os/")
             for (resource in resources) {
                 val localFile = File(root.absolutePath, resource)
                 if (!localFile.exists()) {
                     printLine("Pussycat, initializing [ ${localFile.name} ]")
-                    val input = javaClass.classLoader.getResourceAsStream(resource)
+                    val input = javaClass.classLoader.getResourceAsStream("$resourcesPath$resource")
                     localFile.writeBytes(input.readBytes())
                     input.close()
                     localFile.setExecutable(true)
@@ -402,7 +403,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 }
             }
             try {
-                bridge = AndroidDebugBridge.createBridge("${root.absolutePath}${File.pathSeparator}local_adb$extension", false)
+                bridge = AndroidDebugBridge.createBridge("${root.absolutePath}${File.separator}local_adb$extension", false)
             } catch (e: Exception) {
                 printLine("Pussycat, error occurred while creating alternative debug bridge: $e")
             }
