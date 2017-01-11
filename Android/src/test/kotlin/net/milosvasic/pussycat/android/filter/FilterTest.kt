@@ -41,6 +41,9 @@ class FilterTest {
 
     @Before
     fun beforeTestFilter() {
+        testSets.put("nsnsjsjsj", 0)
+        testSets.put("L ion", 0)
+        testSets.put("Li on", 0)
         testSets.put("Lion", 3)
         testSets.put("Cow", 2)
         testSets.put("Elephant", 2)
