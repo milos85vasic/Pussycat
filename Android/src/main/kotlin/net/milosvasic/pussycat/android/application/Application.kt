@@ -38,7 +38,9 @@ class Application(args: Array<String>) : ApplicationAbstract(args) {
     override fun getApplicationInformation(): ApplicationInformation {
         return ApplicationInformation(
                 "1.0.0",
-                "Pussycat for Android"
+                "Pussycat for Android",
+                "http://pussycat.milosvasic.net",
+                "Miloš Vasić"
         )
     }
 
