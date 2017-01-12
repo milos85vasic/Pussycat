@@ -5,7 +5,7 @@ import javax.swing.JWindow
 import java.awt.*
 
 
-class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?) : JWindow(owner) {
+class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, val callback: OnSplashComplete) : JWindow(owner) {
 
     val splashWidth = 640
     val splashHeight = 339
@@ -24,4 +24,13 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?) :
         splashPanel.isVisible = true
     }
 
+    override fun setVisible(b: Boolean) {
+        super.setVisible(b)
+        Thread(
+                Runnable {
+                    Thread.sleep(3000)
+                    callback.onComplete(true)
+                }
+        ).start()
+    }
 }
