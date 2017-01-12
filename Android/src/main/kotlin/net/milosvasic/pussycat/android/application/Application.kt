@@ -1,12 +1,14 @@
 package net.milosvasic.pussycat.android.application
 
 import net.milosvasic.pussycat.android.AndroidPussycat
+import net.milosvasic.pussycat.android.GuiPussycat
 import net.milosvasic.pussycat.android.TerminalPussycat
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.ApplicationAbstract
+import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.core.COMMAND
 
-open class Application(args: Array<String>) : ApplicationAbstract(args) {
+class Application(args: Array<String>) : ApplicationAbstract(args) {
 
     var type: APPLICATION_TYPE? = null
     var pussy: AndroidPussycat? = null
@@ -21,7 +23,7 @@ open class Application(args: Array<String>) : ApplicationAbstract(args) {
         if (type == APPLICATION_TYPE.CLI) {
             pussy = TerminalPussycat()
         } else {
-            // TODO: Create gui instance.
+            pussy = GuiPussycat(getApplicationInformation())
         }
     }
 
@@ -31,6 +33,13 @@ open class Application(args: Array<String>) : ApplicationAbstract(args) {
 
     override fun stop() {
         pussy?.execute(COMMAND.STOP)
+    }
+
+    override fun getApplicationInformation(): ApplicationInformation {
+        return ApplicationInformation(
+                "1.0.0",
+                "Pussycat for Android"
+        )
     }
 
 }

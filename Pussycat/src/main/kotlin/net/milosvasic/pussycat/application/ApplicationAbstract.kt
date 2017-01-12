@@ -6,4 +6,6 @@ abstract class ApplicationAbstract(val args: Array<String>) {
 
     abstract fun stop()
 
+    abstract fun getApplicationInformation(): ApplicationInformation
+
 }

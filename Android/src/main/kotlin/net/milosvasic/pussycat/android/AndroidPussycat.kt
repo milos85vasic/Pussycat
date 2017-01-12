@@ -213,7 +213,6 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         Thread(Runnable {
             Thread.currentThread().name = "Exporting thread."
             println("Pussycat, export [ STARTED ]")
-            val root: File
             var name: String
             val destination: File
             if (params.isEmpty() || Text.isEmpty(params[0])) {
@@ -224,7 +223,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                     name = "$name.$FILE_EXTENSION"
                 }
             }
-            root = getPussycatHome()
+            val root = getPussycatHome()
             destination = File(root.absolutePath, name)
             if (destination.exists()) {
                 printLine("Pussycat, file already exists [ ${destination.absolutePath} ]. Skipping.")
