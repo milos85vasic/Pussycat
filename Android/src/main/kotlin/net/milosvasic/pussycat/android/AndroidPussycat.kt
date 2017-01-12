@@ -19,6 +19,7 @@ import com.github.salomonbrys.kotson.*
 import com.sun.org.apache.xalan.internal.utils.SecuritySupport
 import net.milosvasic.pussycat.Messages
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
+import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Files
 import java.io.BufferedReader
 import java.io.InputStream
@@ -375,14 +376,14 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         }
         if (bridge == null) {
             printLine("Pussycat, adb not found in your system path. We will try to use local pussycat adb binary.")
-            val osString = System.getProperty("os.name").toLowerCase()
+            val osString = OS.getOS()
             val os: String
             var extension = ""
-            if (osString.contains("mac")) {
+            if (osString.contains(OS.MACOS)) {
                 os = "macos"
-            } else if (osString.contains("linux")) {
+            } else if (osString.contains(OS.LINUX)) {
                 os = "linux"
-            } else if (osString.contains("windows")) {
+            } else if (osString.contains(OS.WINDOWS)) {
                 os = "windows"
                 extension = ".exe"
             } else {

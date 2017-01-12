@@ -22,7 +22,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     protected lateinit var TAG: KClass<*>
     protected lateinit var logger: Logger
     protected var color: String = Color.BLACK
-    protected var mode : PUSSYCAT_MODE? = null
+    protected var mode: PUSSYCAT_MODE? = null
     val configuration = PussycatConfiguration()
     protected val listeners: MutableSet<Events> = Collections.synchronizedSet(HashSet<Events>())
 

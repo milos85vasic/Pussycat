@@ -6,6 +6,10 @@ import net.milosvasic.pussycat.android.gui.OnSplashComplete
 import net.milosvasic.pussycat.android.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application;
+import net.milosvasic.pussycat.core.COMMAND
+import net.milosvasic.pussycat.os.OS
+import java.awt.MenuItem
+import java.awt.PopupMenu
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JFrame
@@ -29,15 +33,6 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
         mainFrame.extendedState = JFrame.MAXIMIZED_BOTH
         mainFrame.isUndecorated = true
-        val osString = System.getProperty("os.name").toLowerCase()
-        if (osString.contains("mac")) {
-            val app = Application.getApplication()
-            app.dockIconImage = favicon
-        } else if (osString.contains("linux")) {
-
-        } else if (osString.contains("windows")) {
-
-        }
     }
 
     override fun start(args: Array<String>) {
@@ -76,10 +71,33 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
     private fun initGui() {
         Thread(
                 Runnable {
+                    val osString = OS.getOS()
+                    val popupMenu = generateApplicationPopupMenu()
+                    if (osString.contains(OS.MACOS)) {
+                        val app = Application.getApplication()
+                        app.dockIconImage = favicon
+                        app.dockMenu = popupMenu
+                    } else if (osString.contains(OS.LINUX)) {
+
+                    } else if (osString.contains(OS.WINDOWS)) {
+
+                    }
+
                     Thread.sleep(15 * 1000) // TODO: Dynamic part to be implemented.
                     splashScreen.finish()
                 }
         ).start()
+    }
+
+    private fun generateApplicationPopupMenu(): PopupMenu {
+        val menu = PopupMenu()
+        val stopMenuItem = MenuItem()
+        stopMenuItem.label = "TBD." // TODO: Define popup menu items.
+        stopMenuItem.addActionListener {
+            println("TBD")
+        }
+        menu.add(stopMenuItem)
+        return menu
     }
 
 }
