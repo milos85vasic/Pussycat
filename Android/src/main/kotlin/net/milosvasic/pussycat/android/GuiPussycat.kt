@@ -2,13 +2,20 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
+import net.milosvasic.pussycat.android.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
+import javax.swing.JFrame
 
 
 class GuiPussycat(val information: ApplicationInformation) : AndroidPussycat() {
 
     override fun start(args: Array<String>) {
-
+        val mainFrame = JFrame()
+        mainFrame.extendedState = JFrame.MAXIMIZED_BOTH
+        mainFrame.isUndecorated = true
+        val splashScreen = PussycatSplashScreen(information, mainFrame)
+        mainFrame.isVisible = true
+        splashScreen.isVisible = true
     }
 
     override fun status() {
