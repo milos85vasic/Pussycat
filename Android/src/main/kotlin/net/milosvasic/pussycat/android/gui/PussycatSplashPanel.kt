@@ -13,7 +13,7 @@ class PussycatSplashPanel(splashWidth: Int, splashHeight: Int) : JPanel() {
 
     init {
         image = ImageIO.read(javaClass.classLoader.getResourceAsStream("splash/Pussycat.png"))
-        background = Color.BLUE
+        background = Color.BLACK
         setSize(splashWidth, splashHeight)
     }
 
