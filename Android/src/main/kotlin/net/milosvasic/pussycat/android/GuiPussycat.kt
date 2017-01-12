@@ -9,12 +9,16 @@ import javax.swing.JFrame
 
 class GuiPussycat(val information: ApplicationInformation) : AndroidPussycat() {
 
-    override fun start(args: Array<String>) {
-        val mainFrame = JFrame()
+    val mainFrame = JFrame()
+
+    init {
         mainFrame.extendedState = JFrame.MAXIMIZED_BOTH
         mainFrame.isUndecorated = true
+    }
+
+    override fun start(args: Array<String>) {
         val splashScreen = PussycatSplashScreen(information, mainFrame)
-        mainFrame.isVisible = true
+//        mainFrame.isVisible = true
         splashScreen.isVisible = true
     }
 
