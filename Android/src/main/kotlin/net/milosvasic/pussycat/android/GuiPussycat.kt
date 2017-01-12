@@ -8,7 +8,7 @@ import net.milosvasic.pussycat.application.ApplicationInformation
 import javax.swing.JFrame
 
 
-class GuiPussycat(val information: ApplicationInformation) : AndroidPussycat() {
+class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     val mainFrame = JFrame()
 
