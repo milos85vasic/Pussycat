@@ -41,7 +41,8 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
     }
 
     override fun start(args: Array<String>) {
-        splashScreen.isVisible = true
+        splashScreen.start()
+        initGui()
     }
 
     override fun status() {
@@ -70,6 +71,15 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     override fun getPrintableFilterValue(): String {
         return ""
+    }
+
+    private fun initGui() {
+        Thread(
+                Runnable {
+                    Thread.sleep(15 * 1000) // TODO: Dynamic part to be implemented.
+                    splashScreen.finish()
+                }
+        ).start()
     }
 
 }

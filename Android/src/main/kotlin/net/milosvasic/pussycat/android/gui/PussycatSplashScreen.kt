@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.android.gui
 import net.milosvasic.pussycat.application.ApplicationInformation
 import javax.swing.JWindow
 import java.awt.*
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.swing.JLabel
 import javax.swing.SwingConstants
 import javax.swing.border.CompoundBorder
@@ -14,6 +15,7 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
     val footer: JLabel
     val splashWidth = 640
     val splashHeight = 389
+    private val finished = AtomicBoolean()
 
     init {
         val screenSize = Toolkit.getDefaultToolkit().screenSize
@@ -33,12 +35,13 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
         body.isVisible = true
     }
 
-    override fun setVisible(b: Boolean) {
-        super.setVisible(b)
+    fun start() {
+        isVisible = true
+        finished.set(false)
         Thread(
                 Runnable {
                     var points = ""
-                    for (x in 0..10) {
+                    while (!finished.get()) {
                         points += " ."
                         footer.text = "<html><font color='white'>Loading$points</font></html>"
                         Thread.sleep(500)
@@ -46,6 +49,10 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
                     callback.onComplete(true)
                 }
         ).start()
+    }
+
+    fun finish() {
+        finished.set(true)
     }
 
     private fun generateHeader(information: ApplicationInformation): JLabel {
