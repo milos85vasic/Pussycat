@@ -1,10 +1,8 @@
 package net.milosvasic.pussycat.android.gui
 
 import net.milosvasic.pussycat.application.ApplicationInformation
-import java.awt.Frame
 import javax.swing.JWindow
-import java.awt.Toolkit
-import javax.imageio.ImageIO
+import java.awt.*
 
 
 class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?) : JWindow(owner) {
@@ -21,8 +19,9 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?) :
         )
 
         setSize(splashWidth, splashHeight)
-
-        val image = ImageIO.read(javaClass.classLoader.getResourceAsStream("splash/Pussycat.png"))
+        val splashPanel = PussycatSplashPanel(splashWidth, splashHeight)
+        add(splashPanel)
+        splashPanel.isVisible = true
     }
 
 }
