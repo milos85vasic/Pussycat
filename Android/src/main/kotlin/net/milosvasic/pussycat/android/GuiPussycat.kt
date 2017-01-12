@@ -73,6 +73,8 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                 Runnable {
                     val osString = OS.getOS()
                     val popupMenu = generateApplicationPopupMenu()
+                    splashScreen.setIconImage(favicon)
+                    mainFrame.iconImage = favicon
                     if (osString.contains(OS.MACOS)) {
                         val app = Application.getApplication()
                         app.dockIconImage = favicon
