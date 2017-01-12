@@ -5,8 +5,7 @@ import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.android.gui.OnSplashComplete
 import net.milosvasic.pussycat.android.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
-import com.apple.eawt.Application;
-import net.milosvasic.pussycat.core.COMMAND
+import com.apple.eawt.Application
 import net.milosvasic.pussycat.os.OS
 import java.awt.MenuItem
 import java.awt.PopupMenu
