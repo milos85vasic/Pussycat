@@ -9,10 +9,9 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-
-
 class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, val callback: OnSplashComplete) : JWindow(owner) {
 
+    val footer: JLabel
     val splashWidth = 640
     val splashHeight = 389
 
@@ -26,8 +25,8 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
 
         setSize(splashWidth, splashHeight)
         val body = PussycatSplashPanel(splashWidth, splashHeight)
-        val header = getHeader(information)
-        val footer = getFooter()
+        val header = generateHeader(information)
+        footer = generateFooter()
         add(body)
         add(header, BorderLayout.NORTH)
         add(footer, BorderLayout.SOUTH)
@@ -38,13 +37,18 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
         super.setVisible(b)
         Thread(
                 Runnable {
-                    Thread.sleep(30000)
+                    var points = ""
+                    for (x in 0..10) {
+                        points += " ."
+                        footer.text = "<html><font color='white'>Loading$points</font></html>"
+                        Thread.sleep(500)
+                    }
                     callback.onComplete(true)
                 }
         ).start()
     }
 
-    private fun getHeader(information: ApplicationInformation): JLabel {
+    private fun generateHeader(information: ApplicationInformation): JLabel {
         val splashLabel = JLabel()
         splashLabel.isOpaque = true
         splashLabel.background = Color.BLACK
@@ -59,11 +63,11 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
         return splashLabel
     }
 
-    private fun getFooter(): JLabel {
+    private fun generateFooter(): JLabel {
         val splashLabel = JLabel()
         splashLabel.isOpaque = true
         splashLabel.background = Color.BLACK
-        splashLabel.text = "<html><font color='white'>Loading ...</font></html>"
+        splashLabel.text = "<html><font color='white'>Loading</font></html>"
         splashLabel.horizontalAlignment = SwingConstants.LEFT
         splashLabel.border = CompoundBorder(splashLabel.border, EmptyBorder(10, 10, 10, 10))
         splashLabel.isVisible = true
