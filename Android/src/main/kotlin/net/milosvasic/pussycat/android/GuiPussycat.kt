@@ -6,7 +6,10 @@ import net.milosvasic.pussycat.gui.OnSplashComplete
 import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
+import net.milosvasic.pussycat.Messages
 import net.milosvasic.pussycat.core.COMMAND
+import net.milosvasic.pussycat.events.EVENT
+import net.milosvasic.pussycat.events.Events
 import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Gui
 import java.awt.MenuItem
@@ -42,13 +45,15 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
             mainFrame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         }
         splashScreen.start()
-        initialize()
-    }
 
-    override fun stop() {
-        super.stop()
-        Gui.close(splashScreen)
-        Gui.close(mainFrame)
+        val hook = Thread(Runnable {
+            execute(COMMAND.STOP)
+        })
+
+        Runtime.getRuntime().addShutdownHook(hook)
+
+        // TODO: Take into account params --- live vs fs etc.
+        initialize()
     }
 
     override fun status() {
@@ -126,6 +131,11 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                             COMMAND.FILESYSTEM -> {
                                 // TODO: Open file ...
                                 println("Open file ...")
+                            }
+                            COMMAND.STOP -> {
+                                execute(command)
+                                Gui.close(splashScreen)
+                                Gui.close(mainFrame)
                             }
                             else -> {
                                 execute(command)
