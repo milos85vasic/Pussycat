@@ -60,15 +60,18 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
     }
 
     override fun printLine(text: String) {
-
+        // TODO: Change this.
+        println(text)
     }
 
     override fun printLine(text: String, logLevel: Log.LogLevel) {
-
+        // TODO: Change this.
+        println(text)
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-
+        // TODO: Change this.
+        println("- - -")
     }
 
     override fun getPrintableLogLevelValue(): String {
@@ -85,7 +88,6 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                     val osString = OS.getOS()
                     initPopupMenu(osString)
                     splashScreen.updateStatus("Loading complete")
-                    Thread.sleep(5000)
                     splashScreen.finish()
                 }
         ).start()
