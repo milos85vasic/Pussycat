@@ -14,6 +14,7 @@ import java.awt.PopupMenu
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JFrame
+import javax.swing.WindowConstants
 
 
 class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
@@ -32,6 +33,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
+        mainFrame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         mainFrame.extendedState = JFrame.MAXIMIZED_BOTH
         mainFrame.isUndecorated = true
     }
@@ -93,13 +95,14 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
                     }
 
-                    Thread.sleep(15 * 1000) // TODO: Dynamic part to be implemented.
+                    Thread.sleep(5000) // TODO: Dynamic part to be implemented.
                     splashScreen.finish()
                 }
         ).start()
     }
 
     private fun generateApplicationPopupMenu(): PopupMenu {
+        // TODO: Refine this a bit and complete the implementation.
         val menu = PopupMenu()
         for (command in COMMAND.list) {
             if (command in listOf(COMMAND.UNKNOWN)) {

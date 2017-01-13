@@ -12,6 +12,7 @@ object Gui {
     fun close(window: Window) {
         window.isVisible = false
         window.dispatchEvent(WindowEvent(window, WindowEvent.WINDOW_CLOSING))
+        window.dispose()
     }
 
 }
