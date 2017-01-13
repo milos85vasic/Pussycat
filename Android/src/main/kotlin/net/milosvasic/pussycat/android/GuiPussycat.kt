@@ -14,6 +14,7 @@ import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Gui
 import java.awt.MenuItem
 import java.awt.PopupMenu
+import java.awt.Window
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JFrame
@@ -37,7 +38,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
         mainFrame.extendedState = JFrame.MAXIMIZED_BOTH
-        mainFrame.isUndecorated = true
+        mainFrame.title = "${information.name} V${information.version} by ${information.author}"
     }
 
     override fun start(args: Array<String>) {
