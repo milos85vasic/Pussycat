@@ -12,9 +12,11 @@ import javax.swing.border.EmptyBorder
 
 class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, val callback: OnSplashComplete) : JWindow(owner) {
 
+    var progress = ""
     val footer: JLabel
     val splashWidth = 640
     val splashHeight = 389
+    private var status = "Loading"
     private val finished = AtomicBoolean()
 
     init {
@@ -40,10 +42,9 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
         finished.set(false)
         Thread(
                 Runnable {
-                    var points = ""
                     while (!finished.get()) {
-                        points += " ."
-                        footer.text = "<html><font color='white'>Loading$points</font></html>"
+                        progress += " ."
+                        updateFooterText()
                         Thread.sleep(500)
                     }
                     callback.onComplete(true)
@@ -53,6 +54,15 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
 
     fun finish() {
         finished.set(true)
+    }
+
+    fun updateStatus(newStatus: String) {
+        status = newStatus
+        updateFooterText()
+    }
+
+    private fun updateFooterText() {
+        footer.text = "<html><font color='white'>$status$progress</font></html>"
     }
 
     private fun generateHeader(information: ApplicationInformation): JLabel {

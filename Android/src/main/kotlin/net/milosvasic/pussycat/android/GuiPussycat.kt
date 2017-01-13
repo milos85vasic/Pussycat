@@ -83,24 +83,32 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         Thread(
                 Runnable {
                     val osString = OS.getOS()
-                    val popupMenu = generateApplicationPopupMenu()
-                    splashScreen.setIconImage(favicon)
-                    mainFrame.iconImage = favicon
-
-                    if (osString.contains(OS.MACOS)) {
-                        val app = Application.getApplication()
-                        app.dockIconImage = favicon
-                        app.dockMenu = popupMenu
-                    } else if (osString.contains(OS.LINUX)) {
-
-                    } else if (osString.contains(OS.WINDOWS)) {
-
-                    }
-
-                    Thread.sleep(5000) // TODO: Dynamic part to be implemented.
+                    initPopupMenu(osString)
+                    initMainIcon()
+                    splashScreen.updateStatus("Loading complete")
                     splashScreen.finish()
                 }
         ).start()
+    }
+
+    private fun initMainIcon() {
+        splashScreen.setIconImage(favicon)
+        mainFrame.iconImage = favicon
+        splashScreen.updateStatus("Main icon set")
+    }
+
+    private fun initPopupMenu(osString: String) {
+        val popupMenu = generateApplicationPopupMenu()
+        if (osString.contains(OS.MACOS)) {
+            val app = Application.getApplication()
+            app.dockIconImage = favicon
+            app.dockMenu = popupMenu
+        } else if (osString.contains(OS.LINUX)) {
+
+        } else if (osString.contains(OS.WINDOWS)) {
+
+        }
+        splashScreen.updateStatus("Main menu initialized")
     }
 
     private fun generateApplicationPopupMenu(): PopupMenu {
