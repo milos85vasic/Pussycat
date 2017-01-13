@@ -7,8 +7,10 @@ import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.os.OS
+import net.milosvasic.pussycat.utils.Gui
 import java.awt.MenuItem
 import java.awt.PopupMenu
+import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JFrame
@@ -21,8 +23,8 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
-            splashScreen.isVisible = false
-            mainFrame.isVisible = true
+            Gui.close(splashScreen)
+            Gui.show(mainFrame)
         }
     }
 
@@ -37,6 +39,12 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
     override fun start(args: Array<String>) {
         splashScreen.start()
         initGui()
+    }
+
+    override fun stop() {
+        super.stop()
+        Gui.close(splashScreen)
+        Gui.close(mainFrame)
     }
 
     override fun status() {
