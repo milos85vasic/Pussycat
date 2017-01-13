@@ -6,11 +6,11 @@ import net.milosvasic.pussycat.gui.OnSplashComplete
 import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
+import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Gui
 import java.awt.MenuItem
 import java.awt.PopupMenu
-import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JFrame
@@ -101,12 +101,17 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     private fun generateApplicationPopupMenu(): PopupMenu {
         val menu = PopupMenu()
-        val stopMenuItem = MenuItem()
-        stopMenuItem.label = "TBD." // TODO: Define popup menu items.
-        stopMenuItem.addActionListener {
-            println("TBD")
+        for (command in COMMAND.list) {
+            if (command in listOf(COMMAND.UNKNOWN)) {
+                continue
+            }
+            val menuItem = MenuItem()
+            menuItem.label = command.value
+            menuItem.addActionListener {
+                execute(command)
+            }
+            menu.add(menuItem)
         }
-        menu.add(stopMenuItem)
         return menu
     }
 
