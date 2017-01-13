@@ -98,6 +98,29 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
         return mode
     }
 
+    fun getArgumentOption(arg: String): String {
+        var occurrences = 0
+        for (char in arg) {
+            if (char == '=') {
+                occurrences++
+            }
+        }
+        if (occurrences > 1) {
+            throw IllegalArgumentException("'=' is contained on more than 1 places.")
+        }
+        if (occurrences == 1) {
+            return arg.substring(0, arg.indexOf('='))
+        }
+        return arg
+    }
+
+    fun getArgumentValue(arg: String): String {
+        if (arg.contains('=')) {
+            return arg.substring(arg.indexOf('=') + 1)
+        }
+        return arg
+    }
+
     abstract fun start(args: Array<String>)
 
     abstract protected fun live()

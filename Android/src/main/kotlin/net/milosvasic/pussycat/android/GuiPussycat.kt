@@ -6,6 +6,7 @@ import net.milosvasic.pussycat.gui.OnSplashComplete
 import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
+import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.gui.PussycatMainWindow
 import net.milosvasic.pussycat.gui.themes.Darcula
@@ -46,9 +47,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         })
 
         Runtime.getRuntime().addShutdownHook(hook)
-
-        // TODO: Take into account params --- live vs fs etc.
-        initialize()
+        initialize(args)
     }
 
     override fun status() {
@@ -82,11 +81,39 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         return ""
     }
 
-    private fun initialize() {
+    private fun initialize(args: Array<String>) {
         Thread(
                 Runnable {
                     val osString = OS.getOS()
                     initPopupMenu(osString)
+
+                    var adb = true
+                    var file: String = ""
+                    for (arg in args) {
+                        var parsedArg: String
+                        try {
+                            parsedArg = getArgumentOption(arg.trim())
+                        } catch (e: Exception) {
+                            printLine("Error parsing arguments: $arg\n" + e.message)
+                            adb = false
+                            execute(ANDROID_COMMAND.PARENT.STOP)
+                            break
+                        }
+                        when (parsedArg) {
+                            "--adb" -> adb = true
+                            "--filesystem" -> {
+                                adb = false
+                                file = getArgumentValue(arg)
+                            }
+                            else -> {
+                            }
+                        }
+                    }
+                    if (adb) {
+                        execute(ANDROID_COMMAND.PARENT.LIVE)
+                    } else {
+                        execute(ANDROID_COMMAND.PARENT.FILESYSTEM, arrayOf(file))
+                    }
                     splashScreen.updateStatus("Loading complete")
                     splashScreen.finish()
                 }

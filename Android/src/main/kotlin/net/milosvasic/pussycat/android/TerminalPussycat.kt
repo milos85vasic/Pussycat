@@ -118,29 +118,6 @@ class TerminalPussycat : AndroidPussycat() {
         }
     }
 
-    fun getArgumentOption(arg: String): String {
-        var occurances = 0
-        for (char in arg) {
-            if (char == '=') {
-                occurances++
-            }
-        }
-        if (occurances > 1) {
-            throw IllegalArgumentException("'=' is contained on more than 1 places.")
-        }
-        if (occurances == 1) {
-            return arg.substring(0, arg.indexOf('='))
-        }
-        return arg
-    }
-
-    fun getArgumentValue(arg: String): String {
-        if (arg.contains('=')) {
-            return arg.substring(arg.indexOf('=') + 1)
-        }
-        return arg
-    }
-
     override fun clear() {
         printLine(TERMINAL_CLEAR)
     }
