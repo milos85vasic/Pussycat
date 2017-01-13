@@ -2,8 +2,8 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
-import net.milosvasic.pussycat.android.gui.OnSplashComplete
-import net.milosvasic.pussycat.android.gui.PussycatSplashScreen
+import net.milosvasic.pussycat.gui.OnSplashComplete
+import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.os.OS

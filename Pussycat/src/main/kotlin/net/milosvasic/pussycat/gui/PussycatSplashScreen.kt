@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.android.gui
+package net.milosvasic.pussycat.gui
 
 import net.milosvasic.pussycat.application.ApplicationInformation
 import javax.swing.JWindow
