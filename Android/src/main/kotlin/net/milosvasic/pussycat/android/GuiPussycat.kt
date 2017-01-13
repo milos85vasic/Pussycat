@@ -105,15 +105,26 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         // TODO: Refine this a bit and complete the implementation.
         val menu = PopupMenu()
         for (command in COMMAND.list) {
-            if (command in listOf(COMMAND.UNKNOWN)) {
-                continue
+            when (command) {
+                COMMAND.UNKNOWN -> {
+                }
+                else -> {
+                    val menuItem = MenuItem()
+                    menuItem.label = command.value
+                    menuItem.addActionListener {
+                        when (command) {
+                            COMMAND.FILESYSTEM -> {
+                                // TODO: Open file ...
+                                println("Open file ...")
+                            }
+                            else -> {
+                                execute(command)
+                            }
+                        }
+                    }
+                    menu.add(menuItem)
+                }
             }
-            val menuItem = MenuItem()
-            menuItem.label = command.value
-            menuItem.addActionListener {
-                execute(command)
-            }
-            menu.add(menuItem)
         }
         return menu
     }
