@@ -42,7 +42,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
             mainFrame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         }
         splashScreen.start()
-        initGui()
+        initialize()
     }
 
     override fun stop() {
@@ -79,7 +79,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         return ""
     }
 
-    private fun initGui() {
+    private fun initialize() {
         Thread(
                 Runnable {
                     val osString = OS.getOS()
