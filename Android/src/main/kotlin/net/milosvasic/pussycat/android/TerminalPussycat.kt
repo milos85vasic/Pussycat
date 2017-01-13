@@ -205,4 +205,8 @@ class TerminalPussycat : AndroidPussycat() {
         return Messages.NOT_SET
     }
 
+    override fun executeFilesystemRunnable(runnable: Runnable) {
+        Thread(runnable).start()
+    }
+
 }

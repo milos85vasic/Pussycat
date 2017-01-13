@@ -111,7 +111,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         }
         val logcat = File(params[0] as String)
         if (logcat.exists()) {
-            Thread(Runnable {
+            val runnable = Runnable {
                 Thread.currentThread().name = "Filesystem reading thread"
                 logcatTask?.removeLogCatListener(logcatListener)
                 AndroidDebugBridge.removeDeviceChangeListener(deviceChangeListener)
@@ -126,8 +126,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 fun countBytes(line: String) {
                     bytesLoaded += line.toByteArray().size / 1024.0
                     val percent: Double = (bytesLoaded * 100.0) / (fileSizeInBytes / 1024.0)
-                    val s = String.format("%.2f", percent)
-                    printLine("Pussycat, ${Messages.LOADING_DATA} [ $s % ]")
+                    printFilesystemLoadingProgress(percent)
                 }
                 if (logcat.extension == FILE_EXTENSION) {
                     val gson = Gson()
@@ -152,7 +151,8 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                 if (!loadingSuccess) {
                     printLine("\nPussycat, serialization problems detected during data loading. Some logcat lines may missing.\n")
                 }
-            }).start()
+            }
+            executeFilesystemRunnable(runnable)
         } else {
             printLine("Logcat: ${logcat.absoluteFile} does not exist")
         }
@@ -256,6 +256,13 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
     abstract protected fun getPrintableLogLevelValue(): String
 
     abstract protected fun getPrintableFilterValue(): String
+
+    abstract protected fun executeFilesystemRunnable(runnable: Runnable)
+
+    open protected fun printFilesystemLoadingProgress(percent: Double) {
+        val s = String.format("%.2f", percent)
+        printLine("Pussycat, ${Messages.LOADING_DATA} [ $s % ]")
+    }
 
     private fun filterByLogLevel(params: Array<out String?>) {
         if (!params.isEmpty()) {

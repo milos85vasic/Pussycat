@@ -14,6 +14,8 @@ import net.milosvasic.pussycat.os.OS
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.image.BufferedImage
+import java.util.concurrent.Callable
+import java.util.concurrent.Executors
 import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
@@ -81,6 +83,12 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         return ""
     }
 
+    override fun printFilesystemLoadingProgress(percent: Double) {
+        super.printFilesystemLoadingProgress(percent)
+        val s = String.format("%.0f", percent)
+        splashScreen.updateStatus("Loading: $s%")
+    }
+
     private fun initialize(args: Array<String>) {
         Thread(
                 Runnable {
@@ -118,6 +126,10 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                     splashScreen.finish()
                 }
         ).start()
+    }
+
+    override fun executeFilesystemRunnable(runnable: Runnable) {
+        runnable.run()
     }
 
     private fun initPopupMenu(osString: String) {
