@@ -33,7 +33,9 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
-        mainFrame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+        if (configuration.exitOnStop) {
+            mainFrame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+        }
         mainFrame.extendedState = JFrame.MAXIMIZED_BOTH
         mainFrame.isUndecorated = true
     }
