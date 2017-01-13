@@ -6,10 +6,8 @@ import net.milosvasic.pussycat.gui.OnSplashComplete
 import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
-import net.milosvasic.pussycat.Messages
 import net.milosvasic.pussycat.core.COMMAND
-import net.milosvasic.pussycat.events.EVENT
-import net.milosvasic.pussycat.events.Events
+import net.milosvasic.pussycat.gui.PussycatMainWindow
 import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Gui
 import java.awt.MenuItem
@@ -22,27 +20,25 @@ import javax.swing.WindowConstants
 
 class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
-    val mainFrame = JFrame()
+    val mainWindow = PussycatMainWindow(information)
     private var favicon: BufferedImage? = null
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
             Gui.close(splashScreen)
-            Gui.show(mainFrame)
+            Gui.show(mainWindow)
         }
     }
 
-    val splashScreen = PussycatSplashScreen(information, mainFrame, splashScreenCallback)
+    val splashScreen = PussycatSplashScreen(information, mainWindow, splashScreenCallback)
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
-        mainFrame.extendedState = JFrame.MAXIMIZED_BOTH
-        mainFrame.title = "${information.name} V${information.version} by ${information.author}"
     }
 
     override fun start(args: Array<String>) {
         if (configuration.exitOnStop) {
-            mainFrame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+            mainWindow.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         }
         splashScreen.start()
 
@@ -90,6 +86,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                     val osString = OS.getOS()
                     initPopupMenu(osString)
                     initMainIcon()
+                    initMainWindow()
                     splashScreen.updateStatus("Loading complete")
                     splashScreen.finish()
                 }
@@ -98,13 +95,14 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     private fun initMainIcon() {
         splashScreen.setIconImage(favicon)
-        mainFrame.iconImage = favicon
+        mainWindow.iconImage = favicon
         splashScreen.updateStatus("Main icon set")
     }
 
     private fun initPopupMenu(osString: String) {
         val popupMenu = generateApplicationPopupMenu()
         if (osString.contains(OS.MACOS)) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true")
             val app = Application.getApplication()
             app.dockIconImage = favicon
             app.dockMenu = popupMenu
@@ -114,6 +112,11 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
         }
         splashScreen.updateStatus("Main menu initialized")
+    }
+
+    private fun initMainWindow(){
+        mainWindow.initialize()
+        splashScreen.updateStatus("Main window initialized")
     }
 
     private fun generateApplicationPopupMenu(): PopupMenu {
@@ -135,7 +138,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                             COMMAND.STOP -> {
                                 execute(command)
                                 Gui.close(splashScreen)
-                                Gui.close(mainFrame)
+                                Gui.close(mainWindow)
                             }
                             else -> {
                                 execute(command)
