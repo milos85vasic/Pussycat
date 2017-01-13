@@ -49,6 +49,7 @@ abstract class ApplicationTestAbstract {
         Thread.sleep(waitingTime)
         Assert.assertEquals(expectedMode, app.pussy?.getPussycatMode())
         app.stop()
+        Thread.sleep(waitingTime)
     }
 
     @After

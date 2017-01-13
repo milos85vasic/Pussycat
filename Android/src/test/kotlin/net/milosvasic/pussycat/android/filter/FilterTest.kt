@@ -106,6 +106,7 @@ class FilterTest {
 
             Assert.assertEquals(app.pussy?.getPussycatMode(), PUSSYCAT_MODE.FILESYSTEM)
             app.stop()
+            Thread.sleep(3000)
         }
     }
 

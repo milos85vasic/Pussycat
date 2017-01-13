@@ -78,6 +78,7 @@ class ApplicationTestModesToggling : ApplicationTestAbstract() {
         }
 
         app.stop()
+        Thread.sleep(waitingTime)
     }
 
 }

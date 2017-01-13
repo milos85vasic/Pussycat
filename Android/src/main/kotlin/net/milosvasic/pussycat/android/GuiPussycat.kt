@@ -33,14 +33,14 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
-        if (configuration.exitOnStop) {
-            mainFrame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
-        }
         mainFrame.extendedState = JFrame.MAXIMIZED_BOTH
         mainFrame.isUndecorated = true
     }
 
     override fun start(args: Array<String>) {
+        if (configuration.exitOnStop) {
+            mainFrame.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+        }
         splashScreen.start()
         initGui()
     }
