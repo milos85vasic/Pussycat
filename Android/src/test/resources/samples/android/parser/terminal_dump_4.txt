@@ -2309,7 +2309,7 @@ D/WifiHAL (  939): no_seq_check received
 I/WifiHAL (  939): event received NL80211_CMD_SET_REKEY_OFFLOAD
 I/WifiHAL (  939): event received NL80211_CMD_SET_REKEY_OFFLOAD, vendor_id = 0x0
 I/WifiHAL (  939): event ignored!!
-I/qdhwcomposer(  248): handle_blank_event: dpy:0 panel power state: 1
+I/qdhwcomposer(  248): handle_blank_event: dpy:0 mainPanel power state: 1
 D/qdhwcomposer(  248): hwc_setPowerMode: Done setting mode 2 on display 0
 D/SurfaceControl(  939): Excessive delay in setPowerMode(): 333ms
 I/DisplayPowerController(  939): Unblocked screen on after 355 ms
@@ -2543,7 +2543,7 @@ E/SuperStamina-NativeDaemonConnector(  939): Error in NativeDaemonConnector: com
 E/SuperStamina-NativeDaemonConnector(  939): closing output stream for xssm
 E/SuperStamina-NativeDaemonConnector(  939): closing input stream for xssm
 E/SuperStamina-NativeDaemonConnector(  939): Command failed, max retries exceeded, so ignoring it: disp read()
-I/qdhwcomposer(  248): handle_blank_event: dpy:0 panel power state: 0
+I/qdhwcomposer(  248): handle_blank_event: dpy:0 mainPanel power state: 0
 D/qdhwcomposer(  248): hwc_setPowerMode: Done setting mode 0 on display 0
 D/SurfaceControl(  939): Excessive delay in setPowerMode(): 423ms
 I/QCOM PowerHAL(  939): Got set_interactive hint
@@ -4236,7 +4236,7 @@ W/ResourceType(27216): Found multiple library tables, ignoring...
 W/ResourceType(27216): Found multiple library tables, ignoring...
 W/GAV2    (27216): Thread[main,5,main]: Need to call initialize() and be in fallback mode to start dispatch.
 I/ActivityManager(  939): Killing 26520:android.process.acore/u0a46 (adj 15): empty #9
-I/qdhwcomposer(  248): handle_blank_event: dpy:0 panel power state: 1
+I/qdhwcomposer(  248): handle_blank_event: dpy:0 mainPanel power state: 1
 E/WifiStateMachine(  939): WifiStateMachine CMD_START_SCAN source -2 txSuccessRate=49.25 rxSuccessRate=33.25 targetRoamBSSID=any RSSI=-59
 D/qdhwcomposer(  248): hwc_setPowerMode: Done setting mode 2 on display 0
 D/SurfaceControl(  939): Excessive delay in setPowerMode(): 330ms
@@ -4909,7 +4909,7 @@ I/DisplayManagerService(  939): Display device changed: DisplayDeviceInfo{"Built
 V/ActivityManager(  939): Display changed displayId=0
 D/SurfaceFlinger(  248): Set power mode=0, type=0 flinger=0xb80593d8
 D/qdhwcomposer(  248): hwc_setPowerMode: Setting mode 0 on display: 0
-I/qdhwcomposer(  248): handle_blank_event: dpy:0 panel power state: 0
+I/qdhwcomposer(  248): handle_blank_event: dpy:0 mainPanel power state: 0
 D/qdhwcomposer(  248): hwc_setPowerMode: Done setting mode 0 on display 0
 D/SurfaceControl(  939): Excessive delay in setPowerMode(): 423ms
 I/QCOM PowerHAL(  939): Got set_interactive hint
@@ -4945,7 +4945,7 @@ I/WifiHAL (  939): event ignored!!
 D/charger_monitor(  475): vchg_loop stable: 0, is_settled = 0,usb_target_ua = 500000, usbin_current_now = 500000,fastchg_sts = 1, num_attempts = 0
 D/Dormancy( 2230): prepareMoniterDataDormancy: start_moniter_dormancy = false
 D/Dormancy( 2230): prepareMoniterDataDormancy: start_moniter_dormancy = false
-I/qdhwcomposer(  248): handle_blank_event: dpy:0 panel power state: 1
+I/qdhwcomposer(  248): handle_blank_event: dpy:0 mainPanel power state: 1
 D/qdhwcomposer(  248): hwc_setPowerMode: Done setting mode 2 on display 0
 D/SurfaceControl(  939): Excessive delay in setPowerMode(): 337ms
 D/StatusBar.NetworkController( 1925): onSignalStrengthsChanged signalStrength=SignalStrength: 23 0 67 -120 -160 -120 -1 -1 99 2147483647 2147483647 2147483647 2147483647 2147483647 gsm|lte level=4
@@ -5070,7 +5070,7 @@ D/qdhwcomposer(  248): hwc_setPowerMode: Setting mode 0 on display: 0
 V/ActivityManager(  939): Display changed displayId=0
 E/CABL    (  378): hist_preprocess: Incorrect histogram data!!!
 E/PPDaemon(  378): abl_calc_lut() failed with ret = 1
-I/qdhwcomposer(  248): handle_blank_event: dpy:0 panel power state: 0
+I/qdhwcomposer(  248): handle_blank_event: dpy:0 mainPanel power state: 0
 D/qdhwcomposer(  248): hwc_setPowerMode: Done setting mode 0 on display 0
 D/SurfaceControl(  939): Excessive delay in setPowerMode(): 408ms
 I/QCOM PowerHAL(  939): Got set_interactive hint

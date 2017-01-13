@@ -1277,7 +1277,7 @@
 12-21 21:09:59.909  3820  6812 D fpc_fingerprint_hal: worker idle
 12-21 21:09:59.926 16962 16962 W System  : ClassLoader referenced unknown path: 
 12-21 21:09:59.929 16962 16962 D ApplicationLoaders: ignored Vulkan layer search path /data/app/com.google.android.gms-1/lib/arm:/system/fake-libs:/data/app/com.google.android.gms-1/base.apk!/lib/armeabi-v7a for namespace 0xef1620d0
-12-21 21:10:00.094   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-21 21:10:00.094   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-21 21:10:00.094   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
 12-21 21:10:00.100  5040  6831 I chatty  : uid=1000(system) PhotonicModulat expire 4 lines
 12-21 21:10:00.116 16244 16244 I Dialer  : InCallActivity.onStart
@@ -1846,7 +1846,7 @@
 12-21 21:10:14.581   400   400 D qdhwcomposer: hwc_setPowerMode: Setting mode 0 on display: 0
 12-21 21:10:14.584  5040  5113 W LocalDisplayAdapter: Unable to find color mode 0, ignoring request.
 12-21 21:10:14.584 16244 16244 I Dialer  : ProximitySensor.onDisplayStateChanged, isDisplayOn: false
-12-21 21:10:14.717   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-21 21:10:14.717   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-21 21:10:14.719   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-21 21:10:32.634  7473  7726 I chatty  : uid=10018(com.google.android.gms) lowpool[2] expire 19 lines
 12-21 21:11:13.491  5040  6456 I chatty  : uid=1000(system) n HAL callback. expire 10 lines
@@ -1871,7 +1871,7 @@
 12-21 21:12:37.487  5040  5113 W LocalDisplayAdapter: Unable to find color mode 0, ignoring request.
 12-21 21:12:37.495 16244 16244 I Dialer  : ProximitySensor.onDisplayStateChanged, isDisplayOn: true
 12-21 21:12:37.500  5040  9241 I chatty  : uid=1000(system) Binder:5040_A expire 5 lines
-12-21 21:12:37.720   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-21 21:12:37.720   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-21 21:12:37.720   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
 12-21 21:12:37.768 16244 16244 I Dialer  : ProximitySensor.updateProximitySensorMode, screenOnImmediately: false, dialPadVisible: false, offHook: true, horizontal: false, uiShowing: true, audioRoute: EARPIECE
 12-21 21:12:37.768 16244 16244 I Dialer  : ProximitySensor.turnOnProximitySensor, wake lock already acquired
@@ -2066,7 +2066,7 @@
 12-21 21:12:40.889  5040 18543 D ActivityManager: cleanUpApplicationRecord -- 16276
 12-21 21:12:40.889  5040  6789 E ConnectivityService: RemoteException caught trying to send a callback msg for NetworkRequest [ LISTEN id=138, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED] ]
 12-21 21:12:40.901  7652  7982 I chatty  : uid=10018(com.google.android.gms) lowpool[4] expire 2 lines
-12-21 21:12:40.955   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-21 21:12:40.955   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-21 21:12:40.958   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-21 21:12:40.961  5040  5115 I PowerManagerService: Sleeping (uid 1000)...
 12-21 21:12:40.972  6835  6835 I GoogleInputMethod: onReceive() : Action = android.intent.action.SCREEN_OFF
@@ -2581,7 +2581,7 @@
 12-22 00:58:55.761  7652 18666 I chatty  : uid=10018(com.google.android.gms) expire 4 lines
 12-22 00:58:55.820 18653 18653 I art     : Starting a blocking GC AddRemoveAppImageSpace
 12-22 00:58:55.830 18653 18653 W System  : ClassLoader referenced unknown path: /data/app/com.google.android.calendar-2/lib/arm64
-12-22 00:58:55.836   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-22 00:58:55.836   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-22 00:58:55.836   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
 12-22 00:58:55.836  5040  6831 I chatty  : uid=1000(system) PhotonicModulat expire 2 lines
 12-22 00:58:55.841 16244 16244 I Dialer  : InCallActivity.onResume
@@ -2831,7 +2831,7 @@
 12-22 00:59:17.345   400   400 D SurfaceFlinger: Set power mode=0, type=0 flinger=0x7bab847000
 12-22 00:59:17.345   400   400 D qdhwcomposer: hwc_setPowerMode: Setting mode 0 on display: 0
 12-22 00:59:17.348  5040  5113 W LocalDisplayAdapter: Unable to find color mode 0, ignoring request.
-12-22 00:59:17.464   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-22 00:59:17.464   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-22 00:59:17.468   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-22 00:59:17.486  5040  5115 I PowerManagerService: Sleeping (uid 1000)...
 12-22 00:59:17.514  6893  6893 D PhoneStatusBar: disable: < expand ICONS alerts SYSTEM_INFO back HOME RECENT clock SEARCH quick_settings >
@@ -3940,7 +3940,7 @@
 12-22 11:10:43.928  7652 21057 I chatty  : uid=10018(com.google.android.gms) expire 4 lines
 12-22 11:10:43.933  7652 21055 I chatty  : uid=10018(com.google.android.gms) expire 13 lines
 12-22 11:10:43.935  7473 21059 I chatty  : uid=10018 com.google.android.gms.persistent expire 1 line
-12-22 11:10:43.967   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-22 11:10:43.967   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-22 11:10:43.967   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
 12-22 11:10:43.968  5040  6831 D SurfaceControl: Excessive delay in setPowerMode(): 232ms
 12-22 11:10:43.996  5040  5115 I DisplayPowerController: Unblocked screen on after 271 ms
@@ -4620,7 +4620,7 @@
 12-22 11:10:52.488  3798  4274 D audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback
 12-22 11:10:52.503  3798  4274 D audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-22 11:10:52.503  3798  4274 D audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
-12-22 11:10:52.534   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-22 11:10:52.534   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-22 11:10:52.539   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-22 11:10:52.540  5040  6831 D SurfaceControl: Excessive delay in setPowerMode(): 134ms
 12-22 11:10:52.542  5040  5115 I PowerManagerService: Sleeping (uid 1000)...
@@ -4814,7 +4814,7 @@
 12-22 11:12:47.056  7517  7670 E NxpTml  : PN54X - Error in I2C Write.....
 12-22 11:12:47.056  7517  7672 E NxpHal  : write error status = 0x1ff
 12-22 11:12:47.057  7517  7651 E NxpHal  : write_unlocked failed - PN54X Maybe in Standby Mode - Retry
-12-22 11:12:47.215   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-22 11:12:47.215   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-22 11:12:47.215   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
 12-22 11:12:47.216  5040  6831 D SurfaceControl: Excessive delay in setPowerMode(): 229ms
 12-22 11:12:47.225  5040  5115 I DisplayPowerController: Unblocked screen on after 255 ms
@@ -5232,7 +5232,7 @@
 12-22 11:13:10.171  3798  4274 D audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback
 12-22 11:13:10.185  3798  4274 D audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-22 11:13:10.185  3798  4274 D audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
-12-22 11:13:10.234   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-22 11:13:10.234   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-22 11:13:10.236   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-22 11:13:10.236  5040  6831 D SurfaceControl: Excessive delay in setPowerMode(): 118ms
 12-22 11:13:10.239  5040  5115 I PowerManagerService: Sleeping (uid 1000)...
@@ -5302,7 +5302,7 @@
 12-22 11:18:38.993  7473 21968 W ctxmgr  : [ContextSpecificAclFactory]LocationConsent failed, ULR opt-in status is: false, account#-1741774679#
 12-22 11:18:38.993  7473 21968 W ctxmgr  : [AclManager]No 2 for (accnt=account#-1741774679#, com.google.android.gms(10018):UserLocationProducer, vrsn=10084000, 0, 3pPkg = null ,  3pMdlId = null). Was: 2 for 1, account#-1741774679#
 12-22 11:18:39.191   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
-12-22 11:18:39.192   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-22 11:18:39.192   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-22 11:18:39.192  5040  6831 D SurfaceControl: Excessive delay in setPowerMode(): 232ms
 12-22 11:18:39.202  5040  5115 I DisplayPowerController: Unblocked screen on after 254 ms
 12-22 11:18:39.203  5040  5115 V KeyguardServiceDelegate: onScreenTurnedOn()
@@ -6006,7 +6006,7 @@
 12-22 11:19:11.539  3798  4274 D audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback
 12-22 11:19:11.553  3798  4274 D audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-22 11:19:11.553  3798  4274 D audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
-12-22 11:19:11.611   400   523 I qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-22 11:19:11.611   400   523 I qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-22 11:19:11.613   400   400 D qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-22 11:19:11.614  5040  6831 D SurfaceControl: Excessive delay in setPowerMode(): 119ms
 12-22 11:19:11.628  5040  5115 I PowerManagerService: Sleeping (uid 1000)...

@@ -2633,7 +2633,7 @@ D/NativeCrypto( 5168): ssl=0x66d69c88 info_callback ignored
 D/OpenGLRenderer(  858): prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 D/OpenGLRenderer(  858): clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
 D/OpenGLRenderer(  858): finish <0x61c46008>
-D/StatusBar(  858): Close float panel.
+D/StatusBar(  858): Close float mainPanel.
 D/StatusBar(  858): closeFloatPanel: mFloatPanelView = null,visible = 0, shown = null
 D/OpenSSLLib( 5168):  User Build
 D/NativeCrypto( 5168): ssl=0x66d69c88 info_callback where=0x1001 ret=1
@@ -3839,7 +3839,7 @@ I/BufferQueue(  135): [FrameBufferSurface_0](this:0xb7068088,id:0,api:1,p:135,c:
 I/BufferQueue(  135): [FrameBufferSurface_0](this:0xb7068088,id:0,api:1,p:135,c:135) [queue] fps:3.53, dur:1132.72, max:541.06, min:17.64
 I/SurfaceFlinger(  135): [Built-in Screen (type:0)] fps:3.531313,dur:1132.72,max:541.07,min:17.64
 V/ActivityManager(  649): Broadcast: Intent { act=com.facebook.common.appstate.peers flg=0x10 pkg=com.facebook.katana (has extras) } ordered=false userid=0 callerApp=ProcessRecord{4201e108 5168:com.facebook.katana/u0a24}
-D/StatusBar(  858): Close float panel.
+D/StatusBar(  858): Close float mainPanel.
 D/StatusBar(  858): closeFloatPanel: mFloatPanelView = null,visible = 0, shown = null
 D/WifiStateMachine(  649): ConnectedState{ when=-3ms what=131155 arg1=1 target=com.android.internal.util.StateMachine$SmHandler target=Handler (com.android.internal.util.StateMachine$SmHandler) {42461588} }
 D/WifiStateMachine(  649): L2ConnectedState{ when=-3ms what=131155 arg1=1 target=com.android.internal.util.StateMachine$SmHandler target=Handler (com.android.internal.util.StateMachine$SmHandler) {42461588} }
@@ -6066,7 +6066,7 @@ W/InputReader(  649): outer ID:0, tracking ID:-1, pointer count:16
 W/InputReader(  649): inCount:16, pointer count:1
 W/InputReader(  649): outer ID:0, tracking ID:-1, pointer count:16
 W/InputReader(  649): inCount:16, pointer count:1
-D/StatusBar(  858): Close float panel.
+D/StatusBar(  858): Close float mainPanel.
 D/StatusBar(  858): closeFloatPanel: mFloatPanelView = null,visible = 0, shown = null
 W/InputReader(  649): outer ID:0, tracking ID:-1, pointer count:16
 W/InputReader(  649): inCount:16, pointer count:1
@@ -7116,11 +7116,15 @@ D/SensorService(  649): disable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=0
 D/Sensors (  649): activate handle =0, enable = 0
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:0 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:0 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 0!
 V/Provider/Settings(  858): get setting for user -2 by user 0 so skipping cache
 V/SettingsProvider(  649):    access setting for user 0
@@ -7138,7 +7142,8 @@ D/WifiHW  (  649):
 D/wifi    (  649): doStringCommand, buf IFNAME=wlan0 SIGNAL_POLL
 I/WifiStateMachine(  649): fetchRssiAndLinkSpeedNative, newRssi:-41, newLinkSpeed:65, SSID:"irichanin.com"
 V/WifiManager(  649): calculateSignalLevel(),numLevels = 5
-D/Hwmsen_sensors(  649): active_sensors =10
+D/Hwmsen_sensors(  649): active_sensors =10
+
 D/SensorService(  649): ~SensorEventConnection(0x629470a0)
 D/SensorService(  649): 1 active sensors
 D/SensorService(  649): removing connection 0x629470a0 for sensor[0].handle=0x00000004
@@ -8154,16 +8159,22 @@ D/SensorService(  649): enable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=1
 D/Sensors (  649): activate handle =0, enable = 1
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:1 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:1 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:1 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:1 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 1!
-D/Hwmsen_sensors(  649): active_sensors =11
+D/Hwmsen_sensors(  649): active_sensors =11
+
 D/SensorService(  649): 	>>> actuating h/w setDelay 0 66667000 
 D/Accel   (  649): setDelay: (handle=0, ns=66667000)
-D/Accel   (  649): no ACC setDelay control attr 
+D/Accel   (  649): no ACC setDelay control attr 
+
 E/Sensors (  649): new acc setDelay handle(0),ns(66667000) err! go to hwmsen
 D/Hwmsen_sensors(  649): setDelay: (handle=0, ns=66667000)
 D/Hwmsen_sensors(  649): setDelay: (what=0, ms=66)
@@ -8281,13 +8292,18 @@ D/SensorService(  649): disable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=0
 D/Sensors (  649): activate handle =0, enable = 0
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:0 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:0 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 0!
-D/Hwmsen_sensors(  649): active_sensors =10
+D/Hwmsen_sensors(  649): active_sensors =10
+
 D/SensorService(  649): ~SensorEventConnection(0x682e6d50)
 D/SensorService(  649): 1 active sensors
 D/SensorService(  649): removing connection 0x682e6d50 for sensor[0].handle=0x00000004
@@ -8478,7 +8494,7 @@ D/VelocityTracker( 5310): tpd read y fail: Bad file number
 V/AppsCustomizePagedView( 5310): appscustomizePage onPackagesUpdated
 D/RecentTasksLoader( 5310): ignore itself
 D/RecentTasksLoader( 5310): ignore launcher
-V/AppWidgetServiceImpl(  649): getInstalledProviders hostName = com.acer.android.floatapp.recentÀ€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€
+V/AppWidgetServiceImpl(  649): getInstalledProviders hostName = com.acer.android.floatapp.recentï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 V/AppWidgetServiceImpl(  649): permission of the launcher: 0 enableFiltering = false
 V/AppWidgetServiceImpl(  649): widget package name: com.booking Permission: -1
 V/AppWidgetServiceImpl(  649): p.zombie = false
@@ -8736,16 +8752,22 @@ D/SensorService(  649): enable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=1
 D/Sensors (  649): activate handle =0, enable = 1
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:1 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:1 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:1 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:1 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 1!
-D/Hwmsen_sensors(  649): active_sensors =11
+D/Hwmsen_sensors(  649): active_sensors =11
+
 D/SensorService(  649): 	>>> actuating h/w setDelay 0 200000000 
 D/Accel   (  649): setDelay: (handle=0, ns=200000000)
-D/Accel   (  649): no ACC setDelay control attr 
+D/Accel   (  649): no ACC setDelay control attr 
+
 E/Sensors (  649): new acc setDelay handle(0),ns(200000000) err! go to hwmsen
 D/Hwmsen_sensors(  649): setDelay: (handle=0, ns=200000000)
 D/Hwmsen_sensors(  649): setDelay: (what=0, ms=200)
@@ -9973,11 +9995,15 @@ D/SensorService(  649): disable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=0
 D/Sensors (  649): activate handle =0, enable = 0
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:0 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:0 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 0!
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x6352a2a8
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x61a47b50
@@ -9989,7 +10015,8 @@ D/DisplayManagerService(  649): Display listener for pid 4766 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x6805ff38
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x682db528
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x6352a2a8
-D/Hwmsen_sensors(  649): active_sensors =10
+D/Hwmsen_sensors(  649): active_sensors =10
+
 D/ActivityThread( 5310): ACT-AM_ON_PAUSE_CALLED ActivityRecord{41e983f0 token=android.os.BinderProxy@41e97aa8 {com.acer.android.floatapp.recent/com.acer.android.floatapp.recent.RecentsActivity}}
 I/libPerfService(  649): 1: set: 2
 E/        (  649): Could not open '/data/data/hotplug/cmd'
@@ -15915,16 +15942,22 @@ D/SensorService(  649): enable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=1
 D/Sensors (  649): activate handle =0, enable = 1
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:1 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:1 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:1 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:1 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 1!
-D/Hwmsen_sensors(  649): active_sensors =11
+D/Hwmsen_sensors(  649): active_sensors =11
+
 D/SensorService(  649): 	>>> actuating h/w setDelay 0 66667000 
 D/Accel   (  649): setDelay: (handle=0, ns=66667000)
-D/Accel   (  649): no ACC setDelay control attr 
+D/Accel   (  649): no ACC setDelay control attr 
+
 E/Sensors (  649): new acc setDelay handle(0),ns(66667000) err! go to hwmsen
 D/Hwmsen_sensors(  649): setDelay: (handle=0, ns=66667000)
 D/Hwmsen_sensors(  649): setDelay: (what=0, ms=66)
@@ -15985,11 +16018,15 @@ V/NetworkStats(  649): setKernelCounterSet uid=10101 set=1
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=0
 D/Sensors (  649): activate handle =0, enable = 0
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:0 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:0 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 0!
 D/dalvikvm(  649): threadid=80 (Thread-192): calling run()
 D/ConnectivityService(  649): onUidRulesChanged(uid=10101, uidRules=0)
@@ -15998,7 +16035,8 @@ I/GLConsumer(  135): [Starting com.acer.android.floatapp.recent](this:0xb70b6158
 D/GLConsumer(  135):     GraphicBuffer: gb=0xb70b35c8 handle=0xb707bfe8 fmt=1
 D/GLConsumer(  135):     EGLImage: dpy=0x1, img=0x10000006
 I/SurfaceFlinger(  135): [Built-in Screen (type:0)] fps:8.279357,dur:1811.73,max:888.98,min:16.18
-D/Hwmsen_sensors(  649): active_sensors =10
+D/Hwmsen_sensors(  649): active_sensors =10
+
 D/SensorService(  649): ~SensorEventConnection(0x682e0840)
 D/SensorService(  649): 1 active sensors
 D/SensorService(  649): removing connection 0x682e0840 for sensor[0].handle=0x00000004
@@ -16057,7 +16095,7 @@ D/VelocityTracker( 5310): tpd read x fail: Bad file number
 D/VelocityTracker( 5310): tpd read y fail: Bad file number
 V/AppsCustomizePagedView( 5310): appscustomizePage onPackagesUpdated
 D/RecentTasksLoader( 5310): numTasks:4
-V/AppWidgetServiceImpl(  649): getInstalledProviders hostName = com.acer.android.floatapp.recentÀ€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€À€
+V/AppWidgetServiceImpl(  649): getInstalledProviders hostName = com.acer.android.floatapp.recentï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 D/RecentTasksLoader( 5310): ignore itself
 V/AppWidgetServiceImpl(  649): permission of the launcher: 0 enableFiltering = false
 V/AppWidgetServiceImpl(  649): widget package name: com.booking Permission: -1
@@ -16309,16 +16347,22 @@ D/SensorService(  649): enable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=1
 D/Sensors (  649): activate handle =0, enable = 1
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:1 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:1 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:1 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:1 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 1!
-D/Hwmsen_sensors(  649): active_sensors =11
+D/Hwmsen_sensors(  649): active_sensors =11
+
 D/SensorService(  649): 	>>> actuating h/w setDelay 0 200000000 
 D/Accel   (  649): setDelay: (handle=0, ns=200000000)
-D/Accel   (  649): no ACC setDelay control attr 
+D/Accel   (  649): no ACC setDelay control attr 
+
 E/Sensors (  649): new acc setDelay handle(0),ns(200000000) err! go to hwmsen
 D/Hwmsen_sensors(  649): setDelay: (handle=0, ns=200000000)
 D/Hwmsen_sensors(  649): setDelay: (what=0, ms=200)
@@ -16676,11 +16720,15 @@ D/SensorService(  649): disable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=0 enabled=0
 D/Sensors (  649): activate handle =0, enable = 0
 D/Sensors (  649): use new sensor index=1, mSensors[index](5cdbe768)
-D/Accel   (  649): ACC enable: handle:0, en:0 
-D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
-D/Accel   (  649): no ACC enable control attr
+D/Accel   (  649): ACC enable: handle:0, en:0 
+
+D/Accel   (  649): path:/sys/class/misc/m_acc_misc/accactive 
+
+D/Accel   (  649): no ACC enable control attr
+
 D/Sensors (  649): use old sensor err(-1),index(1) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:0, en:0 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 0, enable or disable 0!
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x62f07300
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x5af28120
@@ -16700,7 +16748,8 @@ D/WifiService(  649): Client connection lost with reason: 4
 D/DisplayManagerService(  649): Display listener for pid 5356 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x5af280b8
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x68112fa0
-D/Hwmsen_sensors(  649): active_sensors =10
+D/Hwmsen_sensors(  649): active_sensors =10
+
 D/ActivityThread( 5310): ACT-AM_ON_PAUSE_CALLED ActivityRecord{423335a0 token=android.os.BinderProxy@42332c58 {com.acer.android.floatapp.recent/com.acer.android.floatapp.recent.RecentsActivity}}
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x656f2f00
 I/WindowState(  649): WIN DEATH: Window{420cd728 u0 com.android.settings/com.android.settings.SubSettings}
@@ -17001,9 +17050,11 @@ D/SensorService(  649): disable index=0
 D/SensorService(  649): 	>>> actuating h/w activate handle=4 enabled=0
 D/Sensors (  649): activate handle =4, enable = 0
 D/Sensors (  649): use old sensor err(0),index(-22) go to old hwmsen
-D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:4, en:0 
+D/Hwmsen_sensors(  649): Hwmsen_Enable: handle:4, en:0 
+
 D/Hwmsen_sensors(  649): virtual int Hwmsen::enable(int32_t, int): handle 4, enable or disable 0!
-D/Hwmsen_sensors(  649): active_sensors =0
+D/Hwmsen_sensors(  649): active_sensors =0
+
 D/SensorService(  649): ~SensorEventConnection(0x64e33f68)
 D/SensorService(  649): 0 active sensors
 D/ElectronBeam(  649): prepare: mode=2

@@ -3,7 +3,10 @@ package net.milosvasic.pussycat.gui
 import net.milosvasic.pussycat.application.ApplicationInformation
 import javax.swing.JWindow
 import java.awt.*
+import java.awt.event.WindowEvent
+import java.awt.image.BufferedImage
 import java.util.concurrent.atomic.AtomicBoolean
+import javax.imageio.ImageIO
 import javax.swing.JLabel
 import javax.swing.SwingConstants
 import javax.swing.border.CompoundBorder
@@ -18,15 +21,14 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
     val splashHeight = 389
     private var status = "Loading"
     private val finished = AtomicBoolean()
+    private var favicon: BufferedImage? = null
 
     init {
         val screenSize = Toolkit.getDefaultToolkit().screenSize
-
         setLocation(
                 (screenSize.width / 2) - (splashWidth / 2),
                 (screenSize.height / 2) - (splashHeight / 2)
         )
-
         setSize(splashWidth, splashHeight)
         val body = PussycatSplashPanel(splashWidth, splashHeight)
         val header = generateHeader(information)
@@ -35,6 +37,8 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
         add(header, BorderLayout.NORTH)
         add(footer, BorderLayout.SOUTH)
         body.isVisible = true
+        favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
+        setIconImage(favicon)
     }
 
     fun start() {
@@ -54,6 +58,13 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
 
     fun finish() {
         finished.set(true)
+        close()
+    }
+
+    fun close() {
+        isVisible = false
+        dispatchEvent(WindowEvent(this, WindowEvent.WINDOW_CLOSING))
+        dispose()
     }
 
     fun updateStatus(newStatus: String) {

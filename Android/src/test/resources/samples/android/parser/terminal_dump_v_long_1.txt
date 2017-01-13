@@ -13151,7 +13151,7 @@ hwc_setPowerMode: Setting mode 0 on display: 0
 Display changed displayId=0
 
 [ 12-23 10:56:57.761   248:  305 I/qdhwcomposer ]
-handle_blank_event: dpy:0 panel power state: 0
+handle_blank_event: dpy:0 mainPanel power state: 0
 
 [ 12-23 10:56:57.786   248:  248 D/qdhwcomposer ]
 hwc_setPowerMode: Done setting mode 0 on display 0
@@ -13318,7 +13318,7 @@ event received NL80211_CMD_SET_REKEY_OFFLOAD, vendor_id = 0x0
 event ignored!!
 
 [ 12-23 10:57:16.982   248:  305 I/qdhwcomposer ]
-handle_blank_event: dpy:0 panel power state: 1
+handle_blank_event: dpy:0 mainPanel power state: 1
 
 [ 12-23 10:57:17.025   248:  248 D/qdhwcomposer ]
 hwc_setPowerMode: Done setting mode 2 on display 0
@@ -20627,7 +20627,7 @@ Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:0",
 Display changed displayId=0
 
 [ 12-23 10:58:41.151   248:  305 I/qdhwcomposer ]
-handle_blank_event: dpy:0 panel power state: 0
+handle_blank_event: dpy:0 mainPanel power state: 0
 
 [ 12-23 10:58:41.175   248:  248 D/qdhwcomposer ]
 hwc_setPowerMode: Done setting mode 0 on display 0

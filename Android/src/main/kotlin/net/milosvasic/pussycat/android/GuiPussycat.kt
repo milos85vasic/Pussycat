@@ -8,25 +8,24 @@ import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.gui.PussycatMainWindow
+import net.milosvasic.pussycat.gui.themes.Darcula
 import net.milosvasic.pussycat.os.OS
-import net.milosvasic.pussycat.utils.Gui
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
-import javax.swing.JFrame
 import javax.swing.WindowConstants
 
 
 class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
-    val mainWindow = PussycatMainWindow(information)
+    val theme = Darcula()
     private var favicon: BufferedImage? = null
+    val mainWindow = PussycatMainWindow(theme, information)
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
-            Gui.close(splashScreen)
-            Gui.show(mainWindow)
+            mainWindow.open()
         }
     }
 
@@ -85,18 +84,11 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                 Runnable {
                     val osString = OS.getOS()
                     initPopupMenu(osString)
-                    initMainIcon()
-                    initMainWindow()
                     splashScreen.updateStatus("Loading complete")
+                    Thread.sleep(5000)
                     splashScreen.finish()
                 }
         ).start()
-    }
-
-    private fun initMainIcon() {
-        splashScreen.setIconImage(favicon)
-        mainWindow.iconImage = favicon
-        splashScreen.updateStatus("Main icon set")
     }
 
     private fun initPopupMenu(osString: String) {
@@ -112,11 +104,6 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
         }
         splashScreen.updateStatus("Main menu initialized")
-    }
-
-    private fun initMainWindow(){
-        mainWindow.initialize()
-        splashScreen.updateStatus("Main window initialized")
     }
 
     private fun generateApplicationPopupMenu(): PopupMenu {
@@ -137,8 +124,8 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                             }
                             COMMAND.STOP -> {
                                 execute(command)
-                                Gui.close(splashScreen)
-                                Gui.close(mainWindow)
+                                splashScreen.close()
+                                mainWindow.close()
                             }
                             else -> {
                                 execute(command)

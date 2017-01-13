@@ -4306,7 +4306,7 @@
 12-21 07:23:06.096 8217-25542/? I/chatty: uid=10012(com.google.android.gms) expire 1 line
 12-21 07:23:06.173 5071-5129/? I/chatty: uid=1000(system) android.bg expire 9 lines
 12-21 07:23:06.239 22229-22229/? I/ServiceManager: Waiting for service AtCmdFwd...
-12-21 07:23:06.302 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-21 07:23:06.302 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-21 07:23:06.304 410-410/? D/qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
 12-21 07:23:06.304 5071-6988/? I/chatty: uid=1000(system) PhotonicModulat expire 4 lines
 12-21 07:23:06.325 25889-25980/? D/omnistore: DebouncingRateLimiter attempting event SyncProtocol::onConnectionEstablished
@@ -5013,7 +5013,7 @@
 12-21 07:23:21.509 410-410/? D/SurfaceFlinger: Set power mode=0, type=0 flinger=0x7f34047000
 12-21 07:23:21.517 410-410/? D/qdhwcomposer: hwc_setPowerMode: Setting mode 0 on display: 0
 12-21 07:23:21.527 19317-19317/? I/AviaryCdsAssetsDownloaderService: onDestroy
-12-21 07:23:21.807 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-21 07:23:21.807 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-21 07:23:21.808 410-410/? D/qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-21 07:23:21.811 5071-5150/? I/PowerManagerService: Sleeping (uid 1000)...
 12-21 07:23:21.821 5071-28670/? I/ActivityManager: Setting hasTopUi=true for pid=7043
@@ -5700,7 +5700,7 @@
 12-21 07:32:47.865 25889-25992/? E/msgr.StickinessController: StickinessController not initialized yet
 12-21 07:32:47.885 5071-28672/? I/chatty: uid=1000(system) Binder:5071_14 expire 1 line
 12-21 07:32:47.885 25889-25889/? E/msgr.StickinessController: StickinessController not initialized yet
-12-21 07:32:48.175 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-21 07:32:48.175 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-21 07:32:48.181 410-410/? D/qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
 12-21 07:32:48.195 5071-5150/? I/DisplayPowerController: Unblocked screen on after 366 ms
 12-21 07:32:48.221 8084-8243/? D/BrcmNfcJni: RoutingManager::nfaEeCallback: NFA_EE_SET_TECH_CFG_EVT; status=0x0
@@ -5751,7 +5751,7 @@
 12-21 07:32:50.610 23503-23507/? I/art: After code cache collection, code=111KB, data=106KB
 12-21 07:32:50.610 23503-23507/? I/art: Increasing code cache capacity to 512KB
 12-21 07:32:50.610 23503-23507/? I/art: Compiler allocated 12MB to compile int com.google.k.b.c.gt.computeSerializedSize()
-12-21 07:32:50.760 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-21 07:32:50.760 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-21 07:32:50.761 410-410/? D/qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-21 07:32:50.774 5071-5150/? I/PowerManagerService: Sleeping (uid 1000)...
 12-21 07:32:50.792 7043-7043/? D/PhoneStatusBar: disable: < expand ICONS alerts SYSTEM_INFO back HOME RECENT clock SEARCH quick_settings >
@@ -6653,7 +6653,7 @@
 12-21 07:56:22.694 8011-27653/? I/GCoreUlr: Successfully inserted 1 locations
 12-21 07:56:22.698 5071-19627/? I/sensors: activate
 12-21 07:56:22.700 5071-19627/? I/nanohub: queueActivate: sensor=10, handle=4, enable=0
-12-21 07:56:22.910 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 panel power state: 1
+12-21 07:56:22.910 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 1
 12-21 07:56:22.912 410-410/? D/qdhwcomposer: hwc_setPowerMode: Done setting mode 2 on display 0
 12-21 07:56:22.915 5071-6988/? D/SurfaceControl: Excessive delay in setPowerMode(): 339ms
 12-21 07:56:22.936 7043-7043/? D/PhoneStatusBar: disable: < expand icons* alerts system_info* back HOME RECENT clock SEARCH quick_settings >
@@ -7311,7 +7311,7 @@
 12-21 07:57:48.926 410-410/? D/SurfaceFlinger: Set power mode=0, type=0 flinger=0x7f34047000
 12-21 07:57:48.928 5071-6770/? I/nanohub: osLog: AMS: sensorPowerAls: 0
 12-21 07:57:48.929 410-410/? D/qdhwcomposer: hwc_setPowerMode: Setting mode 0 on display: 0
-12-21 07:57:49.216 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 panel power state: 0
+12-21 07:57:49.216 410-660/? I/qdhwcomposer: handle_blank_event: dpy:0 mainPanel power state: 0
 12-21 07:57:49.217 410-410/? D/qdhwcomposer: hwc_setPowerMode: Done setting mode 0 on display 0
 12-21 07:57:49.218 5071-6988/? D/SurfaceControl: Excessive delay in setPowerMode(): 292ms
 12-21 07:57:49.228 5071-5150/? I/PowerManagerService: Sleeping (uid 1000)...
