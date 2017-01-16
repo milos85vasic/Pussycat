@@ -15,9 +15,7 @@ abstract class ApplicationTestAbstract {
     var waitingTime : Long = 3000
     lateinit var localSample : File
     lateinit var params: Array<String>
-    var expectedMode: PUSSYCAT_MODE? = null
     val localFileName = "testing_parser.txt"
-    lateinit var expectedType: APPLICATION_TYPE
 
     @Before
     fun beforeTestApplication() {
@@ -44,10 +42,10 @@ abstract class ApplicationTestAbstract {
         app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 1
         Thread(Runnable {
             app.start()
-            Assert.assertEquals(expectedType, app.type)
+            Assert.assertEquals(getExpectedType(), app.type)
         }).start()
         Thread.sleep(waitingTime)
-        Assert.assertEquals(expectedMode, app.pussy?.getPussycatMode())
+        Assert.assertEquals(getExpectedMode(), app.pussy?.getPussycatMode())
         app.stop()
         Thread.sleep(waitingTime)
     }
@@ -60,5 +58,9 @@ abstract class ApplicationTestAbstract {
         localSample.delete()
         Assert.assertFalse(localSample.exists())
     }
+
+    abstract fun getExpectedType(): APPLICATION_TYPE
+
+    abstract fun getExpectedMode(): PUSSYCAT_MODE?
 
 }

@@ -7,8 +7,14 @@ class ApplicationTestTerminalParam : ApplicationTestAbstract() {
 
     init {
         params = arrayOf("--terminal")
-        expectedType = APPLICATION_TYPE.CLI
-        expectedMode = PUSSYCAT_MODE.LIVE
+    }
+
+    override fun getExpectedMode(): PUSSYCAT_MODE? {
+        return PUSSYCAT_MODE.LIVE
+    }
+
+    override fun getExpectedType(): APPLICATION_TYPE {
+        return APPLICATION_TYPE.CLI
     }
 
 }

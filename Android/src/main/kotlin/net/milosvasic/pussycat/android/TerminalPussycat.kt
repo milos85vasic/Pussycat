@@ -6,7 +6,7 @@ import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.events.EVENT
-import net.milosvasic.pussycat.events.Events
+import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.terminal.TerminalPrinter
 import net.milosvasic.pussycat.utils.Text
 import java.io.BufferedWriter
@@ -35,9 +35,9 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun start(args: Array<String>) {
-        val listener = object : Events {
-            override fun onEvent(event: EVENT) {
-                if (event == EVENT.STOP) {
+        val listener = object : Listener<EVENT> {
+            override fun onEvent(value: EVENT?) {
+                if (value == EVENT.STOP) {
                     unsubscribe(this)
                     configuration.getExitRoutine().run()
                 }

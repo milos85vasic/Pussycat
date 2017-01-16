@@ -83,8 +83,8 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         return ""
     }
 
-    override fun printFilesystemLoadingProgress(percent: Double) {
-        super.printFilesystemLoadingProgress(percent)
+    override fun publishFilesystemLoadingProgress(percent: Double) {
+        super.publishFilesystemLoadingProgress(percent)
         val s = String.format("%.0f", percent)
         splashScreen.updateStatus("Loading: $s%")
     }

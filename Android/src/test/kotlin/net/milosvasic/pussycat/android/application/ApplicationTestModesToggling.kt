@@ -13,8 +13,16 @@ class ApplicationTestModesToggling : ApplicationTestAbstract() {
 
     init {
         params = arrayOf("--terminal")
-        expectedType = APPLICATION_TYPE.CLI
     }
+
+    override fun getExpectedType(): APPLICATION_TYPE {
+        return APPLICATION_TYPE.CLI
+    }
+
+    override fun getExpectedMode(): PUSSYCAT_MODE? {
+        return null
+    }
+
 
     @Test
     override fun testApplication() {
@@ -27,7 +35,7 @@ class ApplicationTestModesToggling : ApplicationTestAbstract() {
 
         app.start()
         Thread.sleep(waitingTime)
-        Assert.assertEquals(expectedType, app.type)
+        Assert.assertEquals(getExpectedType(), app.type)
         Assert.assertEquals(pussycatModeToExpect, app.pussy?.getPussycatMode())
 
         for (x in 0..3) {

@@ -6,14 +6,17 @@ import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 
 class ApplicationTestTerminalFilesystemParams4 : ApplicationTestAbstract() {
 
-    init {
-        expectedType = APPLICATION_TYPE.CLI
-        expectedMode = PUSSYCAT_MODE.FILESYSTEM
-    }
-
     override fun testApplication() {
         params = arrayOf("--terminal", "--filesystem=${localSample.absolutePath}")
         super.testApplication()
+    }
+
+    override fun getExpectedType(): APPLICATION_TYPE {
+        return APPLICATION_TYPE.CLI
+    }
+
+    override fun getExpectedMode(): PUSSYCAT_MODE? {
+        return PUSSYCAT_MODE.FILESYSTEM
     }
 
 }

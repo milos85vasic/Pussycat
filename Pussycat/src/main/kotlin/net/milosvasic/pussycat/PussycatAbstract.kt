@@ -8,7 +8,8 @@ import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.Data
 import net.milosvasic.pussycat.core.common.Execute
 import net.milosvasic.pussycat.events.EVENT
-import net.milosvasic.pussycat.events.Events
+import net.milosvasic.pussycat.listeners.Listener
+import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.logging.Logger
 import java.io.File
 import kotlin.reflect.KClass
@@ -16,7 +17,7 @@ import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 
 
-abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<T>, String>, Events {
+abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<T>, String> {
 
     protected lateinit var data: D
     protected lateinit var TAG: KClass<*>
@@ -24,7 +25,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     protected var color: String = Color.BLACK
     protected var mode: PUSSYCAT_MODE? = null
     val configuration = PussycatConfiguration()
-    protected val listeners: MutableSet<Events> = Collections.synchronizedSet(HashSet<Events>())
+    protected val listeners: Listeners<EVENT> = Listeners.obtain()
 
     companion object {
         fun getPussycatHome(): File {
@@ -80,18 +81,16 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
         logger.w(TAG, "Unknown command: " + executable)
     }
 
-    override fun onEvent(event: EVENT) {
-        for (listener in listeners) {
-            listener.onEvent(event)
-        }
+    open fun onEvent(event: EVENT) {
+        listeners.notify(event)
     }
 
-    fun subscribe(listener: Events) {
-        listeners.add(listener)
+    fun subscribe(listener: Listener<EVENT>) {
+        listeners.subscribe(listener)
     }
 
-    fun unsubscribe(listener: Events) {
-        listeners.remove(listener)
+    fun unsubscribe(listener: Listener<EVENT>) {
+        listeners.unsubscribe(listener)
     }
 
     fun getPussycatMode(): PUSSYCAT_MODE? {
