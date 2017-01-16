@@ -792,7 +792,7 @@ D/ActivityManager(  649): getContentProviderImpl: updateLruProcessLocked cpr.pro
 D/ActivityThread( 1289): hoder:android.app.IActivityManager$ContentProviderHolder@4215dba0,provider,holder.Provider:android.content.ContentProviderProxy@4215dc28
 D/ActivityThread( 4157): BDC-RECEIVER handled : 0 / ReceiverData{intent=Intent { act=android.intent.action.ACTION_POWER_DISCONNECTED flg=0x4000010 cmp=com.google.android.apps.plus/com.google.android.apps.photos.autobackup.AutoBackupEnvironment$BatteryReceiver } packageName=com.google.android.apps.plus resultCode=0 resultData=null resultExtras=null}
 I/ActivityManager(  649): Killing 4281:com.mediatek.schpwronoff/1000 (adj 15): empty #17
-D/DisplayManagerService(  649): Display listener for pid 4281 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 4281 died.
 D/PowerManagerService(  649): acquireWakeLockInternal: lock=1121798368, flags=0x1, tag="GCoreFlp", ws=null, uid=10027, pid=1289
 D/PowerManagerNotifier(  649): onWakeLockAcquired: flags=1, tag="GCoreFlp", packageName=com.google.android.gms, ownerUid=10027, ownerPid=1289, workSource=null
 D/PowerManagerService(  649): updateWakeLockSummaryLocked: mWakefulness=Awake, mWakeLockSummary=0x1
@@ -890,7 +890,7 @@ E/MountService(  649): mount service mListeners bl=com.android.server.MountServi
 E/MountService(  649): mount service mListeners bl=com.android.server.MountService$MountServiceBinderListener@427be698
 I/ActivityManager(  649): Killing 4257:com.android.deskclock/u0a62 (adj 15): empty #17
 D/ActivityThread( 1572): SVC-STOP_SERVICE handled : 0 / android.os.BinderProxy@421564b0
-D/DisplayManagerService(  649): Display listener for pid 4257 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 4257 died.
 D/StorageNotification(  858): onUsbMassStorageConnectionChangedAsync - mLastState: mounted, st: removed, mLastConnected: false, connected: false
 D/StorageNotification(  858): isAbleToShare - length:2
 D/StorageNotification(  858): isAbleToShare - allowMassStorage:falseisEmulated:true
@@ -1301,7 +1301,7 @@ I/iu.UploadsManager( 1227): num updated entries: 0
 D/ActivityThread( 1227): BDC-RECEIVER handled : 0 / ReceiverData{intent=Intent { act=android.intent.action.ACTION_POWER_CONNECTED flg=0x4000010 cmp=com.google.android.gms/com.google.android.libraries.social.autobackup.AutoBackupEnvironment$BatteryReceiver } packageName=com.google.android.gms resultCode=0 resultData=null resultExtras=null}
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x64d12e60
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x61985508
-D/DisplayManagerService(  649): Display listener for pid 4221 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 4221 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x61985508
 D/ActivityThread( 1227): SVC-Creating service: CreateServiceData{token=android.os.BinderProxy@41edc0d0 className=com.google.android.libraries.social.autobackup.FingerprintScannerIntentService packageName=com.google.android.gms intent=null}
 D/dalvikvm( 1227): create interp thread : stack size=128KB
@@ -3707,7 +3707,7 @@ I/Process ( 5126): Sending signal. PID: 5126 SIG: 9
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x686b5ab8
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x62f05690
 I/ActivityManager(  649): Process com.mediatek.mtklogger (pid 5126) has died.
-D/DisplayManagerService(  649): Display listener for pid 5126 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 5126 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x62f05690
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x686b5ab8
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
@@ -9594,7 +9594,7 @@ W/InputReader(  649): inCount:16, pointer count:0
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x6c3bbf78
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x656f9d20
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x62f03208
-D/DisplayManagerService(  649): Display listener for pid 4973 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 4973 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x62f03208
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x60be3f88
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x60be3f88
@@ -9987,7 +9987,7 @@ D/OpenGLRenderer( 5310): finish <0x615ed008>
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x6a5d0150
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x6866f3c0
 W/ContextImpl( 5310): Implicit intents with startService are not safe: Intent { act=com.acer.android.launchpad.showallfloatapp } android.content.ContextWrapper.startService:494 com.acer.android.floatapp.recent.RecentsActivity.showAllFloatApp:346 com.acer.android.floatapp.recent.RecentsActivity.onPause:256 
-D/DisplayManagerService(  649): Display listener for pid 4786 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 4786 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x6a5d0150
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x6866f3c0
 D/SensorService(  649): SensorDevice::activate: ident=0x68476280, handle=0x00000000, enabled=0, count=1
@@ -10011,7 +10011,7 @@ D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x682db528
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x61a47b50
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x6805ff38
 I/SurfaceFlinger(  135): EventThread Client Pid (4766) disconnected by (135)
-D/DisplayManagerService(  649): Display listener for pid 4766 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 4766 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x6805ff38
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x682db528
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x6352a2a8
@@ -16745,7 +16745,7 @@ D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x5cdbe
 I/SurfaceFlinger(  135): EventThread Client Pid (5356) disconnected by (135)
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x68112fa0
 D/WifiService(  649): Client connection lost with reason: 4
-D/DisplayManagerService(  649): Display listener for pid 5356 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 5356 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x5af280b8
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x68112fa0
 D/Hwmsen_sensors(  649): active_sensors =10

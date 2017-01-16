@@ -1935,7 +1935,7 @@ D/WifiService(  939): Client connection lost with reason: 4
 W/ResourceType(25659): Found multiple library tables, ignoring...
 I/ActivityManager(  939): Resuming delayed broadcast
 V/Finsky  (25614): [1] GearheadStateMonitor.onReady: sIsProjecting:false
-I/CAR.SERVICE(25659): listener not found in list
+I/CAR.SERVICE(25659): eventsListener not found in list
 I/ActivityManager(  939): Start proc 25716:com.sonyericsson.album/u0a43 for broadcast com.sonyericsson.album/.online.UpdateReceiver
 I/ActivityManager(  939): Killing 25504:com.android.exchange/u0a25 (adj 15): empty #9
 W/ResourceType(25716): Found multiple library tables, ignoring...
@@ -2271,7 +2271,7 @@ W/ResourceType(26173): Found multiple library tables, ignoring...
 D/Finsky  (26137): [3772] AppStatesReplicator.handleContentSyncResponse: Completed 0 account content syncs with 0 successful.
 D/Finsky  (26137): [1] 5.onFinished: Installation state replication succeeded.
 V/Finsky  (26137): [1] GearheadStateMonitor.onReady: sIsProjecting:false
-I/CAR.SERVICE(26173): listener not found in list
+I/CAR.SERVICE(26173): eventsListener not found in list
 I/ActivityManager(  939): Killing 25764:com.google.android.googlequicksearchbox:search/u0a62 (adj 15): empty #9
 I/ActivityManager(  939): Killing 25941:com.google.android.apps.magazines/u0a112 (adj 15): empty #9
 D/Ulp_jni (  939): Location CB invoked
@@ -4678,7 +4678,7 @@ D/StatusBar.NetworkController( 1925): refreshSignalCluster - setMobileDataIndica
 D/StatusBar.NetworkController( 1925): refreshSignalCluster - setMobileDataIndicators:  mHasMobileDataFeature = true mPhoneSignalIconId = com.android.systemui:drawable/stat_sys_signal_null mDataSignalIconId = com.android.systemui:drawable/stat_sys_signal_null mMobileActivityIconId = (null) mDataTypeIconId = (null) mNoSimIconId = com.android.systemui:drawable/stat_sys_no_sim
 D/StatusBar.NetworkController( 1925): changing data overlay icon id to 2130838448
 I/Choreographer(27409): Skipped 330 frames!  The application may be doing too much work on its main thread.
-W/GmsClientEvents(27409): unregisterConnectionFailedListener(): listener com.sonymobile.xhs.geofence.e@b793240 not found
+W/GmsClientEvents(27409): unregisterConnectionFailedListener(): eventsListener com.sonymobile.xhs.geofence.e@b793240 not found
 I/ActivityManager(  939): Killing 26834:com.sonymobile.devicesecurity.service/1000 (adj 15): empty #9
 I/Timeline(27409): Timeline: Activity_idle id: android.os.BinderProxy@1ea22981 time:3184474
 W/ActivityManager(  939): Scheduling restart of crashed service com.sonymobile.devicesecurity.service/.DeviceSecurityService in 1000ms

@@ -1678,13 +1678,13 @@
 12-21 21:09:59.141 5040-19130/? I/Telecom: Event: Call TC@10: CAPABILITY_CHANGE, Current: [[ sup_hld mut !v2a spd_aud]], Removed [[]], Added [[ sup_hld mut !v2a spd_aud]]: CSW.hCCC@Bgg
 12-21 21:09:59.141 5040-19130/? I/Telecom: Event: Call TC@10: FILTERING_INITIATED, null: CSW.hCCC@Bgg
 12-21 21:09:59.141 5040-19130/? I/Telecom: Event: Call TC@10: DIRECT_TO_VM_INITIATED, null: CSW.hCCC@Bgg
-12-21 21:09:59.141 5040-19130/? I/Telecom: CallerInfoLookupHelper: There is a previously incomplete query for handle tel:*************. Adding to listeners for this query.: CSW.hCCC@Bgg
+12-21 21:09:59.141 5040-19130/? I/Telecom: CallerInfoLookupHelper: There is a previously incomplete query for handle tel:*************. Adding to eventListeners for this query.: CSW.hCCC@Bgg
 12-21 21:09:59.145 5040-19130/? I/Telecom: Event: Call TC@10: SCREENING_SENT, null: CSW.hCCC@Bgg
 12-21 21:09:59.146 5040-16954/? I/Telecom: Event: Call TC@10: BLOCK_CHECK_INITIATED, null: CSW.hCCC->ABCF.dIB@Bgg_0
 12-21 21:09:59.148 5040-19130/? I/Telecom: CallScreeningServiceFilter: There are no call screening services installed on this device.: CSW.hCCC@Bgg
 12-21 21:09:59.148 5040-19130/? I/Telecom: CallScreeningServiceFilter: Could not bind to call screening service: CSW.hCCC@Bgg
 12-21 21:09:59.148 5040-19130/? I/Telecom: Event: Call TC@10: SCREENING_COMPLETED, [Allow, logged, notified]: CSW.hCCC@Bgg
-12-21 21:09:59.149 5040-5040/? I/Telecom: CallerInfoLookupHelper: CI query for handle tel:************* has completed; notifying all listeners.: TSI.aNIC->CILH.sL->CILH.oQC@BgU_1_0
+12-21 21:09:59.149 5040-5040/? I/Telecom: CallerInfoLookupHelper: CI query for handle tel:************* has completed; notifying all eventListeners.: TSI.aNIC->CILH.sL->CILH.oQC@BgU_1_0
 12-21 21:09:59.149 5040-5040/? I/Telecom: Call: CallerInfo received for tel:*************: com.android.internal.telephony.CallerInfo@619ef05 { name non-null, phoneNumber non-null }: TSI.aNIC->CILH.sL->CILH.oQC@BgU_1_0
 12-21 21:09:59.149 5040-5040/? I/Telecom: Event: Call TC@10: DIRECT_TO_VM_FINISHED, [Allow, logged, notified]: TSI.aNIC->CILH.sL->CILH.oQC@BgU_1_0
 12-21 21:09:59.149 5040-5040/? I/Telecom: CallerInfoLookupHelper: There is no photo for this contact, skipping photo query: TSI.aNIC->CILH.sL->CILH.oQC@BgU_1_0
@@ -3022,13 +3022,13 @@
 12-22 00:58:54.989 5040-7595/? I/Telecom: Event: Call TC@11: CAPABILITY_CHANGE, Current: [[ sup_hld mut !v2a spd_aud]], Removed [[]], Added [[ sup_hld mut !v2a spd_aud]]: CSW.hCCC@Bnk
 12-22 00:58:54.989 5040-7595/? I/Telecom: Event: Call TC@11: FILTERING_INITIATED, null: CSW.hCCC@Bnk
 12-22 00:58:54.989 5040-7595/? I/Telecom: Event: Call TC@11: DIRECT_TO_VM_INITIATED, null: CSW.hCCC@Bnk
-12-22 00:58:54.990 5040-7595/? I/Telecom: CallerInfoLookupHelper: There is a previously incomplete query for handle tel:************. Adding to listeners for this query.: CSW.hCCC@Bnk
+12-22 00:58:54.990 5040-7595/? I/Telecom: CallerInfoLookupHelper: There is a previously incomplete query for handle tel:************. Adding to eventListeners for this query.: CSW.hCCC@Bnk
 12-22 00:58:54.991 5040-7595/? I/Telecom: Event: Call TC@11: SCREENING_SENT, null: CSW.hCCC@Bnk
 12-22 00:58:54.991 5040-18578/? I/Telecom: Event: Call TC@11: BLOCK_CHECK_INITIATED, null: CSW.hCCC->ABCF.dIB@Bnk_0
 12-22 00:58:54.996 5040-7595/? I/Telecom: CallScreeningServiceFilter: There are no call screening services installed on this device.: CSW.hCCC@Bnk
 12-22 00:58:54.996 5040-7595/? I/Telecom: CallScreeningServiceFilter: Could not bind to call screening service: CSW.hCCC@Bnk
 12-22 00:58:54.996 5040-7595/? I/Telecom: Event: Call TC@11: SCREENING_COMPLETED, [Allow, logged, notified]: CSW.hCCC@Bnk
-12-22 00:58:54.997 5040-5040/? I/Telecom: CallerInfoLookupHelper: CI query for handle tel:************ has completed; notifying all listeners.: TSI.aNIC->CILH.sL->CILH.oQC@BnY_1_0
+12-22 00:58:54.997 5040-5040/? I/Telecom: CallerInfoLookupHelper: CI query for handle tel:************ has completed; notifying all eventListeners.: TSI.aNIC->CILH.sL->CILH.oQC@BnY_1_0
 12-22 00:58:54.997 5040-5040/? I/Telecom: Call: CallerInfo received for tel:************: com.android.internal.telephony.CallerInfo@e082f31 { name non-null, phoneNumber non-null }: TSI.aNIC->CILH.sL->CILH.oQC@BnY_1_0
 12-22 00:58:54.998 5040-5040/? I/Telecom: Event: Call TC@11: DIRECT_TO_VM_FINISHED, [Allow, logged, notified]: TSI.aNIC->CILH.sL->CILH.oQC@BnY_1_0
 12-22 00:58:55.017 5040-5040/? I/Telecom: Event: Call TC@11: BLOCK_CHECK_FINISHED, [Allow, logged, notified]: CSW.hCCC->ABCF.oPE@Bnk_1
@@ -3909,7 +3909,7 @@
 12-22 04:45:59.915 19525-20331/? V/ConnMetrics:SnapshotJobService: Task.doInBackground(1)
 12-22 04:45:59.920 19525-19548/? E/GooglePlayServicesUtil: The Google Play services resources were not found. Check your project configuration to ensure that the resources are included.
 12-22 04:45:59.965 19525-20331/? D/ConnMetrics:App: IsOptedIn = true
-12-22 04:45:59.993 20315-20315/? I/BugleBackup: Registering preference change listener for "bugle".
+12-22 04:45:59.993 20315-20315/? I/BugleBackup: Registering preference change eventsListener for "bugle".
 12-22 04:46:00.066 7473-20341/? I/chatty: uid=10018 com.google.android.gms.persistent expire 4 lines
 12-22 04:46:00.083 20315-20338/? D/Primes: Package metric: registered for startup notifications
 12-22 04:46:00.083 20315-20338/? D/Primes: Battery metric disabled [experiment_enabled: false]
@@ -3922,7 +3922,7 @@
 12-22 04:46:00.298 20315-20353/? I/BugleRcs: RCS registration state: RegistrationState UNDEFINED, reason UNKNOWN
 12-22 04:46:00.361 7652-20364/? I/chatty: uid=10018(com.google.android.gms) expire 3 lines
 12-22 04:46:00.377 20315-20315/? I/Bugle: Carrier config changed. Reloading MMS config.
-12-22 04:46:00.408 20315-20353/? I/BugleBackup: Registering preference change listener for "buglesub_1".
+12-22 04:46:00.408 20315-20353/? I/BugleBackup: Registering preference change eventsListener for "buglesub_1".
 12-22 04:46:00.420 20315-20363/? I/BugleDataModel: Fixup: Send failed - 0 Download failed - 0
 12-22 04:46:00.443 20315-20363/? W/BugleDataModel: ProcessPendingMessagesAction: skipped - not default SMS app
 12-22 04:46:00.495 20315-20334/? W/Bugle: canonicalizeMccMnc: invalid mccmnc:null ,null

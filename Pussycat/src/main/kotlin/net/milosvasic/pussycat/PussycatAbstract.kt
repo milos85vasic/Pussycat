@@ -25,9 +25,10 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     protected var color: String = Color.BLACK
     protected var mode: PUSSYCAT_MODE? = null
     val configuration = PussycatConfiguration()
-    protected val listeners: Listeners<EVENT> = Listeners.obtain()
 
     companion object {
+        val SUBSCRIPTIONS = Subscriptions()
+
         fun getPussycatHome(): File {
             val home = System.getProperty("user.home")
             val root = File("$home${File.separator}Pussycat")
@@ -36,6 +37,11 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
             }
             return root
         }
+    }
+
+    class Subscriptions {
+        val EVENTS: Listeners<EVENT> = Listeners.obtain()
+        val PROGRESS: Listeners<Double> = Listeners.obtain()
     }
 
     override fun execute(executable: COMMAND, params: Array<String>) {
@@ -82,15 +88,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
     }
 
     open fun onEvent(event: EVENT) {
-        listeners.notify(event)
-    }
-
-    fun subscribe(listener: Listener<EVENT>) {
-        listeners.subscribe(listener)
-    }
-
-    fun unsubscribe(listener: Listener<EVENT>) {
-        listeners.unsubscribe(listener)
+        SUBSCRIPTIONS.EVENTS.notify(event)
     }
 
     fun getPussycatMode(): PUSSYCAT_MODE? {

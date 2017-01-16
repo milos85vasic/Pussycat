@@ -2374,7 +2374,7 @@
 12-23 10:58:21.388 939-2457/? I/ActivityManager: Start proc 22693:android.process.acore/u0a46 for broadcast com.android.providers.contacts/.PackageIntentReceiver
 12-23 10:58:21.395 939-2457/? I/ActivityManager: Killing 22452:com.android.exchange/u0a25 (adj 15): empty #9
 12-23 10:58:21.445 22470-22470/? V/Finsky: [1] GearheadStateMonitor.onReady: sIsProjecting:false
-12-23 10:58:21.451 22600-22618/? I/CAR.SERVICE: listener not found in list
+12-23 10:58:21.451 22600-22618/? I/CAR.SERVICE: eventsListener not found in list
 12-23 10:58:21.482 22693-22693/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:58:21.488 22693-22693/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:58:21.493 22693-22693/? W/ResourceType: Found multiple library tables, ignoring...
@@ -2940,7 +2940,7 @@
 12-23 10:58:35.772 23193-23193/? W/Finsky: [1] FinskyApp.getDfeApi: No account configured on this device.
 12-23 10:58:35.807 22600-22619/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:58:35.819 23193-23193/? V/Finsky: [1] GearheadStateMonitor.onReady: sIsProjecting:false
-12-23 10:58:35.821 22600-22618/? I/CAR.SERVICE: listener not found in list
+12-23 10:58:35.821 22600-22618/? I/CAR.SERVICE: eventsListener not found in list
 12-23 10:58:35.869 2276-23173/? I/CheckinTask: Sending checkin request (14377 bytes)
 12-23 10:58:35.879 23193-23193/? D/Finsky: [1] GmsCoreHelper.cleanupNlp: result=false type=4
 12-23 10:58:35.903 23193-23193/? D/Finsky: [1] RestoreTracker.stopServiceIfDone: Restore complete with 0 success and 0 failed.
@@ -3640,7 +3640,7 @@
 12-23 10:58:53.749 939-2117/? D/Ulp_jni: Location CB invoked
 12-23 10:58:53.751 23933-23951/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:58:53.845 23842-23842/? V/Finsky: [1] GearheadStateMonitor.onReady: sIsProjecting:false
-12-23 10:58:53.848 23933-23950/? I/CAR.SERVICE: listener not found in list
+12-23 10:58:53.848 23933-23950/? I/CAR.SERVICE: eventsListener not found in list
 12-23 10:58:53.891 939-1884/? I/ActivityManager: Start proc 24020:android.process.acore/u0a46 for broadcast com.android.providers.contacts/.PackageIntentReceiver
 12-23 10:58:53.892 939-1884/? I/ActivityManager: Killing 23782:com.android.exchange/u0a25 (adj 15): empty #9
 12-23 10:58:54.023 24020-24020/? W/ResourceType: Found multiple library tables, ignoring...
@@ -3836,7 +3836,7 @@
 12-23 10:58:57.272 939-1879/? I/ActivityManager: Killing 24149:com.google.android.apps.magazines/u0a112 (adj 15): empty #9
 12-23 10:58:57.294 24324-24342/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:58:57.382 24288-24288/? V/Finsky: [1] GearheadStateMonitor.onReady: sIsProjecting:false
-12-23 10:58:57.384 24324-24341/? I/CAR.SERVICE: listener not found in list
+12-23 10:58:57.384 24324-24341/? I/CAR.SERVICE: eventsListener not found in list
 12-23 10:58:57.489 2276-2276/? D/ChimeraSrvcProxy: Creating service proxy ComponentInfo{com.google.android.gms/com.google.android.gms.games.chimera.GamesAsyncServiceProxy}
 12-23 10:58:57.489 2276-2276/? D/ChimeraSrvcProxy: Proxying container service ComponentInfo{com.google.android.gms/com.google.android.gms.games.chimera.GamesAsyncServiceProxy} to Chimera service impl com.google.android.gms.games.service.PlayGamesAsyncService
 12-23 10:58:57.489 2276-2276/? D/ChimeraCfgMgr: Loading module com.google.android.gms.games from APK com.google.android.play.games
@@ -4072,7 +4072,7 @@
 12-23 10:59:01.952 24777-24777/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:59:01.956 24777-24777/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:59:01.957 24708-24708/? V/Finsky: [1] GearheadStateMonitor.onReady: sIsProjecting:false
-12-23 10:59:01.959 24579-24597/? I/CAR.SERVICE: listener not found in list
+12-23 10:59:01.959 24579-24597/? I/CAR.SERVICE: eventsListener not found in list
 12-23 10:59:01.960 24777-24777/? W/ResourcesManager: Asset path '/system/framework/com.sonymobile.playanywhere.jar' does not exist or contains no resources.
 12-23 10:59:01.960 24777-24777/? W/ResourcesManager: Asset path '/system/framework/com.sonymobile.remotefileaccess.jar' does not exist or contains no resources.
 12-23 10:59:01.960 24777-24777/? W/ResourcesManager: Asset path '/system/framework/com.google.android.maps.jar' does not exist or contains no resources.
@@ -4291,7 +4291,7 @@
 12-23 10:59:05.428 25101-25120/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:59:05.462 25124-25124/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:59:05.526 25062-25062/? V/Finsky: [1] GearheadStateMonitor.onReady: sIsProjecting:false
-12-23 10:59:05.528 25101-25118/? I/CAR.SERVICE: listener not found in list
+12-23 10:59:05.528 25101-25118/? I/CAR.SERVICE: eventsListener not found in list
 12-23 10:59:05.540 939-2457/? I/ActivityManager: Killing 24823:com.google.android.googlequicksearchbox:search/u0a62 (adj 15): empty #9
 12-23 10:59:05.617 2510-4491/? D/GCM: GcmService start Intent { act=com.google.android.gms.INITIALIZE flg=0x10 pkg=com.google.android.gms cmp=com.google.android.gms/.gcm.GcmService } com.google.android.gms.INITIALIZE
 12-23 10:59:05.621 2510-2510/? D/AuthorizationBluetoothService: Received GmsCore event: Intent { act=com.google.android.gms.INITIALIZE flg=0x10 pkg=com.google.android.gms cmp=com.google.android.gms/.auth.be.proximity.authorization.bt.AuthorizationBluetoothService$AutoStarter }.
@@ -4772,7 +4772,7 @@
 12-23 10:59:13.460 25659-25678/? W/ResourceType: Found multiple library tables, ignoring...
 12-23 10:59:13.535 939-1884/? I/ActivityManager: Resuming delayed broadcast
 12-23 10:59:13.544 25614-25614/? V/Finsky: [1] GearheadStateMonitor.onReady: sIsProjecting:false
-12-23 10:59:13.546 25659-25677/? I/CAR.SERVICE: listener not found in list
+12-23 10:59:13.546 25659-25677/? I/CAR.SERVICE: eventsListener not found in list
 12-23 10:59:13.577 939-1884/? I/ActivityManager: Start proc 25716:com.sonyericsson.album/u0a43 for broadcast com.sonyericsson.album/.online.UpdateReceiver
 12-23 10:59:13.579 939-2447/? I/ActivityManager: Killing 25504:com.android.exchange/u0a25 (adj 15): empty #9
 12-23 10:59:13.614 25716-25716/? W/ResourceType: Found multiple library tables, ignoring...
@@ -5108,7 +5108,7 @@
 12-23 10:59:28.796 26137-26179/? D/Finsky: [3772] AppStatesReplicator.handleContentSyncResponse: Completed 0 account content syncs with 0 successful.
 12-23 10:59:28.805 26137-26137/? D/Finsky: [1] 5.onFinished: Installation state replication succeeded.
 12-23 10:59:28.807 26137-26137/? V/Finsky: [1] GearheadStateMonitor.onReady: sIsProjecting:false
-12-23 10:59:28.810 26173-26192/? I/CAR.SERVICE: listener not found in list
+12-23 10:59:28.810 26173-26192/? I/CAR.SERVICE: eventsListener not found in list
 12-23 10:59:28.811 939-961/? I/ActivityManager: Killing 25764:com.google.android.googlequicksearchbox:search/u0a62 (adj 15): empty #9
 12-23 10:59:33.639 939-960/? I/ActivityManager: Killing 25941:com.google.android.apps.magazines/u0a112 (adj 15): empty #9
 12-23 10:59:33.749 939-2117/? D/Ulp_jni: Location CB invoked

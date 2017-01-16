@@ -2896,7 +2896,7 @@ V/MTKLogger/Utils( 5049): adb=true
 V/MTKLogger/Utils( 5049): accessory=false
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x62899e50
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x62942860
-D/DisplayManagerService(  649): Display listener for pid 4187 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 4187 died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x62899e50
 D/IPCThreadState( 4221): [DN #5] BR_DEAD_BINDER cookie 0x604ceeb0
 D/IPCThreadState( 4221): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x604ceeb0
@@ -3812,7 +3812,7 @@ I/MTKLogger/LogReceiver( 5049): Get a self-kill command. Need to kill me now
 I/Process ( 5049): Sending signal. PID: 5049 SIG: 9
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x6893b838
 D/IPCThreadState(  649): [DN #5] BR_DEAD_BINDER cookie 0x62990a28
-D/DisplayManagerService(  649): Display listener for pid 5049 died.
+D/DisplayManagerService(  649): Display eventsListener for pid 5049 died.
 I/ActivityManager(  649): Process com.mediatek.mtklogger (pid 5049) has died.
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x62990a28
 D/IPCThreadState(  649): [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x6893b838

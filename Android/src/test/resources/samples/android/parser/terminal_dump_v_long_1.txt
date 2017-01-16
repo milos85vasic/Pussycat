@@ -8967,7 +8967,7 @@ Killing 18620:com.sonymobile.devicesecurity.service/1000 (adj 15): empty #9
 [1] GearheadStateMonitor.onReady: sIsProjecting:false
 
 [ 12-23 10:55:57.974 19077:19096 I/CAR.SERVICE ]
-listener not found in list
+eventsListener not found in list
 
 [ 12-23 10:55:58.000 19146:19146 D/EmailContent ]
 init for com.android.email.provider
@@ -9739,7 +9739,7 @@ Found multiple library tables, ignoring...
 [1] GearheadStateMonitor.onReady: sIsProjecting:false
 
 [ 12-23 10:56:01.256 19491:19510 I/CAR.SERVICE ]
-listener not found in list
+eventsListener not found in list
 
 [ 12-23 10:56:01.259   939: 1810 I/ActivityManager ]
 Start proc 19564:android.process.acore/u0a46 for broadcast com.android.providers.contacts/.PackageIntentReceiver
@@ -10594,7 +10594,7 @@ Found multiple library tables, ignoring...
 [1] GearheadStateMonitor.onReady: sIsProjecting:false
 
 [ 12-23 10:56:05.854 19988:20006 I/CAR.SERVICE ]
-listener not found in list
+eventsListener not found in list
 
 [ 12-23 10:56:05.919   939: 1368 I/ActivityManager ]
 Start proc 20063:com.sonymobile.socialengine.plugins/u0a53 for broadcast com.sonyericsson.socialengine.plugins.facebook/.sync.AccountChecker
@@ -11724,7 +11724,7 @@ Found multiple library tables, ignoring...
 [1] DailyHygiene.logDeviceFeaturesAndContinue: Logging device features
 
 [ 12-23 10:56:11.401 20606:20626 I/CAR.SERVICE ]
-listener not found in list
+eventsListener not found in list
 
 [ 12-23 10:56:11.402 20146:20146 W/GAV2     ]
 Thread[main,5,main]: dispatch call queued.  Need to call GAServiceManager.getInstance().initialize().
@@ -12820,7 +12820,7 @@ Found multiple library tables, ignoring...
 [1] GearheadStateMonitor.onReady: sIsProjecting:false
 
 [ 12-23 10:56:27.083 21087:21106 I/CAR.SERVICE ]
-listener not found in list
+eventsListener not found in list
 
 [ 12-23 10:56:27.085   939: 1790 I/ActivityManager ]
 Killing 20799:com.google.android.googlequicksearchbox:search/u0a62 (adj 15): empty #9
@@ -18771,7 +18771,7 @@ Killing 22452:com.android.exchange/u0a25 (adj 15): empty #9
 [1] GearheadStateMonitor.onReady: sIsProjecting:false
 
 [ 12-23 10:58:21.451 22600:22618 I/CAR.SERVICE ]
-listener not found in list
+eventsListener not found in list
 
 [ 12-23 10:58:21.482 22693:22693 W/ResourceType ]
 Found multiple library tables, ignoring...
@@ -20325,7 +20325,7 @@ Found multiple library tables, ignoring...
 [1] GearheadStateMonitor.onReady: sIsProjecting:false
 
 [ 12-23 10:58:35.821 22600:22618 I/CAR.SERVICE ]
-listener not found in list
+eventsListener not found in list
 
 [ 12-23 10:58:35.869  2276:23173 I/CheckinTask ]
 Sending checkin request (14377 bytes)

@@ -6,10 +6,13 @@ import net.milosvasic.pussycat.gui.OnSplashComplete
 import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
+import net.milosvasic.pussycat.Messages
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.core.COMMAND
+import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.PussycatMainWindow
 import net.milosvasic.pussycat.gui.themes.Darcula
+import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
 import java.awt.MenuItem
 import java.awt.PopupMenu
@@ -38,6 +41,22 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
     }
 
+    val eventsListener = object : Listener<EVENT> {
+        override fun onEvent(value: EVENT?) {
+            if (value == EVENT.STOP) {
+                SUBSCRIPTIONS.EVENTS.unsubscribe(this)
+                SUBSCRIPTIONS.PROGRESS.unsubscribe(filesystemProgressListener)
+            }
+        }
+    }
+
+    val filesystemProgressListener = object : Listener<Double> {
+        override fun onEvent(value: Double?) {
+            val s = String.format("%.0f", value)
+            splashScreen.updateStatus("Loading: $s%")
+        }
+    }
+
     override fun start(args: Array<String>) {
         if (configuration.exitOnStop) {
             mainWindow.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
@@ -47,6 +66,9 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         val hook = Thread(Runnable {
             execute(COMMAND.STOP)
         })
+
+        SUBSCRIPTIONS.EVENTS.subscribe(eventsListener)
+        SUBSCRIPTIONS.PROGRESS.subscribe(filesystemProgressListener)
 
         Runtime.getRuntime().addShutdownHook(hook)
         initialize(args)
@@ -81,12 +103,6 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     override fun getPrintableFilterValue(): String {
         return ""
-    }
-
-    override fun publishFilesystemLoadingProgress(percent: Double) {
-        super.publishFilesystemLoadingProgress(percent)
-        val s = String.format("%.0f", percent)
-        splashScreen.updateStatus("Loading: $s%")
     }
 
     private fun initialize(args: Array<String>) {

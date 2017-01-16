@@ -34,16 +34,24 @@ class TerminalPussycat : AndroidPussycat() {
         configuration.terminalPriner = TerminalPrinter()
     }
 
-    override fun start(args: Array<String>) {
-        val listener = object : Listener<EVENT> {
-            override fun onEvent(value: EVENT?) {
-                if (value == EVENT.STOP) {
-                    unsubscribe(this)
-                    configuration.getExitRoutine().run()
-                }
+    val filesystemProgressListener = object : Listener<Double> {
+        override fun onEvent(value: Double?) {
+            val s = String.format("%.0f", value)
+            printLine("Pussycat, ${Messages.LOADING_DATA} [ $s % ]")
+        }
+    }
+
+    val eventsListener = object : Listener<EVENT> {
+        override fun onEvent(value: EVENT?) {
+            if (value == EVENT.STOP) {
+                SUBSCRIPTIONS.EVENTS.unsubscribe(this)
+                SUBSCRIPTIONS.PROGRESS.unsubscribe(filesystemProgressListener)
+                configuration.getExitRoutine().run()
             }
         }
+    }
 
+    override fun start(args: Array<String>) {
         val commands = Thread(Runnable {
             Thread.currentThread().name = "Commands thread"
             run.set(true)
@@ -86,7 +94,8 @@ class TerminalPussycat : AndroidPussycat() {
         })
 
         Runtime.getRuntime().addShutdownHook(hook)
-        subscribe(listener)
+        SUBSCRIPTIONS.EVENTS.subscribe(eventsListener)
+        SUBSCRIPTIONS.PROGRESS.subscribe(filesystemProgressListener)
         commands.start()
 
         var adb = true

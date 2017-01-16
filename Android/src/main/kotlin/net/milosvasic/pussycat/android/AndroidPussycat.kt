@@ -260,9 +260,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
     abstract protected fun executeFilesystemRunnable(runnable: Runnable)
 
     open protected fun publishFilesystemLoadingProgress(percent: Double) {
-
-        val s = String.format("%.0f", percent)
-        printLine("Pussycat, ${Messages.LOADING_DATA} [ $s % ]")
+        SUBSCRIPTIONS.PROGRESS.notify(percent)
     }
 
     private fun filterByLogLevel(params: Array<out String?>) {
