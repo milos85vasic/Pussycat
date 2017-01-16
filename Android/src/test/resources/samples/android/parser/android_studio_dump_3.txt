@@ -236,7 +236,7 @@
 12-22 12:21:51.351 649-701/? D/PowerManagerDisplayState: mTask: on = true, onChanged = false, backlightChanged = true, backlight = 59
 12-22 12:21:51.351 649-701/? D/PowerManagerDisplayState: mTask: on = true, mActualOn = true, backlight = 59, mActualBacklight = 59
 12-22 12:21:51.370 649-659/? I/ActivityManager: Killing 4973:com.android.settings/1000 (adj 9): remove task
-12-22 12:21:51.385 649-2044/? D/DisplayManagerService: Display eventsListener for pid 4973 died.
+12-22 12:21:51.385 649-2044/? D/DisplayManagerService: Display listener for pid 4973 died.
 12-22 12:21:51.386 649-701/? D/PowerManagerDisplayState: setScreenBrightness: brightness=60
 12-22 12:21:51.386 649-701/? D/PowerManagerDisplayState: Requesting new screen state: on=true, backlight=60, mChangeInProgress=false
 12-22 12:21:51.387 649-4400/? I/WindowState: WIN DEATH: Window{427ffb68 u0 com.android.settings/com.android.settings.DevelopmentSettings}
@@ -406,8 +406,8 @@
 12-22 12:21:52.154 649-701/? D/PowerManagerDisplayState: mTask: on = true, mActualOn = true, backlight = 91, mActualBacklight = 91
 12-22 12:21:52.154 649-1198/? I/ActivityManager: Killing 4766:com.acer.ccd/u0a5 (adj 13): remove task
 12-22 12:21:52.154 649-1198/? I/ActivityManager: Killing 4786:com.acer.ccd.service/u0a5 (adj 11): remove task
-12-22 12:21:52.167 649-2045/? D/DisplayManagerService: Display eventsListener for pid 4786 died.
-12-22 12:21:52.174 649-660/? D/DisplayManagerService: Display eventsListener for pid 4766 died.
+12-22 12:21:52.167 649-2045/? D/DisplayManagerService: Display listener for pid 4786 died.
+12-22 12:21:52.174 649-660/? D/DisplayManagerService: Display listener for pid 4766 died.
 12-22 12:21:52.180 5310-5310/? D/ActivityThread: ACT-AM_ON_PAUSE_CALLED ActivityRecord{41e983f0 token=android.os.BinderProxy@41e97aa8 {com.acer.android.floatapp.recent/com.acer.android.floatapp.recent.RecentsActivity}}
 12-22 12:21:52.183 649-4400/? V/SettingsProvider: call_put(global:lid_switch_state=1) for 0
 12-22 12:21:52.183 649-4400/? V/SettingsProvider: insert(content://settings/global) for user 0 by 0
@@ -2926,7 +2926,7 @@
 12-22 12:22:16.773 135-424/? I/SurfaceFlinger: EventThread Client Pid (5356) disconnected by (135)
 12-22 12:22:16.773 649-1171/? D/IPCThreadState: [DN #5] BR_DEAD_BINDER cookie 0x68112fa0
 12-22 12:22:16.774 649-828/? D/WifiService: Client connection lost with reason: 4
-12-22 12:22:16.774 649-1171/? D/DisplayManagerService: Display eventsListener for pid 5356 died.
+12-22 12:22:16.774 649-1171/? D/DisplayManagerService: Display listener for pid 5356 died.
 12-22 12:22:16.774 649-2045/? D/IPCThreadState: [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x5af280b8
 12-22 12:22:16.776 649-1171/? D/IPCThreadState: [DN #5] BR_CLEAR_DEATH_NOTIFICATION_DONE cookie 0x68112fa0
 12-22 12:22:16.777 649-1170/? D/Hwmsen_sensors: active_sensors =10
