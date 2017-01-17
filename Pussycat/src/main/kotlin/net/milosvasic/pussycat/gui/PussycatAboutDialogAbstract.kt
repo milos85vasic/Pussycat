@@ -13,14 +13,13 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-abstract class PussycatAboutDialogAbstract(information: ApplicationInformation, owner: Frame?) : JWindow(owner) {
+abstract class PussycatAboutDialogAbstract(val information: ApplicationInformation, owner: Frame?) : JWindow(owner) {
 
     protected val splashWidth = 640
     protected val splashHeight = 389
-    protected val footer: JComponent
     protected var favicon: BufferedImage? = null
 
-    init {
+    fun open() {
         val screenSize = Toolkit.getDefaultToolkit().screenSize
         setLocation(
                 (screenSize.width / 2) - (splashWidth / 2),
@@ -29,13 +28,13 @@ abstract class PussycatAboutDialogAbstract(information: ApplicationInformation, 
         setSize(splashWidth, splashHeight)
         val body = PussycatSplashPanel(splashWidth, splashHeight)
         val header = generateHeader(information)
-        footer = generateFooter()
         add(body)
         add(header, BorderLayout.NORTH)
-        add(footer, BorderLayout.SOUTH)
+        add(generateFooter(), BorderLayout.SOUTH)
         body.isVisible = true
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
         setIconImage(favicon)
+        isVisible = true
     }
 
     fun close() {
@@ -44,7 +43,7 @@ abstract class PussycatAboutDialogAbstract(information: ApplicationInformation, 
         dispose()
     }
 
-    abstract protected fun generateFooter(): JComponent
+    abstract protected fun generateFooter(): JComponent?
 
     private fun generateHeader(information: ApplicationInformation): JLabel {
         val splashLabel = JLabel()

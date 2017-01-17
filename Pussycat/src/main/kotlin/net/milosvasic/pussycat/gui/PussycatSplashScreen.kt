@@ -16,11 +16,12 @@ import javax.swing.border.EmptyBorder
 class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, val callback: OnSplashComplete) : PussycatAboutDialogAbstract(information, owner) {
 
     var progress = ""
+    var footer: JLabel? = null
     private var status = "Loading"
     private val finished = AtomicBoolean()
 
     fun start() {
-        isVisible = true
+        open()
         finished.set(false)
         Thread(
                 Runnable {
@@ -45,20 +46,18 @@ class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, v
     }
 
     private fun updateFooterText() {
-        if (footer is JLabel) {
-            footer.text = "<html><font color='white'>$status$progress</font></html>"
-        }
+        footer?.text = "<html><font color='white'>$status$progress</font></html>"
     }
 
-    override fun generateFooter(): JLabel {
-        val splashLabel = JLabel()
-        splashLabel.isOpaque = true
-        splashLabel.background = Color.BLACK
-        splashLabel.text = "<html><font color='white'>Loading</font></html>"
-        splashLabel.horizontalAlignment = SwingConstants.LEFT
-        splashLabel.border = CompoundBorder(splashLabel.border, EmptyBorder(10, 10, 10, 10))
-        splashLabel.isVisible = true
-        return splashLabel
+    override fun generateFooter(): JLabel? {
+        footer = JLabel()
+        footer?.isOpaque = true
+        footer?.background = Color.BLACK
+        footer?.text = "<html><font color='white'>Loading</font></html>"
+        footer?.horizontalAlignment = SwingConstants.LEFT
+        footer?.border = CompoundBorder(footer?.border, EmptyBorder(10, 10, 10, 10))
+        footer?.isVisible = true
+        return footer
     }
 
 }

@@ -25,7 +25,7 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
             val app = Application.getApplication()
             app.setAboutHandler {
                 val aboutDialog  = PussycatAboutDialog(information, this)
-                aboutDialog.isVisible = true
+                aboutDialog.open()
             }
             app.setDefaultMenuBar(mainMenu)
         } else {

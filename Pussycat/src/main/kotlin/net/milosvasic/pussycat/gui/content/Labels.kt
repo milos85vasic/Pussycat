@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.gui
+package net.milosvasic.pussycat.gui.content
 
 object Labels {
 
