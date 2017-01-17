@@ -18,7 +18,7 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
     override fun initialize() {
         super.initialize()
         val osString = OS.getOS()
-        if (osString.contains(OS.MACOS)) { // TODO: Remove negation for mac os
+        if (!osString.contains(OS.MACOS)) { // TODO: Remove negation for mac os
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", information.name)
             System.setProperty("com.apple.macos.useScreenMenuBar", "true")
             System.setProperty("apple.laf.useScreenMenuBar", "true")

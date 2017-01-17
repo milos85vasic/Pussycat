@@ -8,4 +8,6 @@ abstract class Theme {
 
     abstract fun getColor(type: TYPE, intensity: INTENSITY): Color
 
+    abstract fun getTextColor(type: TYPE, intensity: INTENSITY): Color
+
 }

@@ -18,4 +18,15 @@ class Darcula : Theme() {
         }
     }
 
+    override fun getTextColor(type: TYPE, intensity: INTENSITY): Color {
+        return when (type) {
+            TYPE.BASE -> {
+                when (intensity) {
+                    INTENSITY.LIGHT -> Color.WHITE
+                    INTENSITY.MEDIUM -> Color.WHITE
+                    INTENSITY.DARK -> Color.WHITE
+                }
+            }
+        }
+    }
 }

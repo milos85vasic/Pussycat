@@ -8,10 +8,16 @@ class PussycatMainMenu(theme: Theme) : PussycatMenuBar(theme) {
 
     val file = PussycatMenu(theme, "File")
     val help = PussycatMenu(theme, "Pussycat")
+    val about = PussycatMenuItem(theme, "About")
+    val t1 = PussycatMenuItem(theme, "T 1")
+    val t2 = PussycatMenuItem(theme, "T 2")
+    val t3 = PussycatMenuItem(theme, "T 3")
 
     init {
-        val about = PussycatMenuItem(theme, "About")
+        file.add(t1)
+        file.add(t2)
         help.add(about)
+        help.add(t3)
         add(file)
         add(help)
     }
