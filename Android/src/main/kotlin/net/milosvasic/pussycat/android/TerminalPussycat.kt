@@ -45,7 +45,7 @@ class TerminalPussycat : AndroidPussycat() {
         override fun onEvent(value: EVENT?) {
             if (value == EVENT.STOP) {
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
-                SUBSCRIPTIONS.PROGRESS.unsubscribe(filesystemProgressListener)
+                SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
                 configuration.getExitRoutine().run()
             }
         }
@@ -95,7 +95,7 @@ class TerminalPussycat : AndroidPussycat() {
 
         Runtime.getRuntime().addShutdownHook(hook)
         SUBSCRIPTIONS.EVENTS.subscribe(eventsListener)
-        SUBSCRIPTIONS.PROGRESS.subscribe(filesystemProgressListener)
+        SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.subscribe(filesystemProgressListener)
         commands.start()
 
         var adb = true

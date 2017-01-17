@@ -260,7 +260,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
     abstract protected fun executeFilesystemRunnable(runnable: Runnable)
 
     open protected fun publishFilesystemLoadingProgress(percent: Double) {
-        SUBSCRIPTIONS.PROGRESS.notify(percent)
+        SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.notify(percent)
     }
 
     private fun filterByLogLevel(params: Array<out String?>) {

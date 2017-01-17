@@ -6,7 +6,6 @@ import net.milosvasic.pussycat.gui.OnSplashComplete
 import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
-import net.milosvasic.pussycat.Messages
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
@@ -17,8 +16,6 @@ import net.milosvasic.pussycat.os.OS
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.image.BufferedImage
-import java.util.concurrent.Callable
-import java.util.concurrent.Executors
 import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
@@ -45,7 +42,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         override fun onEvent(value: EVENT?) {
             if (value == EVENT.STOP) {
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
-                SUBSCRIPTIONS.PROGRESS.unsubscribe(filesystemProgressListener)
+                SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
             }
         }
     }
@@ -68,7 +65,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         })
 
         SUBSCRIPTIONS.EVENTS.subscribe(eventsListener)
-        SUBSCRIPTIONS.PROGRESS.subscribe(filesystemProgressListener)
+        SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.subscribe(filesystemProgressListener)
 
         Runtime.getRuntime().addShutdownHook(hook)
         initialize(args)
@@ -151,18 +148,14 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
     private fun initPopupMenu(osString: String) {
         val popupMenu = generateApplicationPopupMenu()
         if (osString.contains(OS.MACOS)) {
-            System.setProperty("apple.laf.useScreenMenuBar", "true")
             val app = Application.getApplication()
             app.dockIconImage = favicon
             app.dockMenu = popupMenu
-        } else if (osString.contains(OS.LINUX)) {
-
-        } else if (osString.contains(OS.WINDOWS)) {
-
         }
         splashScreen.updateStatus("Main menu initialized")
     }
 
+    // TODO: Move to menu factory!
     private fun generateApplicationPopupMenu(): PopupMenu {
         // TODO: Refine this a bit and complete the implementation.
         val menu = PopupMenu()

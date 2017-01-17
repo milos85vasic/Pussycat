@@ -41,7 +41,7 @@ abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, Data
 
     class Subscriptions {
         val EVENTS: Listeners<EVENT> = Listeners.obtain()
-        val PROGRESS: Listeners<Double> = Listeners.obtain()
+        val FILESYSTEM_LOADING_PROGRESS: Listeners<Double> = Listeners.obtain()
     }
 
     override fun execute(executable: COMMAND, params: Array<String>) {
