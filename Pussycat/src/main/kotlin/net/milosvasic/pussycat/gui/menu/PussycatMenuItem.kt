@@ -14,7 +14,7 @@ class PussycatMenuItem(val theme: Theme, title: String) : JMenuItem(title) {
         isOpaque = true
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
-        border = CompoundBorder(border, EmptyBorder(0, 0, 0, 0))
+        border = CompoundBorder(border, EmptyBorder(5, 5, 5, 5))
         isVisible = true
     }
 

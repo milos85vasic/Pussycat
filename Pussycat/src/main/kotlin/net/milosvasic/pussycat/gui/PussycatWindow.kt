@@ -2,20 +2,26 @@ package net.milosvasic.pussycat.gui
 
 
 import net.milosvasic.pussycat.gui.menu.PussycatMainMenu
+import net.milosvasic.pussycat.gui.menu.PussycatMenuBar
 import net.milosvasic.pussycat.gui.themes.color.INTENSITY
 import net.milosvasic.pussycat.gui.themes.color.TYPE
 import net.milosvasic.pussycat.gui.themes.Theme
+import java.awt.BorderLayout
+import java.awt.Color
 import java.awt.Component
+import java.awt.GridLayout
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
+import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JFrame
 import javax.swing.JPanel
+import javax.swing.border.CompoundBorder
+import javax.swing.border.EmptyBorder
 
 abstract class PussycatWindow(val theme: Theme) : JFrame() {
 
-    protected val mainPanel = JPanel()
     private var favicon: BufferedImage? = null
 
     init {
@@ -36,7 +42,8 @@ abstract class PussycatWindow(val theme: Theme) : JFrame() {
 
     protected open fun initialize() {
         iconImage = favicon
-        add(mainPanel)
+        layout = BorderLayout()
+        applyTheme(this)
     }
 
     private fun applyTheme(comp: Component?) {
@@ -44,11 +51,19 @@ abstract class PussycatWindow(val theme: Theme) : JFrame() {
             comp.isOpaque = true
         }
         when (comp) {
-            is JPanel -> {
+            is PussycatContent -> {
+                comp.background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
+                comp.border = CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
+            }
+            is PussycatMenuBar -> {
+                comp.background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+                comp.border = CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+            }
+            is JFrame -> {
                 comp.background = theme.getColor(TYPE.BASE, INTENSITY.LIGHT)
             }
-            is PussycatMainMenu -> {
-                comp.background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+            is JPanel -> {
+                comp.background = theme.getColor(TYPE.BASE, INTENSITY.LIGHT)
             }
         }
     }
