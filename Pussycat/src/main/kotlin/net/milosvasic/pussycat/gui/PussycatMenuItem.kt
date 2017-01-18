@@ -4,6 +4,7 @@ import net.milosvasic.pussycat.gui.themes.Themable
 import net.milosvasic.pussycat.gui.themes.Theme
 import net.milosvasic.pussycat.gui.themes.color.INTENSITY
 import net.milosvasic.pussycat.gui.themes.color.TYPE
+import net.milosvasic.pussycat.gui.themes.font.FONT_WEIGHT
 import java.awt.Graphics
 import javax.swing.JMenuItem
 import javax.swing.border.CompoundBorder
@@ -16,6 +17,7 @@ class PussycatMenuItem(val title: String) : JMenuItem(title), Themable {
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
         border = CompoundBorder(border, EmptyBorder(0, 0, 0, 0))
+        font = theme.getFont(FONT_WEIGHT.THIN).deriveFont(12f)
     }
 
     override fun paintComponent(g: Graphics?) {
@@ -24,6 +26,7 @@ class PussycatMenuItem(val title: String) : JMenuItem(title), Themable {
             g.color = background
             g.fillRect(0, 0, width, height)
             g.color = foreground
+            g.font = font
             g.drawString(title, 10, 10)
         }
     }
