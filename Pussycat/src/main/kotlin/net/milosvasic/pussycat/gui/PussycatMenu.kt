@@ -29,4 +29,12 @@ open class PussycatMenu(val title: String) : JMenu(title), Themable {
         }
     }
 
+    override fun paintBorder(g: Graphics?) {
+        super.paintBorder(g)
+        if (isOpaque && g != null) {
+            g.color = background
+            g.fillRect(0, height - 1, width, 1)
+        }
+    }
+
 }
