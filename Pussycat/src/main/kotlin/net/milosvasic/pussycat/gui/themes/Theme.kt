@@ -26,7 +26,7 @@ abstract class Theme {
                 comp.background = getColor(TYPE.BASE, INTENSITY.MEDIUM)
                 comp.border = CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
             }
-            is PussycatMenu -> {
+            is PussycatMenuButton -> {
                 comp.background = getColor(TYPE.BASE, INTENSITY.MEDIUM)
                 comp.foreground = getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
                 comp.border = CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))

@@ -31,9 +31,9 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
 //            }
 //            app.setDefaultMenuBar(mainMenu)
         } else {
-            val mainMenuPanel = PussycatMainMenuBar(headerBar.width, barHeight)
             headerBar.preferredSize = Dimension(headerBar.width, barHeight * 2)
-            headerBar.addChild(mainMenuPanel, BorderLayout.PAGE_START)
+            val mainMenuBar = PussycatMainMenuBar(headerBar.width, barHeight)
+            headerBar.addChild(mainMenuBar, BorderLayout.NORTH)
         }
         val content = PussycatContent()
         val footerBar = PussycatBar(screenSize.width, barHeight)
@@ -42,9 +42,9 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
         addChild(footerBar, BorderLayout.PAGE_END)
     }
 
-    fun Container.addChild(comp: Component, constraints: Any){
+    fun Container.addChild(comp: Component, constraints: Any) {
         theme.apply(comp)
-        addImpl(comp, constraints, -1)
+        add(comp, constraints)
     }
 
 }
