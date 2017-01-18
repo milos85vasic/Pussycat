@@ -7,7 +7,9 @@ import net.milosvasic.pussycat.gui.themes.color.TYPE
 import java.awt.Component
 import java.awt.Container
 import java.awt.Dimension
+import java.awt.Graphics
 import javax.swing.JMenuBar
+import javax.swing.UIManager
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
@@ -29,6 +31,18 @@ open class PussycatMenuBar(val theme: Theme, width: Int, height: Int) : JMenuBar
             comp.apply(theme)
         }
         add(comp)
+    }
+
+    override fun paintComponent(g: Graphics?) {
+        super.paintComponent(g)
+        if (isOpaque && g != null) {
+            g.color = background
+            g.fillRect(0, 0, width, height)
+        }
+    }
+
+    override fun getMinimumSize(): Dimension {
+        return preferredSize
     }
 
 }
