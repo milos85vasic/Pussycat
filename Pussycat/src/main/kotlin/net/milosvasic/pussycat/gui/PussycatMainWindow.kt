@@ -5,6 +5,7 @@ import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.gui.PussycatMainMenuBar
 import net.milosvasic.pussycat.gui.PussycatBar
+import net.milosvasic.pussycat.gui.themes.Themable
 import net.milosvasic.pussycat.gui.themes.Theme
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
@@ -32,7 +33,7 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
 //            app.setDefaultMenuBar(mainMenu)
         } else {
             headerBar.preferredSize = Dimension(headerBar.width, barHeight * 2)
-            val mainMenuBar = PussycatMainMenuBar(headerBar.width, barHeight)
+            val mainMenuBar = PussycatMainMenuBar(theme, headerBar.width, barHeight)
             headerBar.addChild(mainMenuBar, BorderLayout.NORTH)
         }
         val content = PussycatContent()
@@ -43,7 +44,9 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
     }
 
     fun Container.addChild(comp: Component, constraints: Any) {
-        theme.apply(comp)
+        if(comp is Themable){
+            comp.apply(theme)
+        }
         add(comp, constraints)
     }
 

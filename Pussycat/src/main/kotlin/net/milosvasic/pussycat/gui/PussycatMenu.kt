@@ -4,11 +4,12 @@ import net.milosvasic.pussycat.gui.themes.Themable
 import net.milosvasic.pussycat.gui.themes.Theme
 import net.milosvasic.pussycat.gui.themes.color.INTENSITY
 import net.milosvasic.pussycat.gui.themes.color.TYPE
-import javax.swing.JMenuItem
+import javax.swing.JMenu
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
-class PussycatMenuItem(title: String) : JMenuItem(title), Themable {
+
+open class PussycatMenu(title: String) : JMenu(title), Themable {
 
     override fun apply(theme: Theme) {
         isOpaque = true
