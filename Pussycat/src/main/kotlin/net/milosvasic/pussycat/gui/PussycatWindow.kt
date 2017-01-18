@@ -1,19 +1,18 @@
 package net.milosvasic.pussycat.gui
 
 
-import net.milosvasic.pussycat.gui.menu.PussycatMainMenu
+import net.milosvasic.pussycat.gui.menu.PussycatMainMenuPanel
+import net.milosvasic.pussycat.gui.menu.PussycatMenu
 import net.milosvasic.pussycat.gui.menu.PussycatMenuBar
+import net.milosvasic.pussycat.gui.menu.PussycatMenuItem
 import net.milosvasic.pussycat.gui.themes.color.INTENSITY
 import net.milosvasic.pussycat.gui.themes.color.TYPE
 import net.milosvasic.pussycat.gui.themes.Theme
 import java.awt.BorderLayout
-import java.awt.Color
 import java.awt.Component
-import java.awt.GridLayout
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
-import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JFrame
 import javax.swing.JPanel
@@ -51,13 +50,27 @@ abstract class PussycatWindow(val theme: Theme) : JFrame() {
             comp.isOpaque = true
         }
         when (comp) {
-            is PussycatContent -> {
-                comp.background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
-                comp.border = CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
-            }
             is PussycatMenuBar -> {
                 comp.background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
                 comp.border = CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+            }
+            is PussycatMenu -> {
+                comp.background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+                comp.foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
+                comp.border = CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+            }
+            is PussycatMenuItem -> {
+                comp.background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+                comp.foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
+                comp.border = CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+            }
+            is PussycatMainMenuPanel -> {
+                comp.background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+                comp.border = CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+            }
+            is PussycatContent -> {
+                comp.background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
+                comp.border = CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
             }
             is JFrame -> {
                 comp.background = theme.getColor(TYPE.BASE, INTENSITY.LIGHT)
