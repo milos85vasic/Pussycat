@@ -18,7 +18,9 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
 
     override fun initialize() {
         super.initialize()
-        if (!OS.isMacOS()) { // TODO: Remove negation for mac os
+        val screenSize = Toolkit.getDefaultToolkit().screenSize
+        val barHeight = (screenSize.height / 100) * 3
+        if (!OS.isMacOS()) { // TODO: Remove negation.
 //            System.setProperty("com.apple.mrj.application.apple.menu.about.name", information.name)
 //            System.setProperty("com.apple.mac.useScreenMenuBar", "true")
 //            System.setProperty("apple.laf.useScreenMenuBar", "true")
@@ -29,15 +31,13 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
 //            }
 //            app.setDefaultMenuBar(mainMenu)
         } else {
-            val screenSize = Toolkit.getDefaultToolkit().screenSize
-            val barHeight = (screenSize.height / 100) * 3
             val headerBar = PussycatMenuBar(screenSize.width, barHeight)
-            val content = PussycatContent()
-            val footerBar = PussycatMenuBar(screenSize.width, barHeight)
             add(headerBar, BorderLayout.PAGE_START)
-            add(content, BorderLayout.CENTER)
-            add(footerBar, BorderLayout.PAGE_END)
         }
+        val content = PussycatContent()
+        val footerBar = PussycatMenuBar(screenSize.width, barHeight)
+        add(content, BorderLayout.CENTER)
+        add(footerBar, BorderLayout.PAGE_END)
     }
 
 }
