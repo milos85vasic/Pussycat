@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.gui.menu
+package net.milosvasic.pussycat.gui
 
 import javax.swing.JMenu
 

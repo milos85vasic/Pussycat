@@ -1,11 +1,11 @@
-package net.milosvasic.pussycat.gui.menu
+package net.milosvasic.pussycat.gui
 
 import java.awt.BorderLayout
 import java.awt.Dimension
 import javax.swing.JPanel
 
 
-class PussycatMenuBar(width: Int, height: Int) : JPanel() {
+open class PussycatBar(width: Int, height: Int) : JPanel() {
 
     init {
         preferredSize = Dimension(width, height)

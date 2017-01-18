@@ -1,0 +1,23 @@
+package net.milosvasic.pussycat.gui
+
+
+
+class PussycatMainMenuBar(width: Int, height: Int) : PussycatBar(width, height) {
+
+    val file = PussycatMenu("File")
+    val help = PussycatMenu("Pussycat")
+    val about = PussycatMenuItem("About")
+    val t1 = PussycatMenuItem("T 1")
+    val t2 = PussycatMenuItem("T 2")
+    val t3 = PussycatMenuItem("T 3")
+
+    init {
+//        file.add(t1)
+//        file.add(t2)
+//        help.add(about)
+//        help.add(t3)
+//        add(file, BorderLayout.WEST)
+//        add(help)
+    }
+
+}
