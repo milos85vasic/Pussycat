@@ -105,9 +105,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
     private fun initialize(args: Array<String>) {
         Thread(
                 Runnable {
-                    val osString = OS.getOS()
-                    initPopupMenu(osString)
-
+                    initPopupMenu()
                     var adb = true
                     var file: String = ""
                     for (arg in args) {
@@ -145,9 +143,9 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         runnable.run()
     }
 
-    private fun initPopupMenu(osString: String) {
+    private fun initPopupMenu() {
         val popupMenu = generateApplicationPopupMenu()
-        if (osString.contains(OS.MACOS)) {
+        if (OS.isMacOS()) {
             val app = Application.getApplication()
             app.dockIconImage = favicon
             app.dockMenu = popupMenu
