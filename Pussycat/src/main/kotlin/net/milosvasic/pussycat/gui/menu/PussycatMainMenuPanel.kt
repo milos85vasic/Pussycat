@@ -6,7 +6,7 @@ import java.awt.Dimension
 import javax.swing.JMenuBar
 
 
-class PussycatMainMenuPanel(preferedHeight: Int) : JMenuBar() {
+class PussycatMainMenuPanel(preferredHeight: Int) : JMenuBar() {
 
     val file = PussycatMenu("File")
     val help = PussycatMenu("Pussycat")
@@ -16,7 +16,7 @@ class PussycatMainMenuPanel(preferedHeight: Int) : JMenuBar() {
     val t3 = PussycatMenuItem("T 3")
 
     init {
-        preferredSize = Dimension(width, preferedHeight)
+        preferredSize = Dimension(width, preferredHeight)
         layout = BorderLayout()
         file.add(t1)
         file.add(t2)
