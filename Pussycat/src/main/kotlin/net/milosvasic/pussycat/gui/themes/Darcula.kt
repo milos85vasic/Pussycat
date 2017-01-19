@@ -61,33 +61,33 @@ open class Darcula : Theme() {
         }
     }
 
-    override fun getTextColor(type: TYPE, intensity: INTENSITY, interactionState: UI_INTERACTION_STATE): Color {
+    override fun getTextColor(type: TYPE, intensity: INTENSITY, interactionTYPE: UI_INTERACTION_TYPE): Color {
         return when (type) {
             TYPE.BASE -> {
                 when (intensity) {
-                    INTENSITY.LIGHT -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
+                    INTENSITY.LIGHT -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
                             getColor(TYPE.MAIN_COLOR_1, INTENSITY.LIGHT)
                         }
-                        UI_INTERACTION_STATE.PRESSED -> {
+                        UI_INTERACTION_TYPE.PRESSED -> {
                             getColor(TYPE.MAIN_COLOR_2, INTENSITY.LIGHT)
                         }
                         else -> Color.WHITE
                     }
-                    INTENSITY.MEDIUM -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
+                    INTENSITY.MEDIUM -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
                             getColor(TYPE.MAIN_COLOR_1, INTENSITY.MEDIUM)
                         }
-                        UI_INTERACTION_STATE.PRESSED -> {
+                        UI_INTERACTION_TYPE.PRESSED -> {
                             getColor(TYPE.MAIN_COLOR_2, INTENSITY.MEDIUM)
                         }
                         else -> Color.WHITE
                     }
-                    INTENSITY.DARK -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
+                    INTENSITY.DARK -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
                             getColor(TYPE.MAIN_COLOR_1, INTENSITY.DARK)
                         }
-                        UI_INTERACTION_STATE.PRESSED -> {
+                        UI_INTERACTION_TYPE.PRESSED -> {
                             getColor(TYPE.MAIN_COLOR_2, INTENSITY.DARK)
                         }
                         else -> Color.WHITE
@@ -96,29 +96,29 @@ open class Darcula : Theme() {
             }
             TYPE.MAIN_COLOR_1 -> {
                 when (intensity) {
-                    INTENSITY.LIGHT -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
+                    INTENSITY.LIGHT -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
                             Color.WHITE
                         }
-                        UI_INTERACTION_STATE.PRESSED -> {
-                            Color.WHITE
-                        }
-                        else -> Color.WHITE
-                    }
-                    INTENSITY.MEDIUM -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
-                            Color.WHITE
-                        }
-                        UI_INTERACTION_STATE.PRESSED -> {
+                        UI_INTERACTION_TYPE.PRESSED -> {
                             Color.WHITE
                         }
                         else -> Color.WHITE
                     }
-                    INTENSITY.DARK -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
+                    INTENSITY.MEDIUM -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
                             Color.WHITE
                         }
-                        UI_INTERACTION_STATE.PRESSED -> {
+                        UI_INTERACTION_TYPE.PRESSED -> {
+                            Color.WHITE
+                        }
+                        else -> Color.WHITE
+                    }
+                    INTENSITY.DARK -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
+                            Color.WHITE
+                        }
+                        UI_INTERACTION_TYPE.PRESSED -> {
                             Color.WHITE
                         }
                         else -> Color.WHITE
@@ -127,29 +127,29 @@ open class Darcula : Theme() {
             }
             TYPE.MAIN_COLOR_2 -> {
                 when (intensity) {
-                    INTENSITY.LIGHT -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
+                    INTENSITY.LIGHT -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
                             Color.WHITE
                         }
-                        UI_INTERACTION_STATE.PRESSED -> {
-                            Color.WHITE
-                        }
-                        else -> Color.WHITE
-                    }
-                    INTENSITY.MEDIUM -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
-                            Color.WHITE
-                        }
-                        UI_INTERACTION_STATE.PRESSED -> {
+                        UI_INTERACTION_TYPE.PRESSED -> {
                             Color.WHITE
                         }
                         else -> Color.WHITE
                     }
-                    INTENSITY.DARK -> when (interactionState) {
-                        UI_INTERACTION_STATE.HOVER -> {
+                    INTENSITY.MEDIUM -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
                             Color.WHITE
                         }
-                        UI_INTERACTION_STATE.PRESSED -> {
+                        UI_INTERACTION_TYPE.PRESSED -> {
+                            Color.WHITE
+                        }
+                        else -> Color.WHITE
+                    }
+                    INTENSITY.DARK -> when (interactionTYPE) {
+                        UI_INTERACTION_TYPE.HOVER -> {
+                            Color.WHITE
+                        }
+                        UI_INTERACTION_TYPE.PRESSED -> {
                             Color.WHITE
                         }
                         else -> Color.WHITE

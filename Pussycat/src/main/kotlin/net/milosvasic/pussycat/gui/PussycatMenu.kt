@@ -2,7 +2,7 @@ package net.milosvasic.pussycat.gui
 
 import net.milosvasic.pussycat.gui.themes.Themable
 import net.milosvasic.pussycat.gui.themes.Theme
-import net.milosvasic.pussycat.gui.themes.UI_INTERACTION_STATE
+import net.milosvasic.pussycat.gui.themes.UI_INTERACTION_TYPE
 import net.milosvasic.pussycat.gui.themes.color.INTENSITY
 import net.milosvasic.pussycat.gui.themes.color.TYPE
 import net.milosvasic.pussycat.gui.themes.font.FONT_WEIGHT
@@ -40,7 +40,7 @@ class PussycatMenu(val title: String) : JMenu(title), Themable, MouseListener {
     }
 
     override fun mouseEntered(e: MouseEvent?) {
-        foreground = theme?.getTextColor(TYPE.BASE, INTENSITY.MEDIUM, UI_INTERACTION_STATE.HOVER)
+        foreground = theme?.getTextColor(TYPE.BASE, INTENSITY.MEDIUM, UI_INTERACTION_TYPE.HOVER)
         repaint()
     }
 
