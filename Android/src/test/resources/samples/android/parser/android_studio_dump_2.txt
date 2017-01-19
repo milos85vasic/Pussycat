@@ -5220,7 +5220,7 @@
 12-22 11:10:50.305 7473-8475/? W/ContentTaskController: Invalid task was provided to stopTracking.
 12-22 11:10:50.352 5040-5100/? E/BatteryStatsService: no controller energy info supplied
 12-22 11:10:50.394 7473-8475/? W/ContentTaskController: Invalid newTask was provided to startTracking.
-12-22 11:10:50.413 20988-21072/? I/MediaStoreImporter: Update: incremental Added music: 0 Updated music: 0 Deleted music: 0 Created playlists: 0 Updated playlists: 0 Deleted playlists: 0 Inserted playlist items: 0 Deleted playlist items: 0 Removed orphaned playlist items: 0
+12-22 11:10:50.413 20988-21072/? I/MediaStoreImporter: Update: incremental Added music: 0 Updated music: 0 Deleted music: 0 Created playlists: 0 Updated playlists: 0 Deleted playlists: 0 Inserted playlist contextMenuItems: 0 Deleted playlist contextMenuItems: 0 Removed orphaned playlist contextMenuItems: 0
 12-22 11:10:50.416 20988-20988/? D/MusicLifecycle: com.google.android.music.wear.WearBroadcastReceiver generated event: Broadcast received with context android.app.ReceiverRestrictedContext@2a0fe47 and intent Intent { act=com.google.android.music.IMPORT_COMPLETE flg=0x10 cmp=com.google.android.music/.wear.WearBroadcastReceiver }
 12-22 11:10:50.433 7473-8475/? W/ContentTaskController: Invalid task was provided to stopTracking.
 12-22 11:10:50.446 20988-21296/? E/GmsUtils: Failed to connect to Google API client: ConnectionResult{statusCode=API_UNAVAILABLE, resolution=null, message=null}
@@ -5275,7 +5275,7 @@
 12-22 11:10:51.698 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback
 12-22 11:10:51.712 3798-4274/? D/audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-22 11:10:51.712 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
-12-22 11:10:51.730 20988-21157/? D/BlacklistItem: 0 blacklist items deleted.
+12-22 11:10:51.730 20988-21157/? D/BlacklistItem: 0 blacklist contextMenuItems deleted.
 12-22 11:10:51.730 5040-5097/? I/ActivityManager: Start proc 21356:com.android.calllogbackup/u0a1 for broadcast com.android.calllogbackup/.CallLogChangeReceiver
 12-22 11:10:51.772 21356-21356/? W/System: ClassLoader referenced unknown path: /system/priv-app/CallLogBackup/lib/arm64
 12-22 11:10:51.872 5040-6464/? I/PowerManagerService: Going to sleep due to power button (uid 1000)...

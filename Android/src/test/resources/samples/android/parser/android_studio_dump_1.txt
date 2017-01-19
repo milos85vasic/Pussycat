@@ -5051,7 +5051,7 @@
                                                        [ 12-21 07:23:22.066  7198:12627 D/         ]
                                                        oem_qmi_lib:rapi_event_type=10057, qmi_ret=0, return_status=1.
 12-21 07:23:22.089 8217-8217/? I/chatty: uid=10012(com.google.android.gms) expire 3 lines
-12-21 07:23:22.100 25609-25651/? I/MediaStoreImporter: Update: incremental Added music: 0 Updated music: 0 Deleted music: 0 Created playlists: 0 Updated playlists: 0 Deleted playlists: 0 Inserted playlist items: 0 Deleted playlist items: 0 Removed orphaned playlist items: 0
+12-21 07:23:22.100 25609-25651/? I/MediaStoreImporter: Update: incremental Added music: 0 Updated music: 0 Deleted music: 0 Created playlists: 0 Updated playlists: 0 Deleted playlists: 0 Inserted playlist contextMenuItems: 0 Deleted playlist contextMenuItems: 0 Removed orphaned playlist contextMenuItems: 0
 12-21 07:23:22.103 25609-25609/? D/MusicLifecycle: com.google.android.music.wear.WearBroadcastReceiver generated event: Broadcast received with context android.app.ReceiverRestrictedContext@a6f75c2 and intent Intent { act=com.google.android.music.IMPORT_COMPLETE flg=0x10 cmp=com.google.android.music/.wear.WearBroadcastReceiver }
 12-21 07:23:22.130 25609-26050/? E/GmsUtils: Failed to connect to Google API client: ConnectionResult{statusCode=API_UNAVAILABLE, resolution=null, message=null}
 12-21 07:23:22.200 25826-25874/? D/ApplicationLoaders: ignored Vulkan layer search path /data/app/com.google.android.gms-1/lib/arm64:/system/fake-libs64:/data/app/com.google.android.gms-1/base.apk!/lib/arm64-v8a for namespace 0x7a5ccbd0f0
@@ -5258,7 +5258,7 @@
 12-21 07:23:33.655 25609-26327/? W/MusicApiClient: No content in 'data' field in GET sync response for SyncablePlaylistEntry
 12-21 07:23:34.100 25609-26327/? D/MusicProfiler: http: duration=0412ms uri=https://mclients.googleapis.com/sj/v2.5/radio/station?hl=en_US&tier=aa&dv=41201&alt=json&updated-min=1460536028137000
 12-21 07:23:34.413 25609-26327/? D/MusicProfiler: http: duration=0206ms uri=https://mclients.googleapis.com/sj/v2.5/listennow/get_dismissed_items?hl=en_US&tier=aa&dv=41201&alt=json&max-results=250
-12-21 07:23:34.431 25609-26327/? D/BlacklistItem: 0 blacklist items deleted.
+12-21 07:23:34.431 25609-26327/? D/BlacklistItem: 0 blacklist contextMenuItems deleted.
 12-21 07:23:34.441 5071-28670/? I/ActivityManager: Killing 24949:com.google.android.talk/u0a53 (adj 906): empty #17
 12-21 07:23:34.491 5071-12073/? D/ActivityManager: cleanUpApplicationRecord -- 24949
 12-21 07:23:34.776 25609-26327/? W/InstanceID/Rpc: Found 10012

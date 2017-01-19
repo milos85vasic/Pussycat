@@ -7,9 +7,11 @@ import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
+import net.milosvasic.pussycat.android.gui.GuiPussycatMenuFactory
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.PussycatMainWindow
+import net.milosvasic.pussycat.gui.PussycatMenuFactory
 import net.milosvasic.pussycat.gui.themes.Darcula
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
@@ -144,19 +146,6 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
     }
 
     private fun initPopupMenu() {
-        val popupMenu = generateApplicationPopupMenu()
-        if (OS.isMacOS()) {
-            val app = Application.getApplication()
-            app.dockIconImage = favicon
-            app.dockMenu = popupMenu
-        }
-        splashScreen.updateStatus("Main menu initialized")
-    }
-
-    // TODO: Move to menu factory!
-    private fun generateApplicationPopupMenu(): PopupMenu {
-        // TODO: Refine this a bit and complete the implementation.
-        val menu = PopupMenu()
         for (command in COMMAND.list) {
             when (command) {
                 COMMAND.UNKNOWN -> {
@@ -180,11 +169,18 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                             }
                         }
                     }
-                    menu.add(menuItem)
+                    GuiPussycatMenuFactory.add("CMD_${menuItem.label}", menuItem)
                 }
             }
         }
-        return menu
+        val items = GuiPussycatMenuFactory.CONTEXT.create()
+        val popupMenu = PussycatMenuFactory.CONTEXT.create(items)
+        if (OS.isMacOS()) {
+            val app = Application.getApplication()
+            app.dockIconImage = favicon
+            app.dockMenu = popupMenu
+        }
+        splashScreen.updateStatus("Main menu initialized")
     }
 
 }
