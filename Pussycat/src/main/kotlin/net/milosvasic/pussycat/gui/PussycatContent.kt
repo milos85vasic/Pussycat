@@ -14,9 +14,9 @@ class PussycatContent : JPanel(), Themable {
         setSize(width, 1200)
     }
 
-    override fun apply(theme: Theme) {
+    override fun apply(theme: Theme?) {
         isOpaque = true
-        background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
+        background = theme?.getColor(TYPE.BASE, INTENSITY.DARK)
         border = CompoundBorder(border, EmptyBorder(5, 5, 5, 5))
     }
 

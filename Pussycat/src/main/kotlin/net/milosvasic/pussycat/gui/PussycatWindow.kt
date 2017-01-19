@@ -38,8 +38,8 @@ abstract class PussycatWindow(val theme: Theme) : JFrame(), Themable {
         }
     }
 
-    override fun apply(theme: Theme) {
-        background = theme.getColor(TYPE.BASE, INTENSITY.LIGHT)
+    override fun apply(theme: Theme?) {
+        background = theme?.getColor(TYPE.BASE, INTENSITY.LIGHT)
     }
 
 }

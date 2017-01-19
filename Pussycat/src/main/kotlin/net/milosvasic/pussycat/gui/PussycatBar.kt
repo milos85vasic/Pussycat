@@ -18,9 +18,9 @@ open class PussycatBar(width: Int, height: Int) : JPanel(), Themable {
         layout = BorderLayout()
     }
 
-    override fun apply(theme: Theme) {
+    override fun apply(theme: Theme?) {
         isOpaque = true
-        background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+        background = theme?.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         border = CompoundBorder(border, EmptyBorder(0, 0, 0, 0))
     }
 

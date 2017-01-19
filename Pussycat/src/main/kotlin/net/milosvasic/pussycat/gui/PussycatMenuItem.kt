@@ -19,12 +19,12 @@ class PussycatMenuItem(val title: String) : JMenuItem(title), Themable, MouseLis
         addMouseListener(this)
     }
 
-    override fun apply(theme: Theme) {
+    override fun apply(theme: Theme?) {
         this.theme = theme
         isOpaque = true
-        background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
-        foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
-        font = theme.getFont(FONT_WEIGHT.THIN).deriveFont(theme.getFontSize())
+        background = theme?.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+        foreground = theme?.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
+        font = theme?.getFont(FONT_WEIGHT.THIN)?.deriveFont(theme.getFontSize())
     }
 
     override fun paintComponent(g: Graphics?) {
