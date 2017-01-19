@@ -26,6 +26,8 @@ class PussycatMenu(val title: String) : JMenu(title), Themable, MouseListener {
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
         font = theme.getFont(FONT_WEIGHT.THIN).deriveFont(theme.getFontSize())
+        popupMenu.isOpaque = true
+        popupMenu.background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
     }
 
     override fun paintComponent(g: Graphics?) {
