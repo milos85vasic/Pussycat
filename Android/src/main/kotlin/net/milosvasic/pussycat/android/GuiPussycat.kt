@@ -173,9 +173,9 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                 }
             }
         }
-        val items = GuiPussycatMenuFactory.CONTEXT.create()
-        val popupMenu = PussycatMenuFactory.CONTEXT.create(items)
         if (OS.isMacOS()) {
+            val items = GuiPussycatMenuFactory.CONTEXT.create()
+            val popupMenu = PussycatMenuFactory.CONTEXT.create(items)
             val app = Application.getApplication()
             app.dockIconImage = favicon
             app.dockMenu = popupMenu
