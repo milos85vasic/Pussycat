@@ -10,8 +10,6 @@ import java.awt.Graphics
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JMenu
-import javax.swing.border.CompoundBorder
-import javax.swing.border.EmptyBorder
 
 
 class PussycatMenu(val title: String) : JMenu(title), Themable, MouseListener {
@@ -27,7 +25,6 @@ class PussycatMenu(val title: String) : JMenu(title), Themable, MouseListener {
         isOpaque = true
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
-        border = CompoundBorder(border, EmptyBorder(0, 0, 0, 0))
         font = theme.getFont(FONT_WEIGHT.THIN).deriveFont(theme.getFontSize())
     }
 

@@ -9,6 +9,8 @@ import net.milosvasic.pussycat.gui.themes.Themable
 import net.milosvasic.pussycat.gui.themes.Theme
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
+import javax.swing.border.CompoundBorder
+import javax.swing.border.EmptyBorder
 
 class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) : PussycatWindow(theme) {
 
@@ -34,6 +36,8 @@ class PussycatMainWindow(theme: Theme, val information: ApplicationInformation) 
         } else {
             headerBar.preferredSize = Dimension(headerBar.width, barHeight * 2)
             val mainMenuBar = PussycatMainMenuBar(theme, headerBar.width, barHeight)
+            val margin = EmptyBorder(10, 0, 0, 0)
+            headerBar.border = CompoundBorder(headerBar.border, margin)
             headerBar.addChild(mainMenuBar, BorderLayout.NORTH)
         }
         val content = PussycatContent()
