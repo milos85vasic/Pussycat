@@ -14,9 +14,13 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-open class PussycatMenu(val title: String) : JMenu(title), Themable, MouseListener {
+class PussycatMenu(val title: String) : JMenu(title), Themable, MouseListener {
 
     private var theme: Theme? = null
+
+    init {
+        addMouseListener(this)
+    }
 
     override fun apply(theme: Theme) {
         this.theme = theme
