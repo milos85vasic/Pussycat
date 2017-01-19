@@ -9,7 +9,7 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-abstract class PussycatMenuBar(width: Int, height: Int) : JMenuBar() {
+class PussycatMenuBar(width: Int, height: Int) : JMenuBar() {
 
     init {
         preferredSize = Dimension(width, height)

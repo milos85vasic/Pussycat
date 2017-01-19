@@ -19,15 +19,17 @@ abstract class PussycatMainWindow(val information: ApplicationInformation) : Pus
         val screenSize = Toolkit.getDefaultToolkit().screenSize
         val barHeight = (screenSize.height / 100) * 3
         val headerBar = PussycatBar(screenSize.width, barHeight)
-        val mainMenuItems = getMainMenuItems()
-        val mainMenuBar = PussycatMainMenuBar(headerBar.width, barHeight, mainMenuItems)
+        val mainMenuBar = PussycatMenuBar(headerBar.width, barHeight)
+        for (item in getMainMenuItems()) {
+            mainMenuBar.add(item)
+        }
         if (!OS.isMacOS()) { // TODO: Remove negation.
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", information.name)
             System.setProperty("com.apple.mac.useScreenMenuBar", "true")
             System.setProperty("apple.laf.useScreenMenuBar", "true")
             val app = Application.getApplication()
             app.setAboutHandler {
-                val aboutDialog  = PussycatAboutDialog(information, this)
+                val aboutDialog = PussycatAboutDialog(information, this)
                 aboutDialog.open()
             }
             app.setDefaultMenuBar(mainMenuBar)
