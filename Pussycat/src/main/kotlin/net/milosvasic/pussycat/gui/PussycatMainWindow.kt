@@ -24,22 +24,19 @@ abstract class PussycatMainWindow(theme: Theme, val information: ApplicationInfo
         val barHeight = (screenSize.height / 100) * 3
         val headerBar = PussycatBar(screenSize.width, barHeight)
         val mainMenuItems = getMainMenuItems()
+        val mainMenuBar = PussycatMainMenuBar(theme, headerBar.width, barHeight, mainMenuItems)
         if (!OS.isMacOS()) { // TODO: Remove negation.
-//            System.setProperty("com.apple.mrj.application.apple.menu.about.name", information.name)
-//            System.setProperty("com.apple.mac.useScreenMenuBar", "true")
-//            System.setProperty("apple.laf.useScreenMenuBar", "true")
-//            val app = Application.getApplication()
-//            app.setAboutHandler {
-//                val aboutDialog  = PussycatAboutDialog(information, this)
-//                aboutDialog.open()
-//            }
-//            app.setDefaultMenuBar(mainMenu)
+            System.setProperty("com.apple.mrj.application.apple.menu.about.name", information.name)
+            System.setProperty("com.apple.mac.useScreenMenuBar", "true")
+            System.setProperty("apple.laf.useScreenMenuBar", "true")
+            val app = Application.getApplication()
+            app.setAboutHandler {
+                val aboutDialog  = PussycatAboutDialog(information, this)
+                aboutDialog.open()
+            }
+            app.setDefaultMenuBar(mainMenuBar)
         } else {
             headerBar.preferredSize = Dimension(headerBar.width, barHeight * 2)
-            val mainMenuBar = PussycatMenuBar(theme, headerBar.width, barHeight)
-            for(item in mainMenuItems){
-                mainMenuBar.addItem(item)
-            }
             val margin = EmptyBorder(10, 0, 0, 0)
             headerBar.border = CompoundBorder(headerBar.border, margin)
             headerBar.addChild(mainMenuBar, BorderLayout.NORTH)

@@ -6,12 +6,11 @@ import net.milosvasic.pussycat.gui.themes.color.INTENSITY
 import net.milosvasic.pussycat.gui.themes.color.TYPE
 import java.awt.*
 import javax.swing.JMenuBar
-import javax.swing.UIManager
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-open class PussycatMenuBar(val theme: Theme, width: Int, height: Int) : JMenuBar(), Themable {
+abstract class PussycatMenuBar(val theme: Theme, width: Int, height: Int) : JMenuBar(), Themable {
 
     init {
         preferredSize = Dimension(width, height)
