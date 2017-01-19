@@ -12,6 +12,10 @@ abstract class Theme {
 
     abstract fun getTextColor(type: TYPE, intensity: INTENSITY): Color
 
+    abstract fun getTextColor(type: TYPE, intensity: INTENSITY, interactionState: UI_INTERACTION_STATE): Color
+
     abstract fun getFont(weight: FONT_WEIGHT): Font
+
+    abstract fun getFontSize(): Float
 
 }

@@ -5,9 +5,9 @@ import net.milosvasic.pussycat.gui.themes.color.TYPE
 import net.milosvasic.pussycat.gui.themes.font.FONT_WEIGHT
 import java.awt.Color
 import java.awt.Font
-import java.io.InputStream
 
-class Darcula : Theme() {
+
+open class Darcula : Theme() {
 
     override fun getColor(type: TYPE, intensity: INTENSITY): Color {
         return when (type) {
@@ -16,6 +16,20 @@ class Darcula : Theme() {
                     INTENSITY.LIGHT -> Color(60, 63, 65)
                     INTENSITY.MEDIUM -> Color(49, 51, 53)
                     INTENSITY.DARK -> Color(43, 43, 43)
+                }
+            }
+            TYPE.MAIN_COLOR_1 -> {
+                when (intensity) {
+                    INTENSITY.LIGHT -> Color(224, 54, 198)
+                    INTENSITY.MEDIUM -> Color(156, 50, 140)
+                    INTENSITY.DARK -> Color(95, 47, 99)
+                }
+            }
+            TYPE.MAIN_COLOR_2 -> {
+                when (intensity) {
+                    INTENSITY.LIGHT -> Color(102, 77, 255)
+                    INTENSITY.MEDIUM -> Color(77, 57, 190)
+                    INTENSITY.DARK -> Color(57, 54, 133)
                 }
             }
         }
@@ -28,6 +42,118 @@ class Darcula : Theme() {
                     INTENSITY.LIGHT -> Color.WHITE
                     INTENSITY.MEDIUM -> Color.WHITE
                     INTENSITY.DARK -> Color.WHITE
+                }
+            }
+            TYPE.MAIN_COLOR_1 -> {
+                when (intensity) {
+                    INTENSITY.LIGHT -> Color.WHITE
+                    INTENSITY.MEDIUM -> Color.WHITE
+                    INTENSITY.DARK -> Color.WHITE
+                }
+            }
+            TYPE.MAIN_COLOR_2 -> {
+                when (intensity) {
+                    INTENSITY.LIGHT -> Color.WHITE
+                    INTENSITY.MEDIUM -> Color.WHITE
+                    INTENSITY.DARK -> Color.WHITE
+                }
+            }
+        }
+    }
+
+    override fun getTextColor(type: TYPE, intensity: INTENSITY, interactionState: UI_INTERACTION_STATE): Color {
+        return when (type) {
+            TYPE.BASE -> {
+                when (intensity) {
+                    INTENSITY.LIGHT -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            getColor(TYPE.MAIN_COLOR_1, INTENSITY.LIGHT)
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            getColor(TYPE.MAIN_COLOR_2, INTENSITY.LIGHT)
+                        }
+                        else -> Color.WHITE
+                    }
+                    INTENSITY.MEDIUM -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            getColor(TYPE.MAIN_COLOR_1, INTENSITY.MEDIUM)
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            getColor(TYPE.MAIN_COLOR_2, INTENSITY.MEDIUM)
+                        }
+                        else -> Color.WHITE
+                    }
+                    INTENSITY.DARK -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            getColor(TYPE.MAIN_COLOR_1, INTENSITY.DARK)
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            getColor(TYPE.MAIN_COLOR_2, INTENSITY.DARK)
+                        }
+                        else -> Color.WHITE
+                    }
+                }
+            }
+            TYPE.MAIN_COLOR_1 -> {
+                when (intensity) {
+                    INTENSITY.LIGHT -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            Color.WHITE
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            Color.WHITE
+                        }
+                        else -> Color.WHITE
+                    }
+                    INTENSITY.MEDIUM -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            Color.WHITE
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            Color.WHITE
+                        }
+                        else -> Color.WHITE
+                    }
+                    INTENSITY.DARK -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            Color.WHITE
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            Color.WHITE
+                        }
+                        else -> Color.WHITE
+                    }
+                }
+            }
+            TYPE.MAIN_COLOR_2 -> {
+                when (intensity) {
+                    INTENSITY.LIGHT -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            Color.WHITE
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            Color.WHITE
+                        }
+                        else -> Color.WHITE
+                    }
+                    INTENSITY.MEDIUM -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            Color.WHITE
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            Color.WHITE
+                        }
+                        else -> Color.WHITE
+                    }
+                    INTENSITY.DARK -> when (interactionState) {
+                        UI_INTERACTION_STATE.HOVER -> {
+                            Color.WHITE
+                        }
+                        UI_INTERACTION_STATE.PRESSED -> {
+                            Color.WHITE
+                        }
+                        else -> Color.WHITE
+                    }
                 }
             }
         }
@@ -73,6 +199,10 @@ class Darcula : Theme() {
             }
         }
         return Font.createFont(Font.TRUETYPE_FONT, input)
+    }
+
+    override fun getFontSize(): Float {
+        return 14f
     }
 
 }

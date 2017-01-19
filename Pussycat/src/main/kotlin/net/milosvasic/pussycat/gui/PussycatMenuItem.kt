@@ -2,22 +2,32 @@ package net.milosvasic.pussycat.gui
 
 import net.milosvasic.pussycat.gui.themes.Themable
 import net.milosvasic.pussycat.gui.themes.Theme
+import net.milosvasic.pussycat.gui.themes.UI_INTERACTION_STATE
 import net.milosvasic.pussycat.gui.themes.color.INTENSITY
 import net.milosvasic.pussycat.gui.themes.color.TYPE
 import net.milosvasic.pussycat.gui.themes.font.FONT_WEIGHT
 import java.awt.Graphics
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
 import javax.swing.JMenuItem
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
-class PussycatMenuItem(val title: String) : JMenuItem(title), Themable {
+class PussycatMenuItem(val title: String) : JMenuItem(title), Themable, MouseListener {
+
+    private var theme: Theme? = null
+
+    init {
+        addMouseListener(this)
+    }
 
     override fun apply(theme: Theme) {
+        this.theme = theme
         isOpaque = true
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
         border = CompoundBorder(border, EmptyBorder(0, 0, 0, 0))
-        font = theme.getFont(FONT_WEIGHT.THIN).deriveFont(12f)
+        font = theme.getFont(FONT_WEIGHT.THIN).deriveFont(theme.getFontSize())
     }
 
     override fun paintComponent(g: Graphics?) {
@@ -27,8 +37,30 @@ class PussycatMenuItem(val title: String) : JMenuItem(title), Themable {
             g.fillRect(0, 0, width, height)
             g.color = foreground
             g.font = font
-            g.drawString(title, 10, 10)
+            g.drawString(title, font.size, font.size)
         }
+    }
+
+    override fun mouseEntered(e: MouseEvent?) {
+        foreground = theme?.getTextColor(TYPE.BASE, INTENSITY.MEDIUM, UI_INTERACTION_STATE.HOVER)
+        repaint()
+    }
+
+    override fun mouseExited(e: MouseEvent?) {
+        foreground = theme?.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
+        repaint()
+    }
+
+    override fun mouseClicked(e: MouseEvent?) {
+        return
+    }
+
+    override fun mouseReleased(e: MouseEvent?) {
+        return
+    }
+
+    override fun mousePressed(e: MouseEvent?) {
+        return
     }
 
 }
