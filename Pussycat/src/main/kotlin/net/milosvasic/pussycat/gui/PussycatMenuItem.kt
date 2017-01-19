@@ -1,30 +1,24 @@
 package net.milosvasic.pussycat.gui
 
-import net.milosvasic.pussycat.gui.themes.Themable
-import net.milosvasic.pussycat.gui.themes.Theme
-import net.milosvasic.pussycat.gui.themes.UI_INTERACTION_TYPE
-import net.milosvasic.pussycat.gui.themes.color.INTENSITY
-import net.milosvasic.pussycat.gui.themes.color.TYPE
-import net.milosvasic.pussycat.gui.themes.font.FONT_WEIGHT
+import net.milosvasic.pussycat.gui.theme.ThemeManager
+import net.milosvasic.pussycat.gui.theme.UI_INTERACTION_TYPE
+import net.milosvasic.pussycat.gui.theme.color.INTENSITY
+import net.milosvasic.pussycat.gui.theme.color.TYPE
+import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import java.awt.Graphics
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JMenuItem
 
-class PussycatMenuItem(val title: String) : JMenuItem(title), Themable, MouseListener {
-
-    private var theme: Theme? = null
+class PussycatMenuItem(val title: String) : JMenuItem(title), MouseListener {
 
     init {
         addMouseListener(this)
-    }
-
-    override fun apply(theme: Theme?) {
-        this.theme = theme
+        val theme = ThemeManager.currentTheme
         isOpaque = true
-        background = theme?.getColor(TYPE.BASE, INTENSITY.MEDIUM)
-        foreground = theme?.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
-        font = theme?.getFont(FONT_WEIGHT.THIN)?.deriveFont(theme.getFontSize())
+        background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+        foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
+        font = theme.getFont(FONT_WEIGHT.THIN).deriveFont(theme.getFontSize())
     }
 
     override fun paintComponent(g: Graphics?) {
@@ -39,12 +33,14 @@ class PussycatMenuItem(val title: String) : JMenuItem(title), Themable, MouseLis
     }
 
     override fun mouseEntered(e: MouseEvent?) {
-        foreground = theme?.getTextColor(TYPE.BASE, INTENSITY.MEDIUM, UI_INTERACTION_TYPE.HOVER)
+        val theme = ThemeManager.currentTheme
+        foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM, UI_INTERACTION_TYPE.HOVER)
         repaint()
     }
 
     override fun mouseExited(e: MouseEvent?) {
-        foreground = theme?.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
+        val theme = ThemeManager.currentTheme
+        foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
         repaint()
     }
 

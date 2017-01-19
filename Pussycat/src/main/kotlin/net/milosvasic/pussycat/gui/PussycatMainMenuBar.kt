@@ -1,15 +1,15 @@
 package net.milosvasic.pussycat.gui
 
-import net.milosvasic.pussycat.gui.themes.Theme
 
 
-class PussycatMainMenuBar(theme: Theme, width: Int, height: Int, items: List<PussycatMenu>) : PussycatMenuBar(theme, width, height) {
-
-    val file = PussycatMenu("ZZZZ")
+class PussycatMainMenuBar(width: Int, height: Int, items: List<PussycatMenu>) : PussycatMenuBar(width, height) {
 
     init {
-        file.add(PussycatMenuItem("ssss"))
-        file.add(PussycatMenuItem("mmmm"))
+        val file = PussycatMenu("ZZZZ")
+        val item1 = PussycatMenuItem("ssss")
+        val item2 = PussycatMenuItem("mmmm")
+        file.add(item1)
+        file.add(item2)
         add(file)
         for (item in items) {
             add(item)

@@ -10,7 +10,8 @@ import net.milosvasic.pussycat.android.gui.GuiPussycatMenuFactory
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
-import net.milosvasic.pussycat.gui.themes.Darcula
+import net.milosvasic.pussycat.gui.theme.Darcula
+import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
 import java.awt.MenuItem
@@ -24,9 +25,8 @@ import javax.swing.WindowConstants
 
 class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
-    val theme = Darcula()
     private var favicon: BufferedImage? = null
-    val mainWindow = GuiPussycatMainWindow(theme, information)
+    val mainWindow = GuiPussycatMainWindow(information)
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {

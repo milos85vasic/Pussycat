@@ -1,8 +1,8 @@
-package net.milosvasic.pussycat.gui.themes
+package net.milosvasic.pussycat.gui.theme
 
-import net.milosvasic.pussycat.gui.themes.color.INTENSITY
-import net.milosvasic.pussycat.gui.themes.color.TYPE
-import net.milosvasic.pussycat.gui.themes.font.FONT_WEIGHT
+import net.milosvasic.pussycat.gui.theme.color.INTENSITY
+import net.milosvasic.pussycat.gui.theme.color.TYPE
+import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import java.awt.Color
 import java.awt.Font
 

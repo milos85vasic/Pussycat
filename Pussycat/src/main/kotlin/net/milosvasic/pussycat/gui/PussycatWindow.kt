@@ -1,16 +1,15 @@
 package net.milosvasic.pussycat.gui
 
-import net.milosvasic.pussycat.gui.themes.Themable
-import net.milosvasic.pussycat.gui.themes.Theme
-import net.milosvasic.pussycat.gui.themes.color.INTENSITY
-import net.milosvasic.pussycat.gui.themes.color.TYPE
+import net.milosvasic.pussycat.gui.theme.ThemeManager
+import net.milosvasic.pussycat.gui.theme.color.INTENSITY
+import net.milosvasic.pussycat.gui.theme.color.TYPE
 import java.awt.BorderLayout
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JFrame
 
-abstract class PussycatWindow(val theme: Theme) : JFrame(), Themable {
+abstract class PussycatWindow : JFrame() {
 
     private var favicon: BufferedImage? = null
 
@@ -33,13 +32,9 @@ abstract class PussycatWindow(val theme: Theme) : JFrame(), Themable {
     protected open fun initialize() {
         iconImage = favicon
         layout = BorderLayout()
-        if (this is Themable) {
-            apply(theme)
-        }
+        background = ThemeManager.currentTheme.getColor(TYPE.BASE, INTENSITY.LIGHT)
     }
 
-    override fun apply(theme: Theme?) {
-        background = theme?.getColor(TYPE.BASE, INTENSITY.LIGHT)
-    }
+
 
 }

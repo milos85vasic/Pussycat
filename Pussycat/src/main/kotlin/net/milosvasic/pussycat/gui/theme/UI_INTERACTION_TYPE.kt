@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.gui.themes
+package net.milosvasic.pussycat.gui.theme
 
 
 enum class UI_INTERACTION_TYPE {

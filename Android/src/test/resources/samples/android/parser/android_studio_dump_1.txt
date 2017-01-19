@@ -4413,7 +4413,7 @@
 12-21 07:23:10.211 7043-7043/? D/PhoneStatusBar: disable: < expand icons alerts system_info back home recent clock search quick_settings >
 12-21 07:23:11.353 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:23:11.376 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:23:11.379 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:23:11.379 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:23:11.398 5071-8106/? D/ConnectivityService: Returning unblocked NetworkInfo to uid=11873
 12-21 07:23:11.906 3826-4237/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback speaker
 12-21 07:23:11.916 3826-4237/? D/audio_hw_primary: disable_snd_device: snd_device(2: speaker)
@@ -6739,7 +6739,7 @@
 12-21 07:56:23.731 27699-27710/? W/art: Suspending all threads took: 6.483ms
 12-21 07:56:24.100 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:56:24.113 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:56:24.117 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:56:24.117 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:56:24.320 8084-27756/? D/NfcService: Discovery configuration equal, not updating.
 12-21 07:56:24.330 7198-12627/? D/ScreenStateRecorder: ScreenStateRecorderHandler, handleMessage msg.what = 1
 
@@ -6785,7 +6785,7 @@
 12-21 07:56:25.501 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:56:25.503 5071-19631/? I/ActivityManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.facebook.katana/.LoginActivity (has extras)} from uid 10185 on display 0
 12-21 07:56:25.527 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:56:25.529 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:56:25.529 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:56:25.619 27735-27735/? I/FirebaseInitProvider: FirebaseApp initialization unsuccessful
 12-21 07:56:25.646 21570-21570/? I/System.out: Creating REAL NavigationComponentMap!!!
 12-21 07:56:25.913 21570-21570/? E/fb4a.0Xj: Called registerBroadcastReceiver twice.
@@ -6864,7 +6864,7 @@
 12-21 07:56:26.961 27699-27704/? I/art: Increasing code cache capacity to 256KB
 12-21 07:56:27.141 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:56:27.152 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:56:27.154 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:56:27.154 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:56:27.261 21570-23994/? W/fb4a.RequestLoggingListener: time 122203769: onProducerFinishWithFailure: {requestId: 29, stage: DiskCacheProducer, elapsedTime: -1 ms, extraMap: null, throwable: java.lang.IllegalArgumentException}
 12-21 07:56:27.264 21570-24023/? W/fb4a.RequestLoggingListener: time 122203773: onProducerFinishWithFailure: {requestId: 30, stage: DiskCacheProducer, elapsedTime: -1 ms, extraMap: null, throwable: java.lang.IllegalArgumentException}
 12-21 07:56:27.385 8122-8122/? W/Tesla.OEMBroadcast: onReceive: android.intent.action.BADGE_COUNT_UPDATE ComponentTag{com.facebook.katana/com.facebook.katana.LoginActivity} 0
@@ -6898,7 +6898,7 @@
 12-21 07:56:28.822 5071-19628/? I/ActivityManager: Start proc 27869:com.facebook.katana:browser/u0a149 for service com.facebook.katana/com.facebook.browser.lite.BrowserLiteIntentService
 12-21 07:56:28.846 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:56:28.862 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:56:28.865 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:56:28.865 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:56:28.892 5071-8137/? I/ActivityManager: START u0 {flg=0x10804000 cmp=com.android.systemui/.recents.RecentsActivity} from uid 10027 on display 0
 12-21 07:56:28.913 3836-5185/? D/MDnsDS: Stopping discover with ref 0x770101b0e8
 12-21 07:56:28.913 3836-5185/? D/MDnsDS: freeServiceRef 53
@@ -6946,7 +6946,7 @@
 12-21 07:56:30.392 27735-27735/? D/Volley: [1] Request.finish: 3715 ms: [ ] https://api.wunderground.com/api/2b0d6572c90d3e4a/conditions/forecast/alerts/v:2.0/lang:EN/q/44.8119994,20.4083223.json?v=wuiapp 0xa1e5816f IMMEDIATE 1
 12-21 07:56:30.493 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:56:30.504 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:56:30.507 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:56:30.507 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:56:30.773 5071-3221/? I/ActivityManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10200000 cmp=com.teslacoilsw.launcher/.NovaLauncher} from uid 10027 on display 0
 12-21 07:56:30.847 8122-8122/? D/TeslaUnread: onStartCommand() called with: intent = [Intent { cmp=com.teslacoilsw.notifier/.NotificationService (has extras) }], flags = [0], startId = [93], lastStartTime = [-9223372036854775808]
 12-21 07:56:31.036 3826-4237/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback speaker
@@ -6970,12 +6970,12 @@
 12-21 07:56:32.045 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:56:32.054 27932-27970/? W/fb4a.0ac: The sessioned store is not available. Are you fetching sessioned quick experiment data while the user is logged out?
 12-21 07:56:32.059 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:56:32.062 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:56:32.062 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:56:32.584 3826-4237/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback speaker
 12-21 07:56:32.591 3826-4237/? D/audio_hw_primary: disable_snd_device: snd_device(2: speaker)
 12-21 07:56:33.153 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:56:33.164 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:56:33.167 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:56:33.167 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:56:33.224 5071-6776/? I/ActivityManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10200000 cmp=com.teslacoilsw.launcher/.NovaLauncher (has extras)} from uid 1000 on display 0
 12-21 07:56:33.702 3826-4237/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback speaker
 12-21 07:56:33.709 3826-4237/? D/audio_hw_primary: disable_snd_device: snd_device(2: speaker)
@@ -7096,14 +7096,14 @@
 12-21 07:57:26.420 5071-5083/? I/art: Background partial concurrent mark sweep GC freed 81022(3MB) AllocSpace objects, 2(76KB) LOS objects, 25% free, 46MB/62MB, paused 1.128ms total 116.523ms
 12-21 07:57:26.697 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:57:26.726 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:57:26.729 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:57:26.729 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:57:27.262 3826-4237/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback speaker
 12-21 07:57:27.271 3826-4237/? D/audio_hw_primary: disable_snd_device: snd_device(2: speaker)
 12-21 07:57:28.641 27571-27571/? I/ServiceManager: Waiting for service AtCmdFwd...
 12-21 07:57:28.677 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:57:28.681 5071-21581/? I/ActivityManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.makonda.blic/.news.HomePageActivity (has extras)} from uid 10185 on display 0
 12-21 07:57:28.692 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:57:28.694 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:57:28.694 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:57:28.768 5071-19628/? I/ActivityManager: Start proc 28142:com.makonda.blic/u0a1253 for activity com.makonda.blic/.news.HomePageActivity
 12-21 07:57:28.803 7043-7043/? V/PhoneStatusBar: setLightsOn(true)
 12-21 07:57:28.817 7043-7043/? V/PhoneStatusBar: setLightsOn(true)
@@ -7203,7 +7203,7 @@
 12-21 07:57:33.645 27571-27571/? W/Atfwd_Sendcmd: AtCmdFwd service not published, waiting... retryCnt : 2
 12-21 07:57:39.790 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:57:39.804 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:57:39.807 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:57:39.807 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:57:39.822 5071-19633/? W/ActivityManager: Bad activity token: android.os.BinderProxy@5091625
                                                    java.lang.ClassCastException: android.os.BinderProxy cannot be cast to com.android.server.am.ActivityRecord$Token
                                                        at com.android.server.am.ActivityRecord.forTokenLocked(ActivityRecord.java:594)
@@ -7262,7 +7262,7 @@
 12-21 07:57:45.640 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:57:45.648 27571-27571/? I/ServiceManager: Waiting for service AtCmdFwd...
 12-21 07:57:45.659 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:57:45.662 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:57:45.662 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:57:45.694 7043-7043/? V/PhoneStatusBar: setLightsOn(true)
 12-21 07:57:46.133 7043-7043/? V/PhoneStatusBar: setLightsOn(true)
 12-21 07:57:46.137 28142-28142/? W/ViewRootImpl[HomePageActivity]: Cancelling event due to no window focus: KeyEvent { action=ACTION_UP, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x68, repeatCount=0, eventTime=122282639, downTime=122282620, deviceId=-1, source=0x101 }
@@ -7275,7 +7275,7 @@
 12-21 07:57:46.190 3826-4237/? D/audio_hw_primary: disable_snd_device: snd_device(2: speaker)
 12-21 07:57:46.197 3826-4237/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=2
 12-21 07:57:46.212 3826-4237/? D/audio_hw_primary: enable_snd_device: snd_device(2: speaker)
-12-21 07:57:46.214 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback speaker
+12-21 07:57:46.214 3826-4237/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback speaker
 12-21 07:57:46.223 8156-8156/? W/ViewRootImpl[NovaLauncher]: Cancelling event due to no window focus: KeyEvent { action=ACTION_UP, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x68, repeatCount=0, eventTime=122282714, downTime=122282620, deviceId=-1, source=0x101 }
 12-21 07:57:46.223 8156-8156/? W/ViewRootImpl[NovaLauncher]: Cancelling event due to no window focus: KeyEvent { action=ACTION_UP, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x68, repeatCount=0, eventTime=122282714, downTime=122282620, deviceId=-1, source=0x101 }
 12-21 07:57:46.223 8156-8156/? W/ViewRootImpl[NovaLauncher]: Cancelling event due to no window focus: KeyEvent { action=ACTION_UP, keyCode=KEYCODE_BACK, scanCode=0, metaState=0, flags=0x68, repeatCount=0, eventTime=122282714, downTime=122282620, deviceId=-1, source=0x101 }

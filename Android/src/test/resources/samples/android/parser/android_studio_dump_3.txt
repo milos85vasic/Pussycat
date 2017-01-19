@@ -1674,12 +1674,12 @@
 12-22 12:22:12.448 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:22:12.448 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:22:12.448 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:22:12.448 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:22:12.448 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:22:12.449 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:22:12.449 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:22:12.449 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:22:12.449 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:22:12.449 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:22:12.450 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:22:12.450 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:22:12.450 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:22:12.459 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 12-22 12:22:12.460 858-858/? D/OpenGLRenderer: clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
 12-22 12:22:12.462 858-858/? D/OpenGLRenderer: finish <0x61c46008>
@@ -1852,12 +1852,12 @@
 12-22 12:22:13.451 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:22:13.451 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:22:13.451 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:22:13.451 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:22:13.451 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:22:13.451 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:22:13.451 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:22:13.452 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:22:13.451 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:22:13.452 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:22:13.452 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:22:13.452 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:22:13.452 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:22:13.452 858-858/? D/StatusBar.NetworkController: PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 12-22 12:22:13.467 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 12-22 12:22:13.467 858-858/? D/OpenGLRenderer: clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
@@ -2022,12 +2022,12 @@
 12-22 12:22:14.375 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:22:14.375 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:22:14.375 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:22:14.375 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:22:14.375 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:22:14.376 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:22:14.376 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:22:14.376 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:22:14.376 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:22:14.376 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:22:14.377 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:22:14.377 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:22:14.377 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:22:14.378 858-858/? D/PhoneStatusBar: onReceive, action=android.intent.action.CLOSE_SYSTEM_DIALOGS
 12-22 12:22:14.380 858-858/? D/PhoneStatusBar: dismissAppGuideInt
 12-22 12:22:14.393 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
@@ -3411,12 +3411,12 @@
 12-22 12:22:18.577 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:22:18.577 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:22:18.577 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:22:18.577 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:22:18.577 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:22:18.578 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:22:18.578 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:22:18.578 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:22:18.578 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:22:18.578 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:22:18.578 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:22:18.578 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:22:18.578 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:22:18.578 858-858/? D/StatusBar.NetworkController: PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 12-22 12:22:18.600 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 12-22 12:22:18.600 858-858/? D/OpenGLRenderer: clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
@@ -5468,10 +5468,10 @@
 12-22 12:25:44.760 649-649/? D/ActivityThread: BDC-Calling finishReceiver: IIntentReceiver=420b41e8
 12-22 12:25:44.760 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:25:44.761 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:25:44.761 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:25:44.761 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:25:44.763 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:44.763 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:25:44.763 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:25:44.763 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:25:44.763 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:25:44.769 649-659/? D/ActivityManager: getContentProviderImpl: from callerandroid.app.ApplicationThreadProxy@42267e30 (pid=1133) to get content provider com.android.launcher2.settings
 12-22 12:25:44.769 649-659/? D/ActivityManager: getContentProviderImpl: updateLruProcessLocked cpr.proc=ProcessRecord{4232dec8 4294:com.acer.shell.home/u0a6}
 12-22 12:25:44.770 1133-5446/? D/ActivityThread: hoder:android.app.IActivityManager$ContentProviderHolder@41f2e038,provider,holder.Provider:android.content.ContentProviderProxy@41f2e828
@@ -5499,7 +5499,7 @@
 12-22 12:25:44.776 649-4401/? D/Hwmsen_sensors: setDelay: (what=0, ms=200)
 12-22 12:25:44.776 649-4401/? D/Hwmsen_sensors: really setDelay: (what=0, ms=200)
 12-22 12:25:44.776 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:44.777 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:25:44.777 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:25:44.778 1133-1133/? D/WaterIsNotHighEnough: bHasPermanentMenuKey true vDP 569.3333
 12-22 12:25:44.780 135-4738/? I/BufferQueue: [Keyguard](this:0xb70843c8,id:100,api:1,p:858,c:135) new GraphicBuffer needed
 12-22 12:25:44.780 135-4738/? D/BufferQueue:     [OLD] gb:NULL
@@ -5773,10 +5773,10 @@
 12-22 12:25:44.931 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:25:44.931 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:25:44.931 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:25:44.931 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:25:44.931 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:25:44.931 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:44.931 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:25:44.931 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:25:44.931 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:25:44.931 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:25:44.931 1133-1133/? I/Wave: mHeight 816
 12-22 12:25:44.932 1133-1133/? D/dalvikvm: create interp thread : stack size=128KB
 12-22 12:25:44.932 1133-1133/? D/dalvikvm: create new thread
@@ -5789,7 +5789,7 @@
 12-22 12:25:44.933 1199-5450/? V/Provider/Settings:  from settings cache , name = date_format , value = dd-MM-yyyy
 12-22 12:25:44.933 1133-5456/? D/dalvikvm: threadid=11: notify debugger
 12-22 12:25:44.933 1133-5456/? D/dalvikvm: threadid=11 (wave): calling run()
-12-22 12:25:44.933 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:25:44.933 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:25:44.933 858-858/? D/StatusBar.NetworkController: PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 12-22 12:25:44.935 1199-5450/? W/System.err: java.io.FileNotFoundException: /storage/sdcard0/Android/data/com.acer.android.widget.weatherwidget/fileLocationIdToWeatherDatastrUserInLocation.data: open failed: ENOENT (No such file or directory)
 12-22 12:25:44.935 1199-5450/? W/System.err:     at libcore.io.IoBridge.open(IoBridge.java:453)
@@ -5964,12 +5964,12 @@
 12-22 12:25:45.034 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:25:45.034 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:25:45.034 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:25:45.034 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:25:45.034 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:25:45.034 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:45.034 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:25:45.034 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:25:45.034 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:25:45.034 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:25:45.035 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:45.035 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:25:45.035 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:25:45.036 858-858/? V/AppWidgetContext: package name: com.acer.android.widget.weatherwidget
 12-22 12:25:45.036 858-858/? V/AppWidgetContext: context permission not changed
 12-22 12:25:45.038 858-858/? D/PhoneStatusBar: onReceive, intent action is android.provider.Telephony.SPN_STRINGS_UPDATED.
@@ -6214,12 +6214,12 @@
 12-22 12:25:45.560 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:25:45.560 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:25:45.561 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:25:45.561 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:25:45.561 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:25:45.561 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:45.561 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:25:45.561 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:25:45.561 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:25:45.561 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:25:45.561 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:45.562 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:25:45.562 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:25:45.563 858-858/? D/KeyguardViewStateManager: mHideHintsRunnable mKeyguardWidgetPager=com.android.keyguard.KeyguardWidgetPager{42072ab0 V.E.H... ........ -1041,-446-1521,1262 #7f0a002b app:id/app_widget_container}
 12-22 12:25:45.571 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 12-22 12:25:45.571 858-858/? D/OpenGLRenderer: clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
@@ -6967,12 +6967,12 @@
 12-22 12:25:48.503 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:25:48.503 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:25:48.503 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:25:48.503 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:25:48.503 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:25:48.503 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:48.503 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:25:48.503 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:25:48.503 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:25:48.503 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:25:48.504 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:48.504 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:25:48.504 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:25:48.504 858-858/? D/StatusBar.NetworkController: PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 12-22 12:25:48.510 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 12-22 12:25:48.511 858-858/? D/OpenGLRenderer: clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
@@ -7016,12 +7016,12 @@
 12-22 12:25:48.561 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:25:48.561 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:25:48.561 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:25:48.561 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:25:48.561 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:25:48.561 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:48.561 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:25:48.561 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:25:48.561 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:25:48.561 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:25:48.562 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:48.562 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:25:48.562 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:25:48.563 139-612/? D/AudioMTKStreamOut: AudioMTKStreamOut::write (-)
 12-22 12:25:48.567 139-612/? D/AudioLoopbackController: +IsAPBTLoopbackWithCodec(), mBtLoopbackWithCodec = 0
 12-22 12:25:48.571 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
@@ -7152,12 +7152,12 @@
 12-22 12:25:49.575 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:25:49.576 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:25:49.576 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:25:49.576 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:25:49.576 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:25:49.576 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:49.577 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:25:49.577 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:25:49.577 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:25:49.577 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:25:49.577 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:49.578 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:25:49.578 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:25:49.585 139-612/? D/AudioMTKStreamOut: AudioMTKStreamOut::write (-)
 12-22 12:25:49.597 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 12-22 12:25:49.598 858-858/? D/OpenGLRenderer: clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
@@ -8025,12 +8025,12 @@
 12-22 12:25:53.639 858-858/? D/SignalClusterView: setRoamingFlagandResource(0), roaming=false, roamingId=0
 12-22 12:25:53.639 858-858/? D/SignalClusterView: setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 12-22 12:25:53.639 858-858/? D/SignalClusterView: setDataNetType3G(0), NetworkType=null
-12-22 12:25:53.639 858-858/? D/SignalClusterView: apply(), mWifiVisible is true
+12-22 12:25:53.639 858-858/? D/SignalClusterView: applyTheme(), mWifiVisible is true
 12-22 12:25:53.639 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:53.640 858-858/? D/SignalClusterView: apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-12-22 12:25:53.640 858-858/? D/SignalClusterView: apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+12-22 12:25:53.640 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+12-22 12:25:53.640 858-858/? D/SignalClusterView: applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 12-22 12:25:53.640 858-858/? D/SIMHelper: isSimInserted(0), SimInserted=false
-12-22 12:25:53.641 858-858/? D/SignalClusterView: apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+12-22 12:25:53.641 858-858/? D/SignalClusterView: applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 12-22 12:25:53.641 858-858/? D/StatusBar.NetworkController: PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 12-22 12:25:53.657 858-858/? D/OpenGLRenderer: prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 12-22 12:25:53.658 858-858/? D/OpenGLRenderer: clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>

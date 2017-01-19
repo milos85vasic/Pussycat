@@ -1748,8 +1748,8 @@
 12-21 21:09:59.453 3798-4274/? E/volume_listener: check_and_set_gain_dep_cal: Failed to set gain dep cal level
 12-21 21:09:59.454 3809-16985/? D/NuPlayerDriver: notifyListener_l(0xf392aae0), (6, 0, 0), loop setting(1, 0)
 12-21 21:09:59.460 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-21 21:09:59.460 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
-12-21 21:09:59.485 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-21 21:09:59.460 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
+12-21 21:09:59.485 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-21 21:09:59.525 3798-4274/? D/audio_hw_primary: out_write: retry previous failed cal level set
 12-21 21:09:59.526 3798-4274/? W/msm8974_platform: platform_send_gain_dep_cal: Usecase list is empty
 12-21 21:09:59.529 5040-5090/? I/ActivityManager: START u0 {act=android.intent.action.MAIN flg=0x10040000 cmp=com.google.android.dialer/com.android.incallui.InCallActivity (has extras)} from uid 10020 on display 0
@@ -2351,12 +2351,12 @@
 12-21 21:10:13.965 3798-4274/? D/audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-21 21:10:13.965 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
 12-21 21:10:13.967 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(11: voice-handset)
-12-21 21:10:13.970 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-21 21:10:13.970 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-21 21:10:14.006 3798-4274/? E/audio_route: unable to find path 'set-capture-format-default'
 12-21 21:10:14.006 3798-4274/? D/sound_trigger_platform: platform_stdev_check_and_update_concurrency: concurrency active 0, tx 1, rx 0, concurrency session_allowed 0
 12-21 21:10:14.006 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(54: voice-dmic-ef)
 12-21 21:10:14.020 3798-4274/? E/ACDB-LOADER: Error: ACDB AANC returned = -19
-12-21 21:10:14.020 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(10) apply and update mixer path: voice-call
+12-21 21:10:14.020 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(10) applyTheme and update mixer path: voice-call
 12-21 21:10:14.125 3798-4274/? D/voice: voice_set_sidetone: enable, out_snd_device: 11
 12-21 21:10:14.125 3798-4274/? D/voice: voice_set_sidetone: sidetone out device = sidetone-handset
 12-21 21:10:14.126 3798-4274/? D/voice: voice_start_usecase: exit: status(0)
@@ -2476,7 +2476,7 @@
 12-21 21:12:38.345 16244-16244/? I/Dialer: CallCardPresenter, disconnecting call: [DialerCall_0, ACTIVE, [Capabilities: CAPABILITY_HOLD CAPABILITY_SUPPORT_HOLD CAPABILITY_MUTE CAPABILITY_CANNOT_DOWNGRADE_VIDEO_TO_AUDIO], [Properties:], children:[], parent:null, conferenceable:[], videoState:Audio Only, mSessionModificationState:0, VideoSettings:(CameraDir:-1)]
 12-21 21:12:38.348 3798-4274/? D/audio_hw_primary: out_set_parameters: enter: usecase(1: low-latency-playback) kvpairs: routing=1
 12-21 21:12:38.351 3798-4274/? D/audio_hw_primary: select_devices: changing use case low-latency-playback output device from(2: speaker, acdb 14) to (11: voice-handset, acdb 7)
-12-21 21:12:38.352 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-21 21:12:38.352 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-21 21:12:38.355 16244-16244/? I/Dialer: InCallFragment.setSecondary, SecondaryInfo, show: false, name: null, label: null, providerLabel: null
 12-21 21:12:38.371 16244-16244/? I/Dialer: InCallFragment.setCallState, PrimaryCallState, state: 9, connectionLabel: null
 12-21 21:12:38.381 16244-16244/? I/Dialer: InCallActivity.onPrimaryCallStateChanged
@@ -2590,7 +2590,7 @@
 12-21 21:12:38.986 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback
 12-21 21:12:39.008 3798-4274/? D/audio_hw_primary: disable_snd_device: snd_device(11: voice-handset)
 12-21 21:12:39.011 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(1: handset)
-12-21 21:12:39.012 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-21 21:12:39.012 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-21 21:12:39.015 17786-17786/? W/System: ClassLoader referenced unknown path: /system/priv-app/CallLogBackup/lib/arm64
 12-21 21:12:39.019 16244-16244/? I/Dialer: InCallActivity.finish, hasPendingDialogs: false
 12-21 21:12:39.023 16244-16244/? I/Dialer: InCallFragment.setSecondary, SecondaryInfo, show: false, name: null, label: null, providerLabel: null
@@ -3108,7 +3108,7 @@
 12-22 00:58:55.370 3809-18597/? D/NuPlayerDriver: notifyListener_l(0xf392ae40), (6, 0, 0), loop setting(1, 0)
 12-22 00:58:55.370 3798-4274/? D/audio_hw_primary: select_devices: changing use case low-latency-playback output device from(1: handset, acdb 7) to (2: speaker, acdb 14)
 12-22 00:58:55.376 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 00:58:55.376 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
+12-22 00:58:55.376 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
 12-22 00:58:55.385 16244-16244/? I/Dialer: AnswerFragment.setCallState, PrimaryCallState, state: 4, connectionLabel: null
 12-22 00:58:55.386 16244-16244/? I/Dialer: InCallActivity.onPrimaryCallStateChanged
 12-22 00:58:55.386 16244-16244/? I/Dialer: InCallActivity.shouldShowAnswerUi, found incoming call
@@ -3123,7 +3123,7 @@
 12-22 00:58:55.396 16244-16244/? I/Dialer: AnswerFragment.onResume
 12-22 00:58:55.403 16244-16244/? I/Dialer: AnswerProximitySensor.PseudoProximityWakeLock.onSensorChanged: near:false
 12-22 00:58:55.403 16244-16244/? I/Dialer: AnswerProximitySensor.releaseProximityWakeLock, releasing lock
-12-22 00:58:55.405 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 00:58:55.405 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 00:58:55.405 16244-16244/? I/Dialer: InCallActivity.onPause
 12-22 00:58:55.405 16244-16244/? I/Dialer: AnswerFragment.onPause
 12-22 00:58:55.406 16244-16244/? I/Dialer: ProximitySensor.updateProximitySensorMode, screenOnImmediately: false, dialPadVisible: false, offHook: false, horizontal: false, uiShowing: true, audioRoute: EARPIECE
@@ -5027,8 +5027,8 @@
 12-22 11:10:47.145 7473-8475/? W/ContentTaskController: Invalid task was provided to stopTracking.
 12-22 11:10:47.232 6835-21093/? I/LanguageModelDatabase: populateEntry() : en_US = STAGED (20160608)
 12-22 11:10:47.238 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:10:47.238 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
-12-22 11:10:47.263 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:10:47.238 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
+12-22 11:10:47.263 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:10:47.295 7652-21228/? I/PhenotypeFlagCommitter: Experiment Configs successfully retrieved for com.google.android.metrics
 12-22 11:10:47.310 7473-8475/? W/ContentTaskController: Invalid newTask was provided to startTracking.
 12-22 11:10:47.352 20988-21157/? W/Conscrypt: Could not set socket write timeout: null
@@ -5252,9 +5252,9 @@
 12-22 11:10:50.999 7473-21295/? I/GoogleURLConnFactory: Using platform SSLCertificateSocketFactory
 12-22 11:10:51.008 20988-21157/? D/MusicProfiler: http: duration=0337ms uri=https://mclients.googleapis.com/sj/v2.5/radio/station?hl=en_US&tier=aa&dv=40071&alt=json&updated-min=1460536028137000
 12-22 11:10:51.138 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:10:51.138 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
+12-22 11:10:51.138 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
 12-22 11:10:51.147 5040-5040/? I/ActivityManager: Start proc 21319:com.google.android.dialer/u0a20 for service com.google.android.dialer/com.android.dialer.app.calllog.CallLogNotificationsService
-12-22 11:10:51.167 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:10:51.167 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:10:51.204 7473-21295/? W/Conscrypt: Could not set socket write timeout: null
 12-22 11:10:51.212 21319-21319/? W/System: ClassLoader referenced unknown path: /system/priv-app/GoogleDialer/lib/arm64
 12-22 11:10:51.282 7473-21295/? W/Conscrypt: Could not set socket write timeout: null
@@ -5283,7 +5283,7 @@
 12-22 11:10:51.876 3798-28323/? W/AudioFlinger: virtual sp<android::IAudioTrack> android::AudioFlinger::createTrack(audio_stream_type_t, uint32_t, audio_format_t, audio_channel_mask_t, size_t *, audio_output_flags_t *, const sp<android::IMemory> &, audio_io_handle_t, pid_t, pid_t, audio_session_t *, int, status_t *) uid 10035 pid 6893 tried to pass itself off as pid 0
 12-22 11:10:51.876 3798-28323/? W/AudioFlinger: TrackBase uid 10035 tried to pass itself off as 1000
 12-22 11:10:51.883 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:10:51.883 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
+12-22 11:10:51.883 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
 12-22 11:10:51.883 3820-3820/? D/fpc_fingerprint_hal: fpc_get_authenticator_id
 12-22 11:10:51.884 5040-5040/? V/FingerprintService: startAuthentication(com.android.systemui)
 12-22 11:10:51.884 5040-5040/? V/FingerprintService: starting client AuthenticationClient(com.android.systemui), initiatedByClient = true)
@@ -5294,7 +5294,7 @@
 12-22 11:10:51.899 7473-7726/? W/ctxmgr: [ContextSpecificAclFactory]LocationConsent failed, ULR opt-in status is: false, account#-1757086878#
 12-22 11:10:51.899 7473-7726/? W/ctxmgr: [AclManager]No 2 for (accnt=account#-1757086878#, com.google.android.gms(10018):UserLocationProducer, vrsn=10084000, 0, 3pPkg = null ,  3pMdlId = null). Was: 2 for 1, account#-1757086878#
 12-22 11:10:51.904 3820-6812/? D/fpc_fingerprint_hal: wait_finger_up
-12-22 11:10:51.910 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:10:51.910 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:10:51.912 3820-6812/? D/fpc_fingerprint_hal: wait_finger_up FPC_LIB_FINGER_LOST
 12-22 11:10:51.917 7473-7726/? W/ctxmgr: [ContextSpecificAclFactory]LocationConsent failed, ULR opt-in status is: false, account#-1741774679#
 12-22 11:10:51.918 7473-7726/? W/ctxmgr: [AclManager]No 2 for (accnt=account#-1741774679#, com.google.android.gms(10018):UserLocationProducer, vrsn=10084000, 0, 3pPkg = null ,  3pMdlId = null). Was: 2 for 1, account#-1741774679#
@@ -5521,20 +5521,20 @@
 12-22 11:12:48.338 6893-6893/? D/PhoneStatusBar: disable: < expand ICONS alerts SYSTEM_INFO back HOME RECENT clock SEARCH quick_settings >
 12-22 11:12:48.449 6893-6893/? D/PhoneStatusBar: disable: < expand ICONS alerts SYSTEM_INFO back HOME RECENT clock SEARCH quick_settings >
 12-22 11:12:48.963 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:12:48.963 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
-12-22 11:12:48.991 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:12:48.963 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
+12-22 11:12:48.991 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:12:49.787 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback
 12-22 11:12:49.804 3798-4274/? D/audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-22 11:12:49.804 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
 12-22 11:12:51.359 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:12:51.359 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
-12-22 11:12:51.393 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:12:51.359 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
+12-22 11:12:51.393 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:12:51.917 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback
 12-22 11:12:51.936 3798-4274/? D/audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-22 11:12:51.937 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
 12-22 11:12:52.984 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:12:52.984 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
-12-22 11:12:53.011 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:12:52.984 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
+12-22 11:12:53.011 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 
                                                    [ 12-22 11:12:53.634  3802: 3802 I/         ]
                                                    calling unlock when already unlocked, ignoring.
@@ -5627,15 +5627,15 @@
 12-22 11:12:54.657 3798-4274/? D/audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-22 11:12:54.657 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
 12-22 11:12:56.495 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:12:56.495 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
-12-22 11:12:56.522 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:12:56.495 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
+12-22 11:12:56.522 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:12:57.047 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(1) reset and update mixer path: low-latency-playback
 12-22 11:12:57.062 3798-4274/? D/audio_hw_primary: disable_snd_device: snd_device(78: vi-feedback)
 12-22 11:12:57.062 3798-4274/? D/audio_hw_primary: disable_audio_route: usecase(21) reset and update mixer path: spkr-vi-record
 12-22 11:12:59.552 5040-7224/? I/ActivityManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.wunderground.android.weather/.ui.WeatherHomeActivity (has extras)} from uid 10088 on display 0
 12-22 11:12:59.567 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:12:59.567 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
-12-22 11:12:59.596 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:12:59.567 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
+12-22 11:12:59.596 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:12:59.690 19995-20014/? W/art: Suspending all threads took: 27.593ms
 12-22 11:12:59.693 19995-20014/? I/art: Background sticky concurrent mark sweep GC freed 14179(805KB) AllocSpace objects, 14(280KB) LOS objects, 19% free, 5MB/6MB, paused 28.504ms total 38.924ms
 12-22 11:12:59.700 19995-19995/? D/AppsFlyer_4.4.0: Build Number: 87
@@ -5849,7 +5849,7 @@
 12-22 11:13:06.741 7652-7652/? I/chromium: [INFO:CONSOLE(0)] "Application Cache Progress event (0 of 4) https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/sdk-core-v40-loader.js", source: https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/sdk-core-v40-loader.html (0)
 12-22 11:13:06.741 7652-7652/? I/chromium: [INFO:CONSOLE(0)] "Application Cache Progress event (1 of 4) https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/production/sdk-core-v40-impl.js", source: https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/sdk-core-v40-loader.html (0)
 12-22 11:13:06.872 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:13:06.872 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
+12-22 11:13:06.872 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
 12-22 11:13:06.889 7652-7652/? I/Ads: Received log message: <Google:HTML> You are using version 9.1 of the Google Play services Ads SDK. Please consider updating your SDK to the most recent SDK version to get the latest features and bug fixes. See http://goo.gl/r2TRzC for instructions on how to get the latest version of Google Play services.
 12-22 11:13:06.889 7652-7652/? I/chromium: [INFO:CONSOLE(0)] "Application Cache Progress event (2 of 4) https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/canary/sdk-core-v40-impl.js", source: https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/sdk-core-v40-loader.html (0)
 12-22 11:13:06.889 7652-7652/? I/chromium: [INFO:CONSOLE(0)] "Application Cache Progress event (3 of 4) https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/sdk-core-v40-loader.html", source: https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/sdk-core-v40-loader.html (0)
@@ -5857,7 +5857,7 @@
 12-22 11:13:06.889 7652-7652/? I/chromium: [INFO:CONSOLE(0)] "Application Cache UpdateReady event", source: https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/sdk-core-v40-loader.html (0)
 12-22 11:13:06.890 7652-7652/? I/Ads: JS Engine is requesting an update
 12-22 11:13:06.890 7652-7652/? I/Ads: Starting reload.
-12-22 11:13:06.896 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:13:06.896 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:13:06.904 7652-7652/? I/cr_Ime: ImeThread is enabled.
 12-22 11:13:06.908 7652-7652/? E/chromium: [ERROR:interface_registry.cc(104)] Failed to locate a binder for interface: autofill::mojom::PasswordManagerDriver
 12-22 11:13:06.916 7652-7652/? W/cr_BindingManager: Cannot call determinedVisibility() - never saw a connection for the pid: 7652
@@ -5919,10 +5919,10 @@
 12-22 11:13:09.572 3820-6812/? D/fpc_fingerprint_hal: workerFunction STATE_AUTHENTICATE
 12-22 11:13:09.572 5040-5040/? W/FingerprintService: client com.android.systemui is authenticating...
 12-22 11:13:09.576 3798-4274/? D/audio_hw_primary: enable_snd_device: snd_device(78: vi-feedback)
-12-22 11:13:09.576 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) apply and update mixer path: spkr-vi-record
+12-22 11:13:09.576 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(21) applyTheme and update mixer path: spkr-vi-record
 12-22 11:13:09.593 3820-6812/? D/fpc_fingerprint_hal: wait_finger_up
 12-22 11:13:09.602 3820-6812/? D/fpc_fingerprint_hal: wait_finger_up FPC_LIB_FINGER_LOST
-12-22 11:13:09.605 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) apply and update mixer path: low-latency-playback
+12-22 11:13:09.605 3798-4274/? D/audio_hw_primary: enable_audio_route: usecase(1) applyTheme and update mixer path: low-latency-playback
 12-22 11:13:10.113 5040-5115/? V/KeyguardServiceDelegate: onScreenTurnedOff()
 12-22 11:13:10.115 5040-5115/? I/sensors: activate
 12-22 11:13:10.117 5040-5115/? I/nanohub: queueActivate: sensor=12, handle=7, enable=0

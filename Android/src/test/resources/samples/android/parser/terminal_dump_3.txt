@@ -3123,12 +3123,12 @@ V/Provider/Settings(  858): from db cache, name = airplane_mode_on , value = 0
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 D/StatusBar.NetworkController(  858): PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 D/OpenGLRenderer( 4973): prepareDirty (0.00, 0.00, 480.00, 854.00) opaque 1 <0x6249f798>
 D/OpenGLRenderer( 4973): finish <0x6249f798>
@@ -3553,12 +3553,12 @@ V/Provider/Settings(  858):  from settings cache , name = airplane_mode_on , val
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 D/StatusBar.NetworkController(  858): PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 W/InputReader(  649): outer ID:0, tracking ID:-1, pointer count:16
 W/InputReader(  649): inCount:16, pointer count:1
@@ -3858,12 +3858,12 @@ V/Provider/Settings(  858):  from settings cache , name = airplane_mode_on , val
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 D/StatusBar.NetworkController(  858): PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 D/OpenGLRenderer(  858): prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 D/OpenGLRenderer(  858): clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
@@ -4250,12 +4250,12 @@ V/Provider/Settings(  858):  from settings cache , name = airplane_mode_on , val
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 D/StatusBar.NetworkController(  858): PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 W/InputReader(  649): outer ID:0, tracking ID:-1, pointer count:16
 W/InputReader(  649): inCount:16, pointer count:1
@@ -5040,12 +5040,12 @@ D/SignalClusterView(  858): setIsAirplaneMode=false
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 I/BufferQueue(  135): [StatusBar](this:0xb7080918,id:6,api:1,p:858,c:135) new GraphicBuffer needed
 D/BufferQueue(  135):     [OLD] gb:NULL
 I/GraphicBuffer(  135): allocate buffer (w:480 h:38 f:1) handle(0xb7074550) err(0)
@@ -5150,12 +5150,12 @@ V/Provider/Settings(  858):  from settings cache , name = airplane_mode_on , val
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 D/StatusBar.NetworkController(  858): PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 I/BufferQueue(  135): [StatusBar](this:0xb7080918,id:6,api:1,p:858,c:135) new GraphicBuffer needed
 D/BufferQueue(  135):     [OLD] gb:NULL
@@ -5205,12 +5205,12 @@ D/SignalClusterView(  858): setIsAirplaneMode=false
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 D/OpenGLRenderer(  858): prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 D/OpenGLRenderer(  858): clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
 D/OpenGLRenderer(  858): finish <0x61c46008>
@@ -5849,12 +5849,12 @@ V/Provider/Settings(  858):  from settings cache , name = airplane_mode_on , val
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 D/StatusBar.NetworkController(  858): PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 D/OpenGLRenderer(  858): prepareDirty (0.00, 0.00, 480.00, 38.00) opaque 0 <0x61c46008>
 D/OpenGLRenderer(  858): clear (0.00, 38 - 38.00 = 0.00, 480.00 - 0.00 = 480.00, 38.00 - 0.00 = 38.00) opaque 0 <0x61c46008>
@@ -7017,12 +7017,12 @@ V/Provider/Settings(  858):  from settings cache , name = airplane_mode_on , val
 D/SignalClusterView(  858): setRoamingFlagandResource(0), roaming=false, roamingId=0
 D/SignalClusterView(  858): setShowSimIndicator(0), showSimIndicator=false simIndicatorResource = 0
 D/SignalClusterView(  858): setDataNetType3G(0), NetworkType=null
-D/SignalClusterView(  858): apply(), mWifiVisible is true
+D/SignalClusterView(  858): applyTheme(), mWifiVisible is true
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
-D/SignalClusterView(  858): apply(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
+D/SignalClusterView(  858): applyTheme(), slotId=0, mMobileVisible=true, mShouldMobileGroupVisible=true
+D/SignalClusterView(  858): applyTheme(), slotId=0, mRoaming=false mMobileActivityId=0 mMobileTypeId=0 mMobileStrengthId[0] = 2130837997 mMobileStrengthId[1] = 0
 D/SIMHelper(  858): isSimInserted(0), SimInserted=false
-D/SignalClusterView(  858): apply(). mIsAirplaneMode is false, NWType slot(0) is 8
+D/SignalClusterView(  858): applyTheme(). mIsAirplaneMode is false, NWType slot(0) is 8
 D/StatusBar.NetworkController(  858): PhoneStateListener:onSignalStrengthsChanged, sim0 after.
 I/BufferQueue(  135): [StatusBar](this:0xb7080918,id:6,api:1,p:858,c:135) new GraphicBuffer needed
 D/BufferQueue(  135):     [OLD] gb:NULL

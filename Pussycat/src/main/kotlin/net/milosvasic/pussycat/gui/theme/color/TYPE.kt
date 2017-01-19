@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.gui.themes.color
+package net.milosvasic.pussycat.gui.theme.color
 
 enum class TYPE {
 

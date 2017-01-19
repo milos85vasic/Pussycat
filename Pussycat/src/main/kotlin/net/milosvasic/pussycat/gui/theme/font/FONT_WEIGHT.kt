@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.gui.themes.font
+package net.milosvasic.pussycat.gui.theme.font
 
 enum class FONT_WEIGHT {
 

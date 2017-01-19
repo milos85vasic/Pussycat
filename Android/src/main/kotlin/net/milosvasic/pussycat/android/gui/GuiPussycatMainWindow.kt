@@ -5,9 +5,8 @@ import net.milosvasic.pussycat.gui.PussycatMainWindow
 import net.milosvasic.pussycat.gui.PussycatMenu
 import net.milosvasic.pussycat.gui.PussycatMenuFactory
 import net.milosvasic.pussycat.gui.content.Labels
-import net.milosvasic.pussycat.gui.themes.Theme
 
-class GuiPussycatMainWindow(theme: Theme, information: ApplicationInformation) : PussycatMainWindow(theme, information) {
+class GuiPussycatMainWindow(information: ApplicationInformation) : PussycatMainWindow(information) {
 
     override fun getMainMenuItems(): List<PussycatMenu> {
         val items = mutableListOf<PussycatMenu>()
