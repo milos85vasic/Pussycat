@@ -30,6 +30,10 @@ open class PussycatMenuBar(val theme: Theme, width: Int, height: Int) : JMenuBar
         add(comp)
     }
 
+    fun addItem(comp: Component) {
+        addChild(comp)
+    }
+
     override fun paintComponent(g: Graphics?) {
         super.paintComponent(g)
         if (isOpaque && g != null) {

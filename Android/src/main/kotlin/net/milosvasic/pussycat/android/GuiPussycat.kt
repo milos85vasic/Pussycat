@@ -2,21 +2,21 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
-import net.milosvasic.pussycat.gui.OnSplashComplete
-import net.milosvasic.pussycat.gui.PussycatSplashScreen
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
+import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
 import net.milosvasic.pussycat.android.gui.GuiPussycatMenuFactory
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
-import net.milosvasic.pussycat.gui.PussycatMainWindow
-import net.milosvasic.pussycat.gui.PussycatMenuFactory
+import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.themes.Darcula
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
 import java.awt.MenuItem
 import java.awt.PopupMenu
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.WindowConstants
@@ -26,7 +26,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
 
     val theme = Darcula()
     private var favicon: BufferedImage? = null
-    val mainWindow = PussycatMainWindow(theme, information)
+    val mainWindow = GuiPussycatMainWindow(theme, information)
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
@@ -151,9 +151,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                 COMMAND.UNKNOWN -> {
                 }
                 else -> {
-                    val menuItem = MenuItem()
-                    menuItem.label = command.value
-                    menuItem.addActionListener {
+                    val action = ActionListener {
                         when (command) {
                             COMMAND.FILESYSTEM -> {
                                 // TODO: Open file ...
@@ -169,7 +167,8 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
                             }
                         }
                     }
-                    GuiPussycatMenuFactory.add("CMD_${menuItem.label}", menuItem)
+                    val menuItem = PussycatMenuItemDefinition(command.value, action)
+                    GuiPussycatMenuFactory.add("CMD_${command.value}", menuItem)
                 }
             }
         }
