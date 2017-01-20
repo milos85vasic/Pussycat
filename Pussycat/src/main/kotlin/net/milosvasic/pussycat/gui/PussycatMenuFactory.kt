@@ -15,7 +15,7 @@ object PussycatMenuFactory {
             val file = PussycatMenu(Labels.FILE)
             if (!OS.isMacOS()) {
                 val quit = PussycatMenuItem(Labels.QUIT)
-                quit.addActionListener {  }
+                quit.addActionListener { System.exit(0) }
                 file.add(quit)
             }
             items.add(file)
