@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat
+package net.milosvasic.pussycat.content
 
 object Messages {
 

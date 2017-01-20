@@ -1,7 +1,7 @@
 package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
-import net.milosvasic.pussycat.Messages
+import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.color.Color

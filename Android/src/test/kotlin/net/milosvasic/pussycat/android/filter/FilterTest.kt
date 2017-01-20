@@ -1,6 +1,6 @@
 package net.milosvasic.pussycat.android.filter
 
-import net.milosvasic.pussycat.Messages
+import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.TerminalPussycat
 import net.milosvasic.pussycat.android.application.Application

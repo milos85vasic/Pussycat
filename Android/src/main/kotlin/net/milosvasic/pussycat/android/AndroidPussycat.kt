@@ -17,7 +17,7 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import com.github.salomonbrys.kotson.*
 import com.sun.org.apache.xalan.internal.utils.SecuritySupport
-import net.milosvasic.pussycat.Messages
+import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.application.PUSSYCAT_MODE
 import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Files

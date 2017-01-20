@@ -7,8 +7,6 @@ import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.ApplicationAbstract
 import net.milosvasic.pussycat.information.ApplicationInformation
 import net.milosvasic.pussycat.core.COMMAND
-import net.milosvasic.pussycat.gui.theme.Darcula
-import net.milosvasic.pussycat.gui.theme.ThemeManager
 import net.milosvasic.pussycat.information.InformationProvider
 
 class Application(args: Array<String>) : ApplicationAbstract(args) {
