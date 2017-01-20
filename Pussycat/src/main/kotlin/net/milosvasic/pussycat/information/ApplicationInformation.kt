@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.application
+package net.milosvasic.pussycat.information
 
 data class ApplicationInformation(
         val version: String,

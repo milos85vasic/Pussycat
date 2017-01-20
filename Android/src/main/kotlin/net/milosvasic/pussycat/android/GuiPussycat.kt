@@ -2,7 +2,7 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
-import net.milosvasic.pussycat.application.ApplicationInformation
+import net.milosvasic.pussycat.information.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
@@ -23,10 +23,10 @@ import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
 
-class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
+class GuiPussycat: AndroidPussycat() {
 
     private var favicon: BufferedImage? = null
-    val mainWindow = GuiPussycatMainWindow(information)
+    val mainWindow = GuiPussycatMainWindow()
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
@@ -34,7 +34,7 @@ class GuiPussycat(information: ApplicationInformation) : AndroidPussycat() {
         }
     }
 
-    val splashScreen = PussycatSplashScreen(information, mainWindow, splashScreenCallback)
+    val splashScreen = PussycatSplashScreen(mainWindow, splashScreenCallback)
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))

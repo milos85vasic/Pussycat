@@ -1,19 +1,14 @@
 package net.milosvasic.pussycat.gui
 
-import net.milosvasic.pussycat.application.ApplicationInformation
-import javax.swing.JWindow
 import java.awt.*
-import java.awt.event.WindowEvent
-import java.awt.image.BufferedImage
 import java.util.concurrent.atomic.AtomicBoolean
-import javax.imageio.ImageIO
 import javax.swing.JLabel
 import javax.swing.SwingConstants
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-class PussycatSplashScreen(information: ApplicationInformation, owner: Frame?, val callback: OnSplashComplete) : PussycatAboutDialogAbstract(information, owner) {
+class PussycatSplashScreen(owner: Frame?, val callback: OnSplashComplete) : PussycatAboutDialogAbstract(owner) {
 
     var progress = ""
     var footer: JLabel? = null

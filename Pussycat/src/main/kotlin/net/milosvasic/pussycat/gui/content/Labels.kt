@@ -6,6 +6,8 @@ object Labels {
     val FILE = "File"
     val COMMANDS = "Commands"
     val QUIT = "Quit"
+    val ABOUT = "About"
     val PUSSYCAT = "Pussycat"
+    val UNKNOWN = "Unknown"
 
 }

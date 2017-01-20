@@ -12,15 +12,25 @@ object PussycatMenuFactory {
     object MAIN : Creator.Parametric<List<PussycatMenu>, Collection<PussycatMenu>> {
         override fun create(params: Collection<PussycatMenu>): List<PussycatMenu> {
             val items = mutableListOf<PussycatMenu>()
-            val file = PussycatMenu(Labels.FILE)
             if (!OS.isMacOS()) {
+                val file = PussycatMenu(Labels.FILE)
                 val quit = PussycatMenuItem(Labels.QUIT)
                 quit.addActionListener { System.exit(0) }
                 file.add(quit)
+                items.add(file)
             }
-            items.add(file)
             for (item in params) {
                 items.add(item)
+            }
+            if (!OS.isMacOS()) {
+                val pussycat = PussycatMenu(Labels.PUSSYCAT)
+                val about = PussycatMenuItem(Labels.ABOUT)
+                about.addActionListener {
+//                    val aboutDialog = PussycatAboutDialog()
+//                    aboutDialog.open()
+                }
+                pussycat.add(about)
+                items.add(pussycat)
             }
             return items
         }
