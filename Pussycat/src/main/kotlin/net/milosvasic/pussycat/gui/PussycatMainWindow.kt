@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.gui
 
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
+import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
@@ -10,8 +11,6 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
-
-    val menuFactory = PussycatMenuFactory(theme)
 
     init {
         title = "${information.name} V${information.version} by ${information.author}"
@@ -23,10 +22,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val barHeight = (screenSize.height / 100) * 3
         val headerBar = PussycatBar(theme, screenSize.width, barHeight)
         val mainMenuBar = PussycatMenuBar(theme, headerBar.width, barHeight)
-        val mainMenuItems = menuFactory.MAIN.create(getMainMenuItems())
-        for (item in mainMenuItems) {
-            mainMenuBar.add(item)
-        }
+        createMainMenu(mainMenuBar)
         if (OS.isMacOS()) {
             System.setProperty("com.apple.mrj.application.apple.menu.about.name", information.name)
             System.setProperty("com.apple.mac.useScreenMenuBar", "true")
@@ -51,5 +47,32 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>
+
+    private fun createMainMenu(mainMenuBar: PussycatMenuBar) {
+        val items = mutableListOf<PussycatMenu>()
+        if (!OS.isMacOS()) {
+            val file = PussycatMenu(theme, Labels.FILE)
+            val quit = PussycatMenuItem(theme, Labels.QUIT)
+            quit.addActionListener { System.exit(0) }
+            file.add(quit)
+            items.add(file)
+        }
+        for (item in getMainMenuItems()) {
+            items.add(item)
+        }
+        if (!OS.isMacOS()) {
+            val pussycat = PussycatMenu(theme, Labels.PUSSYCAT)
+            val about = PussycatMenuItem(theme, Labels.ABOUT)
+            about.addActionListener {
+                val aboutDialog = PussycatAboutDialog(information, theme, this)
+                aboutDialog.open()
+            }
+            pussycat.add(about)
+            items.add(pussycat)
+        }
+        for (item in items) {
+            mainMenuBar.add(item)
+        }
+    }
 
 }

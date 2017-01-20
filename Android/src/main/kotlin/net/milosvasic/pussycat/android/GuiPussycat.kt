@@ -6,13 +6,14 @@ import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
-import net.milosvasic.pussycat.android.gui.GuiPussycatMenuFactory
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
+import java.awt.MenuItem
+import java.awt.PopupMenu
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
@@ -22,7 +23,6 @@ import javax.swing.WindowConstants
 class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPussycat() {
 
     private var favicon: BufferedImage? = null
-    val menuFactory = PussycatMenuFactory(theme)
     val mainWindow = GuiPussycatMainWindow(information, theme)
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
@@ -143,6 +143,23 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     private fun initPopupMenu() {
+        val items = getPopupMenuItems()
+        if (OS.isMacOS()) {
+            val popupMenu = PopupMenu()
+            for (item in items) {
+                val menuItem = MenuItem(item.title)
+                menuItem.addActionListener(item.action)
+                popupMenu.add(menuItem)
+            }
+            val app = Application.getApplication()
+            app.dockIconImage = favicon
+            app.dockMenu = popupMenu
+        }
+        splashScreen.updateStatus("Main menu initialized")
+    }
+
+    private fun getPopupMenuItems(): List<PussycatMenuItemDefinition> {
+        val list = mutableListOf<PussycatMenuItemDefinition>()
         for (command in COMMAND.list) {
             when (command) {
                 COMMAND.UNKNOWN -> {
@@ -165,18 +182,11 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
                         }
                     }
                     val menuItem = PussycatMenuItemDefinition(command.value, action)
-                    GuiPussycatMenuFactory.add("CMD_${command.value}", menuItem)
+                    list.add(menuItem)
                 }
             }
         }
-        if (OS.isMacOS()) {
-            val items = GuiPussycatMenuFactory.CONTEXT.create()
-            val popupMenu = menuFactory.CONTEXT.create(items)
-            val app = Application.getApplication()
-            app.dockIconImage = favicon
-            app.dockMenu = popupMenu
-        }
-        splashScreen.updateStatus("Main menu initialized")
+        return list
     }
 
 }

@@ -10,8 +10,8 @@ class GuiPussycatMainWindow(information: ApplicationInformation, theme: Theme) :
 
     override fun getMainMenuItems(): List<PussycatMenu> {
         val items = mutableListOf<PussycatMenu>()
-        val children = GuiPussycatMenuFactory.CONTEXT.create()
-        val commands = menuFactory.GENERAL.create(Pair(Labels.COMMANDS, children))
+//        val children = GuiPussycatMenuFactory.CONTEXT.create()
+        val commands = PussycatMenu(theme, Labels.COMMANDS)
         items.add(commands)
         return items
     }
