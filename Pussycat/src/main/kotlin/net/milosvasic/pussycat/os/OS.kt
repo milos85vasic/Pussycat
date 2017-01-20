@@ -12,7 +12,8 @@ object OS {
     }
 
     fun isMacOS(): Boolean {
-        return getOS().contains(MACOS)
+        return false
+        // return getOS().contains(MACOS) // TODO: Remove negation.
     }
 
     fun isLinux(): Boolean {

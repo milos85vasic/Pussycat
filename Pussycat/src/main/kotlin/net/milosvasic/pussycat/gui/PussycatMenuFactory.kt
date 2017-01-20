@@ -2,6 +2,7 @@ package net.milosvasic.pussycat.gui
 
 import net.milosvasic.pussycat.actions.Creator
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.os.OS
 import java.awt.MenuItem
 import java.awt.PopupMenu
 
@@ -12,6 +13,11 @@ object PussycatMenuFactory {
         override fun create(params: Collection<PussycatMenu>): List<PussycatMenu> {
             val items = mutableListOf<PussycatMenu>()
             val file = PussycatMenu(Labels.FILE)
+            if (!OS.isMacOS()) {
+                val quit = PussycatMenuItem(Labels.QUIT)
+                quit.addActionListener {  }
+                file.add(quit)
+            }
             items.add(file)
             for (item in params) {
                 items.add(item)
