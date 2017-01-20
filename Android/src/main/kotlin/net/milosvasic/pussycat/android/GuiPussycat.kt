@@ -144,6 +144,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     private fun initPopupMenu() {
         val items = getPopupMenuItems()
+        mainWindow.addPopIpMenuItems(items)
         if (OS.isMacOS()) {
             val popupMenu = PopupMenu()
             for (item in items) {
