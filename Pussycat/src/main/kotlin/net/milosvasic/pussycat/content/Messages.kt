@@ -8,5 +8,7 @@ object Messages {
     val LOADING_DATA = "Loading data. Please wait."
     val PUSSYCAT_SHUTDOWN = "We are shutting down Pussycat."
     val NO_DATA_MATCHING_PARAMETERS = "No data matching parameters."
+    val APPLICATION_ALREADY_RUNNING = "An application instance already running."
+    val APPLICATION_NOT_RUNNING = "An application instance is not running."
 
 }

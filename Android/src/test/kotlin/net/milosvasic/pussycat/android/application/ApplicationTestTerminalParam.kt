@@ -1,7 +1,7 @@
 package net.milosvasic.pussycat.android.application
 
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
-import net.milosvasic.pussycat.application.PUSSYCAT_MODE
+import net.milosvasic.pussycat.PUSSYCAT_MODE
 
 class ApplicationTestTerminalParam : ApplicationTestAbstract() {
 

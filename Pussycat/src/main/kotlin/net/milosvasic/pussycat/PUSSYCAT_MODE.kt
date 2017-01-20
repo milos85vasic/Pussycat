@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.application
+package net.milosvasic.pussycat
 
 enum class PUSSYCAT_MODE {
     LIVE,

@@ -5,9 +5,9 @@ import net.milosvasic.pussycat.android.GuiPussycat
 import net.milosvasic.pussycat.android.TerminalPussycat
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.ApplicationAbstract
-import net.milosvasic.pussycat.information.ApplicationInformation
+import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.core.COMMAND
-import net.milosvasic.pussycat.information.InformationProvider
+import net.milosvasic.pussycat.gui.theme.Darcula
 
 class Application(args: Array<String>) : ApplicationAbstract(args) {
 
@@ -15,6 +15,12 @@ class Application(args: Array<String>) : ApplicationAbstract(args) {
     var pussy: AndroidPussycat? = null
 
     init {
+        information = ApplicationInformation(
+                "1.0.0",
+                "Pussycat for Android",
+                "http://pussycat.milosvasic.net",
+                "Miloš Vasić"
+        )
         type = APPLICATION_TYPE.GUI
         for (arg in args) {
             if (arg.trim() == "--terminal") {
@@ -24,21 +30,18 @@ class Application(args: Array<String>) : ApplicationAbstract(args) {
         if (type == APPLICATION_TYPE.CLI) {
             pussy = TerminalPussycat()
         } else {
-            InformationProvider.applicationInformation = ApplicationInformation(
-                    "1.0.0",
-                    "Pussycat for Android",
-                    "http://pussycat.milosvasic.net",
-                    "Miloš Vasić"
-            )
-            pussy = GuiPussycat()
+            val theme = Darcula()
+            pussy = GuiPussycat(information, theme)
         }
     }
 
     override fun start() {
+        super.start()
         pussy?.start(args)
     }
 
     override fun stop() {
+        super.stop()
         pussy?.execute(COMMAND.STOP)
     }
 

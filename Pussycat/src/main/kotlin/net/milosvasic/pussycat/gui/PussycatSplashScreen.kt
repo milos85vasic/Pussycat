@@ -1,5 +1,7 @@
 package net.milosvasic.pussycat.gui
 
+import net.milosvasic.pussycat.application.ApplicationInformation
+import net.milosvasic.pussycat.gui.theme.Theme
 import java.awt.*
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.swing.JLabel
@@ -8,7 +10,7 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-class PussycatSplashScreen(owner: Frame?, val callback: OnSplashComplete) : PussycatAboutDialogAbstract(owner) {
+class PussycatSplashScreen(information: ApplicationInformation, theme: Theme, owner: Frame?, val callback: OnSplashComplete) : PussycatAboutDialogAbstract(information, theme, owner) {
 
     var progress = ""
     var footer: JLabel? = null

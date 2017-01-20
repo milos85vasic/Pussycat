@@ -2,7 +2,7 @@ package net.milosvasic.pussycat.android
 
 import com.android.ddmlib.Log
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
-import net.milosvasic.pussycat.information.ApplicationInformation
+import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
@@ -10,23 +10,20 @@ import net.milosvasic.pussycat.android.gui.GuiPussycatMenuFactory
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
-import net.milosvasic.pussycat.gui.theme.Darcula
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
-import java.awt.MenuItem
-import java.awt.PopupMenu
-import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
 
-class GuiPussycat: AndroidPussycat() {
+class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPussycat() {
 
     private var favicon: BufferedImage? = null
-    val mainWindow = GuiPussycatMainWindow()
+    val menuFactory = PussycatMenuFactory(theme)
+    val mainWindow = GuiPussycatMainWindow(information, theme)
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
@@ -34,7 +31,7 @@ class GuiPussycat: AndroidPussycat() {
         }
     }
 
-    val splashScreen = PussycatSplashScreen(mainWindow, splashScreenCallback)
+    val splashScreen = PussycatSplashScreen(information, theme, mainWindow, splashScreenCallback)
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
@@ -174,7 +171,7 @@ class GuiPussycat: AndroidPussycat() {
         }
         if (OS.isMacOS()) {
             val items = GuiPussycatMenuFactory.CONTEXT.create()
-            val popupMenu = PussycatMenuFactory.CONTEXT.create(items)
+            val popupMenu = menuFactory.CONTEXT.create(items)
             val app = Application.getApplication()
             app.dockIconImage = favicon
             app.dockMenu = popupMenu

@@ -1,6 +1,7 @@
 package net.milosvasic.pussycat.gui
 
-import net.milosvasic.pussycat.information.InformationProvider
+import net.milosvasic.pussycat.application.ApplicationInformation
+import net.milosvasic.pussycat.gui.theme.Theme
 import java.awt.*
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
@@ -13,7 +14,7 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-abstract class PussycatAboutDialogAbstract(owner: Frame?) : JWindow(owner) {
+abstract class PussycatAboutDialogAbstract(val information: ApplicationInformation, val theme: Theme, owner: Frame?) : JWindow(owner) {
 
     protected val splashWidth = 640
     protected val splashHeight = 389
@@ -46,7 +47,6 @@ abstract class PussycatAboutDialogAbstract(owner: Frame?) : JWindow(owner) {
     abstract protected fun generateFooter(): JComponent?
 
     private fun generateHeader(): JLabel {
-        val information = InformationProvider.applicationInformation
         val splashLabel = JLabel()
         splashLabel.isOpaque = true
         splashLabel.background = Color.BLACK

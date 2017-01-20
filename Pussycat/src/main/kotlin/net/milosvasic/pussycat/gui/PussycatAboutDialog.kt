@@ -1,7 +1,9 @@
 package net.milosvasic.pussycat.gui
 
-import net.milosvasic.pussycat.information.ApplicationInformation
+
+import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.gui.theme.Theme
 import java.awt.Color
 import java.awt.Frame
 import javax.swing.JButton
@@ -11,7 +13,7 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-class PussycatAboutDialog(owner: Frame?) : PussycatAboutDialogAbstract(owner) {
+class PussycatAboutDialog(information: ApplicationInformation, theme: Theme, owner: Frame?) : PussycatAboutDialogAbstract(information, theme, owner) {
 
     override fun generateFooter(): JComponent? {
         val closeButton = JButton()

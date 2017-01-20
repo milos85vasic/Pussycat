@@ -1,6 +1,6 @@
 package net.milosvasic.pussycat.gui
 
-import net.milosvasic.pussycat.gui.theme.ThemeManager
+import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.UI_INTERACTION_TYPE
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
@@ -10,11 +10,10 @@ import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JMenuItem
 
-class PussycatMenuItem(val title: String) : JMenuItem(title), MouseListener {
+class PussycatMenuItem(val theme: Theme, val title: String) : JMenuItem(title), MouseListener {
 
     init {
         addMouseListener(this)
-        val theme = ThemeManager.currentTheme
         isOpaque = true
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
@@ -33,13 +32,11 @@ class PussycatMenuItem(val title: String) : JMenuItem(title), MouseListener {
     }
 
     override fun mouseEntered(e: MouseEvent?) {
-        val theme = ThemeManager.currentTheme
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM, UI_INTERACTION_TYPE.HOVER)
         repaint()
     }
 
     override fun mouseExited(e: MouseEvent?) {
-        val theme = ThemeManager.currentTheme
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
         repaint()
     }

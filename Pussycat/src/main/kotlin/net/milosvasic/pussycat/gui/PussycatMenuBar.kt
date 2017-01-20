@@ -1,15 +1,14 @@
 package net.milosvasic.pussycat.gui
 
-import net.milosvasic.pussycat.gui.theme.ThemeManager
+import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import java.awt.*
 import javax.swing.JMenuBar
 
-class PussycatMenuBar(width: Int, height: Int) : JMenuBar() {
+class PussycatMenuBar(val theme: Theme, width: Int, height: Int) : JMenuBar() {
 
     init {
-        val theme = ThemeManager.currentTheme
         preferredSize = Dimension(width, height)
         isOpaque = true
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
