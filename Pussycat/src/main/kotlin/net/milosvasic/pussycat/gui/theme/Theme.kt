@@ -5,6 +5,8 @@ import net.milosvasic.pussycat.gui.theme.color.TYPE
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import java.awt.Color
 import java.awt.Font
+import javax.swing.JComponent
+import javax.swing.border.Border
 
 abstract class Theme {
 
@@ -17,5 +19,7 @@ abstract class Theme {
     abstract fun getFont(weight: FONT_WEIGHT): Font
 
     abstract fun getFontSize(): Float
+
+    abstract fun getBorder(comp: JComponent): Border
 
 }

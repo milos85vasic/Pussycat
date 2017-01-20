@@ -5,17 +5,15 @@ import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import java.awt.*
 import javax.swing.JMenuBar
-import javax.swing.border.CompoundBorder
-import javax.swing.border.EmptyBorder
-
 
 class PussycatMenuBar(width: Int, height: Int) : JMenuBar() {
 
     init {
+        val theme = ThemeManager.currentTheme
         preferredSize = Dimension(width, height)
         isOpaque = true
-        background = ThemeManager.currentTheme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
-        border = CompoundBorder(border, EmptyBorder(0, 0, 0, 0))
+        background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+        border = theme.getBorder(this)
     }
 
     override fun paintComponent(g: Graphics?) {

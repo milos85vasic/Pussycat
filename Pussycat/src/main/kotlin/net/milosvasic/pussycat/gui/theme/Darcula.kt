@@ -1,10 +1,19 @@
 package net.milosvasic.pussycat.gui.theme
 
+import net.milosvasic.pussycat.gui.PussycatBar
+import net.milosvasic.pussycat.gui.PussycatContent
+import net.milosvasic.pussycat.gui.PussycatMenuBar
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import java.awt.Color
+import java.awt.Component
 import java.awt.Font
+import javax.swing.JComponent
+import javax.swing.border.AbstractBorder
+import javax.swing.border.Border
+import javax.swing.border.CompoundBorder
+import javax.swing.border.EmptyBorder
 
 
 open class Darcula : Theme() {
@@ -205,4 +214,20 @@ open class Darcula : Theme() {
         return 14f
     }
 
+    override fun getBorder(comp: JComponent): Border {
+        return when (comp) {
+            is PussycatBar -> {
+                CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+            }
+            is PussycatContent -> {
+                CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
+            }
+            is PussycatMenuBar -> {
+                CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+            }
+            else -> {
+                comp.border
+            }
+        }
+    }
 }
