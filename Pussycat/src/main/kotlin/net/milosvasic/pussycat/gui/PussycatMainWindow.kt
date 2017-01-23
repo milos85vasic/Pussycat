@@ -11,8 +11,10 @@ import java.awt.*
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
+
 abstract class PussycatMainWindow<T, D : Data<T>>(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
 
+    private val scrollPane = PussycatScrollPane(theme)
     private val list = PussycatList<T>(theme)
 
     private var data: D? = null
@@ -49,7 +51,8 @@ abstract class PussycatMainWindow<T, D : Data<T>>(val information: ApplicationIn
             requestOSXFullscreen(this)
         }
         val content = PussycatContent(theme)
-        content.add(list)
+        scrollPane.setViewportView(list)
+        content.add(scrollPane, BorderLayout.CENTER)
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)
         add(headerBar, BorderLayout.PAGE_START)
         add(content, BorderLayout.CENTER)
