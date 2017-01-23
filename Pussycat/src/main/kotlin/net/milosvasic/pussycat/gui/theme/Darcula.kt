@@ -2,6 +2,7 @@ package net.milosvasic.pussycat.gui.theme
 
 import net.milosvasic.pussycat.gui.PussycatBar
 import net.milosvasic.pussycat.gui.PussycatContent
+import net.milosvasic.pussycat.gui.PussycatList
 import net.milosvasic.pussycat.gui.PussycatMenu
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
@@ -216,9 +217,6 @@ open class Darcula : Theme() {
 
     override fun getBorder(comp: JComponent): Border {
         return when (comp) {
-            is PussycatBar -> {
-                CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
-            }
             is PussycatContent -> {
                 CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
             }
@@ -226,7 +224,7 @@ open class Darcula : Theme() {
                 CompoundBorder(comp.border, EmptyBorder(10, 10, 10, 10))
             }
             else -> {
-                comp.border
+                CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
             }
         }
     }

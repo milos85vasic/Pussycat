@@ -89,8 +89,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-        // TODO: Change this.
-        println("- - -")
+        mainWindow.addData(line)
     }
 
     override fun getPrintableLogLevelValue(): String {
@@ -144,7 +143,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     private fun initPopupMenu() {
         val items = getPopupMenuItems()
-        mainWindow.addPopIpMenuItems(items)
+        mainWindow.addPopUpMenuItems(items)
         if (OS.isMacOS()) {
             val popupMenu = PopupMenu()
             for (item in items) {

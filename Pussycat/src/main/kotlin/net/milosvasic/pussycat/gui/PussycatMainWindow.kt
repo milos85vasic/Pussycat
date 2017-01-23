@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.gui
 
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
+import net.milosvasic.pussycat.core.data.Data
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.os.OS
@@ -10,7 +11,16 @@ import java.awt.*
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
-abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
+abstract class PussycatMainWindow<T, D : Data<T>>(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
+
+    private val list = PussycatList<T>(theme)
+
+    private var data: D? = null
+        set(value) {
+            data = value
+            applyData(data)
+        }
+        get
 
     init {
         title = "${information.name} V${information.version} by ${information.author}"
@@ -39,10 +49,16 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             requestOSXFullscreen(this)
         }
         val content = PussycatContent(theme)
+        content.add(list)
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)
         add(headerBar, BorderLayout.PAGE_START)
         add(content, BorderLayout.CENTER)
         add(footerBar, BorderLayout.PAGE_END)
+        applyData(data)
+    }
+
+    fun addData(item: T) {
+        list.listModel.addElement(item)
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>
@@ -66,6 +82,14 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         pussycat.addMenuItem(about)
         items.add(pussycat)
         return items
+    }
+
+    private fun applyData(data: D?) {
+        if (data != null) {
+            for (item in data.get()) {
+                list.listModel.addElement(item)
+            }
+        }
     }
 
 }
