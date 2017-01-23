@@ -44,6 +44,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             for (item in mainMenu) {
                 headerBar.add(item, BorderLayout.WEST)
             }
+            enableOSXFullscreen()
         }
         val content = PussycatContent(theme)
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)

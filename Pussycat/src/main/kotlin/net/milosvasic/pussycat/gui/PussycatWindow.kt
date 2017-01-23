@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JFrame
+import java.awt.Window
+
 
 abstract class PussycatWindow(val theme: Theme) : JFrame() {
 
@@ -33,6 +35,17 @@ abstract class PussycatWindow(val theme: Theme) : JFrame() {
         iconImage = favicon
         layout = BorderLayout()
         background = theme.getColor(TYPE.BASE, INTENSITY.LIGHT)
+    }
+
+    fun enableOSXFullscreen() {
+        try {
+            val util = Class.forName("com.apple.eawt.FullScreenUtilities")
+            val params = arrayOf<Class<*>>(Window::class.java, java.lang.Boolean.TYPE)
+            val method = util.getMethod("setWindowCanFullScreen", *params)
+            method.invoke(util, this, true)
+        } catch (e: Exception) {
+            println(e)
+        }
     }
 
 
