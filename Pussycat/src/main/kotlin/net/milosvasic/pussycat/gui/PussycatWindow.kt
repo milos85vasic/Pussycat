@@ -48,5 +48,18 @@ abstract class PussycatWindow(val theme: Theme) : JFrame() {
         }
     }
 
+    fun requestOSXFullscreen(window: Window) {
+        try {
+            val appClass = Class.forName("com.apple.eawt.Application")
+            val params = arrayOf<Class<*>>()
+            val getApplication = appClass.getMethod("getApplication", *params)
+            val application = getApplication.invoke(appClass)
+            val requestToggleFulLScreen = application.javaClass.getMethod("requestToggleFullScreen", Window::class.java)
+            requestToggleFulLScreen.invoke(application, window)
+        } catch (e: Exception) {
+            println(e)
+        }
+    }
+
 
 }
