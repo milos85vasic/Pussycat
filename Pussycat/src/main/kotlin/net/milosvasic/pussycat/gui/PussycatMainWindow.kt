@@ -28,7 +28,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             headerBar.add(item, BorderLayout.WEST)
         }
         if (OS.isMacOS()) {
-            System.setProperty("com.apple.mrj.application.apple.menu.about.name", information.name)
             System.setProperty("com.apple.mac.useScreenMenuBar", "true")
             System.setProperty("apple.laf.useScreenMenuBar", "true")
             val app = Application.getApplication()

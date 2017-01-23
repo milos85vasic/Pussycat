@@ -8,6 +8,7 @@ import net.milosvasic.pussycat.application.ApplicationAbstract
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.gui.theme.Darcula
+import net.milosvasic.pussycat.os.OS
 
 class Application(args: Array<String>) : ApplicationAbstract(args) {
 
@@ -21,6 +22,9 @@ class Application(args: Array<String>) : ApplicationAbstract(args) {
                 "http://pussycat.milosvasic.net",
                 "Miloš Vasić"
         )
+        if (OS.isMacOS()) {
+            System.setProperty("apple.awt.application.name", information.name)
+        }
         type = APPLICATION_TYPE.GUI
         for (arg in args) {
             if (arg.trim() == "--terminal") {
