@@ -19,7 +19,7 @@ class GuiPussycatMainWindow(information: ApplicationInformation, theme: Theme) :
             for (item in popupMenuItems) {
                 val menuItem = PussycatMenuItem(theme, item.title)
                 menuItem.addActionListener(item.action)
-                commands.add(menuItem)
+                commands.addMenuItem(menuItem)
             }
             items.add(commands)
         }
