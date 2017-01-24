@@ -1,17 +1,13 @@
 package net.milosvasic.pussycat.gui.theme
 
-import net.milosvasic.pussycat.gui.PussycatBar
 import net.milosvasic.pussycat.gui.PussycatContent
-import net.milosvasic.pussycat.gui.PussycatList
 import net.milosvasic.pussycat.gui.PussycatMenu
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import java.awt.Color
-import java.awt.Component
 import java.awt.Font
 import javax.swing.JComponent
-import javax.swing.border.AbstractBorder
 import javax.swing.border.Border
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
@@ -20,26 +16,30 @@ import javax.swing.border.EmptyBorder
 open class Darcula : Theme() {
 
     override fun getColor(type: TYPE, intensity: INTENSITY): Color {
+        return getColor(type, intensity, 255)
+    }
+
+    override fun getColor(type: TYPE, intensity: INTENSITY, opacity: Int): Color {
         return when (type) {
             TYPE.BASE -> {
                 when (intensity) {
-                    INTENSITY.LIGHT -> Color(60, 63, 65)
-                    INTENSITY.MEDIUM -> Color(49, 51, 53)
-                    INTENSITY.DARK -> Color(43, 43, 43)
+                    INTENSITY.LIGHT -> Color(60, 63, 65, opacity)
+                    INTENSITY.MEDIUM -> Color(49, 51, 53, opacity)
+                    INTENSITY.DARK -> Color(43, 43, 43, opacity)
                 }
             }
             TYPE.MAIN_COLOR_1 -> {
                 when (intensity) {
-                    INTENSITY.LIGHT -> Color(224, 54, 198)
-                    INTENSITY.MEDIUM -> Color(156, 50, 140)
-                    INTENSITY.DARK -> Color(95, 47, 99)
+                    INTENSITY.LIGHT -> Color(224, 54, 198, opacity)
+                    INTENSITY.MEDIUM -> Color(156, 50, 140, opacity)
+                    INTENSITY.DARK -> Color(95, 47, 99, opacity)
                 }
             }
             TYPE.MAIN_COLOR_2 -> {
                 when (intensity) {
-                    INTENSITY.LIGHT -> Color(102, 77, 255)
-                    INTENSITY.MEDIUM -> Color(77, 57, 190)
-                    INTENSITY.DARK -> Color(57, 54, 133)
+                    INTENSITY.LIGHT -> Color(102, 77, 255, opacity)
+                    INTENSITY.MEDIUM -> Color(77, 57, 190, opacity)
+                    INTENSITY.DARK -> Color(57, 54, 133, opacity)
                 }
             }
         }

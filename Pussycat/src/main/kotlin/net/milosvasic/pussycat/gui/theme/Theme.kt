@@ -12,6 +12,8 @@ abstract class Theme {
 
     abstract fun getColor(type: TYPE, intensity: INTENSITY): Color
 
+    abstract fun getColor(type: TYPE, intensity: INTENSITY, opacity: Int): Color
+
     abstract fun getTextColor(type: TYPE, intensity: INTENSITY): Color
 
     abstract fun getTextColor(type: TYPE, intensity: INTENSITY, interactionTYPE: UI_INTERACTION_TYPE): Color
