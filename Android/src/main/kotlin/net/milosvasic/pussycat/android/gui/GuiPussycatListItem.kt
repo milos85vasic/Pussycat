@@ -2,19 +2,18 @@ package net.milosvasic.pussycat.android.gui
 
 import com.android.ddmlib.Log
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
+import net.milosvasic.pussycat.gui.PussycatLabel
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.awt.Color
-import javax.swing.JLabel
 
 
 class GuiPussycatListItem(theme: Theme, value: AndroidLogCatMessage, index: Int) : PussycatListItem<AndroidLogCatMessage>(theme, value, index) {
 
-    val logLevel = JLabel(value.logLevel.stringValue.substring(0, 1).toUpperCase())
+    val logLevel = PussycatLabel(value.logLevel.stringValue.substring(0, 1).toUpperCase(), theme)
 
     init {
-        logLevel.isOpaque = true
         logLevel.background = background
         logLevel.foreground = getTextColor(value)
         add(logLevel)
