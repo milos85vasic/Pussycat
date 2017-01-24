@@ -4,27 +4,48 @@ package net.milosvasic.pussycat.gui
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.core.data.Data
+import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.theme.Theme
+import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
+import java.util.concurrent.LinkedBlockingDeque
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
+import javax.swing.event.ListDataEvent
+import javax.swing.event.ListDataListener
 
 
-abstract class PussycatMainWindow<T, D : Data<T>>(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
+abstract class PussycatMainWindow<T>(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
 
+    val SUBSCRIPTIONS = Subscriptions()
+
+    class Subscriptions {
+        val STATUS: Listeners<Boolean> = Listeners.obtain()
+    }
+
+    private val ready = AtomicBoolean()
+    private var currentDataItem: T? = null
+    private val dataQueue = LinkedBlockingQueue<T>()
     private val scrollPane = PussycatScrollPane(theme)
-
-    private var data: D? = null
-        set(value) {
-            data = value
-            applyData(data)
-        }
-        get
 
     init {
         title = "${information.name} V${information.version} by ${information.author}"
+    }
+
+    val listDataListener = object : ListDataListener {
+        override fun contentsChanged(e: ListDataEvent?) {
+        }
+
+        override fun intervalRemoved(e: ListDataEvent?) {
+        }
+
+        override fun intervalAdded(e: ListDataEvent?) {
+            addNextDataItem()
+        }
     }
 
     override fun initialize() {
@@ -50,22 +71,49 @@ abstract class PussycatMainWindow<T, D : Data<T>>(val information: ApplicationIn
             requestOSXFullscreen(this)
         }
         val content = PussycatContent(theme)
-        scrollPane.setViewportView(getList())
+        val list = getList()
+        list.listModel.addListDataListener(listDataListener)
+        scrollPane.setViewportView(list)
         content.add(scrollPane, BorderLayout.CENTER)
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)
         add(headerBar, BorderLayout.PAGE_START)
         add(content, BorderLayout.CENTER)
         add(footerBar, BorderLayout.PAGE_END)
-        applyData(data)
+    }
+
+    override fun open() {
+        super.open()
+        updateStatus(true)
+    }
+
+    override fun close() {
+        updateStatus(false)
+        super.close()
+    }
+
+    fun isReady(): Boolean {
+        return ready.get()
     }
 
     fun addData(item: T) {
-        getList().listModel.addElement(item)
+        dataQueue.add(item)
+        if (currentDataItem == null) {
+            addNextDataItem()
+        }
+    }
+
+    fun clearData() {
+        getList().listModel.clear()
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>
 
     abstract fun getList(): PussycatList<T>
+
+    private fun updateStatus(status: Boolean) {
+        ready.set(status)
+        SUBSCRIPTIONS.STATUS.notify(status)
+    }
 
     private fun createMainMenu(): List<PussycatMenu> {
         val items = mutableListOf<PussycatMenu>()
@@ -88,11 +136,14 @@ abstract class PussycatMainWindow<T, D : Data<T>>(val information: ApplicationIn
         return items
     }
 
-    private fun applyData(data: D?) {
-        if (data != null) {
-            for (item in data.get()) {
-                getList().listModel.addElement(item)
+    private fun addNextDataItem() {
+        if (!dataQueue.isEmpty()) {
+            currentDataItem = dataQueue.poll()
+            if (currentDataItem != null) {
+                getList().listModel.addElement(currentDataItem)
             }
+        } else {
+            currentDataItem = null
         }
     }
 

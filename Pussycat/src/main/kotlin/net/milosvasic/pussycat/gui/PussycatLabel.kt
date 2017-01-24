@@ -12,13 +12,13 @@ class PussycatLabel(val title: String, val theme: Theme) : JLabel(title) {
 
     init {
         isOpaque = true
-        font = theme.getFont(FONT_WEIGHT.REGULAR).deriveFont(theme.getFontSize())
+//        font = theme.getFont(FONT_WEIGHT.REGULAR).deriveFont(theme.getFontSize())
     }
 
     override fun paintComponent(g: Graphics?) {
-        val g2 = g as Graphics2D
-        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP)
-        super.paintComponent(g2)
+//        val g2 = g as Graphics2D
+//        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP)
+        super.paintComponent(g)
     }
 
 }

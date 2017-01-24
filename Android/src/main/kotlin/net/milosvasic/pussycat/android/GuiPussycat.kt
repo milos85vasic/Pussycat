@@ -25,6 +25,24 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     private var favicon: BufferedImage? = null
     val mainWindow = GuiPussycatMainWindow(information, theme)
 
+    val mainWindowStatusCallback = object : Listener<Boolean> {
+        override fun onEvent(value: Boolean?) {
+            if (value != null) {
+                if (value) {
+                    if (!data.get().isEmpty()) {
+                        Thread(Runnable {
+                            println("Data start") // TODO: Move to footer bar as a message
+                            for (item in data.get()) {
+                                mainWindow.addData(item)
+                            }
+                            println("Data end") // TODO: Move to footer bar as a message
+                        }).start()
+                    }
+                }
+            }
+        }
+    }
+
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
             mainWindow.open()
@@ -35,6 +53,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
+        mainWindow.SUBSCRIPTIONS.STATUS.subscribe(mainWindowStatusCallback)
     }
 
     val eventsListener = object : Listener<EVENT> {
@@ -42,6 +61,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             if (value == EVENT.STOP) {
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
+                mainWindow.SUBSCRIPTIONS.STATUS.unsubscribe(mainWindowStatusCallback)
             }
         }
     }
@@ -89,7 +109,9 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-        mainWindow.addData(line)
+        if (mainWindow.isReady()) {
+            mainWindow.addData(line)
+        }
     }
 
     override fun getPrintableLogLevelValue(): String {
