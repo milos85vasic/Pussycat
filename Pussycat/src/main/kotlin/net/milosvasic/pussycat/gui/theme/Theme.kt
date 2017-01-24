@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.gui.theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
+import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.awt.Color
 import java.awt.Font
 import javax.swing.JComponent
@@ -17,6 +18,8 @@ abstract class Theme {
     abstract fun getTextColor(type: TYPE, intensity: INTENSITY): Color
 
     abstract fun getTextColor(type: TYPE, intensity: INTENSITY, interactionTYPE: UI_INTERACTION_TYPE): Color
+
+    abstract fun getTextColor(logType: LOG_TYPE): Color
 
     abstract fun getFont(weight: FONT_WEIGHT): Font
 

@@ -7,6 +7,7 @@ import net.milosvasic.pussycat.gui.PussycatScrollPane
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
+import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.awt.Color
 import java.awt.Font
 import javax.swing.JComponent
@@ -167,6 +168,26 @@ open class Darcula : Theme() {
                         else -> Color.WHITE
                     }
                 }
+            }
+        }
+    }
+
+    override fun getTextColor(logType: LOG_TYPE): Color {
+        return when (logType) {
+            LOG_TYPE.DEBUG -> {
+                Color.WHITE
+            }
+            LOG_TYPE.INFORMATION -> {
+                Color.CYAN
+            }
+            LOG_TYPE.WARNING -> {
+                Color.ORANGE
+            }
+            LOG_TYPE.ERROR -> {
+                Color.RED
+            }
+            else -> {
+                Color.GRAY
             }
         }
     }
