@@ -11,7 +11,7 @@ import javax.swing.JLabel
 
 class GuiPussycatListItem(theme: Theme, value: AndroidLogCatMessage, index: Int) : PussycatListItem<AndroidLogCatMessage>(theme, value, index) {
 
-    val logLevel = JLabel(value.logLevel.stringValue)
+    val logLevel = JLabel(value.logLevel.stringValue.substring(0, 1).toUpperCase())
 
     init {
         logLevel.isOpaque = true
