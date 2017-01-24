@@ -4,15 +4,13 @@ package net.milosvasic.pussycat.android.gui
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.application.ApplicationInformation
-import net.milosvasic.pussycat.gui.PussycatMainWindow
-import net.milosvasic.pussycat.gui.PussycatMenu
-import net.milosvasic.pussycat.gui.PussycatMenuItem
-import net.milosvasic.pussycat.gui.PussycatMenuItemDefinition
+import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.theme.Theme
 
 class GuiPussycatMainWindow(information: ApplicationInformation, theme: Theme) : PussycatMainWindow<AndroidLogCatMessage, AndroidData>(information, theme) {
 
+    private val list = GuiPussycatList(theme)
     private val popupMenuItems = mutableListOf<PussycatMenuItemDefinition>()
 
     override fun getMainMenuItems(): List<PussycatMenu> {
@@ -31,6 +29,10 @@ class GuiPussycatMainWindow(information: ApplicationInformation, theme: Theme) :
 
     fun addPopUpMenuItems(items: List<PussycatMenuItemDefinition>) {
         popupMenuItems.addAll(items)
+    }
+
+    override fun getList(): GuiPussycatList {
+        return list
     }
 
 }
