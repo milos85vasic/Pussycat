@@ -34,7 +34,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane() {
         g?.fillRect(0, 0, width, height)
     }
 
-    class PussycatScrollBarUI(val theme: Theme) : BasicScrollBarUI() {
+    inner class PussycatScrollBarUI(val theme: Theme) : BasicScrollBarUI() {
 
         override fun createDecreaseButton(orientation: Int): JButton {
             return createZeroButton()
@@ -73,22 +73,23 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane() {
                 g2.setRenderingHints(qualityHints)
                 g2.translate(thumbBounds.x, thumbBounds.y)
                 g2.color = color
-                val rW = w / 4
-                g2.fillRoundRect(rW, rW, w - (rW), h - (rW), w / 2, w / 2)
+                g2.fillRoundRect(0, 0, w, h, w / 2, w / 2)
             }
         }
 
         override fun setThumbBounds(x: Int, y: Int, width: Int, height: Int) {
-            super.setThumbBounds(x, y, width, height)
+            val border = theme.getBorder(this@PussycatScrollPane)
+            val borderValue = border.getBorderInsets(this@PussycatScrollPane).left * 4
+            super.setThumbBounds(x + borderValue, y, width - borderValue, height)
             scrollbar.repaint()
         }
 
         private fun createZeroButton(): JButton {
-            val jbutton = JButton()
-            jbutton.preferredSize = Dimension(0, 0)
-            jbutton.minimumSize = Dimension(0, 0)
-            jbutton.maximumSize = Dimension(0, 0)
-            return jbutton
+            val jButton = JButton()
+            jButton.preferredSize = Dimension(0, 0)
+            jButton.minimumSize = Dimension(0, 0)
+            jButton.maximumSize = Dimension(0, 0)
+            return jButton
         }
 
     }
