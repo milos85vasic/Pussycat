@@ -30,9 +30,9 @@ abstract class PussycatList<T>(val theme: Theme, val listModel: DefaultListModel
     }
 
     override fun getListCellRendererComponent(list: JList<out T>?, value: T, index: Int, isSelected: Boolean, cellHasFocus: Boolean): Component {
-        return getListItem()
+        return getListItem(index, value)
     }
 
-    abstract fun getListItem(): PussycatListItem<T>
+    abstract fun getListItem(index: Int, value: T): PussycatListItem<T>
 
 }
