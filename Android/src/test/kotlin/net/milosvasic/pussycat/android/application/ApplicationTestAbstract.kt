@@ -38,7 +38,7 @@ abstract class ApplicationTestAbstract {
     open fun testApplication() {
         val app = Application(params)
         app.pussy?.configuration?.exitOnStop = false
-        app.pussy?.configuration?.terminalPriner = BlackHoleTerminalPrinter()
+        app.pussy?.configuration?.terminalPrinter = BlackHoleTerminalPrinter()
         app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 1
         Thread(Runnable {
             app.start()

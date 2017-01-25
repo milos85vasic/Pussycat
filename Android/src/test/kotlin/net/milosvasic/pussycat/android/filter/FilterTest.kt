@@ -89,7 +89,7 @@ class FilterTest {
             val params = arrayOf("--terminal", "--filesystem=${resourceFile.absolutePath}")
             val app = Application(params)
             app.pussy?.configuration?.exitOnStop = false
-            app.pussy?.configuration?.terminalPriner = FilterTestTerminalPrinter(printLineCallback)
+            app.pussy?.configuration?.terminalPrinter = FilterTestTerminalPrinter(printLineCallback)
             app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 1
             Thread(Runnable {
                 app.start()

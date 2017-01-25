@@ -3,15 +3,12 @@ package net.milosvasic.pussycat.gui
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
-import java.awt.*
+import java.awt.Color
 import javax.swing.JLabel
-import javax.swing.JPanel
 
-
-class PussycatListItem(val theme: Theme, val index: Int) : JPanel() {
+class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = null) : JLabel() {
 
     init {
-        layout = FlowLayout(FlowLayout.LEFT)
         isOpaque = true
         val intensity: INTENSITY
         if (index % 2 == 0) {
@@ -20,23 +17,22 @@ class PussycatListItem(val theme: Theme, val index: Int) : JPanel() {
             intensity = INTENSITY.MEDIUM
         }
         background = theme.getColor(TYPE.BASE, intensity)
-        foreground = theme.getTextColor(TYPE.BASE, intensity)
+        if (color != null) {
+            foreground = color
+        } else {
+            foreground = theme.getTextColor(TYPE.BASE, intensity)
+        }
         border = theme.getBorder(this)
-        preferredSize = Dimension(width, 10)
     }
 
-    fun append(text: String): PussycatListItem {
-        return append(text, foreground)
-    }
-
-    fun append(text: String, color: Color): PussycatListItem {
-        val item = JLabel(text)
-        item.isOpaque = true
-        item.background = background
-        item.foreground = color
-        item.border = theme.getBorder(item)
-        item.preferredSize = Dimension(100, 10)
-        add(item)
+    fun append(text: String, minEms: Int): PussycatListItem {
+        this.text += text
+        val spaces = minEms - text.length
+        if (spaces > 0) {
+            for (x in 0..spaces) {
+                this.text += "_"
+            }
+        }
         return this
     }
 

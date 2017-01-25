@@ -34,12 +34,10 @@ class GuiPussycatListItemFactory {
                 }
             }
 
-            val logLevel = value.logLevel.stringValue.substring(0, 1).toUpperCase()
-
-            val item = PussycatListItem(theme, index)
-                    .append(logLevel, getTextColor())
-                    .append("${value.pid}")
-                    .append("${value.tid}")
+            val color = getTextColor()
+            val item = PussycatListItem(theme, index, color)
+                    .append("${value.pid}", 10)
+                    .append("${value.tid}", 10)
 
             return item
         }

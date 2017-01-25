@@ -6,7 +6,7 @@ import net.milosvasic.pussycat.terminal.Printer
 class PussycatConfiguration {
 
     var exitOnStop = true
-    var terminalPriner: Printer? = null
+    var terminalPrinter: Printer? = null
     private var exitRoutine: Runnable? = null
     var waitingForDevicesTimeoutInSeconds = 30
 
