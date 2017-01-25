@@ -12,7 +12,7 @@ import java.awt.Color
 class GuiPussycatListItemFactory {
 
     companion object {
-        fun create(value: AndroidLogCatMessage, index: Int, theme: Theme): PussycatListItem {
+        fun create(theme: Theme, value: AndroidLogCatMessage, index: Int): PussycatListItem {
 
             fun getTextColor(): Color {
                 return when (value.logLevel) {

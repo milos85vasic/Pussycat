@@ -30,7 +30,20 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
+            mainWindow.SUBSCRIPTIONS.STATUS.subscribe(mainWindowStatusListener)
             mainWindow.open()
+        }
+    }
+
+    val mainWindowStatusListener = object : Listener<Boolean> {
+        override fun onEvent(value: Boolean?) {
+            if (value != null && value) {
+                mainWindow.setBussy(true)
+                for (item in data.get()) {
+                    sendToMainWindowList(item)
+                }
+                mainWindow.setBussy(false)
+            }
         }
     }
 
@@ -45,6 +58,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             if (value == EVENT.STOP) {
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
+                mainWindow.SUBSCRIPTIONS.STATUS.unsubscribe(mainWindowStatusListener)
             }
         }
     }
@@ -92,12 +106,9 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-        val item = GuiPussycatListItemFactory.create(
-                line,
-                data.get().indexOf(line),
-                mainWindow.theme
-        )
-        mainWindow.list.add(item)
+        if (mainWindow.isReady() && !mainWindow.isBussy()) {
+            sendToMainWindowList(line)
+        }
     }
 
     override fun getPrintableLogLevelValue(): String {
@@ -195,6 +206,15 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             }
         }
         return list
+    }
+
+    private fun sendToMainWindowList(line: AndroidLogCatMessage) {
+        val item = GuiPussycatListItemFactory.create(
+                mainWindow.theme,
+                line,
+                data.get().indexOf(line)
+        )
+        mainWindow.list.add(item)
     }
 
 }
