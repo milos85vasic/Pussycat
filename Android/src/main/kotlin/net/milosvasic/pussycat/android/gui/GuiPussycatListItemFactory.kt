@@ -37,8 +37,12 @@ class GuiPussycatListItemFactory {
             // "$time $pid $tid $appName $tag: ${line.msg}"
             val color = getTextColor()
             val item = PussycatListItem(theme, index, color)
+                    .append(value.time, 15)
                     .append("${value.pid}", 10)
                     .append("${value.tid}", 10)
+                    .append(value.appName, 20)
+                    .append(value.tag, 10)
+                    .append(value.msg)
 
             return item
         }

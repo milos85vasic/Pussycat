@@ -25,6 +25,11 @@ class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = nul
         border = theme.getBorder(this)
     }
 
+    fun append(text: String): PussycatListItem {
+        this.text += text
+        return this
+    }
+
     fun append(text: String, minEms: Int): PussycatListItem {
         this.text += text
         val spaces = minEms - text.length

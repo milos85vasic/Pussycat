@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.android.data.parser
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
+import net.milosvasic.pussycat.content.Messages
 import java.util.*
 import java.util.regex.Matcher
 import java.util.LinkedHashMap
@@ -255,7 +256,7 @@ class LogCatMessageParser {
                         notify(true, message)
                     }
                 } else {
-                    val message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, "ERROR", "ERROR", "PUSSYCAT PARSING ERROR", "Log not matched,\n\t$line\n")
+                    val message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, Messages.PPE, Messages.PPE, Messages.PPE, "Log not matched,\n\t$line\n")
                     messages.put(System.currentTimeMillis().toString(), message)
                     notify(false, message)
                 }

@@ -2,6 +2,7 @@ package net.milosvasic.pussycat.content
 
 object Messages {
 
+    val PPE = "PPE"
     val NOT_SET = "Not set."
     val BYE_BYE = "Bye, bye!"
     val ERROR_READING_LINE = "Error reading line."
