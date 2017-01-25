@@ -32,24 +32,44 @@ class AndroidLogCatMessage(
     init {
         val pidLen = "$pid".length
         if (pidLen > LENGTHS.PID) {
-            LENGTHS.PID = pidLen
+            if (pidLen >= 12) {
+                LENGTHS.PID = 12
+            } else {
+                LENGTHS.PID = pidLen
+            }
         }
 
         val tidLen = "$tid".length
         if (tidLen > LENGTHS.TID) {
-            LENGTHS.TID = tidLen
+            if (tidLen >= 12) {
+                LENGTHS.TID = 12
+            } else {
+                LENGTHS.TID = tidLen
+            }
         }
 
         if (appName.length > LENGTHS.APP_NAME) {
-            LENGTHS.APP_NAME = appName.length
+            if (appName.length >= 15) {
+                LENGTHS.APP_NAME = 15
+            } else {
+                LENGTHS.APP_NAME = appName.length
+            }
         }
 
         if (tag.length > LENGTHS.TAG) {
-            LENGTHS.TAG = tag.length
+            if (tag.length >= 15) {
+                LENGTHS.TAG = 15
+            } else {
+                LENGTHS.TAG = tag.length
+            }
         }
 
         if (time.length > LENGTHS.TIME) {
-            LENGTHS.TIME = time.length
+            if (time.length >= 15) {
+                LENGTHS.TIME = 15
+            } else {
+                LENGTHS.TIME = time.length
+            }
         }
     }
 
