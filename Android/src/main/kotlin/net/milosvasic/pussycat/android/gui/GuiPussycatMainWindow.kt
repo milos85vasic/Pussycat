@@ -12,6 +12,10 @@ class GuiPussycatMainWindow(information: ApplicationInformation, theme: Theme) :
     private val list = GuiPussycatList(theme)
     private val popupMenuItems = mutableListOf<PussycatMenuItemDefinition>()
 
+    init {
+        list.visibleRowCount = 10
+    }
+
     override fun getMainMenuItems(): List<PussycatMenu> {
         val items = mutableListOf<PussycatMenu>()
         if (!popupMenuItems.isEmpty()) {
