@@ -10,7 +10,6 @@ class PussycatContent(val theme: Theme) : JPanel() {
 
     init {
         layout = BorderLayout()
-        setSize(width, 1200)
         isOpaque = true
         background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
         border = theme.getBorder(this)

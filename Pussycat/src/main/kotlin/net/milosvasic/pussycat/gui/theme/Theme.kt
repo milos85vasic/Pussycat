@@ -5,6 +5,7 @@ import net.milosvasic.pussycat.gui.theme.color.TYPE
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.awt.Color
+import java.awt.Dimension
 import java.awt.Font
 import javax.swing.JComponent
 import javax.swing.border.Border

@@ -13,13 +13,11 @@ import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
-import java.awt.Dimension
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
-import javax.swing.JLabel
 import javax.swing.WindowConstants
 
 
@@ -38,11 +36,11 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val mainWindowStatusListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
-                mainWindow.setBussy(true)
+                mainWindow.setBusy(true)
                 for (item in data.get()) {
                     sendToMainWindowList(item)
                 }
-                mainWindow.setBussy(false)
+                mainWindow.setBusy(false)
             }
         }
     }
@@ -106,7 +104,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-        if (mainWindow.isReady() && !mainWindow.isBussy()) {
+        if (mainWindow.isReady() && !mainWindow.isBusy()) {
             sendToMainWindowList(line)
         }
     }
@@ -214,7 +212,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
                 line,
                 data.get().indexOf(line)
         )
-        mainWindow.list.add(item)
+        mainWindow.addContentItem(item)
     }
 
 }

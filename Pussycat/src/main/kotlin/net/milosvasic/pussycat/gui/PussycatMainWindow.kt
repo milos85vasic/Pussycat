@@ -20,9 +20,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val STATUS: Listeners<Boolean> = Listeners.obtain()
     }
 
-    val list = PussycatList(theme)
     private val ready = AtomicBoolean()
-    private val bussy = AtomicBoolean()
+    private val busy = AtomicBoolean()
+    private val list = PussycatList(theme)
 
     init {
         title = "${information.name} V${information.version} by ${information.author}"
@@ -74,12 +74,16 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         return ready.get()
     }
 
-    fun isBussy(): Boolean {
-        return bussy.get()
+    fun isBusy(): Boolean {
+        return busy.get()
     }
 
-    fun setBussy(bussy: Boolean) {
-        this.bussy.set(bussy)
+    fun setBusy(bussy: Boolean) {
+        this.busy.set(bussy)
+    }
+
+    fun addContentItem(item: PussycatListItem) {
+        list.add(item)
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>

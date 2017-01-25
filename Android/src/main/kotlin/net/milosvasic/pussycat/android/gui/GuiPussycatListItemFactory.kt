@@ -34,13 +34,13 @@ class GuiPussycatListItemFactory {
                 }
             }
 
-            fun getTitle(): String {
-                val title = value.logLevel.stringValue.substring(0, 1).toUpperCase()
-                return title
-            }
+            val logLevel = value.logLevel.stringValue.substring(0, 1).toUpperCase()
 
-            val item = PussycatListItem(getTitle(), theme, index)
-            item.foreground = getTextColor()
+            val item = PussycatListItem(theme, index)
+                    .append(logLevel, getTextColor())
+                    .append("${value.pid}")
+                    .append("${value.tid}")
+
             return item
         }
     }
