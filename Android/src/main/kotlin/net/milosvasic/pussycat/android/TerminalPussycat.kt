@@ -31,7 +31,7 @@ class TerminalPussycat : AndroidPussycat() {
             System.`in`.close()
             printLine(Messages.BYE_BYE)
         })
-        configuration.terminalPriner = TerminalPrinter()
+        configuration.terminalPrinter = TerminalPrinter()
     }
 
     val filesystemProgressListener = object : Listener<Double> {
@@ -132,7 +132,7 @@ class TerminalPussycat : AndroidPussycat() {
     }
 
     override fun printLine(text: String) {
-        configuration.terminalPriner?.printLine(text)
+        configuration.terminalPrinter?.printLine(text)
     }
 
     override fun printLine(line: AndroidLogCatMessage) {

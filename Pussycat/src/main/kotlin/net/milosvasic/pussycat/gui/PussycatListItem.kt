@@ -12,9 +12,9 @@ class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = nul
         isOpaque = true
         val intensity: INTENSITY
         if (index % 2 == 0) {
-            intensity = INTENSITY.DARK
-        } else {
             intensity = INTENSITY.MEDIUM
+        } else {
+            intensity = INTENSITY.DARK
         }
         background = theme.getColor(TYPE.BASE, intensity)
         if (color != null) {
