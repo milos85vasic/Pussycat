@@ -8,13 +8,11 @@ import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
-import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
-import javax.swing.JButton
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
-abstract class PussycatMainWindow<T>(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
+abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
 
     val SUBSCRIPTIONS = Subscriptions()
 
@@ -22,9 +20,8 @@ abstract class PussycatMainWindow<T>(val information: ApplicationInformation, th
         val STATUS: Listeners<Boolean> = Listeners.obtain()
     }
 
+    val list = PussycatList(theme)
     private val ready = AtomicBoolean()
-    private val content = PussycatContent(theme)
-    private val scrollPane = PussycatScrollPane(theme)
 
     init {
         title = "${information.name} V${information.version} by ${information.author}"
@@ -54,6 +51,10 @@ abstract class PussycatMainWindow<T>(val information: ApplicationInformation, th
         }
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)
         add(headerBar, BorderLayout.PAGE_START)
+        val content = PussycatContent(theme)
+        val scrollPane = PussycatScrollPane(theme)
+        scrollPane.setViewportView(list)
+        content.add(scrollPane, BorderLayout.CENTER)
         add(content, BorderLayout.CENTER)
         add(footerBar, BorderLayout.PAGE_END)
     }
@@ -72,15 +73,7 @@ abstract class PussycatMainWindow<T>(val information: ApplicationInformation, th
         return ready.get()
     }
 
-    fun setData(items: CopyOnWriteArrayList<T>) {
-        val list = getList(items)
-        scrollPane.setViewportView(list)
-        content.add(list, BorderLayout.CENTER)
-    }
-
     abstract fun getMainMenuItems(): List<PussycatMenu>
-
-    abstract protected fun getList(items: CopyOnWriteArrayList<T>): PussycatList<T>
 
     private fun updateStatus(status: Boolean) {
         ready.set(status)

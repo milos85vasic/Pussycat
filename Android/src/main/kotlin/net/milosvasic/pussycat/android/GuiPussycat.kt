@@ -5,6 +5,7 @@ import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
+import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
@@ -12,11 +13,13 @@ import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
+import java.awt.Dimension
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
+import javax.swing.JLabel
 import javax.swing.WindowConstants
 
 
@@ -24,16 +27,6 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     private var favicon: BufferedImage? = null
     val mainWindow = GuiPussycatMainWindow(information, theme)
-
-    val mainWindowStatusCallback = object : Listener<Boolean> {
-        override fun onEvent(value: Boolean?) {
-            if (value != null) {
-                if (value) {
-                    mainWindow.setData(data.get())
-                }
-            }
-        }
-    }
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
@@ -45,7 +38,6 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
-        mainWindow.SUBSCRIPTIONS.STATUS.subscribe(mainWindowStatusCallback)
     }
 
     val eventsListener = object : Listener<EVENT> {
@@ -53,7 +45,6 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             if (value == EVENT.STOP) {
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
-                mainWindow.SUBSCRIPTIONS.STATUS.unsubscribe(mainWindowStatusCallback)
             }
         }
     }
@@ -101,9 +92,12 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-//        if (mainWindow.isReady()) { // TODO: TBD.
-//            mainWindow.addData(line)
-//        }
+        val item = GuiPussycatListItemFactory.create(
+                line,
+                data.get().indexOf(line),
+                mainWindow.theme
+        )
+        mainWindow.list.add(item)
     }
 
     override fun getPrintableLogLevelValue(): String {
