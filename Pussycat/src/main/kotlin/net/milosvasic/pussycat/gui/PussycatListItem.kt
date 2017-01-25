@@ -30,9 +30,15 @@ class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = nul
         return this
     }
 
-    fun append(text: String, minEms: Int): PussycatListItem {
-        this.text += text
-        val spaces = minEms - text.length
+    fun append(text: String, ems: Int): PussycatListItem {
+        val desiredEms = ems + 5
+        var rawText = text
+        if (text.length > desiredEms) {
+            val suffix = "... "
+            rawText = text.substring(0, desiredEms - suffix.length) + suffix
+        }
+        this.text += rawText
+        val spaces = desiredEms - rawText.length
         if (spaces > 0) {
             for (x in 0..spaces) {
                 this.text += "_"

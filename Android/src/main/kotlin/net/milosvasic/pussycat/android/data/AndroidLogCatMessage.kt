@@ -78,8 +78,8 @@ class AndroidLogCatMessage(
     }
 
     class Lengths {
-        val SPACING_DEFAULT = 12
-        val SPACING_LONG = 15
+        val SPACING_DEFAULT = 20
+        val SPACING_LONG = 30
 
         var PID = 0
         var TID = 0
