@@ -14,6 +14,8 @@ class AndroidLogCatMessage(
 ) {
 
     companion object {
+        val LENGTHS = Lengths()
+
         fun getFrom(message: LogCatMessage): AndroidLogCatMessage {
             return AndroidLogCatMessage(
                     message.logLevel,
@@ -27,8 +29,40 @@ class AndroidLogCatMessage(
         }
     }
 
+    init {
+        val pidLen = "$pid".length
+        if (pidLen > LENGTHS.PID) {
+            LENGTHS.PID = pidLen
+        }
+
+        val tidLen = "$tid".length
+        if (tidLen > LENGTHS.TID) {
+            LENGTHS.TID = tidLen
+        }
+
+        if (appName.length > LENGTHS.APP_NAME) {
+            LENGTHS.APP_NAME = appName.length
+        }
+
+        if (tag.length > LENGTHS.TAG) {
+            LENGTHS.TAG = tag.length
+        }
+
+        if (time.length > LENGTHS.TIME) {
+            LENGTHS.TIME = time.length
+        }
+    }
+
     override fun toString(): String {
         return "$time: ${logLevel.priorityLetter}/$logLevel($pid): $msg"
+    }
+
+    class Lengths {
+        var PID = 0
+        var TID = 0
+        var APP_NAME = 0
+        var TAG = 0
+        var TIME = 0
     }
 
 }

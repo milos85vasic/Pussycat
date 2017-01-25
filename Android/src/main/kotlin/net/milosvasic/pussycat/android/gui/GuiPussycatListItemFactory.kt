@@ -34,14 +34,14 @@ class GuiPussycatListItemFactory {
                 }
             }
 
-            // "$time $pid $tid $appName $tag: ${line.msg}"
+            val addSpace = 5
             val color = getTextColor()
             val item = PussycatListItem(theme, index, color)
-                    .append(value.time, 15)
-                    .append("${value.pid}", 10)
-                    .append("${value.tid}", 10)
-                    .append(value.appName, 20)
-                    .append(value.tag, 10)
+                    .append(value.time, AndroidLogCatMessage.LENGTHS.TIME + addSpace)
+                    .append("${value.pid}", AndroidLogCatMessage.LENGTHS.PID + addSpace)
+                    .append("${value.tid}", AndroidLogCatMessage.LENGTHS.TID + addSpace)
+                    .append(value.appName, AndroidLogCatMessage.LENGTHS.APP_NAME + addSpace)
+                    .append(value.tag, AndroidLogCatMessage.LENGTHS.TAG + addSpace)
                     .append(value.msg)
 
             return item
