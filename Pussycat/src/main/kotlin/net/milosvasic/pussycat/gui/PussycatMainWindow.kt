@@ -8,7 +8,9 @@ import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
+import javax.swing.JButton
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
@@ -21,6 +23,7 @@ abstract class PussycatMainWindow<T>(val information: ApplicationInformation, th
     }
 
     private val ready = AtomicBoolean()
+    private val content = PussycatContent(theme)
     private val scrollPane = PussycatScrollPane(theme)
 
     init {
@@ -49,9 +52,6 @@ abstract class PussycatMainWindow<T>(val information: ApplicationInformation, th
             enableOSXFullscreen()
             requestOSXFullscreen(this)
         }
-        val content = PussycatContent(theme)
-        scrollPane.setViewportView(getList())
-        content.add(scrollPane, BorderLayout.CENTER)
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)
         add(headerBar, BorderLayout.PAGE_START)
         add(content, BorderLayout.CENTER)
@@ -72,17 +72,15 @@ abstract class PussycatMainWindow<T>(val information: ApplicationInformation, th
         return ready.get()
     }
 
-    fun addData(item: T) {
-        getList().listModel.addElement(item)
-    }
-
-    fun clearData() {
-        getList().listModel.clear()
+    fun setData(items: CopyOnWriteArrayList<T>) {
+        val list = getList(items)
+        scrollPane.setViewportView(list)
+        content.add(list, BorderLayout.CENTER)
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>
 
-    abstract fun getList(): PussycatList<T>
+    abstract protected fun getList(items: CopyOnWriteArrayList<T>): PussycatList<T>
 
     private fun updateStatus(status: Boolean) {
         ready.set(status)

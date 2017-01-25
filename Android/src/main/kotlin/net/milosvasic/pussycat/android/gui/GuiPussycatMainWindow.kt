@@ -6,15 +6,12 @@ import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.theme.Theme
+import java.util.concurrent.CopyOnWriteArrayList
 
 class GuiPussycatMainWindow(information: ApplicationInformation, theme: Theme) : PussycatMainWindow<AndroidLogCatMessage>(information, theme) {
 
-    private val list = GuiPussycatList(theme)
+    private var list: GuiPussycatList? = null
     private val popupMenuItems = mutableListOf<PussycatMenuItemDefinition>()
-
-    init {
-        list.visibleRowCount = 10
-    }
 
     override fun getMainMenuItems(): List<PussycatMenu> {
         val items = mutableListOf<PussycatMenu>()
@@ -34,8 +31,11 @@ class GuiPussycatMainWindow(information: ApplicationInformation, theme: Theme) :
         popupMenuItems.addAll(items)
     }
 
-    override fun getList(): GuiPussycatList {
-        return list
+    override fun getList(items: CopyOnWriteArrayList<AndroidLogCatMessage>): GuiPussycatList {
+        if (list == null) {
+            list = GuiPussycatList(items, theme)
+        }
+        return list as GuiPussycatList
     }
 
 }

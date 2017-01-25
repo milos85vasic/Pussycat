@@ -29,15 +29,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun onEvent(value: Boolean?) {
             if (value != null) {
                 if (value) {
-                    if (!data.get().isEmpty()) {
-                        Thread(Runnable {
-                            println("Data start") // TODO: Move to footer bar as a message
-                            for (item in data.get()) {
-                                mainWindow.addData(item)
-                            }
-                            println("Data end") // TODO: Move to footer bar as a message
-                        }).start()
-                    }
+                    mainWindow.setData(data.get())
                 }
             }
         }
@@ -109,9 +101,9 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-        if (mainWindow.isReady()) {
-            mainWindow.addData(line)
-        }
+//        if (mainWindow.isReady()) { // TODO: TBD.
+//            mainWindow.addData(line)
+//        }
     }
 
     override fun getPrintableLogLevelValue(): String {
