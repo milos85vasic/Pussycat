@@ -5,12 +5,12 @@ import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.gui.configuration.PussycatMainWindowConfiguration
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
-import java.awt.event.ActionListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import java.util.concurrent.atomic.AtomicBoolean
@@ -32,9 +32,24 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val STATUS: Listeners<Boolean> = Listeners.obtain()
     }
 
+    val scrollbarEventsListener = object : Listener<SCROLLING_EVENT> {
+        override fun onEvent(value: SCROLLING_EVENT?) {
+            when (value) {
+                SCROLLING_EVENT.BOTTOM_REACHED -> {
+                    if (!configuration.isScrollbarAnchored()) {
+                        configuration.setScrollbarAnchored(true)
+                    }
+                }
+                SCROLLING_EVENT.TOP_REACHED -> {
+                    // reached the top
+                }
+            }
+        }
+    }
+
     val scrollbarAnchoringListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
-            if(value!=null) {
+            if (value != null) {
                 println("Anchoring: [ $value ]")
             }
         }
@@ -89,6 +104,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         add(headerBar, BorderLayout.PAGE_START)
         val content = PussycatContent(theme)
         scrollPane.setViewportView(list)
+        scrollPane.scrollingEvents.subscribe(scrollbarEventsListener)
         content.add(scrollPane, BorderLayout.CENTER)
         add(content, BorderLayout.CENTER)
         add(footerBar, BorderLayout.PAGE_END)
@@ -102,6 +118,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     override fun close() {
         configuration.scrollbarAnchoring.unsubscribe(scrollbarAnchoringListener)
+        scrollPane.scrollingEvents.unsubscribe(scrollbarEventsListener)
         updateStatus(false)
         super.close()
     }

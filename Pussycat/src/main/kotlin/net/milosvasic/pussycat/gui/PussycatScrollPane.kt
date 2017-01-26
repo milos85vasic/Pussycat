@@ -1,18 +1,24 @@
 package net.milosvasic.pussycat.gui
 
 
+import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
+import net.milosvasic.pussycat.listeners.Listeners
 import java.awt.*
 import javax.swing.JComponent
 import javax.swing.JScrollPane
 import javax.swing.plaf.basic.BasicScrollBarUI
 import javax.swing.JButton
 import java.awt.RenderingHints
+import java.awt.event.AdjustmentEvent
+import java.awt.event.AdjustmentListener
 
 
-class PussycatScrollPane(val theme: Theme) : JScrollPane() {
+class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
+
+    val scrollingEvents: Listeners<SCROLLING_EVENT> = Listeners.obtain()
 
     init {
         isOpaque = true
@@ -22,6 +28,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane() {
         horizontalScrollBar.ui = PussycatScrollBarUI(theme)
         verticalScrollBar.unitIncrement = 16
         horizontalScrollBar.unitIncrement = 16
+        verticalScrollBar.addAdjustmentListener(this)
     }
 
     override fun paintComponent(g: Graphics?) {
@@ -99,6 +106,21 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane() {
             return jButton
         }
 
+    }
+
+    override fun adjustmentValueChanged(e: AdjustmentEvent?) {
+        val extent = verticalScrollBar.model.extent
+        val value = verticalScrollBar.value
+        val max = verticalScrollBar.maximum
+        val min = verticalScrollBar.minimum
+        when (value + extent) {
+            max -> {
+                scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_REACHED)
+            }
+            extent -> {
+                scrollingEvents.notify(SCROLLING_EVENT.TOP_REACHED)
+            }
+        }
     }
 
 }
