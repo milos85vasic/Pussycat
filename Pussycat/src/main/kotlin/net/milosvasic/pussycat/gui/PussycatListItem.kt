@@ -8,6 +8,10 @@ import javax.swing.JLabel
 
 class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = null) : JLabel() {
 
+    companion object {
+        val SPACING = "  "
+    }
+
     init {
         isOpaque = true
         val intensity: INTENSITY
@@ -36,7 +40,7 @@ class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = nul
             val spaces = (ems + 3) - rawText.length
             if (spaces > 0) {
                 for (x in 0..spaces) {
-                    this.text += "  "
+                    this.text += SPACING
                 }
             }
         }

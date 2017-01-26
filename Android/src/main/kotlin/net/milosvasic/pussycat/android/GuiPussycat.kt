@@ -270,11 +270,11 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
             for (itemPair in itemPairs) {
                 val spaces = itemPair.second
                 for (x in 0..spaces) {
-                    builder.append("  ")
+                    builder.append(PussycatListItem.SPACING)
                 }
             }
             for (x in 0..AndroidLogCatMessage.LENGTHS.SPACING_DEFAULT) {
-                builder.append("  ")
+                builder.append(PussycatListItem.SPACING)
             }
             builder.append(stacktraceItem)
             stacktraceListItemPairs.add(Pair(builder.toString(), AndroidLogCatMessage.LENGTHS.NO_SPACING_APPLIED))
