@@ -9,6 +9,7 @@ import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
 import java.util.concurrent.atomic.AtomicBoolean
+import javax.swing.BoxLayout
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
@@ -23,6 +24,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private val ready = AtomicBoolean()
     private val busy = AtomicBoolean()
     private val list = PussycatList(theme)
+    private val scrollPane = PussycatScrollPane(theme)
 
     init {
         title = "${information.name} V${information.version} by ${information.author}"
@@ -53,7 +55,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)
         add(headerBar, BorderLayout.PAGE_START)
         val content = PussycatContent(theme)
-        val scrollPane = PussycatScrollPane(theme)
         scrollPane.setViewportView(list)
         content.add(scrollPane, BorderLayout.CENTER)
         add(content, BorderLayout.CENTER)
@@ -84,6 +85,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     fun addContentItem(item: PussycatListItem) {
         list.add(item)
+        list.validate()
+        contentPane.validate()
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>

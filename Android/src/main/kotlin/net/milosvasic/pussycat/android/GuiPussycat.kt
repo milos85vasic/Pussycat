@@ -12,7 +12,9 @@ import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
+import net.milosvasic.pussycat.logging.LOG_TYPE
 import net.milosvasic.pussycat.os.OS
+import java.awt.Color
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
@@ -21,7 +23,7 @@ import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
 
-class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPussycat() {
+class GuiPussycat(information: ApplicationInformation, val theme: Theme) : AndroidPussycat() {
 
     private var favicon: BufferedImage? = null
     val mainWindow = GuiPussycatMainWindow(information, theme)
@@ -37,12 +39,24 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
                 Thread(Runnable {
+                    println("START ...")
+
                     Thread.currentThread().priority = Thread.MAX_PRIORITY
                     mainWindow.setBusy(true)
+                    val pussycatListItems = mutableListOf<PussycatListItem>()
                     for (item in data.get()) {
-                        sendToMainWindowList(item)
+                        println("START 1 ...")
+                        pussycatListItems.addAll(getPussycatListItems(item))
+                        println("STOP 1 ...")
+                    }
+                    for (pussycatListItem in pussycatListItems) {
+                        println("START 2 ...")
+                        mainWindow.addContentItem(pussycatListItem)
+                        println("STOP 2 ...")
                     }
                     mainWindow.setBusy(false)
+
+                    println("STOP ...")
                 }).start()
             }
         }
@@ -108,7 +122,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     override fun printLine(line: AndroidLogCatMessage) {
         if (mainWindow.isReady() && !mainWindow.isBusy()) {
-            sendToMainWindowList(line)
+            getPussycatListItems(line)
         }
     }
 
@@ -209,13 +223,67 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         return list
     }
 
-    private fun sendToMainWindowList(line: AndroidLogCatMessage) {
+    private fun getPussycatListItems(line: AndroidLogCatMessage): List<PussycatListItem> {
+        val pussycatListItems = mutableListOf<PussycatListItem>()
+
+        val index = data.get().indexOf(line)
+
+        val color = when (line.logLevel) {
+            Log.LogLevel.DEBUG -> {
+                theme.getTextColor(LOG_TYPE.DEBUG)
+            }
+            Log.LogLevel.INFO -> {
+                theme.getTextColor(LOG_TYPE.INFORMATION)
+            }
+            Log.LogLevel.WARN -> {
+                theme.getTextColor(LOG_TYPE.WARNING)
+            }
+            Log.LogLevel.ERROR -> {
+                theme.getTextColor(LOG_TYPE.ERROR)
+            }
+            else -> {
+                theme.getTextColor(LOG_TYPE.VERBOSE)
+            }
+        }
+
+        val itemPairs = mutableListOf<Pair<String, Int>>()
+        itemPairs.add(Pair(line.time, AndroidLogCatMessage.LENGTHS.SPACING_DEFAULT))
+        itemPairs.add(Pair("${line.pid}", AndroidLogCatMessage.LENGTHS.SPACING_SHORT))
+        itemPairs.add(Pair("${line.tid}", AndroidLogCatMessage.LENGTHS.SPACING_SHORT))
+        itemPairs.add(Pair(line.appName, AndroidLogCatMessage.LENGTHS.SPACING_LONG))
+        itemPairs.add(Pair(line.tag, AndroidLogCatMessage.LENGTHS.SPACING_LONG))
+        itemPairs.add(Pair(line.msg, AndroidLogCatMessage.LENGTHS.NO_SPACING_APPLIED))
+
         val item = GuiPussycatListItemFactory.create(
-                mainWindow.theme,
-                line,
-                data.get().indexOf(line)
+                theme,
+                itemPairs,
+                index,
+                color
         )
-        mainWindow.addContentItem(item)
+
+        pussycatListItems.add(item)
+
+        for (stacktraceItem in line.getStacktrace()) {
+            val builder = StringBuilder()
+            val stacktraceListItemPairs = mutableListOf<Pair<String, Int>>()
+            for (itemPair in itemPairs) {
+                val spaces = itemPair.second
+                for (x in 0..spaces) {
+                    builder.append("  ")
+                }
+            }
+            builder.append(stacktraceItem)
+            stacktraceListItemPairs.add(Pair(builder.toString(), AndroidLogCatMessage.LENGTHS.NO_SPACING_APPLIED))
+            val stacktraceListItem = GuiPussycatListItemFactory.create(
+                    theme,
+                    stacktraceListItemPairs,
+                    index,
+                    color
+            )
+            pussycatListItems.add(stacktraceListItem)
+        }
+
+        return pussycatListItems
     }
 
 }

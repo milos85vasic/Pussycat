@@ -2,7 +2,7 @@ package net.milosvasic.pussycat.android.data
 
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatMessage
-import java.util.*
+
 
 class AndroidLogCatMessage(
         val logLevel: Log.LogLevel,
@@ -32,6 +32,13 @@ class AndroidLogCatMessage(
         }
     }
 
+    fun getStacktrace(): MutableList<String> {
+        if (stacktrace == null) {
+            stacktrace = mutableListOf<String>()
+        }
+        return stacktrace as MutableList<String>
+    }
+
     fun appendToStacktrace(stacktraceItem: String) {
         if (stacktrace == null) {
             stacktrace = mutableListOf<String>()
@@ -47,6 +54,7 @@ class AndroidLogCatMessage(
         val SPACING_DEFAULT = 20
         val SPACING_SHORT = 10
         val SPACING_LONG = 25
+        val NO_SPACING_APPLIED = 0
     }
 
 }

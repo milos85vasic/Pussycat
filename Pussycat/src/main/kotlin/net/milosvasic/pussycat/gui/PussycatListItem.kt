@@ -25,22 +25,19 @@ class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = nul
         border = theme.getBorder(this)
     }
 
-    fun append(text: String): PussycatListItem {
-        this.text += text
-        return this
-    }
-
     fun append(text: String, ems: Int): PussycatListItem {
         var rawText = text
-        if (text.length > ems) {
+        if (text.length > ems && ems > 0) {
             val suffix = "... "
             rawText = text.substring(0, ems - suffix.length) + suffix
         }
         this.text += rawText
-        val spaces = (ems + 3) - rawText.length
-        if (spaces > 0) {
-            for (x in 0..spaces) {
-                this.text += "  "
+        if(ems > 0) {
+            val spaces = (ems + 3) - rawText.length
+            if (spaces > 0) {
+                for (x in 0..spaces) {
+                    this.text += "  "
+                }
             }
         }
         return this
