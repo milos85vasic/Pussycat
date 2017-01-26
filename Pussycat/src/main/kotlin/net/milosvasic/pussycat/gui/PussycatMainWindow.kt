@@ -88,8 +88,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val barHeight = (screenSize.height / 100) * 3
         val headerBar = PussycatBar(theme, screenSize.width, barHeight * 2)
         headerBar.layout = BoxLayout(headerBar, BoxLayout.PAGE_AXIS)
-        val margin = EmptyBorder(10, 0, 0, 0)
-        headerBar.border = CompoundBorder(headerBar.border, margin)
         val mainMenu = createMainMenu()
         val menuBar = PussycatBar(theme, screenSize.width, barHeight)
         for (item in mainMenu) {
