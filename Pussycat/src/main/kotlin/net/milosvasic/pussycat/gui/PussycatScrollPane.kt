@@ -73,7 +73,12 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane() {
                 g2.setRenderingHints(qualityHints)
                 g2.translate(thumbBounds.x, thumbBounds.y)
                 g2.color = color
-                g2.fillRoundRect(0, 0, w, h, w / 2, w / 2)
+                val corners = 10
+                if (componentOrientation.isHorizontal) {
+                    g2.fillRoundRect(0, 0, w, h, corners, corners)
+                } else {
+                    g2.fillRoundRect(0, 0, w, h, corners, corners)
+                }
             }
         }
 
