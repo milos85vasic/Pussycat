@@ -7,6 +7,7 @@ import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
+import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
@@ -26,6 +27,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
 
     private var favicon: BufferedImage? = null
     val mainWindow = GuiPussycatMainWindow(information, theme)
+    val pussycatListItems = mutableListOf<PussycatListItem>()
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
@@ -40,10 +42,6 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
                 Thread(Runnable {
                     Thread.currentThread().priority = Thread.MAX_PRIORITY
                     mainWindow.setBusy(true)
-                    val pussycatListItems = mutableListOf<PussycatListItem>()
-                    for (item in data.get()) {
-                        pussycatListItems.addAll(getPussycatListItems(item))
-                    }
                     for (pussycatListItem in pussycatListItems) {
                         mainWindow.addContentItem(pussycatListItem)
                     }
@@ -72,7 +70,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
     val filesystemProgressListener = object : Listener<Double> {
         override fun onEvent(value: Double?) {
             val s = String.format("%.0f", value)
-            splashScreen.updateStatus("Loading: $s%")
+            splashScreen.updateStatus("${Messages.PARSING}: $s%")
         }
     }
 
@@ -156,6 +154,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
                     } else {
                         execute(ANDROID_COMMAND.PARENT.FILESYSTEM, arrayOf(file))
                     }
+                    getPussycatListItems()
                     splashScreen.updateStatus("Loading complete")
                     splashScreen.finish()
                 }
@@ -212,6 +211,17 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
             }
         }
         return list
+    }
+
+    private fun getPussycatListItems() {
+        val count = data.get().size
+        for (x in 0..count - 1) {
+            val item = data.get()[x]
+            pussycatListItems.addAll(getPussycatListItems(item))
+            val value: Double = (x * 100.0) / count
+            val s = String.format("%.0f", value)
+            splashScreen.updateStatus("${Messages.GENERATING_UI}: $s%")
+        }
     }
 
     private fun getPussycatListItems(line: AndroidLogCatMessage): List<PussycatListItem> {
