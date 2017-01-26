@@ -31,7 +31,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
-            mainWindow.SUBSCRIPTIONS.STATUS.subscribe(mainWindowStatusListener)
+            mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
             mainWindow.open()
         }
     }
@@ -62,7 +62,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
             if (value == EVENT.STOP) {
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
-                mainWindow.SUBSCRIPTIONS.STATUS.unsubscribe(mainWindowStatusListener)
+                mainWindow.subscriptions.STATUS.unsubscribe(mainWindowStatusListener)
             }
         }
     }

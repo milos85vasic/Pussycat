@@ -3,30 +3,64 @@ package net.milosvasic.pussycat.gui
 
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
+import net.milosvasic.pussycat.gui.configuration.PussycatMainWindowConfiguration
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.theme.Theme
+import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
+import java.awt.event.ActionListener
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
+
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
 
-    val SUBSCRIPTIONS = Subscriptions()
-
-    class Subscriptions {
-        val STATUS: Listeners<Boolean> = Listeners.obtain()
-    }
+    val subscriptions = Subscriptions()
+    val configuration = PussycatMainWindowConfiguration()
 
     private val ready = AtomicBoolean()
     private val busy = AtomicBoolean()
     private val list = PussycatList(theme)
     private val scrollPane = PussycatScrollPane(theme)
 
+    class Subscriptions {
+        val STATUS: Listeners<Boolean> = Listeners.obtain()
+    }
+
+    val scrollbarAnchoringListener = object : Listener<Boolean> {
+        override fun onEvent(value: Boolean?) {
+            if(value!=null) {
+                println("Anchoring: [ $value ]")
+            }
+        }
+    }
+
+    val listClickListener = object : MouseListener {
+        override fun mouseClicked(e: MouseEvent?) {
+            configuration.setScrollbarAnchored(false)
+        }
+
+        override fun mouseEntered(e: MouseEvent?) {
+        }
+
+        override fun mouseReleased(e: MouseEvent?) {
+        }
+
+        override fun mouseExited(e: MouseEvent?) {
+        }
+
+        override fun mousePressed(e: MouseEvent?) {
+        }
+    }
+
     init {
         title = "${information.name} V${information.version} by ${information.author}"
+        list.addMouseListener(listClickListener)
     }
 
     override fun initialize() {
@@ -58,6 +92,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         content.add(scrollPane, BorderLayout.CENTER)
         add(content, BorderLayout.CENTER)
         add(footerBar, BorderLayout.PAGE_END)
+        configuration.scrollbarAnchoring.subscribe(scrollbarAnchoringListener)
     }
 
     override fun open() {
@@ -66,6 +101,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     override fun close() {
+        configuration.scrollbarAnchoring.unsubscribe(scrollbarAnchoringListener)
         updateStatus(false)
         super.close()
     }
@@ -84,15 +120,18 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     fun addContentItem(item: PussycatListItem) {
         list.add(item)
-        list.validate()
         contentPane.validate()
+        if (configuration.isScrollbarAnchored()) {
+            val vertical = scrollPane.verticalScrollBar
+            vertical.value = vertical.maximum
+        }
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>
 
     private fun updateStatus(status: Boolean) {
         ready.set(status)
-        SUBSCRIPTIONS.STATUS.notify(status)
+        subscriptions.STATUS.notify(status)
     }
 
     private fun createMainMenu(): List<PussycatMenu> {
