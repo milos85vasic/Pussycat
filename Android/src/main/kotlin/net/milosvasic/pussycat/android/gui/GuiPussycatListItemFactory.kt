@@ -35,11 +35,11 @@ class GuiPussycatListItemFactory {
 
             val color = getTextColor()
             val item = PussycatListItem(theme, index, color)
-                    .append(value.time, AndroidLogCatMessage.LENGTHS.TIME)
-                    .append("${value.pid}", AndroidLogCatMessage.LENGTHS.PID)
-                    .append("${value.tid}", AndroidLogCatMessage.LENGTHS.TID)
-                    .append(value.appName, AndroidLogCatMessage.LENGTHS.APP_NAME)
-                    .append(value.tag, AndroidLogCatMessage.LENGTHS.TAG)
+                    .append(value.time, AndroidLogCatMessage.LENGTHS.SPACING_DEFAULT)
+                    .append("${value.pid}", AndroidLogCatMessage.LENGTHS.SPACING_SHORT)
+                    .append("${value.tid}", AndroidLogCatMessage.LENGTHS.SPACING_SHORT)
+                    .append(value.appName, AndroidLogCatMessage.LENGTHS.SPACING_LONG)
+                    .append(value.tag, AndroidLogCatMessage.LENGTHS.SPACING_LONG)
                     .append(value.msg)
 
             return item

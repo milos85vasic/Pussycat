@@ -14,7 +14,7 @@ class AndroidLogCatMessage(
 ) {
 
     companion object {
-        val LENGTHS = Lengths()
+        val LENGTHS = Lengths
 
         fun getFrom(message: LogCatMessage): AndroidLogCatMessage {
             return AndroidLogCatMessage(
@@ -29,63 +29,14 @@ class AndroidLogCatMessage(
         }
     }
 
-    init {
-        val pidLen = "$pid".length
-        if (pidLen > LENGTHS.PID) {
-            if (pidLen >= LENGTHS.SPACING_DEFAULT) {
-                LENGTHS.PID = LENGTHS.SPACING_DEFAULT
-            } else {
-                LENGTHS.PID = pidLen
-            }
-        }
-
-        val tidLen = "$tid".length
-        if (tidLen > LENGTHS.TID) {
-            if (tidLen >= LENGTHS.SPACING_DEFAULT) {
-                LENGTHS.TID = LENGTHS.SPACING_DEFAULT
-            } else {
-                LENGTHS.TID = tidLen
-            }
-        }
-
-        if (appName.length > LENGTHS.APP_NAME) {
-            if (appName.length >= LENGTHS.SPACING_LONG) {
-                LENGTHS.APP_NAME = LENGTHS.SPACING_LONG
-            } else {
-                LENGTHS.APP_NAME = appName.length
-            }
-        }
-
-        if (tag.length > LENGTHS.TAG) {
-            if (tag.length >= LENGTHS.SPACING_LONG) {
-                LENGTHS.TAG = LENGTHS.SPACING_LONG
-            } else {
-                LENGTHS.TAG = tag.length
-            }
-        }
-
-        if (time.length > LENGTHS.TIME) {
-            if (time.length >= LENGTHS.SPACING_LONG) {
-                LENGTHS.TIME = LENGTHS.SPACING_LONG
-            } else {
-                LENGTHS.TIME = time.length
-            }
-        }
-    }
-
     override fun toString(): String {
         return "$time: ${logLevel.priorityLetter}/$logLevel($pid): $msg"
     }
 
-    class Lengths {
-        val SPACING_DEFAULT = 20
-        val SPACING_LONG = 30
-
-        var PID = 0
-        var TID = 0
-        var APP_NAME = 0
-        var TAG = 0
-        var TIME = 0
+    object Lengths {
+        val SPACING_DEFAULT = 15
+        val SPACING_SHORT = 10
+        val SPACING_LONG = 20
     }
 
 }
