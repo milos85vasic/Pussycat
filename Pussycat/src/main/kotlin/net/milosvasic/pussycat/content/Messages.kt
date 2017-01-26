@@ -8,6 +8,7 @@ object Messages {
     val PARSING = "Parsing data"
     val ERROR_READING_LINE = "Error reading line."
     val LOADING_DATA = "Loading data. Please wait."
+    val INITIALIZING_TOOLBAR = "Initializing toolbar"
     val GENERATING_UI = "Generating UI for parsed data"
     val PUSSYCAT_SHUTDOWN = "We are shutting down Pussycat."
     val NO_DATA_MATCHING_PARAMETERS = "No data matching parameters."

@@ -249,9 +249,6 @@ open class Darcula : Theme() {
             is PussycatMenu -> {
                 CompoundBorder(comp.border, EmptyBorder(10, 10, 10, 10))
             }
-//            is PussycatScrollPane -> {
-//                CompoundBorder(comp.border, EmptyBorder(10, 0, 10, 0))
-//            }
             else -> {
                 CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
             }
