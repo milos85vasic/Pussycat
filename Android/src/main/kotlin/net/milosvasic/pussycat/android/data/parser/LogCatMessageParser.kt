@@ -213,17 +213,8 @@ class LogCatMessageParser {
                     val identifier = getIdentifier(message)
                     val existing = messages[identifier]
                     if (existing != null) {
-                        val newMessage = AndroidLogCatMessage(
-                                message.logLevel,
-                                message.pid,
-                                message.tid,
-                                message.appName,
-                                message.tag,
-                                message.time,
-                                "${existing.msg}\n\t${message.msg}"
-                        )
-                        messages[identifier] = newMessage
-                        notify(true, newMessage)
+                        existing.appendToStacktrace(message.msg)
+                        notify(true, existing)
                     } else {
                         lastMessage = message
                         messages.put(identifier, message)
@@ -238,17 +229,8 @@ class LogCatMessageParser {
                     val identifier = "${header.timestamp}_${header.pid}_${header.tid}_${header.appName}_${header.tag}"
                     val existing = messages[identifier]
                     if (existing != null) {
-                        val newMessage = AndroidLogCatMessage(
-                                header.logLevel,
-                                header.pid,
-                                header.tid,
-                                header.appName,
-                                header.tag,
-                                header.timestamp.toString(),
-                                "${existing.msg}\n\t$line"
-                        )
-                        messages[identifier] = newMessage
-                        notify(true, newMessage)
+                        existing.appendToStacktrace(line)
+                        notify(true, existing)
                     } else {
                         val message = AndroidLogCatMessage.getFrom(LogCatMessage(header, line))
                         lastMessage = message
@@ -256,7 +238,7 @@ class LogCatMessageParser {
                         notify(true, message)
                     }
                 } else {
-                    val message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, Messages.PPE, Messages.PPE, Messages.PPE, "Log not matched,\n\t$line\n")
+                    val message = AndroidLogCatMessage(Log.LogLevel.ERROR, -1, -1, Messages.PPE, Messages.PPE, Messages.PPE, "${Messages.PPE}: $line")
                     messages.put(System.currentTimeMillis().toString(), message)
                     notify(false, message)
                 }

@@ -37,16 +37,7 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<AndroidLogCatMessage>,
             val existing = data.last();
             val existingIdentifier = getIdentifier(existing)
             if (existing != null && identifier == existingIdentifier) {
-                val newMessage = AndroidLogCatMessage(
-                        message.logLevel,
-                        message.pid,
-                        message.tid,
-                        message.appName,
-                        message.tag,
-                        message.time,
-                        "${existing.msg}\n\t${message.msg}"
-                )
-                data[data.lastIndex] = newMessage
+                existing.appendToStacktrace(message.msg)
             } else {
                 data.add(message)
             }
