@@ -36,11 +36,14 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val mainWindowStatusListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
-                mainWindow.setBusy(true)
-                for (item in data.get()) {
-                    sendToMainWindowList(item)
-                }
-                mainWindow.setBusy(false)
+                Thread(Runnable {
+                    Thread.currentThread().priority = Thread.MAX_PRIORITY
+                    mainWindow.setBusy(true)
+                    for (item in data.get()) {
+                        sendToMainWindowList(item)
+                    }
+                    mainWindow.setBusy(false)
+                }).start()
             }
         }
     }
