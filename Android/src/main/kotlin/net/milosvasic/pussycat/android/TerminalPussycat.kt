@@ -158,6 +158,11 @@ class TerminalPussycat : AndroidPussycat() {
         }
         val message = "$time$pid$tid$appName$tag: ${line.msg}"
         printLine(message, line.logLevel)
+
+        for (stackTrace in line.getStacktrace()) {
+            val stackTraceLine = "\t\t\t$stackTrace"
+            printLine(stackTraceLine, line.logLevel)
+        }
     }
 
     override fun printLine(text: String, logLevel: Log.LogLevel) {
