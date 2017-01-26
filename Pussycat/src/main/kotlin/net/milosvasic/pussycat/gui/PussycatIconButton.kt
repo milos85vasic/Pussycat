@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.gui
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
+import java.awt.Dimension
 import java.awt.Image
 import java.util.*
 import javax.swing.ImageIcon
@@ -12,7 +13,7 @@ import javax.swing.JButton
 class PussycatIconButton(val size: Int, val theme: Theme, val icons: HashMap<Int, Image>) : JButton() {
 
     init {
-        setSize(size, size)
+        preferredSize = Dimension(size, size)
         isOpaque = true
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         border = theme.getBorder(this)
