@@ -20,6 +20,8 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane() {
         border = theme.getBorder(this)
         verticalScrollBar.ui = PussycatScrollBarUI(theme)
         horizontalScrollBar.ui = PussycatScrollBarUI(theme)
+        verticalScrollBar.unitIncrement = 16
+        horizontalScrollBar.unitIncrement = 16
     }
 
     override fun paintComponent(g: Graphics?) {
