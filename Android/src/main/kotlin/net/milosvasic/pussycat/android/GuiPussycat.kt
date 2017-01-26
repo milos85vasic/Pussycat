@@ -14,7 +14,6 @@ import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import net.milosvasic.pussycat.os.OS
-import java.awt.Color
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
@@ -39,24 +38,16 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
                 Thread(Runnable {
-                    println("START ...")
-
                     Thread.currentThread().priority = Thread.MAX_PRIORITY
                     mainWindow.setBusy(true)
                     val pussycatListItems = mutableListOf<PussycatListItem>()
                     for (item in data.get()) {
-                        println("START 1 ...")
                         pussycatListItems.addAll(getPussycatListItems(item))
-                        println("STOP 1 ...")
                     }
                     for (pussycatListItem in pussycatListItems) {
-                        println("START 2 ...")
                         mainWindow.addContentItem(pussycatListItem)
-                        println("STOP 2 ...")
                     }
                     mainWindow.setBusy(false)
-
-                    println("STOP ...")
                 }).start()
             }
         }
@@ -271,6 +262,9 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
                 for (x in 0..spaces) {
                     builder.append("  ")
                 }
+            }
+            for (x in 0..AndroidLogCatMessage.LENGTHS.SPACING_DEFAULT) {
+                builder.append("  ")
             }
             builder.append(stacktraceItem)
             stacktraceListItemPairs.add(Pair(builder.toString(), AndroidLogCatMessage.LENGTHS.NO_SPACING_APPLIED))

@@ -9,7 +9,6 @@ import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
 import java.util.concurrent.atomic.AtomicBoolean
-import javax.swing.BoxLayout
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
