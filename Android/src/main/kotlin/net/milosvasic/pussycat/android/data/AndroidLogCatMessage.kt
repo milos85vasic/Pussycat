@@ -44,9 +44,9 @@ class AndroidLogCatMessage(
     }
 
     object Lengths {
-        val SPACING_DEFAULT = 15
+        val SPACING_DEFAULT = 20
         val SPACING_SHORT = 10
-        val SPACING_LONG = 20
+        val SPACING_LONG = 25
     }
 
 }
