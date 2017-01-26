@@ -12,6 +12,7 @@ class PussycatList(val theme: Theme) : JPanel() {
 
     init {
         isOpaque = true
+        layout = BoxLayout(this, BoxLayout.PAGE_AXIS)
         background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
         font = theme.getFont(FONT_WEIGHT.REGULAR).deriveFont(theme.getFontSize())
@@ -20,9 +21,6 @@ class PussycatList(val theme: Theme) : JPanel() {
     override fun paintComponent(g: Graphics?) {
         if (border != theme.getBorder(this)) {
             border = theme.getBorder(this)
-        }
-        if (layout !is BoxLayout) {
-            layout = BoxLayout(this, BoxLayout.PAGE_AXIS)
         }
         val g2 = g as Graphics2D
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP)

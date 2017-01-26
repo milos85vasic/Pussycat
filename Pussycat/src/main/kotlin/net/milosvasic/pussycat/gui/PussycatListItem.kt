@@ -40,7 +40,7 @@ class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = nul
         val spaces = (ems + 3) - rawText.length
         if (spaces > 0) {
             for (x in 0..spaces) {
-                this.text += "_"
+                this.text += "  "
             }
         }
         return this
