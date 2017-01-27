@@ -12,6 +12,7 @@ import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
+import java.awt.event.ActionListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import java.util.*
@@ -190,28 +191,73 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val items = mutableListOf<PussycatIconButton?>()
         anchor = getAnchorButton(size)
         items.add(anchor)
+        items.add(getGoTopButton(size))
+        items.add(getGoBottomButton(size))
         return items
     }
 
     private fun getAnchorButton(size: Int): PussycatIconButton? {
-        val anchorIcons = HashMap<Int, Image>()
-        val iconDefault = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/anchor.png"))
-        val iconActive = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/anchor_active.png"))
+        val definition = PussycatIconButtonDefinition(
+                size,
+                "anchor",
+                "anchor_active",
+                Labels.ANCHOR_BTN_TOOLTIP,
+                ActionListener { configuration.setScrollbarAnchored(!configuration.isScrollbarAnchored()) }
+        )
+        val btn = getToolbarButton(definition)
+        if (configuration.isScrollbarAnchored()) {
+            btn.setState(PussycatIconButton.STATE.ACTIVE.value)
+        } else {
+            btn.setState(PussycatIconButton.STATE.DEFAULT.value)
+        }
+        return btn
+    }
+
+    private fun getGoTopButton(size: Int): PussycatIconButton? {
+        val action = ActionListener {
+            configuration.setScrollbarAnchored(true)
+            val vertical = scrollPane.verticalScrollBar
+            vertical.value = vertical.minimum
+        }
+        val definition = PussycatIconButtonDefinition(
+                size,
+                "go_top",
+                "go_top",
+                Labels.GO_TOP_BTN_TOOLTIP,
+                action
+        )
+        return getToolbarButton(definition)
+    }
+
+    private fun getGoBottomButton(size: Int): PussycatIconButton? {
+        val action = ActionListener {
+            configuration.setScrollbarAnchored(false)
+            val vertical = scrollPane.verticalScrollBar
+            vertical.value = vertical.maximum
+        }
+        val definition = PussycatIconButtonDefinition(
+                size,
+                "go_bottom",
+                "go_bottom",
+                Labels.GO_BOTTOM_BTN_TOOLTIP,
+                action
+        )
+        return getToolbarButton(definition)
+    }
+
+    private fun getToolbarButton(definition: PussycatIconButtonDefinition): PussycatIconButton {
+        val size = definition.size
+        val icons = HashMap<Int, Image>()
+        val iconDefault = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/${definition.defaultIcon}.png"))
+        val iconActive = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/${definition.activeIcon}.png"))
         val iconDefaultResized = iconDefault.getScaledInstance(size, size, Image.SCALE_SMOOTH)
         val iconActiveResized = iconActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
-        anchorIcons.put(PussycatIconButton.STATE.DEFAULT.value, iconDefaultResized)
-        anchorIcons.put(PussycatIconButton.STATE.ACTIVE.value, iconActiveResized)
-        val anchor = PussycatIconButton(size, theme, anchorIcons)
-        if (configuration.isScrollbarAnchored()) {
-            anchor.setState(PussycatIconButton.STATE.ACTIVE.value)
-        } else {
-            anchor.setState(PussycatIconButton.STATE.DEFAULT.value)
-        }
-        anchor.toolTipText = Labels.ANCHOR_BTN_TOOLTIP
-        anchor.addActionListener {
-            configuration.setScrollbarAnchored(!configuration.isScrollbarAnchored())
-        }
-        return anchor
+        icons.put(PussycatIconButton.STATE.DEFAULT.value, iconDefaultResized)
+        icons.put(PussycatIconButton.STATE.ACTIVE.value, iconActiveResized)
+        val button = PussycatIconButton(size, theme, icons)
+        button.toolTipText = definition.toolTip
+        button.addActionListener(definition.action)
+        return button
     }
 
 }
