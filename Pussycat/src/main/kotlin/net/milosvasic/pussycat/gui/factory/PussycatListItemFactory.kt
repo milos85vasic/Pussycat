@@ -1,4 +1,6 @@
-package net.milosvasic.pussycat.gui
+package net.milosvasic.pussycat.gui.factory
+
+import net.milosvasic.pussycat.gui.PussycatListItem
 
 interface PussycatListItemFactory<T> {
 

@@ -10,7 +10,6 @@ abstract class Data<T>(val filter: DataFilter<CopyOnWriteArrayList<T>, String>) 
 
     protected var pattern = ""
     protected val data = CopyOnWriteArrayList<T>()
-    val events: Listeners<Pair<T, Int>> = Listeners.obtain()
 
     override fun apply(pattern: String?) {
         this.pattern = pattern ?: ""
@@ -38,12 +37,7 @@ abstract class Data<T>(val filter: DataFilter<CopyOnWriteArrayList<T>, String>) 
         return evaluable(listOf(pattern), operator)
     }
 
-    fun addData(message: T) {
-        val index = appendData(message)
-        events.notify(Pair(message, index))
-    }
-
-    abstract fun appendData(message: T): Int
+    abstract fun addData(message: T)
 
     protected abstract fun evaluable(elements: List<String>): Boolean
 

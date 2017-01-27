@@ -11,6 +11,7 @@ import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
+import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
@@ -61,7 +62,6 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
     val eventsListener = object : Listener<EVENT> {
         override fun onEvent(value: EVENT?) {
             if (value == EVENT.STOP) {
-                data.events.subscribe(pussycatListItemsFactory)
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
                 mainWindow.subscriptions.STATUS.unsubscribe(mainWindowStatusListener)
@@ -88,7 +88,6 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
 
         SUBSCRIPTIONS.EVENTS.subscribe(eventsListener)
         SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.subscribe(filesystemProgressListener)
-        data.events.subscribe(pussycatListItemsFactory)
 
         Runtime.getRuntime().addShutdownHook(hook)
         initialize(args)
@@ -113,12 +112,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-        if (mainWindow.isReady() && !mainWindow.isBusy()) {
-            // TODO: Change this.
-//            val item = getPussycatListItem(line)
-//            pussycatListItems.add(item)
-//            mainWindow.addContentItem(item)
-        }
+        pussycatListItemsFactory.addRawData(line, data.get().indexOf(line))
     }
 
     override fun getPrintableLogLevelValue(): String {
