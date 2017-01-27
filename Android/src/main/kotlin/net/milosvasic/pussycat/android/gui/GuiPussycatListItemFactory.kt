@@ -9,8 +9,6 @@ import net.milosvasic.pussycat.logging.LOG_TYPE
 
 class GuiPussycatListItemFactory(val theme: Theme) : PussycatListItemFactory<AndroidLogCatMessage> {
 
-    // data.get().indexOf(line)
-
     fun getPussycatListItem(line: AndroidLogCatMessage, index: Int): PussycatListItem {
         val color = when (line.logLevel) {
             Log.LogLevel.DEBUG -> {

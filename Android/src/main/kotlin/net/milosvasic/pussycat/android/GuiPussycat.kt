@@ -13,7 +13,6 @@ import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
-import net.milosvasic.pussycat.logging.LOG_TYPE
 import net.milosvasic.pussycat.os.OS
 import java.awt.MenuItem
 import java.awt.PopupMenu
@@ -62,6 +61,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
     val eventsListener = object : Listener<EVENT> {
         override fun onEvent(value: EVENT?) {
             if (value == EVENT.STOP) {
+                data.events.subscribe(pussycatListItemsFactory)
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
                 mainWindow.subscriptions.STATUS.unsubscribe(mainWindowStatusListener)
@@ -88,6 +88,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
 
         SUBSCRIPTIONS.EVENTS.subscribe(eventsListener)
         SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.subscribe(filesystemProgressListener)
+        data.events.subscribe(pussycatListItemsFactory)
 
         Runtime.getRuntime().addShutdownHook(hook)
         initialize(args)
