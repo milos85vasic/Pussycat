@@ -42,10 +42,12 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     val mainWindowStatusListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
-            val from = 0
-            val amount = PussycatListItemsFactory.REQUEST_DELTA
-            val request = PussycatListItemsRequest(from, amount, mainWindow)
-            pussycatListItemsFactory?.requestData(request)
+            if (value != null && value) {
+                val from = 0
+                val amount = PussycatListItemsFactory.REQUEST_DELTA
+                val request = PussycatListItemsRequest(from, amount, mainWindow)
+                pussycatListItemsFactory?.requestData(request)
+            }
         }
     }
 

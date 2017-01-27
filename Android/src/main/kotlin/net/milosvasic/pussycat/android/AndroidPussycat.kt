@@ -147,6 +147,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                         countBytes(line)
                     }
                 }
+                println("DATA COUNT: ${data.get().size}") // TODO: Remove this.
                 apply(data.get(), "")
                 if (!loadingSuccess) {
                     printLine("\nPussycat, serialization problems detected during data loading. Some logcat lines may missing.\n")

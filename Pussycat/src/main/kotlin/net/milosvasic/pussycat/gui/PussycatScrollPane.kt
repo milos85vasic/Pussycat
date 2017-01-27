@@ -113,16 +113,15 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         val extent = verticalScrollBar.model.extent
         val value = verticalScrollBar.value
         val max = verticalScrollBar.maximum
-        if (value + extent <= max - PussycatListItemsFactory.REQUEST_DELTA) {
+        if (value + extent >= (max * 0.7).toInt()) {
             scrollingEvents.notify(SCROLLING_EVENT.REQUEST_DELTA_REACHED)
-        } else {
-            when (value + extent) {
-                max -> {
-                    scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_REACHED)
-                }
-                extent -> {
-                    scrollingEvents.notify(SCROLLING_EVENT.TOP_REACHED)
-                }
+        }
+        when (value + extent) {
+            max -> {
+                scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_REACHED)
+            }
+            extent -> {
+                scrollingEvents.notify(SCROLLING_EVENT.TOP_REACHED)
             }
         }
     }

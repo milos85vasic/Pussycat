@@ -4,7 +4,6 @@ package net.milosvasic.pussycat.gui
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.content.Messages
-import net.milosvasic.pussycat.gui.configuration.PussycatMainWindowConfiguration
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.events.RequestDeltaReachedCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
@@ -15,8 +14,6 @@ import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
 import java.awt.event.ActionListener
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
@@ -25,13 +22,11 @@ import javax.swing.BoxLayout
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), PussycatListItemsRequestCallback {
 
     val subscriptions = Subscriptions()
-    val configuration = PussycatMainWindowConfiguration()
     var requestDeltaReachedCallback: RequestDeltaReachedCallback? = null
 
     private val ready = AtomicBoolean()
     private val busy = AtomicBoolean()
     private val list = PussycatList(theme)
-    private var anchor: PussycatIconButton? = null
     private val scrollPane = PussycatScrollPane(theme)
 
     class Subscriptions {
@@ -42,10 +37,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         override fun onEvent(value: SCROLLING_EVENT?) {
             when (value) {
                 SCROLLING_EVENT.TOP_REACHED -> {
-                    // top reached - latest data already there
+                    // top reached
                 }
                 SCROLLING_EVENT.BOTTOM_REACHED -> {
-                    // bottom reached - load more from the past // TODO: Load more --- deep into past
+                    // bottom reached
                 }
                 SCROLLING_EVENT.REQUEST_DELTA_REACHED -> {
                     requestDeltaReachedCallback?.onDeltaReached(list.componentCount)
@@ -54,39 +49,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         }
     }
 
-    val scrollbarAnchoringListener = object : Listener<Boolean> {
-        override fun onEvent(value: Boolean?) {
-            if (value != null) {
-                if (value) {
-                    anchor?.setState(PussycatIconButton.STATE.ACTIVE.value)
-                } else {
-                    anchor?.setState(PussycatIconButton.STATE.DEFAULT.value)
-                }
-            }
-        }
-    }
-
-    val listClickListener = object : MouseListener {
-        override fun mouseClicked(e: MouseEvent?) {
-            configuration.setScrollbarAnchored(false)
-        }
-
-        override fun mouseEntered(e: MouseEvent?) {
-        }
-
-        override fun mouseReleased(e: MouseEvent?) {
-        }
-
-        override fun mouseExited(e: MouseEvent?) {
-        }
-
-        override fun mousePressed(e: MouseEvent?) {
-        }
-    }
-
     init {
         title = "${information.name} V${information.version} by ${information.author}"
-        list.addMouseListener(listClickListener)
     }
 
     override fun initialize() {
@@ -128,7 +92,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         content.add(scrollPane, BorderLayout.CENTER)
         add(content, BorderLayout.CENTER)
         add(footerBar, BorderLayout.PAGE_END)
-        configuration.scrollbarAnchoring.subscribe(scrollbarAnchoringListener)
     }
 
     override fun open() {
@@ -137,7 +100,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     override fun close() {
-        configuration.scrollbarAnchoring.unsubscribe(scrollbarAnchoringListener)
         scrollPane.scrollingEvents.unsubscribe(scrollbarEventsListener)
         updateStatus(false)
         super.close()
@@ -145,7 +107,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     override fun onData(items: Collection<PussycatListItem>) {
         for (item in items) {
-            addPussycatListItem(item)
+            addPussycatListItem(item, true)
         }
     }
 
@@ -161,12 +123,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         this.busy.set(bussy)
     }
 
-    fun addPussycatListItem(item: PussycatListItem) {
-        list.add(item, 0)
-        contentPane.validate()
-        if (configuration.isScrollbarAnchored()) {
-            val vertical = scrollPane.verticalScrollBar
-            vertical.value = vertical.minimum
+    fun addPussycatListItem(item: PussycatListItem, toTop: Boolean) {
+        if (toTop) {
+            list.add(item, 0)
+            contentPane.validate()
+        } else {
+            list.add(item)
+            contentPane.validate()
         }
     }
 
@@ -200,33 +163,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     fun createToolbar(size: Int): List<PussycatIconButton?> {
         val items = mutableListOf<PussycatIconButton?>()
-        anchor = getAnchorButton(size)
-        items.add(anchor)
         items.add(getGoTopButton(size))
         items.add(getGoBottomButton(size))
         return items
     }
 
-    private fun getAnchorButton(size: Int): PussycatIconButton? {
-        val definition = PussycatIconButtonDefinition(
-                size,
-                "anchor",
-                "anchor_active",
-                Labels.ANCHOR_BTN_TOOLTIP,
-                ActionListener { configuration.setScrollbarAnchored(!configuration.isScrollbarAnchored()) }
-        )
-        val btn = getToolbarButton(definition)
-        if (configuration.isScrollbarAnchored()) {
-            btn.setState(PussycatIconButton.STATE.ACTIVE.value)
-        } else {
-            btn.setState(PussycatIconButton.STATE.DEFAULT.value)
-        }
-        return btn
-    }
-
     private fun getGoTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            configuration.setScrollbarAnchored(true)
             val vertical = scrollPane.verticalScrollBar
             vertical.value = vertical.minimum
         }
@@ -242,7 +185,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoBottomButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            configuration.setScrollbarAnchored(false)
             val vertical = scrollPane.verticalScrollBar
             vertical.value = vertical.maximum
         }

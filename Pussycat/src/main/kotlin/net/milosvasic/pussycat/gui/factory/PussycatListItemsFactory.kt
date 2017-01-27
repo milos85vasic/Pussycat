@@ -3,7 +3,6 @@ package net.milosvasic.pussycat.gui.factory
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.content.Labels
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -17,8 +16,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
     private var pollingThread: Thread? = null
     private val requested = AtomicInteger(REQUEST_DELTA)
     private val queue = LinkedBlockingQueue<Pair<T, Int>>()
+    private var activeRequest: PussycatListItemsRequest? = null
     private val data = ConcurrentHashMap<Int, PussycatListItem>()
-    private val requests = CopyOnWriteArrayList<PussycatListItemsRequest>()
 
     fun addRawData(value: T, index: Int) {
         if (!data.keys.contains(index)) {
@@ -30,8 +29,15 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
     }
 
     fun requestData(request: PussycatListItemsRequest) {
-        requests.add(request)
-        processData()
+        if (activeRequest != null) {
+            println("Request ignored [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
+            return
+        } else {
+            println("Requesting accepted [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
+            activeRequest = request
+            requested.set(request.from + request.amount)
+            processData()
+        }
     }
 
     private fun processData() {
@@ -53,13 +59,12 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 sendData()
             })
             pollingThread?.start()
-        } else {
-            sendData()
         }
     }
 
     private fun sendData() {
-        for (request in requests) {
+        if (activeRequest != null) {
+            val request = activeRequest as PussycatListItemsRequest
             val from = request.from
             val amount = request.amount
             val callback = request.callback
@@ -73,9 +78,11 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     items.add(data.values.elementAt(x))
                 }
                 callback.onData(items)
-                requests.remove(request)
+                activeRequest = null
                 println("Send data")
             }
+        } else {
+            println("No active request to send the data!") // TODO: Remove this
         }
     }
 
