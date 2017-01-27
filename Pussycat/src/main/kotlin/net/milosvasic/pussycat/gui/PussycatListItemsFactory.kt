@@ -20,7 +20,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) : Lis
     }
 
     private fun processData() {
-        if (pollingThread == null) {
+        if (pollingThread == null && data.size <= requested.get()) {
             pollingThread = Thread(Runnable {
                 Thread.currentThread().name = Labels.POLLING_THREAD
                 while (!Thread.currentThread().isInterrupted && !queue.isEmpty() && data.size <= requested.get()) {
@@ -30,8 +30,6 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) : Lis
                     if (item != null && index != null) {
                         println("start [ $index ]")
                         val view = factory.obtain(item, index)
-                        view.isVisible = true
-                        view.validate()
                         data.put(index, view)
                         println("end [ $index ][ ${data.size} ]")
                     }
