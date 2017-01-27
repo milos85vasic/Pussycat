@@ -4,15 +4,16 @@ import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import java.awt.Color
-import javax.swing.JTextArea
+import javax.swing.JTextPane
 
-class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = null) : JTextArea() {
+class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = null) : JTextPane() {
 
     companion object {
         val SPACING = "  "
     }
 
     init {
+        isEditable = false
         isOpaque = true
         val intensity: INTENSITY
         if (index % 2 == 0) {
