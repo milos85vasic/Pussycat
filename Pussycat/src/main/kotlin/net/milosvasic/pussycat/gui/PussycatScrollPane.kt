@@ -19,6 +19,7 @@ import java.awt.event.AdjustmentListener
 
 class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
 
+    val screenSize = Toolkit.getDefaultToolkit().screenSize
     val scrollingEvents: Listeners<SCROLLING_EVENT> = Listeners.obtain()
 
     init {
@@ -113,7 +114,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         val extent = verticalScrollBar.model.extent
         val value = verticalScrollBar.value
         val max = verticalScrollBar.maximum
-        if (value + extent >= (max * 0.7).toInt()) {
+        if (value + extent >= max - (screenSize.height / 2)) {
             scrollingEvents.notify(SCROLLING_EVENT.REQUEST_DELTA_REACHED)
         }
         when (value + extent) {

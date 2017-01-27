@@ -107,7 +107,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     override fun onData(items: Collection<PussycatListItem>) {
         for (item in items) {
-            addPussycatListItem(item, true)
+            addPussycatListItem(item, false)
         }
     }
 
