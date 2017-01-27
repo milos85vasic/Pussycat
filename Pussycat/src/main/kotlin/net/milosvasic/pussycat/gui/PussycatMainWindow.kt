@@ -38,13 +38,11 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     val scrollbarEventsListener = object : Listener<SCROLLING_EVENT> {
         override fun onEvent(value: SCROLLING_EVENT?) {
             when (value) {
-                SCROLLING_EVENT.BOTTOM_REACHED -> {
-                    if (!configuration.isScrollbarAnchored()) {
-                        configuration.setScrollbarAnchored(true)
-                    }
-                }
                 SCROLLING_EVENT.TOP_REACHED -> {
-                    // reached the top
+                    // top reached - latest data already there
+                }
+                SCROLLING_EVENT.BOTTOM_REACHED -> {
+                    // bottom reached - load more from the past // TODO: Load more --- deep into past
                 }
             }
         }
@@ -152,11 +150,11 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     fun addContentItem(item: PussycatListItem) {
-        list.add(item)
+        list.add(item, 0)
         contentPane.validate()
         if (configuration.isScrollbarAnchored()) {
             val vertical = scrollPane.verticalScrollBar
-            vertical.value = vertical.maximum
+            vertical.value = vertical.minimum
         }
     }
 
