@@ -9,11 +9,6 @@ import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.terminal.TerminalPrinter
 import net.milosvasic.pussycat.utils.Text
-import java.io.BufferedWriter
-import java.io.FileDescriptor
-import java.io.FileOutputStream
-import java.io.OutputStreamWriter
-import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.atomic.AtomicBoolean
 
 class TerminalPussycat : AndroidPussycat() {
