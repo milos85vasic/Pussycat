@@ -19,9 +19,6 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
 import javax.swing.BoxLayout
-import javax.swing.border.CompoundBorder
-import javax.swing.border.EmptyBorder
-
 
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
 

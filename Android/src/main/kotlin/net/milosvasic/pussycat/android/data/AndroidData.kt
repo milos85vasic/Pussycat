@@ -28,13 +28,13 @@ class AndroidData(filter: DataFilter<CopyOnWriteArrayList<AndroidLogCatMessage>,
         return logLevel
     }
 
-    override fun addData(message: AndroidLogCatMessage) {
+    override fun appendData(message: AndroidLogCatMessage) {
         if (!data.isEmpty()) {
             if (Text.isEmpty(message.msg)) {
                 return
             }
             val identifier = getIdentifier(message)
-            val existing = data.last();
+            val existing = data.last()
             val existingIdentifier = getIdentifier(existing)
             if (existing != null && identifier == existingIdentifier) {
                 existing.appendToStacktrace(message.msg)

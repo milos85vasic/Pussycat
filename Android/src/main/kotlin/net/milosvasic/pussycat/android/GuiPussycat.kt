@@ -5,7 +5,7 @@ import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
-import net.milosvasic.pussycat.gui.PussycatListItemsFactory
+import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
@@ -28,6 +28,8 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
     private var favicon: BufferedImage? = null
     val mainWindow = GuiPussycatMainWindow(information, theme)
     val pussycatListItems = mutableListOf<PussycatListItem>()
+    val pussycatListItemFactory = GuiPussycatListItemFactory(theme)
+    val pussycatListItemsFactory: PussycatListItemsFactory<AndroidLogCatMessage>
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
@@ -54,6 +56,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
+        pussycatListItemsFactory = PussycatListItemsFactory(pussycatListItemFactory)
     }
 
     val eventsListener = object : Listener<EVENT> {
@@ -110,9 +113,10 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
 
     override fun printLine(line: AndroidLogCatMessage) {
         if (mainWindow.isReady() && !mainWindow.isBusy()) {
-            val item = getPussycatListItem(line)
-            pussycatListItems.add(item)
-            mainWindow.addContentItem(item)
+            // TODO: Change this.
+//            val item = getPussycatListItem(line)
+//            pussycatListItems.add(item)
+//            mainWindow.addContentItem(item)
         }
     }
 
@@ -155,7 +159,6 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
                     } else {
                         execute(ANDROID_COMMAND.PARENT.FILESYSTEM, arrayOf(file))
                     }
-                    getPussycatListItems()
                     splashScreen.updateStatus("Loading complete")
                     splashScreen.finish()
                 }
@@ -212,69 +215,6 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
             }
         }
         return list
-    }
-
-    private fun getPussycatListItems() {
-        val count = data.get().size
-        for (x in 0..count - 1) {
-            val item = data.get()[x]
-            pussycatListItems.add(getPussycatListItem(item))
-            val value: Double = (x * 100.0) / count
-            val s = String.format("%.0f", value)
-            splashScreen.updateStatus("${Messages.GENERATING_UI}: $s%")
-        }
-    }
-
-    private fun getPussycatListItem(line: AndroidLogCatMessage): PussycatListItem {
-        val index = data.get().indexOf(line)
-        val color = when (line.logLevel) {
-            Log.LogLevel.DEBUG -> {
-                theme.getTextColor(LOG_TYPE.DEBUG)
-            }
-            Log.LogLevel.INFO -> {
-                theme.getTextColor(LOG_TYPE.INFORMATION)
-            }
-            Log.LogLevel.WARN -> {
-                theme.getTextColor(LOG_TYPE.WARNING)
-            }
-            Log.LogLevel.ERROR -> {
-                theme.getTextColor(LOG_TYPE.ERROR)
-            }
-            else -> {
-                theme.getTextColor(LOG_TYPE.VERBOSE)
-            }
-        }
-
-        val itemPairs = mutableListOf<Pair<String, Int>>()
-        itemPairs.add(Pair(line.time, AndroidLogCatMessage.LENGTHS.SPACING_DEFAULT))
-        itemPairs.add(Pair("${line.pid}", AndroidLogCatMessage.LENGTHS.SPACING_SHORT))
-        itemPairs.add(Pair("${line.tid}", AndroidLogCatMessage.LENGTHS.SPACING_SHORT))
-        itemPairs.add(Pair(line.appName, AndroidLogCatMessage.LENGTHS.SPACING_LONG))
-        itemPairs.add(Pair(line.tag, AndroidLogCatMessage.LENGTHS.SPACING_LONG))
-
-        var message = line.msg
-        for (stacktraceItem in line.getStacktrace()) {
-            val builder = StringBuilder()
-            for (itemPair in itemPairs) {
-                val spaces = itemPair.second
-                for (x in 0..spaces) {
-                    builder.append(PussycatListItem.SPACING)
-                }
-            }
-            for (x in 0..(AndroidLogCatMessage.LENGTHS.SPACING_SHORT)) {
-                builder.append(PussycatListItem.SPACING)
-            }
-            builder.append(stacktraceItem)
-            message += "\n" + builder.toString()
-        }
-
-        itemPairs.add(Pair(message, AndroidLogCatMessage.LENGTHS.NO_SPACING_APPLIED))
-        return PussycatListItem.obtain(
-                theme,
-                itemPairs,
-                index,
-                color
-        )
     }
 
 }
