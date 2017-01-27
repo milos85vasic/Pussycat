@@ -263,28 +263,28 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
 
         pussycatListItems.add(item)
 
-        for (stacktraceItem in line.getStacktrace()) {
-            val builder = StringBuilder()
-            val stacktraceListItemPairs = mutableListOf<Pair<String, Int>>()
-            for (itemPair in itemPairs) {
-                val spaces = itemPair.second
-                for (x in 0..spaces) {
-                    builder.append(PussycatListItem.SPACING)
-                }
-            }
-            for (x in 0..AndroidLogCatMessage.LENGTHS.SPACING_DEFAULT) {
-                builder.append(PussycatListItem.SPACING)
-            }
-            builder.append(stacktraceItem)
-            stacktraceListItemPairs.add(Pair(builder.toString(), AndroidLogCatMessage.LENGTHS.NO_SPACING_APPLIED))
-            val stacktraceListItem = GuiPussycatListItemFactory.create(
-                    theme,
-                    stacktraceListItemPairs,
-                    index,
-                    color
-            )
-            pussycatListItems.add(stacktraceListItem)
-        }
+//        for (stacktraceItem in line.getStacktrace()) {
+//            val builder = StringBuilder()
+//            val stacktraceListItemPairs = mutableListOf<Pair<String, Int>>()
+//            for (itemPair in itemPairs) {
+//                val spaces = itemPair.second
+//                for (x in 0..spaces) {
+//                    builder.append(PussycatListItem.SPACING)
+//                }
+//            }
+//            for (x in 0..AndroidLogCatMessage.LENGTHS.SPACING_DEFAULT) {
+//                builder.append(PussycatListItem.SPACING)
+//            }
+//            builder.append(stacktraceItem)
+//            stacktraceListItemPairs.add(Pair(builder.toString(), AndroidLogCatMessage.LENGTHS.NO_SPACING_APPLIED))
+//            val stacktraceListItem = GuiPussycatListItemFactory.create(
+//                    theme,
+//                    stacktraceListItemPairs,
+//                    index,
+//                    color
+//            )
+//            pussycatListItems.add(stacktraceListItem)
+//        }
 
         return pussycatListItems
     }

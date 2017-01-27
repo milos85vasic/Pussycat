@@ -4,9 +4,9 @@ import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import java.awt.Color
-import javax.swing.JLabel
+import javax.swing.JTextArea
 
-class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = null) : JLabel() {
+class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = null) : JTextArea() {
 
     companion object {
         val SPACING = "  "

@@ -19,6 +19,8 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
 import javax.swing.BoxLayout
+import javax.swing.border.CompoundBorder
+import javax.swing.border.EmptyBorder
 
 
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
@@ -88,7 +90,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         super.initialize()
         val screenSize = Toolkit.getDefaultToolkit().screenSize
         val barHeight = (screenSize.height / 100) * 3
-        val headerBar = PussycatBar(theme, screenSize.width, barHeight * 2)
+        val headerBar = PussycatBar(theme, screenSize.width, (barHeight * 2.7).toInt())
         headerBar.layout = BoxLayout(headerBar, BoxLayout.PAGE_AXIS)
         val mainMenu = createMainMenu()
         val menuBar = PussycatBar(theme, screenSize.width, barHeight)
@@ -98,8 +100,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         headerBar.add(menuBar)
         Thread(Runnable {
             Thread.currentThread().name = Messages.INITIALIZING_TOOLBAR
-            val toolBar = PussycatBar(theme, screenSize.width, barHeight)
-            for (icon in createToolbar((barHeight * 0.7).toInt())) {
+            val toolBar = PussycatToolbar(theme, screenSize.width, barHeight)
+            for (icon in createToolbar((barHeight * 0.8).toInt())) {
                 toolBar.add(icon)
             }
             headerBar.add(toolBar)
