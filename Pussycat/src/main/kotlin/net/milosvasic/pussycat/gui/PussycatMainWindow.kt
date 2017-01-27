@@ -18,8 +18,6 @@ import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
 import javax.swing.BoxLayout
-import javax.swing.border.CompoundBorder
-import javax.swing.border.EmptyBorder
 
 
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
@@ -30,6 +28,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private val ready = AtomicBoolean()
     private val busy = AtomicBoolean()
     private val list = PussycatList(theme)
+    private var anchor: PussycatIconButton? = null
     private val scrollPane = PussycatScrollPane(theme)
 
     class Subscriptions {
@@ -54,7 +53,11 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     val scrollbarAnchoringListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
             if (value != null) {
-                println("Anchoring: [ $value ]")
+                if (value) {
+                    anchor?.setState(PussycatIconButton.STATE.ACTIVE.value)
+                } else {
+                    anchor?.setState(PussycatIconButton.STATE.DEFAULT.value)
+                }
             }
         }
     }
@@ -97,7 +100,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         Thread(Runnable {
             Thread.currentThread().name = Messages.INITIALIZING_TOOLBAR
             val toolBar = PussycatBar(theme, screenSize.width, barHeight)
-            for (icon in createToolbar(barHeight)) {
+            for (icon in createToolbar((barHeight * 0.7).toInt())) {
                 toolBar.add(icon)
             }
             headerBar.add(toolBar)
@@ -185,24 +188,30 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         return items
     }
 
-    fun createToolbar(size: Int): List<PussycatIconButton> {
-        val items = mutableListOf<PussycatIconButton>()
-        val anchor = getAnchorButton(size)
+    fun createToolbar(size: Int): List<PussycatIconButton?> {
+        val items = mutableListOf<PussycatIconButton?>()
+        anchor = getAnchorButton(size)
         items.add(anchor)
         return items
     }
 
-    private fun getAnchorButton(size: Int): PussycatIconButton {
+    private fun getAnchorButton(size: Int): PussycatIconButton? {
         val anchorIcons = HashMap<Int, Image>()
         val iconDefault = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/anchor.png"))
         val iconActive = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/anchor_active.png"))
-        anchorIcons.put(PussycatIconButton.STATE.DEFAULT.value, iconDefault)
-        anchorIcons.put(PussycatIconButton.STATE.ACTIVE.value, iconActive)
+        val iconDefaultResized = iconDefault.getScaledInstance(size, size, Image.SCALE_SMOOTH)
+        val iconActiveResized = iconActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
+        anchorIcons.put(PussycatIconButton.STATE.DEFAULT.value, iconDefaultResized)
+        anchorIcons.put(PussycatIconButton.STATE.ACTIVE.value, iconActiveResized)
         val anchor = PussycatIconButton(size, theme, anchorIcons)
         if (configuration.isScrollbarAnchored()) {
             anchor.setState(PussycatIconButton.STATE.ACTIVE.value)
         } else {
             anchor.setState(PussycatIconButton.STATE.DEFAULT.value)
+        }
+        anchor.toolTipText = Labels.ANCHOR_BTN_TOOLTIP
+        anchor.addActionListener {
+            configuration.setScrollbarAnchored(!configuration.isScrollbarAnchored())
         }
         return anchor
     }

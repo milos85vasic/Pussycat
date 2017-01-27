@@ -9,5 +9,6 @@ object Labels {
     val ABOUT = "About"
     val PUSSYCAT = "Pussycat"
     val UNKNOWN = "Unknown"
+    val ANCHOR_BTN_TOOLTIP = "Anchor scrollbar to latest data."
 
 }
