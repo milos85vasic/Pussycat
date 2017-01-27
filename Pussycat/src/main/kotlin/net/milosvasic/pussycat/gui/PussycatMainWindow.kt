@@ -107,7 +107,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     override fun onData(items: Collection<PussycatListItem>) {
         for (item in items) {
-            addPussycatListItem(item, false)
+            addPussycatListItem(item)
         }
     }
 
@@ -123,14 +123,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         this.busy.set(bussy)
     }
 
-    fun addPussycatListItem(item: PussycatListItem, toTop: Boolean) {
-        if (toTop) {
-            list.add(item, 0)
-            contentPane.validate()
-        } else {
-            list.add(item)
-            contentPane.validate()
-        }
+    fun addPussycatListItem(item: PussycatListItem) {
+        list.add(item)
+        contentPane.validate()
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>
