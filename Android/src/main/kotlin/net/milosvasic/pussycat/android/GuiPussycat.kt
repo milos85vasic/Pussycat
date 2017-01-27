@@ -5,7 +5,7 @@ import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
-import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
+import net.milosvasic.pussycat.gui.PussycatListItemsFactory
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
@@ -269,7 +269,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
         }
 
         itemPairs.add(Pair(message, AndroidLogCatMessage.LENGTHS.NO_SPACING_APPLIED))
-        return GuiPussycatListItemFactory.create(
+        return PussycatListItem.obtain(
                 theme,
                 itemPairs,
                 index,

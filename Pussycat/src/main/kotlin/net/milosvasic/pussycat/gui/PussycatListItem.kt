@@ -10,6 +10,14 @@ class PussycatListItem(val theme: Theme, val index: Int, val color: Color? = nul
 
     companion object {
         val SPACING = "  "
+
+        fun obtain(theme: Theme, items: List<Pair<String, Int>>, index: Int, textColor: Color = theme.getTextColor(TYPE.BASE, INTENSITY.DARK)): PussycatListItem {
+            val item = PussycatListItem(theme, index, textColor)
+            for (line in items) {
+                item.append(line.first, line.second)
+            }
+            return item
+        }
     }
 
     init {
