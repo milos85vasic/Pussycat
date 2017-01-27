@@ -59,8 +59,10 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
     }
 
     private fun sendData() {
-        println("Send data")
-        for ((from, amount, callback) in requests) {
+        for (request in requests) {
+            val from = request.from
+            val amount = request.amount
+            val callback = request.callback
             if (from + amount <= requested.get()) {
                 val items = mutableListOf<PussycatListItem>()
                 var to = from + amount
@@ -71,6 +73,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     items.add(data.values.elementAt(x))
                 }
                 callback.onData(items)
+                requests.remove(request)
+                println("Send data")
             }
         }
     }
