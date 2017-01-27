@@ -2,6 +2,7 @@ package net.milosvasic.pussycat.gui
 
 
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
+import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
@@ -112,13 +113,16 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         val extent = verticalScrollBar.model.extent
         val value = verticalScrollBar.value
         val max = verticalScrollBar.maximum
-        val min = verticalScrollBar.minimum
-        when (value + extent) {
-            max -> {
-                scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_REACHED)
-            }
-            extent -> {
-                scrollingEvents.notify(SCROLLING_EVENT.TOP_REACHED)
+        if (value + extent <= max - PussycatListItemsFactory.REQUEST_DELTA) {
+            scrollingEvents.notify(SCROLLING_EVENT.REQUEST_DELTA_REACHED)
+        } else {
+            when (value + extent) {
+                max -> {
+                    scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_REACHED)
+                }
+                extent -> {
+                    scrollingEvents.notify(SCROLLING_EVENT.TOP_REACHED)
+                }
             }
         }
     }

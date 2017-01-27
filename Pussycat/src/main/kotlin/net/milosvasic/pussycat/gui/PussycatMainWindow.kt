@@ -6,7 +6,9 @@ import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.gui.configuration.PussycatMainWindowConfiguration
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.gui.events.RequestDeltaReachedCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
+import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequestCallback
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
@@ -20,10 +22,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
 import javax.swing.BoxLayout
 
-abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme) {
+abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), PussycatListItemsRequestCallback {
 
     val subscriptions = Subscriptions()
     val configuration = PussycatMainWindowConfiguration()
+    var requestDeltaReachedCallback: RequestDeltaReachedCallback? = null
 
     private val ready = AtomicBoolean()
     private val busy = AtomicBoolean()
@@ -43,6 +46,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 }
                 SCROLLING_EVENT.BOTTOM_REACHED -> {
                     // bottom reached - load more from the past // TODO: Load more --- deep into past
+                }
+                SCROLLING_EVENT.REQUEST_DELTA_REACHED -> {
+                    requestDeltaReachedCallback?.onDeltaReached(list.componentCount)
                 }
             }
         }
@@ -137,6 +143,12 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         super.close()
     }
 
+    override fun onData(items: Collection<PussycatListItem>) {
+        for (item in items) {
+            addPussycatListItem(item)
+        }
+    }
+
     fun isReady(): Boolean {
         return ready.get()
     }
@@ -149,7 +161,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         this.busy.set(bussy)
     }
 
-    fun addContentItem(item: PussycatListItem) {
+    fun addPussycatListItem(item: PussycatListItem) {
         list.add(item, 0)
         contentPane.validate()
         if (configuration.isScrollbarAnchored()) {

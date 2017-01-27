@@ -11,7 +11,9 @@ import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
+import net.milosvasic.pussycat.gui.events.RequestDeltaReachedCallback
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
+import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
@@ -23,32 +25,35 @@ import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
 
-class GuiPussycat(information: ApplicationInformation, val theme: Theme) : AndroidPussycat() {
+class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPussycat() {
 
     private var favicon: BufferedImage? = null
     val mainWindow = GuiPussycatMainWindow(information, theme)
-    val pussycatListItems = mutableListOf<PussycatListItem>()
     val pussycatListItemFactory = GuiPussycatListItemFactory(theme)
-    val pussycatListItemsFactory: PussycatListItemsFactory<AndroidLogCatMessage>
+    var pussycatListItemsFactory: PussycatListItemsFactory<AndroidLogCatMessage>? = null
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
+            mainWindow.requestDeltaReachedCallback = requestDeltaReachedCallback
             mainWindow.open()
         }
     }
 
     val mainWindowStatusListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
-            if (value != null && value) {
-                Thread(Runnable {
-                    mainWindow.setBusy(true)
-                    for (pussycatListItem in pussycatListItems) {
-                        mainWindow.addContentItem(pussycatListItem)
-                    }
-                    mainWindow.setBusy(false)
-                }).start()
-            }
+            val from = 0
+            val amount = PussycatListItemsFactory.REQUEST_DELTA
+            val request = PussycatListItemsRequest(from, amount, mainWindow)
+            pussycatListItemsFactory?.requestData(request)
+        }
+    }
+
+    val requestDeltaReachedCallback = object : RequestDeltaReachedCallback {
+        override fun onDeltaReached(from: Int) {
+            val amount = PussycatListItemsFactory.REQUEST_DELTA / 2
+            val request = PussycatListItemsRequest(from, amount, mainWindow)
+            pussycatListItemsFactory?.requestData(request)
         }
     }
 
@@ -112,7 +117,7 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-        pussycatListItemsFactory.addRawData(line, data.get().indexOf(line))
+        pussycatListItemsFactory?.addRawData(line, data.get().indexOf(line))
     }
 
     override fun getPrintableLogLevelValue(): String {
