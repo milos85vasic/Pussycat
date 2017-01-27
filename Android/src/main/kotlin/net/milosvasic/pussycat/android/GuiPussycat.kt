@@ -40,7 +40,6 @@ class GuiPussycat(information: ApplicationInformation, val theme: Theme) : Andro
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
                 Thread(Runnable {
-                    Thread.currentThread().priority = Thread.MAX_PRIORITY
                     mainWindow.setBusy(true)
                     for (pussycatListItem in pussycatListItems) {
                         mainWindow.addContentItem(pussycatListItem)

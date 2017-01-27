@@ -113,7 +113,6 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         if (logcat.exists()) {
             val runnable = Runnable {
                 Thread.currentThread().name = "Filesystem reading thread"
-                Thread.currentThread().priority = Thread.MAX_PRIORITY
                 logcatTask?.removeLogCatListener(logcatListener)
                 AndroidDebugBridge.removeDeviceChangeListener(deviceChangeListener)
                 data.clear()
