@@ -60,6 +60,10 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             })
             pollingThread?.start()
         }
+        if (data.size >= requested.get() + REQUEST_DELTA) {
+            println("Data already prepared. Sending.") // TODO: Remove this.
+            sendData()
+        }
     }
 
     private fun sendData() {
