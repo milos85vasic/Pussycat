@@ -75,7 +75,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             if (from + amount <= requested.get()) {
                 val items = mutableListOf<PussycatListItem>()
                 var to = from + amount
-                if (to > data.values.size) {
+                if (to >= data.values.size) {
                     to = data.values.size - 1
                 }
                 for (x in from..to) {
