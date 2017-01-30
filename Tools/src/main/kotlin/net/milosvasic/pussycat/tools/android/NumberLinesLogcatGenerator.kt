@@ -1,12 +1,13 @@
-package net.milosvasic.pussycat.tools
+package net.milosvasic.pussycat.tools.android
 
 import net.milosvasic.pussycat.PussycatAbstract
+import net.milosvasic.pussycat.tools.LogGenerator
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class NumberLinesLogcatGenerator : LogcatGenerator {
+class NumberLinesLogcatGenerator : LogGenerator {
 
     override fun generate(count: Int) {
         val home = PussycatAbstract.getPussycatHome()

@@ -1,6 +1,6 @@
 package net.milosvasic.pussycat.tools
 
-interface LogcatGenerator {
+interface LogGenerator {
 
     fun generate(count: Int)
 
