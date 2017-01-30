@@ -168,6 +168,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     fun prependPussycatListItem(item: PussycatListItem) {
         list.add(item, 0)
         contentPane.validate()
+        // TODO: Update current scroll position as we append so the item we are looking at the moment is still there.
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>
