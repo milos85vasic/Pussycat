@@ -7,6 +7,7 @@ import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.events.RequestDeltaReachedCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
+import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequestCallback
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
@@ -44,6 +45,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 }
                 SCROLLING_EVENT.REQUEST_DELTA_REACHED -> {
                     requestDeltaReachedCallback?.onDeltaReached(list.componentCount)
+                    if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 10) {
+                        println("Too much items. Time to remove from above") // TODO: Remove this and add implementation
+                        
+                    }
                 }
             }
         }

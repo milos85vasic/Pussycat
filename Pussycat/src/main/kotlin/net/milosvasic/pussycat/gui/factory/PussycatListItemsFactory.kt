@@ -24,16 +24,16 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             queue.add(Pair(value, index))
             processData()
         } else {
-            println("Already processed [ $index ]") // TODO: Remove this.
+//            println("Already processed [ $index ]") // TODO: Remove this.
         }
     }
 
     fun requestData(request: PussycatListItemsRequest) {
         if (activeRequest != null) {
-            println("Request ignored [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
+//            println("Request ignored [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
             return
         } else {
-            println("Requesting accepted [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
+//            println("Requesting accepted [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
             activeRequest = request
             requested.set(request.from + request.amount)
             processData()
@@ -49,10 +49,10 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     val item = polledItem?.first
                     val index = polledItem?.second
                     if (item != null && index != null) {
-                        println("start [ $index ]")
+//                        println("start [ $index ]") // TODO: Remove this
                         val view = factory.obtain(item, index)
                         data.put(index, view)
-                        println("end [ $index ][ ${data.size} ]")
+//                        println("end [ $index ][ ${data.size} ]") // TODO: Remove this
                     }
                 }
                 pollingThread = null
@@ -61,7 +61,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             pollingThread?.start()
         }
         if (data.size >= requested.get() + REQUEST_DELTA) {
-            println("Data already prepared. Sending.") // TODO: Remove this.
+//            println("Data already prepared. Sending.") // TODO: Remove this.
             sendData()
         }
     }
@@ -83,7 +83,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 }
                 callback.onData(items)
                 activeRequest = null
-                println("Send data")
+                // println("Send data") // TODO: Remove this
             }
         } else {
             println("No active request to send the data!") // TODO: Remove this
