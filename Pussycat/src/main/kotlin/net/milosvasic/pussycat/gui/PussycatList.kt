@@ -15,7 +15,7 @@ class PussycatList(val theme: Theme) : JPanel() {
         layout = BoxLayout(this, BoxLayout.PAGE_AXIS)
         background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
-        font = theme.getFont(FONT_WEIGHT.REGULAR).deriveFont(theme.getFontSize())
+        font = theme.getFont(FONT_WEIGHT.REGULAR, theme.getFontSize())
     }
 
     override fun paintComponent(g: Graphics?) {

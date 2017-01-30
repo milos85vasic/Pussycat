@@ -22,7 +22,9 @@ abstract class Theme {
 
     abstract fun getTextColor(logType: LOG_TYPE): Color
 
-    abstract fun getFont(weight: FONT_WEIGHT): Font
+    abstract fun getFont(weight: FONT_WEIGHT): Font?
+
+    abstract fun getFont(weight: FONT_WEIGHT, size: Float): Font?
 
     abstract fun getFontSize(): Float
 

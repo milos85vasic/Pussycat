@@ -7,6 +7,7 @@ import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.awt.Color
 import java.awt.Font
+import java.util.*
 import javax.swing.JComponent
 import javax.swing.border.Border
 import javax.swing.border.CompoundBorder
@@ -14,6 +15,8 @@ import javax.swing.border.EmptyBorder
 
 
 open class Darcula : Theme() {
+
+    private val fonts = HashMap<String, Font>()
 
     override fun getColor(type: TYPE, intensity: INTENSITY): Color {
         return getColor(type, intensity, 255)
@@ -189,46 +192,29 @@ open class Darcula : Theme() {
         }
     }
 
-    override fun getFont(weight: FONT_WEIGHT): Font {
-        val input = when (weight) {
-            FONT_WEIGHT.BLACK -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-Black.ttf")
-            }
-            FONT_WEIGHT.BLACK_ITALIC -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-BlackItalic.ttf")
-            }
-            FONT_WEIGHT.BOLD -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-Bold.ttf")
-            }
-            FONT_WEIGHT.BOLD_ITALIC -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-BoldItalic.ttf")
-            }
-            FONT_WEIGHT.ITALIC -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-Italic.ttf")
-            }
-            FONT_WEIGHT.LIGHT -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-Light.ttf")
-            }
-            FONT_WEIGHT.LIGHT_ITALIC -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-LightItalic.ttf")
-            }
-            FONT_WEIGHT.MEDIUM -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-Medium.ttf")
-            }
-            FONT_WEIGHT.MEDIUM_ITALIC -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-MediumItalic.ttf")
-            }
-            FONT_WEIGHT.THIN -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-Thin.ttf")
-            }
-            FONT_WEIGHT.THIN_ITALIC -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-ThinItalic.ttf")
-            }
-            else -> {
-                javaClass.classLoader.getResourceAsStream("fonts/Roboto-Regular.ttf")
+    override fun getFont(weight: FONT_WEIGHT, size: Float): Font? {
+        val fontName = getFontName(weight)
+        val identifier = "$fontName@$size"
+        var font = fonts[identifier]
+        if (font == null) {
+            font = getFont(weight)
+            font = font?.deriveFont(size)
+            if (font != null) {
+                fonts.put(identifier, font)
             }
         }
-        return Font.createFont(Font.TRUETYPE_FONT, input)
+        return font
+    }
+
+    override fun getFont(weight: FONT_WEIGHT): Font? {
+        val fontName = getFontName(weight)
+        var font = fonts[fontName]
+        if (font == null) {
+            val input = javaClass.classLoader.getResourceAsStream(fontName)
+            font = Font.createFont(Font.TRUETYPE_FONT, input)
+            fonts.put(fontName, font)
+        }
+        return font
     }
 
     override fun getFontSize(): Float {
@@ -251,6 +237,47 @@ open class Darcula : Theme() {
             }
             else -> {
                 CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+            }
+        }
+    }
+
+    private fun getFontName(weight: FONT_WEIGHT): String {
+        return when (weight) {
+            FONT_WEIGHT.BLACK -> {
+                "fonts/Roboto-Black.ttf"
+            }
+            FONT_WEIGHT.BLACK_ITALIC -> {
+                "fonts/Roboto-BlackItalic.ttf"
+            }
+            FONT_WEIGHT.BOLD -> {
+                "fonts/Roboto-Bold.ttf"
+            }
+            FONT_WEIGHT.BOLD_ITALIC -> {
+                "fonts/Roboto-BoldItalic.ttf"
+            }
+            FONT_WEIGHT.ITALIC -> {
+                "fonts/Roboto-Italic.ttf"
+            }
+            FONT_WEIGHT.LIGHT -> {
+                "fonts/Roboto-Light.ttf"
+            }
+            FONT_WEIGHT.LIGHT_ITALIC -> {
+                "fonts/Roboto-LightItalic.ttf"
+            }
+            FONT_WEIGHT.MEDIUM -> {
+                "fonts/Roboto-Medium.ttf"
+            }
+            FONT_WEIGHT.MEDIUM_ITALIC -> {
+                "fonts/Roboto-MediumItalic.ttf"
+            }
+            FONT_WEIGHT.THIN -> {
+                "fonts/Roboto-Thin.ttf"
+            }
+            FONT_WEIGHT.THIN_ITALIC -> {
+                "fonts/Roboto-ThinItalic.ttf"
+            }
+            else -> {
+                "fonts/Roboto-Regular.ttf"
             }
         }
     }

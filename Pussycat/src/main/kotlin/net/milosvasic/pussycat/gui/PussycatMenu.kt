@@ -24,7 +24,7 @@ class PussycatMenu(val theme: Theme, val title: String) : JLabel(title), MouseLi
         isOpaque = true
         background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
-        font = theme.getFont(FONT_WEIGHT.REGULAR).deriveFont(theme.getFontSize())
+        font = theme.getFont(FONT_WEIGHT.REGULAR, theme.getFontSize())
         border = theme.getBorder(this)
         addMouseListener(this)
     }
