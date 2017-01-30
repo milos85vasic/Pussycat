@@ -115,7 +115,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         val value = verticalScrollBar.value
         val max = verticalScrollBar.maximum
         if (value + extent >= max - (screenSize.height / 2)) {
-            scrollingEvents.notify(SCROLLING_EVENT.REQUEST_DELTA_REACHED)
+            scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_DELTA_REACHED)
         }
         when (value + extent) {
             max -> {
