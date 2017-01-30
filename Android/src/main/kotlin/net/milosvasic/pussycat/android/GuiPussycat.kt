@@ -11,7 +11,7 @@ import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
-import net.milosvasic.pussycat.gui.events.RequestDeltaReachedCallback
+import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
 import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
@@ -36,7 +36,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
-            mainWindow.requestDeltaReachedCallback = requestDeltaReachedCallback
+            mainWindow.requestBarrierReachedCallback = requestDeltaReachedCallback
             mainWindow.open()
         }
     }
@@ -52,10 +52,10 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         }
     }
 
-    val requestDeltaReachedCallback = object : RequestDeltaReachedCallback {
-        override fun onDeltaReached(from: Int) {
+    val requestDeltaReachedCallback = object : RequestBarrierReachedCallback {
+        override fun onBarrierReached(from: Int, direction: DIRECTION) {
             val amount = PussycatListItemsFactory.REQUEST_DELTA / 2
-            val request = PussycatListItemsRequest(from, amount, DIRECTION.DOWN, mainWindow)
+            val request = PussycatListItemsRequest(from, amount, direction, mainWindow)
             pussycatListItemsFactory?.requestData(request)
         }
     }

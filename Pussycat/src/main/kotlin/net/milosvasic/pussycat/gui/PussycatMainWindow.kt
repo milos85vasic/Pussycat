@@ -5,7 +5,7 @@ import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.gui.content.Labels
-import net.milosvasic.pussycat.gui.events.RequestDeltaReachedCallback
+import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
@@ -25,7 +25,7 @@ import javax.swing.BoxLayout
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), PussycatListItemsRequestCallback {
 
     val subscriptions = Subscriptions()
-    var requestDeltaReachedCallback: RequestDeltaReachedCallback? = null
+    var requestBarrierReachedCallback: RequestBarrierReachedCallback? = null
 
     private val ready = AtomicBoolean()
     private val busy = AtomicBoolean()
@@ -42,13 +42,15 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         override fun onEvent(value: SCROLLING_EVENT?) {
             when (value) {
                 SCROLLING_EVENT.TOP_REACHED -> {
-                    // top reached
+                    if (firstItemIndex.get() > 0) {
+                        requestBarrierReachedCallback?.onBarrierReached(firstItemIndex.get(), DIRECTION.UP)
+                    }
                 }
                 SCROLLING_EVENT.BOTTOM_REACHED -> {
                     // bottom reached
                 }
                 SCROLLING_EVENT.REQUEST_DELTA_REACHED -> {
-                    requestDeltaReachedCallback?.onDeltaReached(lastItemIndex.get())
+                    requestBarrierReachedCallback?.onBarrierReached(lastItemIndex.get())
 //                    if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 10) { // TODO: Uncomment this after dev is done.
                     if (list.componentCount >= 200) {
                         println("Too much items. Time to remove from above") // TODO: Remove this and add implementation
