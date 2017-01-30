@@ -7,6 +7,7 @@ import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.events.RequestDeltaReachedCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
+import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequestCallback
 import net.milosvasic.pussycat.gui.theme.Theme
@@ -17,6 +18,7 @@ import java.awt.*
 import java.awt.event.ActionListener
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 import javax.imageio.ImageIO
 import javax.swing.BoxLayout
 
@@ -28,6 +30,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private val ready = AtomicBoolean()
     private val busy = AtomicBoolean()
     private val list = PussycatList(theme)
+    private val lastItemIndex = AtomicInteger(0)
+    private val firstItemIndex = AtomicInteger(0)
     private val scrollPane = PussycatScrollPane(theme)
 
     class Subscriptions {
@@ -44,10 +48,17 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                     // bottom reached
                 }
                 SCROLLING_EVENT.REQUEST_DELTA_REACHED -> {
-                    requestDeltaReachedCallback?.onDeltaReached(list.componentCount)
-                    if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 10) {
+                    requestDeltaReachedCallback?.onDeltaReached(lastItemIndex.get())
+//                    if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 10) { // TODO: Uncomment this after dev is done.
+                    if (list.componentCount >= 200) {
                         println("Too much items. Time to remove from above") // TODO: Remove this and add implementation
-                        
+//                        synchronized(list) {
+//                            for (x in 0..(PussycatListItemsFactory.REQUEST_DELTA * 10) / 2) { // TODO: Uncomment this after dev is done.
+                        for (x in 0..100) {
+                            list.remove(0)
+                            list.validate()
+                        }
+//                        }
                     }
                 }
             }
@@ -110,9 +121,17 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         super.close()
     }
 
-    override fun onData(items: Collection<PussycatListItem>) {
-        for (item in items) {
-            addPussycatListItem(item)
+    override fun onData(items: List<PussycatListItem>, direction: DIRECTION) {
+        if (direction == DIRECTION.DOWN) {
+            for (item in items) {
+                appendPussycatListItem(item)
+                lastItemIndex.incrementAndGet()
+            }
+        } else {
+            for (x in (items.size - 1)..0) {
+                val item = items[x]
+                prependPussycatListItem(item)
+            }
         }
     }
 
@@ -128,8 +147,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         this.busy.set(bussy)
     }
 
-    fun addPussycatListItem(item: PussycatListItem) {
+    fun appendPussycatListItem(item: PussycatListItem) {
         list.add(item)
+        contentPane.validate()
+    }
+
+    fun prependPussycatListItem(item: PussycatListItem) {
+        list.add(item, 0)
         contentPane.validate()
     }
 

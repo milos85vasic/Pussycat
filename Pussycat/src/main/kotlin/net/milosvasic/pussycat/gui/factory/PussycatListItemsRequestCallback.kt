@@ -4,6 +4,6 @@ import net.milosvasic.pussycat.gui.PussycatListItem
 
 interface PussycatListItemsRequestCallback {
 
-    fun onData(items: Collection<PussycatListItem>)
+    fun onData(items: List<PussycatListItem>, direction: DIRECTION = DIRECTION.DOWN)
 
 }

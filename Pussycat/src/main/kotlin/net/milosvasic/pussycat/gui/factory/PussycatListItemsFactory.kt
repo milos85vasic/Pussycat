@@ -33,10 +33,15 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
 //            println("Request ignored [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
             return
         } else {
-//            println("Requesting accepted [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
+            println("Requesting accepted [ ${request.from} ][ ${request.amount} ][ ${request.direction} ]") // TODO: Remove this.
             activeRequest = request
-            requested.set(request.from + request.amount)
-            processData()
+            if(request.direction == DIRECTION.DOWN) {
+                requested.set(request.from + request.amount)
+                processData()
+            } else {
+                // TODO: Implement this.
+
+            }
         }
     }
 
@@ -56,17 +61,17 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     }
                 }
                 pollingThread = null
-                sendData()
+                sendData(DIRECTION.DOWN)
             })
             pollingThread?.start()
         }
         if (data.size >= requested.get() + REQUEST_DELTA) {
 //            println("Data already prepared. Sending.") // TODO: Remove this.
-            sendData()
+            sendData(DIRECTION.DOWN)
         }
     }
 
-    private fun sendData() {
+    private fun sendData(direction: DIRECTION) {
         if (activeRequest != null) {
             val request = activeRequest as PussycatListItemsRequest
             val from = request.from
@@ -81,7 +86,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 for (x in from..to) {
                     items.add(data.values.elementAt(x))
                 }
-                callback.onData(items)
+                callback.onData(items, direction)
                 activeRequest = null
                 // println("Send data") // TODO: Remove this
             }

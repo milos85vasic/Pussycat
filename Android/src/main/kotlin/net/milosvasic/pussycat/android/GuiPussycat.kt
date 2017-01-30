@@ -12,6 +12,7 @@ import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.events.RequestDeltaReachedCallback
+import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.theme.Theme
@@ -45,7 +46,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             if (value != null && value) {
                 val from = 0
                 val amount = PussycatListItemsFactory.REQUEST_DELTA
-                val request = PussycatListItemsRequest(from, amount, mainWindow)
+                val request = PussycatListItemsRequest(from, amount, DIRECTION.DOWN, mainWindow)
                 pussycatListItemsFactory?.requestData(request)
             }
         }
@@ -54,7 +55,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val requestDeltaReachedCallback = object : RequestDeltaReachedCallback {
         override fun onDeltaReached(from: Int) {
             val amount = PussycatListItemsFactory.REQUEST_DELTA / 2
-            val request = PussycatListItemsRequest(from, amount, mainWindow)
+            val request = PussycatListItemsRequest(from, amount, DIRECTION.DOWN, mainWindow)
             pussycatListItemsFactory?.requestData(request)
         }
     }
