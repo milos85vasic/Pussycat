@@ -35,12 +35,11 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         } else {
             println("Requesting accepted [ ${request.from} ][ ${request.amount} ][ ${request.direction} ]") // TODO: Remove this.
             activeRequest = request
-            if(request.direction == DIRECTION.DOWN) {
+            if (request.direction == DIRECTION.DOWN) {
                 requested.set(request.from + request.amount)
                 processData()
             } else {
-                // TODO: Implement this.
-                
+                sendData(DIRECTION.UP)
             }
         }
     }
@@ -80,11 +79,20 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             if (from + amount <= requested.get()) {
                 val items = mutableListOf<PussycatListItem>()
                 var to = from + amount
-                if (to >= data.values.size) {
-                    to = data.values.size - 1
-                }
-                for (x in from..to) {
-                    items.add(data.values.elementAt(x))
+                if (direction == DIRECTION.DOWN) {
+                    if (to >= data.values.size) {
+                        to = data.values.size - 1
+                    }
+                    for (x in from..to) {
+                        items.add(data.values.elementAt(x))
+                    }
+                } else {
+                    if (to < 0) {
+                        to = 0
+                    }
+                    for (x in from..to) {
+                        items.add(data.values.elementAt(x))
+                    }
                 }
                 callback.onData(items, direction)
                 activeRequest = null

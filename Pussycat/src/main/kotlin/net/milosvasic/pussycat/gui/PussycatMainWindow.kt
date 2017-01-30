@@ -134,6 +134,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             for (x in (items.size - 1)..0) {
                 val item = items[x]
                 prependPussycatListItem(item)
+                firstItemIndex.decrementAndGet()
             }
         }
     }
