@@ -1,1 +1,1 @@
-include ':Pussycat', ':Apache', ':Android'
+include ':Pussycat', ':Apache', ':Android', ':Tools'
