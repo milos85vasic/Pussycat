@@ -2,5 +2,7 @@ package net.milosvasic.pussycat.tools
 
 fun main(args: Array<String>) {
     val generator = NumberLinesLogcatGenerator()
-    generator.generate(1000)
+    for (item in listOf(10, 100, 500, 1000, 3000, 5000)) {
+        generator.generate(item)
+    }
 }
