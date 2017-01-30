@@ -131,11 +131,14 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 lastItemIndex.incrementAndGet()
             }
         } else {
-            for (x in (items.size - 1)..0) {
+            println("INDEX PRE ${firstItemIndex.get()}") // TODO: Remove this.
+            for (x in items.size - 1 downTo 0) {
                 val item = items[x]
                 prependPussycatListItem(item)
                 firstItemIndex.decrementAndGet()
+                println("INDEX DURING ${firstItemIndex.get()}") // TODO: Remove this.
             }
+            println("INDEX POST ${firstItemIndex.get()}") // TODO: Remove this.
         }
     }
 
