@@ -57,6 +57,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                         for (x in 0..100) {
                             list.remove(0)
                             list.validate()
+                            firstItemIndex.incrementAndGet()
                         }
 //                        }
                     }
