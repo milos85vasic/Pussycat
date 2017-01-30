@@ -43,11 +43,14 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             when (value) {
                 SCROLLING_EVENT.TOP_REACHED -> {
                     // top reached
+                    println("Top reached") // TODO: Remove this
                 }
                 SCROLLING_EVENT.BOTTOM_REACHED -> {
                     // bottom reached
+                    println("Bottom reached") // TODO: Remove this
                 }
                 SCROLLING_EVENT.TOP_DELTA_REACHED -> {
+                    println("Top delta reached") // TODO: Remove this
                     if (firstItemIndex.get() > 0) {
                         requestBarrierReachedCallback?.onBarrierReached(firstItemIndex.get(), DIRECTION.UP)
                     }
