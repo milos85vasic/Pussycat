@@ -1,6 +1,7 @@
 package net.milosvasic.pussycat.gui
 
 
+import net.milosvasic.pussycat.data.ProgressObtain
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
@@ -17,8 +18,9 @@ import java.awt.event.AdjustmentListener
 import javax.swing.JViewport
 
 
-class PussycatScrollPane(val theme: Theme, val progress: PussycatScrollPaneProgressObtain) : JScrollPane(), AdjustmentListener {
+class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
 
+    var progress: ProgressObtain? = null
     val screenSize: Dimension = Toolkit.getDefaultToolkit().screenSize
     val scrollingEvents: Listeners<SCROLLING_EVENT> = Listeners.obtain()
 
@@ -96,7 +98,11 @@ class PussycatScrollPane(val theme: Theme, val progress: PussycatScrollPaneProgr
                     g2.translate(thumbBounds.x, thumbBounds.y)
                     g2.fillRoundRect(0, 0, w, h, corners, corners)
                 } else {
-                    g2.translate(thumbBounds.x, progress.obtain(height))
+                    var progressValue = thumbBounds.y
+                    if (progress != null) {
+                        progressValue = (progress as ProgressObtain).obtain(height)
+                    }
+                    g2.translate(thumbBounds.x, progressValue)
                     g2.fillRect(0, 0, w, h)
                 }
             }

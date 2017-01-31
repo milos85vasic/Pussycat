@@ -4,6 +4,7 @@ package net.milosvasic.pussycat.gui
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.content.Messages
+import net.milosvasic.pussycat.data.ProgressObtain
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
@@ -27,11 +28,12 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     val subscriptions = Subscriptions()
     var requestBarrierReachedCallback: RequestBarrierReachedCallback? = null
 
-    private val ready = AtomicBoolean()
     private val busy = AtomicBoolean()
+    private val ready = AtomicBoolean()
     private val list = PussycatList(theme)
     private val lastItemIndex = AtomicInteger(0)
     private val firstItemIndex = AtomicInteger(0)
+    private val scrollPane = PussycatScrollPane(theme)
 
     class Subscriptions {
         val STATUS: Listeners<Boolean> = Listeners.obtain()
@@ -58,14 +60,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             }
         }
     }
-
-    private val progress = object : PussycatScrollPaneProgressObtain {
-        override fun obtain(maximum: Int): Int {
-            return (maximum * 0.5).toInt() // TODO: Introduce real calculation.
-        }
-    }
-
-    private val scrollPane = PussycatScrollPane(theme, progress)
 
     init {
         title = "${information.name} V${information.version} by ${information.author}"
@@ -150,6 +144,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         this.busy.set(bussy)
     }
 
+    fun setProgressObtain(progress: ProgressObtain?){
+        scrollPane.progress = progress
+    }
+
     fun appendPussycatListItem(item: PussycatListItem) {
         list.add(item)
         contentPane.validate()
@@ -190,7 +188,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         return items
     }
 
-    fun createToolbar(size: Int): List<PussycatIconButton?> {
+    private fun createToolbar(size: Int): List<PussycatIconButton?> {
         val items = mutableListOf<PussycatIconButton?>()
         items.add(getGoTopButton(size))
         items.add(getGoBottomButton(size))
