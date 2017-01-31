@@ -31,7 +31,7 @@ class ApplicationTestModesToggling : ApplicationTestAbstract() {
 
         app.pussy?.configuration?.exitOnStop = false
         app.pussy?.configuration?.waitingForDevicesTimeoutInSeconds = 1
-        app.pussy?.configuration?.terminalPriner = BlackHoleTerminalPrinter()
+        app.pussy?.configuration?.terminalPrinter = BlackHoleTerminalPrinter()
 
         app.start()
         Thread.sleep(waitingTime)
