@@ -28,8 +28,8 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         border = theme.getBorder(this)
         verticalScrollBar.ui = PussycatScrollBarUI(theme)
         horizontalScrollBar.ui = PussycatScrollBarUI(theme)
-        verticalScrollBar.unitIncrement = 2
-        horizontalScrollBar.unitIncrement = 2
+        verticalScrollBar.unitIncrement = 3
+        horizontalScrollBar.unitIncrement = 3
         viewport.scrollMode = JViewport.BACKINGSTORE_SCROLL_MODE
         verticalScrollBar.addAdjustmentListener(this)
     }
