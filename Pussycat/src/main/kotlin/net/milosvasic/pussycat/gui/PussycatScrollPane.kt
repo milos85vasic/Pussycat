@@ -17,7 +17,7 @@ import java.awt.event.AdjustmentListener
 import javax.swing.JViewport
 
 
-class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
+class PussycatScrollPane(val theme: Theme, val progress: PussycatScrollPaneProgressObtain) : JScrollPane(), AdjustmentListener {
 
     val screenSize: Dimension = Toolkit.getDefaultToolkit().screenSize
     val scrollingEvents: Listeners<SCROLLING_EVENT> = Listeners.obtain()
@@ -96,8 +96,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
                     g2.translate(thumbBounds.x, thumbBounds.y)
                     g2.fillRoundRect(0, 0, w, h, corners, corners)
                 } else {
-                    val position = height / 2 // TODO: Calculate proportionally to data
-                    g2.translate(thumbBounds.x, position)
+                    g2.translate(thumbBounds.x, progress.obtain(height))
                     g2.fillRect(0, 0, w, h)
                 }
             }

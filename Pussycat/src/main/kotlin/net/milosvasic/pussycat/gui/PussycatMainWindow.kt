@@ -32,7 +32,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private val list = PussycatList(theme)
     private val lastItemIndex = AtomicInteger(0)
     private val firstItemIndex = AtomicInteger(0)
-    private val scrollPane = PussycatScrollPane(theme)
 
     class Subscriptions {
         val STATUS: Listeners<Boolean> = Listeners.obtain()
@@ -59,6 +58,14 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             }
         }
     }
+
+    private val progress = object : PussycatScrollPaneProgressObtain {
+        override fun obtain(maximum: Int): Int {
+            return (maximum * 0.5).toInt() // TODO: Introduce real calculation.
+        }
+    }
+
+    private val scrollPane = PussycatScrollPane(theme, progress)
 
     init {
         title = "${information.name} V${information.version} by ${information.author}"
