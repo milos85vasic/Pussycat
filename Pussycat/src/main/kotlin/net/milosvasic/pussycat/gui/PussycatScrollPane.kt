@@ -27,7 +27,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
         border = theme.getBorder(this)
         verticalScrollBar.ui = PussycatScrollBarUI(theme)
-        horizontalScrollBar.ui = PussycatScrollBarUI(theme)
+        horizontalScrollBar.ui = PussycatScrollBarUI(theme, true)
         verticalScrollBar.unitIncrement = 3
         horizontalScrollBar.unitIncrement = 3
         viewport.scrollMode = JViewport.BACKINGSTORE_SCROLL_MODE
@@ -46,7 +46,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         g?.fillRect(0, 0, width, height)
     }
 
-    inner class PussycatScrollBarUI(val theme: Theme) : BasicScrollBarUI() {
+    inner class PussycatScrollBarUI(val theme: Theme, val isHorizontal: Boolean = false) : BasicScrollBarUI() {
 
         override fun createDecreaseButton(orientation: Int): JButton {
             return createZeroButton()
@@ -71,8 +71,15 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
                 return
             }
             if (thumbBounds != null && g != null) {
-                val w = thumbBounds.width
-                val h = thumbBounds.height
+                val w: Int
+                val h: Int
+                if (isHorizontal) {
+                    w = thumbBounds.width
+                    h = thumbBounds.height
+                } else {
+                    w = 20
+                    h = 10
+                }
                 var color = theme.getColor(TYPE.MAIN_COLOR_1, INTENSITY.DARK)
                 if (isDragging) {
                     color = theme.getColor(TYPE.MAIN_COLOR_1, INTENSITY.MEDIUM)
@@ -83,13 +90,14 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
                 val qualityHints = RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
                 qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
                 g2.setRenderingHints(qualityHints)
-                g2.translate(thumbBounds.x, thumbBounds.y)
                 g2.color = color
-                val corners = 10
-                if (componentOrientation.isHorizontal) {
+                if (isHorizontal) {
+                    val corners = 10
+                    g2.translate(thumbBounds.x, thumbBounds.y)
                     g2.fillRoundRect(0, 0, w, h, corners, corners)
                 } else {
-                    g2.fillRoundRect(0, 0, w, h, corners, corners)
+                    g2.translate(thumbBounds.x, 0)
+                    g2.fillRect(0, 0, w, h)
                 }
             }
         }
