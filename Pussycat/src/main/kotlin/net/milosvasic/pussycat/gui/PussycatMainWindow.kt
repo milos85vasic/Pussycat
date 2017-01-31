@@ -43,21 +43,17 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             when (value) {
                 SCROLLING_EVENT.TOP_REACHED -> {
                     // top reached
-                    println("Top reached") // TODO: Remove this
                 }
                 SCROLLING_EVENT.BOTTOM_REACHED -> {
                     // bottom reached
-                    println("Bottom reached") // TODO: Remove this
                 }
                 SCROLLING_EVENT.TOP_DELTA_REACHED -> {
-                    println("Top delta reached") // TODO: Remove this
                     if (firstItemIndex.get() > 0) {
                         requestBarrierReachedCallback?.onBarrierReached(firstItemIndex.get(), DIRECTION.UP)
                     }
                 }
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {
                     requestBarrierReachedCallback?.onBarrierReached(lastItemIndex.get())
-//                    if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 10) { // TODO: Uncomment this after dev is done.
                     checkListCapacity(DIRECTION.UP)
                 }
             }
@@ -127,15 +123,12 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 lastItemIndex.incrementAndGet()
             }
         } else {
-            println("INDEX PRE ${firstItemIndex.get()}") // TODO: Remove this.
             for (x in items.size - 1 downTo 0) {
                 val item = items[x]
                 prependPussycatListItem(item)
                 firstItemIndex.decrementAndGet()
                 checkListCapacity(DIRECTION.DOWN)
-                println("INDEX DURING ${firstItemIndex.get()}") // TODO: Remove this.
             }
-            println("INDEX POST ${firstItemIndex.get()}") // TODO: Remove this.
         }
     }
 

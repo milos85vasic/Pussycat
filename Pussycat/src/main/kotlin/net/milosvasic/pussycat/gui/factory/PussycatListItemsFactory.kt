@@ -23,14 +23,11 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         if (!data.keys.contains(index)) {
             queue.add(Pair(value, index))
             processData()
-        } else {
-//            println("Already processed [ $index ]") // TODO: Remove this.
         }
     }
 
     fun requestData(request: PussycatListItemsRequest) {
         if (activeRequest != null) {
-//            println("Request ignored [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this.
             return
         } else {
             println("Requesting accepted [ ${request.from} ][ ${request.amount} ][ ${request.direction} ]") // TODO: Remove this.
@@ -53,10 +50,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     val item = polledItem?.first
                     val index = polledItem?.second
                     if (item != null && index != null) {
-//                        println("start [ $index ]") // TODO: Remove this
                         val view = factory.obtain(item, index)
                         data.put(index, view)
-//                        println("end [ $index ][ ${data.size} ]") // TODO: Remove this
                     }
                 }
                 pollingThread = null
@@ -65,7 +60,6 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             pollingThread?.start()
         }
         if (data.size >= requested.get() + REQUEST_DELTA) {
-//            println("Data already prepared. Sending.") // TODO: Remove this.
             sendData(DIRECTION.DOWN)
         }
     }
@@ -96,10 +90,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 }
                 callback.onData(items, direction)
                 activeRequest = null
-                // println("Send data") // TODO: Remove this
+                println("Send data [ $from ][ $to ][ ${items.size} ][ $direction ]") // TODO: Remove this
             }
-        } else {
-            println("No active request to send the data!") // TODO: Remove this
         }
     }
 
