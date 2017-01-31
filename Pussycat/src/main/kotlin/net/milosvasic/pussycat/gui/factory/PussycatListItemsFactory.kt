@@ -30,12 +30,12 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         if (activeRequest != null) {
             return
         } else {
-            println("Requesting accepted [ ${request.from} ][ ${request.amount} ][ ${request.direction} ]") // TODO: Remove this.
             activeRequest = request
             if (request.direction == DIRECTION.DOWN) {
                 requested.set(request.from + request.amount)
                 processData()
             } else {
+                println("Requesting accepted [ ${request.from} ][ ${request.amount} ][ ${request.direction} ]") // TODO: Remove this.
                 sendData(DIRECTION.UP)
             }
         }
@@ -87,10 +87,10 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     for (x in from..to) {
                         items.add(data.values.elementAt(x))
                     }
+                    println("Send data [ $from ][ $to ][ ${items.size} ][ $direction ]") // TODO: Remove this
                 }
                 callback.onData(items, direction)
                 activeRequest = null
-                println("Send data [ $from ][ $to ][ ${items.size} ][ $direction ]") // TODO: Remove this
             }
         }
     }
