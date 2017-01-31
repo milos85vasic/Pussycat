@@ -236,11 +236,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     private fun checkListCapacity(direction: DIRECTION) {
-//      if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 10) { // TODO: Uncomment this after dev is done.
-        if (list.componentCount >= 200) {
-            println("Too much items. Time to remove from [ $direction ]") // TODO: Remove this and add implementation
-            //                      for (x in 0..(PussycatListItemsFactory.REQUEST_DELTA * 10) / 2) { // TODO: Uncomment this after dev is done.
-            for (x in 0..100) {
+        if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 2) {
+            for (x in 0..PussycatListItemsFactory.REQUEST_DELTA) {
                 if (direction == DIRECTION.UP) {
                     list.remove(0)
                     list.validate()
