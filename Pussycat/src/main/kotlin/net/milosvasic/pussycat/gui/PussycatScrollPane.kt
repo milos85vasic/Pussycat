@@ -96,7 +96,8 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
                     g2.translate(thumbBounds.x, thumbBounds.y)
                     g2.fillRoundRect(0, 0, w, h, corners, corners)
                 } else {
-                    g2.translate(thumbBounds.x, 0)
+                    val position = height / 2 // TODO: Calculate proportionally to data
+                    g2.translate(thumbBounds.x, position)
                     g2.fillRect(0, 0, w, h)
                 }
             }
