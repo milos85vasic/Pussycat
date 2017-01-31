@@ -123,8 +123,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 lastItemIndex.incrementAndGet()
             }
         } else {
-            for (x in items.size - 1 downTo 0) {
-                val item = items[x]
+            for (item in items) {
                 prependPussycatListItem(item)
                 firstItemIndex.decrementAndGet()
                 checkListCapacity(DIRECTION.DOWN)

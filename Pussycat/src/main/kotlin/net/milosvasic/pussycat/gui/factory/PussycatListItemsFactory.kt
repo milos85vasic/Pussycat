@@ -72,8 +72,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             val callback = request.callback
             if (from + amount <= requested.get()) {
                 val items = mutableListOf<PussycatListItem>()
-                var to = from + amount
                 if (direction == DIRECTION.DOWN) {
+                    var to = from + amount
                     if (to >= data.values.size) {
                         to = data.values.size - 1
                     }
@@ -81,10 +81,11 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                         items.add(data.values.elementAt(x))
                     }
                 } else {
+                    var to = from - amount
                     if (to < 0) {
                         to = 0
                     }
-                    for (x in from..to) {
+                    for (x in from downTo to) {
                         items.add(data.values.elementAt(x))
                     }
                     println("Send data [ $from ][ $to ][ ${items.size} ][ $direction ]") // TODO: Remove this
