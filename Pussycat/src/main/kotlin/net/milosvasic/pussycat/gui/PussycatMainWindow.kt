@@ -58,17 +58,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {
                     requestBarrierReachedCallback?.onBarrierReached(lastItemIndex.get())
 //                    if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 10) { // TODO: Uncomment this after dev is done.
-                    if (list.componentCount >= 200) {
-                        println("Too much items. Time to remove from above") // TODO: Remove this and add implementation
-//                        synchronized(list) {
-//                            for (x in 0..(PussycatListItemsFactory.REQUEST_DELTA * 10) / 2) { // TODO: Uncomment this after dev is done.
-                        for (x in 0..100) {
-                            list.remove(0)
-                            list.validate()
-                            firstItemIndex.incrementAndGet()
-                        }
-//                        }
-                    }
+                    checkListCapacity(DIRECTION.UP)
                 }
             }
         }
@@ -142,6 +132,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 val item = items[x]
                 prependPussycatListItem(item)
                 firstItemIndex.decrementAndGet()
+                checkListCapacity(DIRECTION.DOWN)
                 println("INDEX DURING ${firstItemIndex.get()}") // TODO: Remove this.
             }
             println("INDEX POST ${firstItemIndex.get()}") // TODO: Remove this.
@@ -167,10 +158,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     fun prependPussycatListItem(item: PussycatListItem) {
         list.add(item, 0)
+        contentPane.validate()
         val vertical = scrollPane.verticalScrollBar
         vertical.value += item.height
-        contentPane.validate()
-        // TODO: Update current scroll position as we append so the item we are looking at the moment is still there.
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>
@@ -251,6 +241,25 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         button.toolTipText = definition.toolTip
         button.addActionListener(definition.action)
         return button
+    }
+
+    private fun checkListCapacity(direction: DIRECTION) {
+//      if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 10) { // TODO: Uncomment this after dev is done.
+        if (list.componentCount >= 200) {
+            println("Too much items. Time to remove from [ $direction ]") // TODO: Remove this and add implementation
+            //                      for (x in 0..(PussycatListItemsFactory.REQUEST_DELTA * 10) / 2) { // TODO: Uncomment this after dev is done.
+            for (x in 0..100) {
+                if (direction == DIRECTION.UP) {
+                    list.remove(0)
+                    list.validate()
+                    firstItemIndex.incrementAndGet()
+                } else {
+                    list.remove(list.componentCount - 1)
+                    list.validate()
+                    lastItemIndex.decrementAndGet()
+                }
+            }
+        }
     }
 
 }
