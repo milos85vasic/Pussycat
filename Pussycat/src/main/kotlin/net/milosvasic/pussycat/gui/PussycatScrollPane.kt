@@ -121,16 +121,15 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         } else
             if (position >= bottomDelta) {
                 scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_DELTA_REACHED)
-            } else {
-                when (position) {
-                    max -> {
-                        scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_REACHED)
-                    }
-                    extent -> {
-                        scrollingEvents.notify(SCROLLING_EVENT.TOP_REACHED)
-                    }
-                }
             }
+        when (position) {
+            max -> {
+                scrollingEvents.notify(SCROLLING_EVENT.BOTTOM_REACHED)
+            }
+            extent -> {
+                scrollingEvents.notify(SCROLLING_EVENT.TOP_REACHED)
+            }
+        }
     }
 
 }
