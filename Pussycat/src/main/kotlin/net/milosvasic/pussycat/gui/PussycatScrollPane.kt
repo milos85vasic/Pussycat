@@ -18,7 +18,7 @@ import java.awt.event.AdjustmentListener
 
 class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
 
-    val screenSize = Toolkit.getDefaultToolkit().screenSize
+    val screenSize: Dimension = Toolkit.getDefaultToolkit().screenSize
     val scrollingEvents: Listeners<SCROLLING_EVENT> = Listeners.obtain()
 
     init {
