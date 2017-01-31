@@ -14,6 +14,7 @@ import javax.swing.JButton
 import java.awt.RenderingHints
 import java.awt.event.AdjustmentEvent
 import java.awt.event.AdjustmentListener
+import javax.swing.JViewport
 
 
 class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
@@ -27,8 +28,9 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         border = theme.getBorder(this)
         verticalScrollBar.ui = PussycatScrollBarUI(theme)
         horizontalScrollBar.ui = PussycatScrollBarUI(theme)
-        verticalScrollBar.unitIncrement = 16
-        horizontalScrollBar.unitIncrement = 16
+        verticalScrollBar.unitIncrement = 2
+        horizontalScrollBar.unitIncrement = 2
+        viewport.scrollMode = JViewport.BACKINGSTORE_SCROLL_MODE
         verticalScrollBar.addAdjustmentListener(this)
     }
 
