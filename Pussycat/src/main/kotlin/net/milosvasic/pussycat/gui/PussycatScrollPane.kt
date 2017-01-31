@@ -114,7 +114,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         val value = verticalScrollBar.value
         val max = verticalScrollBar.maximum
         val position = value + extent
-        val topDelta = (screenSize.height / 4) + extent
+        val topDelta = (screenSize.height / 3) + extent
         val bottomDelta = max - (screenSize.height / 2)
         if (position <= topDelta) {
             scrollingEvents.notify(SCROLLING_EVENT.TOP_DELTA_REACHED)
