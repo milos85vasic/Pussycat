@@ -167,6 +167,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     fun prependPussycatListItem(item: PussycatListItem) {
         list.add(item, 0)
+        val vertical = scrollPane.verticalScrollBar
+        vertical.value += item.height
         contentPane.validate()
         // TODO: Update current scroll position as we append so the item we are looking at the moment is still there.
     }
