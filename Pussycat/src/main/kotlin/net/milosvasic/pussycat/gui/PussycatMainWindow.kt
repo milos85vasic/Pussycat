@@ -213,16 +213,22 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
-            busy.set(true)
-            list.removeAll()
-            validate()
-            val vertical = scrollPane.verticalScrollBar
-            vertical.value = vertical.minimum
-            lastItemIndex.set(0)
-            firstItemIndex.set(0)
-            dataRequestCallback?.onRefresh()
-            dataRequestCallback?.onBarrierReached(lastItemIndex.get())
+            if (firstItemIndex.get() > 0) {
+                btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
+                busy.set(true)
+                list.removeAll()
+                validate()
+                val vertical = scrollPane.verticalScrollBar
+                vertical.value = vertical.minimum
+                lastItemIndex.set(0)
+                firstItemIndex.set(0)
+                dataRequestCallback?.onRefresh()
+                dataRequestCallback?.onBarrierReached(lastItemIndex.get())
+            } else {
+                println("No need to refresh!") // TODO: Remove this
+                val vertical = scrollPane.verticalScrollBar
+                vertical.value = vertical.minimum
+            }
         }
         val definition = PussycatIconButtonDefinition(
                 size,
