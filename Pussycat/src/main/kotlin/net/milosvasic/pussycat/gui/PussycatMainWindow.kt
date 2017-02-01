@@ -115,7 +115,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     override fun onData(items: List<PussycatListItem>, direction: DIRECTION) {
-        println("ON DATA ${items.size} $direction") // TODO: Remove this.
         if (direction == DIRECTION.DOWN) {
             for (item in items) {
                 appendPussycatListItem(item)
