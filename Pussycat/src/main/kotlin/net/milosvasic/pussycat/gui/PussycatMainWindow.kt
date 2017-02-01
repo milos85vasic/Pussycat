@@ -196,7 +196,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val definition = PussycatIconButtonDefinition(
                 size,
                 "page_top",
-                "page_top",
                 Labels.PAGE_TOP_BTN_TOOLTIP,
                 action
         )
@@ -210,7 +209,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         }
         val definition = PussycatIconButtonDefinition(
                 size,
-                "page_bottom",
                 "page_bottom",
                 Labels.PAGE_BOTTOM_BTN_TOOLTIP,
                 action
@@ -226,7 +224,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val definition = PussycatIconButtonDefinition(
                 size,
                 "go_top",
-                "go_top",
                 Labels.GO_TOP_BTN_TOOLTIP,
                 action
         )
@@ -240,7 +237,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         }
         val definition = PussycatIconButtonDefinition(
                 size,
-                "go_bottom",
                 "go_bottom",
                 Labels.GO_BOTTOM_BTN_TOOLTIP,
                 action

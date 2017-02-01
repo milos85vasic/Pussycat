@@ -5,7 +5,8 @@ import java.awt.event.ActionListener
 data class PussycatIconButtonDefinition(
         val size: Int,
         val defaultIcon: String,
-        val activeIcon: String,
         val toolTip: String,
-        val action: ActionListener
+        val action: ActionListener,
+        val activeIcon: String = defaultIcon,
+        val disabledIcon: String = defaultIcon
 )
