@@ -12,7 +12,7 @@ import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
-import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
+import net.milosvasic.pussycat.gui.events.DataRequestCallback
 import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
@@ -37,7 +37,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
-            mainWindow.requestBarrierReachedCallback = requestDeltaReachedCallback
+            mainWindow.dataRequestCallback = requestDeltaReachedCallback
             mainWindow.dataSizeObtain = sizeObtain
             mainWindow.open()
         }
@@ -46,15 +46,19 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val mainWindowStatusListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
-                val from = 0
-                val amount = PussycatListItemsFactory.REQUEST_DELTA
-                val request = PussycatListItemsRequest(from, amount, DIRECTION.DOWN, mainWindow)
-                pussycatListItemsFactory?.requestData(request)
+                requestDeltaReachedCallback.onRefresh()
             }
         }
     }
 
-    val requestDeltaReachedCallback = object : RequestBarrierReachedCallback {
+    val requestDeltaReachedCallback = object : DataRequestCallback {
+        override fun onRefresh() {
+            val from = 0
+            val amount = PussycatListItemsFactory.REQUEST_DELTA
+            val request = PussycatListItemsRequest(from, amount, DIRECTION.DOWN, mainWindow)
+            pussycatListItemsFactory?.requestData(request)
+        }
+
         override fun onBarrierReached(from: Int, direction: DIRECTION) {
             val amount = PussycatListItemsFactory.REQUEST_DELTA / 2
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow)

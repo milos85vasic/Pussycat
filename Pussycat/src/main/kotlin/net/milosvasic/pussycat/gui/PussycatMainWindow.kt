@@ -5,7 +5,7 @@ import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
-import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
+import net.milosvasic.pussycat.gui.events.DataRequestCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
@@ -24,7 +24,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     val subscriptions = Subscriptions()
     var dataSizeObtain: DataSizeObtain? = null
-    var requestBarrierReachedCallback: RequestBarrierReachedCallback? = null
+    var dataRequestCallback: DataRequestCallback? = null
 
     private val busy = AtomicBoolean()
     private val ready = AtomicBoolean()
@@ -54,11 +54,11 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 }
                 SCROLLING_EVENT.TOP_DELTA_REACHED -> {
                     if (firstItemIndex.get() > 0) {
-                        requestBarrierReachedCallback?.onBarrierReached(firstItemIndex.get(), DIRECTION.UP)
+                        dataRequestCallback?.onBarrierReached(firstItemIndex.get(), DIRECTION.UP)
                     }
                 }
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {
-                    requestBarrierReachedCallback?.onBarrierReached(lastItemIndex.get())
+                    dataRequestCallback?.onBarrierReached(lastItemIndex.get())
                     checkListCapacity(DIRECTION.UP)
                 }
             }
@@ -208,8 +208,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            //            val vertical = scrollPane.verticalScrollBar
-//            vertical.value = vertical.minimum
+            list.removeAll()
+            validate()
+            val vertical = scrollPane.verticalScrollBar
+            vertical.value = vertical.minimum
+            lastItemIndex.set(0)
+            dataRequestCallback?.onRefresh()
+            dataRequestCallback?.onBarrierReached(lastItemIndex.get())
         }
         val definition = PussycatIconButtonDefinition(
                 size,
