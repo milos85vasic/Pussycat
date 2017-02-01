@@ -16,10 +16,8 @@ import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import java.awt.*
 import java.awt.event.ActionListener
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
-import javax.imageio.ImageIO
 import javax.swing.BoxLayout
 
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), PussycatListItemsRequestCallback {
@@ -33,6 +31,12 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private val lastItemIndex = AtomicInteger(0)
     private val firstItemIndex = AtomicInteger(0)
     private val scrollPane = PussycatScrollPane(theme)
+    private val screenSize: Dimension = Toolkit.getDefaultToolkit().screenSize
+
+    private var btnPageUp: PussycatIconButton? = null
+    private var btnPageDown: PussycatIconButton? = null
+    private var btnGoTop: PussycatIconButton? = null
+    private var btnGoBottom: PussycatIconButton? = null
 
     class Subscriptions {
         val STATUS: Listeners<Boolean> = Listeners.obtain()
@@ -66,24 +70,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     override fun initialize() {
         super.initialize()
-        val screenSize = Toolkit.getDefaultToolkit().screenSize
         val barHeight = (screenSize.height / 100) * 3
         val headerBar = PussycatBar(theme, screenSize.width, (barHeight * 2.7).toInt())
         headerBar.layout = BoxLayout(headerBar, BoxLayout.PAGE_AXIS)
-        val mainMenu = createMainMenu()
-        val menuBar = PussycatBar(theme, screenSize.width, barHeight)
-        for (item in mainMenu) {
-            menuBar.add(item, BorderLayout.WEST)
-        }
+        val toolbar = createToolbar(barHeight)
+        val menuBar = createMenuBar(barHeight)
         headerBar.add(menuBar)
-        Thread(Runnable {
-            Thread.currentThread().name = Messages.INITIALIZING_TOOLBAR
-            val toolBar = PussycatToolbar(theme, screenSize.width, barHeight)
-            for (icon in createToolbar((barHeight * 0.8).toInt())) {
-                toolBar.add(icon)
-            }
-            headerBar.add(toolBar)
-        }).start()
+        headerBar.add(toolbar)
         if (OS.isMacOS()) {
             System.setProperty("com.apple.mac.useScreenMenuBar", "true")
             System.setProperty("apple.laf.useScreenMenuBar", "true")
@@ -179,15 +172,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         return items
     }
 
-    private fun createToolbar(size: Int): List<PussycatIconButton?> {
-        val items = mutableListOf<PussycatIconButton?>()
-        items.add(getGoTopButton(size))
-        items.add(getGoBottomButton(size))
-        items.add(getPageTopButton(size))
-        items.add(getPageBottomButton(size))
-        return items
-    }
-
     private fun getPageTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
             val vertical = scrollPane.verticalScrollBar
@@ -266,6 +250,33 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 }
             }
         }
+    }
+
+    private fun createMenuBar(barHeight: Int): PussycatBar {
+        val mainMenu = createMainMenu()
+        val menuBar = PussycatBar(theme, screenSize.width, barHeight)
+        for (item in mainMenu) {
+            menuBar.add(item, BorderLayout.WEST)
+        }
+        return menuBar
+    }
+
+    private fun createToolbar(barHeight: Int): PussycatToolbar {
+        val size = (barHeight * 0.8).toInt()
+        val toolBar = PussycatToolbar(theme, screenSize.width, barHeight)
+        btnGoTop = getGoTopButton(size)
+        btnGoBottom = getGoBottomButton(size)
+        btnPageUp = getPageTopButton(size)
+        btnPageDown = getPageBottomButton(size)
+        toolBar.add(btnGoTop)
+        toolBar.add(btnGoBottom)
+        toolBar.add(btnPageUp)
+        toolBar.add(btnPageDown)
+        btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
+        btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
+        btnPageUp?.setState(PussycatIconButton.STATE.DISABLED)
+        btnPageDown?.setState(PussycatIconButton.STATE.DISABLED)
+        return toolBar
     }
 
 }

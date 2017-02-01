@@ -5,6 +5,8 @@ import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import java.awt.Dimension
 import java.awt.Image
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import java.util.*
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
@@ -28,8 +30,8 @@ class PussycatIconButton private constructor(val size: Int, val theme: Theme, va
             icons.put(STATE.ACTIVE.value, iconActiveResized)
             icons.put(STATE.DISABLED.value, iconDisabledResized)
             val button = PussycatIconButton(size, theme, icons)
-            button.toolTipText = definition.toolTip
             button.addActionListener(definition.action)
+            button.toolTipText = definition.toolTip
             return button
         }
     }
@@ -43,7 +45,9 @@ class PussycatIconButton private constructor(val size: Int, val theme: Theme, va
     }
 
     fun setState(state: STATE) {
-        icon = ImageIcon(icons[state.value])
+        val position = state.value
+        icon = ImageIcon(icons[position])
+        isEnabled = state != STATE.DISABLED
     }
 
     enum class STATE(val value: Int) {
