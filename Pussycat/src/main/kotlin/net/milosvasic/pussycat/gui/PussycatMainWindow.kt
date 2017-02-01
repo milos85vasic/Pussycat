@@ -201,7 +201,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 "page_top",
                 "page_top_disabled"
         )
-        return getToolbarButton(definition)
+        return PussycatIconButton.create(theme, definition)
     }
 
     private fun getPageBottomButton(size: Int): PussycatIconButton? {
@@ -217,7 +217,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 "page_bottom",
                 "page_bottom_disabled"
         )
-        return getToolbarButton(definition)
+        return PussycatIconButton.create(theme, definition)
     }
 
     private fun getGoTopButton(size: Int): PussycatIconButton? {
@@ -233,7 +233,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 "go_top",
                 "go_top_disabled"
         )
-        return getToolbarButton(definition)
+        return PussycatIconButton.create(theme, definition)
     }
 
     private fun getGoBottomButton(size: Int): PussycatIconButton? {
@@ -249,25 +249,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 "go_bottom",
                 "go_bottom_disabled"
         )
-        return getToolbarButton(definition)
-    }
-
-    private fun getToolbarButton(definition: PussycatIconButtonDefinition): PussycatIconButton {
-        val size = definition.size
-        val icons = HashMap<Int, Image>()
-        val iconDefault = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/${definition.defaultIcon}.png"))
-        val iconActive = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/${definition.activeIcon}.png"))
-        val disabledActive = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/${definition.disabledIcon}.png"))
-        val iconDefaultResized = iconDefault.getScaledInstance(size, size, Image.SCALE_SMOOTH)
-        val iconActiveResized = iconActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
-        val iconDisabledResized = disabledActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
-        icons.put(PussycatIconButton.STATE.DEFAULT.value, iconDefaultResized)
-        icons.put(PussycatIconButton.STATE.ACTIVE.value, iconActiveResized)
-        icons.put(PussycatIconButton.STATE.DISABLED.value, iconDisabledResized)
-        val button = PussycatIconButton(size, theme, icons)
-        button.toolTipText = definition.toolTip
-        button.addActionListener(definition.action)
-        return button
+        return PussycatIconButton.create(theme, definition)
     }
 
     private fun checkListCapacity(direction: DIRECTION) {

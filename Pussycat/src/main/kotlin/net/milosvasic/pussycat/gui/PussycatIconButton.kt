@@ -6,11 +6,33 @@ import net.milosvasic.pussycat.gui.theme.color.TYPE
 import java.awt.Dimension
 import java.awt.Image
 import java.util.*
+import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import javax.swing.JButton
 
 
 class PussycatIconButton(val size: Int, val theme: Theme, val icons: HashMap<Int, Image>) : JButton() {
+
+    companion object {
+        fun create(theme: Theme, definition: PussycatIconButtonDefinition): PussycatIconButton {
+            val size = definition.size
+            val icons = HashMap<Int, Image>()
+            val clazz = PussycatIconButtonDefinition::class.java
+            val iconDefault = ImageIO.read(clazz.classLoader.getResourceAsStream("icons/${definition.defaultIcon}.png"))
+            val iconActive = ImageIO.read(clazz.classLoader.getResourceAsStream("icons/${definition.activeIcon}.png"))
+            val disabledActive = ImageIO.read(clazz.classLoader.getResourceAsStream("icons/${definition.disabledIcon}.png"))
+            val iconDefaultResized = iconDefault.getScaledInstance(size, size, Image.SCALE_SMOOTH)
+            val iconActiveResized = iconActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
+            val iconDisabledResized = disabledActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
+            icons.put(STATE.DEFAULT.value, iconDefaultResized)
+            icons.put(STATE.ACTIVE.value, iconActiveResized)
+            icons.put(STATE.DISABLED.value, iconDisabledResized)
+            val button = PussycatIconButton(size, theme, icons)
+            button.toolTipText = definition.toolTip
+            button.addActionListener(definition.action)
+            return button
+        }
+    }
 
     init {
         preferredSize = Dimension(size, size)
