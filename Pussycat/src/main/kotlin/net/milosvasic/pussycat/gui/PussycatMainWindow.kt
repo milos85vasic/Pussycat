@@ -283,19 +283,21 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun updateNavigationButtons() {
         if (btnGoTop != null) {
             val toTop = btnGoTop as PussycatIconButton
-            if (!toTop.hideActionText && lastItemIndex.get() >= PussycatListItemsFactory.REQUEST_DELTA / 2) {
+            if (!toTop.isEnabled && lastItemIndex.get() >= PussycatListItemsFactory.REQUEST_DELTA / 2) {
                 toTop.setState(PussycatIconButton.STATE.DEFAULT)
                 if (btnGoBottom != null) {
                     val btn = btnGoBottom as PussycatIconButton
                     btn.setState(PussycatIconButton.STATE.DEFAULT)
                 }
-                if (btnPageUp != null) {
-                    val btn = btnPageUp as PussycatIconButton
-                    btn.setState(PussycatIconButton.STATE.DEFAULT)
-                }
-                if (btnPageDown != null) {
-                    val btn = btnPageDown as PussycatIconButton
-                    btn.setState(PussycatIconButton.STATE.DEFAULT)
+                if (lastItemIndex.get() > PussycatListItemsFactory.REQUEST_DELTA) {
+                    if (btnPageDown != null) {
+                        val btn = btnPageDown as PussycatIconButton
+                        btn.setState(PussycatIconButton.STATE.DEFAULT)
+                    }
+                    if (btnPageUp != null) {
+                        val btn = btnPageUp as PussycatIconButton
+                        btn.setState(PussycatIconButton.STATE.DEFAULT)
+                    }
                 }
             }
         }
