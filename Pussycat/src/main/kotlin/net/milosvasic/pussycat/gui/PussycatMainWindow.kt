@@ -115,6 +115,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     override fun onData(items: List<PussycatListItem>, direction: DIRECTION) {
+        println("on data ${items.size} $direction")
         if (direction == DIRECTION.DOWN) {
             for (item in items) {
                 appendPussycatListItem(item)
@@ -223,7 +224,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 lastItemIndex.set(0)
                 firstItemIndex.set(0)
                 dataRequestCallback?.onRefresh()
-                dataRequestCallback?.onBarrierReached(lastItemIndex.get())
             } else {
                 val vertical = scrollPane.verticalScrollBar
                 vertical.value = vertical.minimum
@@ -242,14 +242,24 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoBottomButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            //            list.removeAll()
-//            validate()
-//            val vertical = scrollPane.verticalScrollBar
-//            vertical.value = vertical.minimum
-//            lastItemIndex.set(0)
-//            firstItemIndex.set(0)
-//            dataRequestCallback?.onRefresh()
-//            dataRequestCallback?.onBarrierReached(lastItemIndex.get())
+            println("- - - - - - -")
+            if (dataSizeObtain != null) {
+                val sizeObtain = dataSizeObtain as DataSizeObtain
+                if (lastItemIndex.get() < sizeObtain.getDataSize() - (PussycatListItemsFactory.REQUEST_DELTA / 2)) {
+                    btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
+                    busy.set(true)
+                    list.removeAll()
+                    validate()
+                    val vertical = scrollPane.verticalScrollBar
+                    vertical.value = vertical.maximum
+                    lastItemIndex.set(sizeObtain.getDataSize() - 1)
+                    firstItemIndex.set(lastItemIndex.get() + 1)
+                    dataRequestCallback?.requestData(lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.UP)
+                } else {
+                    val vertical = scrollPane.verticalScrollBar
+                    vertical.value = vertical.maximum
+                }
+            }
         }
         val definition = PussycatIconButtonDefinition(
                 size,

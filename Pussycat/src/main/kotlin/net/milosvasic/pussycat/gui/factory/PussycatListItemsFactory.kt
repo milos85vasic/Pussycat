@@ -31,12 +31,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             return
         } else {
             activeRequest = request
-            if (request.direction == DIRECTION.DOWN) {
-                requested.set(request.from + request.amount)
-                processData()
-            } else {
-                sendData(DIRECTION.UP)
-            }
+            requested.set(request.from + request.amount)
+            processData()
         }
     }
 
@@ -54,16 +50,16 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     }
                 }
                 pollingThread = null
-                sendData(DIRECTION.DOWN)
+                sendData()
             })
             pollingThread?.start()
         }
         if (data.size >= requested.get() + REQUEST_DELTA) {
-            sendData(DIRECTION.DOWN)
+            sendData()
         }
     }
 
-    private fun sendData(direction: DIRECTION) {
+    private fun sendData() {
         if (activeRequest != null) {
             val request = activeRequest as PussycatListItemsRequest
             val from = request.from
@@ -71,7 +67,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             val callback = request.callback
             if (from + amount <= requested.get()) {
                 val items = mutableListOf<PussycatListItem>()
-                if (direction == DIRECTION.DOWN) {
+                if (request.direction == DIRECTION.DOWN) {
                     var to = from + amount
                     if (to >= data.values.size) {
                         to = data.values.size - 1
@@ -88,7 +84,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                         items.add(data.values.elementAt(x))
                     }
                 }
-                callback.onData(items, direction)
+                println(">>> 2")
+                callback.onData(items, request.direction)
                 activeRequest = null
             }
         }

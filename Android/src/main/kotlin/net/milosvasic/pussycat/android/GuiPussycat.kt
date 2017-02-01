@@ -64,6 +64,11 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow)
             pussycatListItemsFactory?.requestData(request)
         }
+
+        override fun requestData(from: Int, amount: Int, direction: DIRECTION) {
+            val request = PussycatListItemsRequest(from, amount, direction, mainWindow)
+            pussycatListItemsFactory?.requestData(request)
+        }
     }
 
     val splashScreen = PussycatSplashScreen(information, theme, mainWindow, splashScreenCallback)
