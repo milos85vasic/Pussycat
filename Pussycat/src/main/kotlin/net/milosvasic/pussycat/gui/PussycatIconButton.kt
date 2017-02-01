@@ -11,7 +11,7 @@ import javax.swing.ImageIcon
 import javax.swing.JButton
 
 
-class PussycatIconButton(val size: Int, val theme: Theme, val icons: HashMap<Int, Image>) : JButton() {
+class PussycatIconButton private constructor(val size: Int, val theme: Theme, val icons: HashMap<Int, Image>) : JButton() {
 
     companion object {
         fun create(theme: Theme, definition: PussycatIconButtonDefinition): PussycatIconButton {
