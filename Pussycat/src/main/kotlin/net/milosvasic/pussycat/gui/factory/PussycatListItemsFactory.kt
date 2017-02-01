@@ -84,7 +84,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                         items.add(data.values.elementAt(x))
                     }
                 }
-                println(">>> 2")
+                println(">>> 2") // TODO: Remove this.
                 callback.onData(items, request.direction)
                 activeRequest = null
             }

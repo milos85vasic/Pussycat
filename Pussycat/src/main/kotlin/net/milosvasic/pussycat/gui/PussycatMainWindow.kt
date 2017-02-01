@@ -115,7 +115,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     override fun onData(items: List<PussycatListItem>, direction: DIRECTION) {
-        println("on data ${items.size} $direction")
+        println("on data ${items.size} $direction") // TODO: Remove this.
         if (direction == DIRECTION.DOWN) {
             for (item in items) {
                 appendPussycatListItem(item)
@@ -242,7 +242,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoBottomButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            println("- - - - - - -")
+            println("- - - - - - -") // TODO: Remove this.
             if (dataSizeObtain != null) {
                 val sizeObtain = dataSizeObtain as DataSizeObtain
                 if (lastItemIndex.get() < sizeObtain.getDataSize() - (PussycatListItemsFactory.REQUEST_DELTA / 2)) {
