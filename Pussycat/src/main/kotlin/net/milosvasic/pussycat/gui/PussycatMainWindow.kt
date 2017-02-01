@@ -225,7 +225,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 dataRequestCallback?.onRefresh()
                 dataRequestCallback?.onBarrierReached(lastItemIndex.get())
             } else {
-                println("No need to refresh!") // TODO: Remove this
                 val vertical = scrollPane.verticalScrollBar
                 vertical.value = vertical.minimum
             }
