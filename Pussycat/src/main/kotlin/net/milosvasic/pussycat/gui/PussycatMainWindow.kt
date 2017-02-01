@@ -4,7 +4,6 @@ package net.milosvasic.pussycat.gui
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.content.Messages
-import net.milosvasic.pussycat.data.ProgressObtain
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
@@ -138,14 +137,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     fun isBusy(): Boolean {
         return busy.get()
-    }
-
-    fun setBusy(bussy: Boolean) {
-        this.busy.set(bussy)
-    }
-
-    fun setProgressObtain(progress: ProgressObtain?){
-        scrollPane.progress = progress
     }
 
     fun appendPussycatListItem(item: PussycatListItem) {

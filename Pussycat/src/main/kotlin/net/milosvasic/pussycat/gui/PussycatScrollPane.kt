@@ -1,7 +1,6 @@
 package net.milosvasic.pussycat.gui
 
 
-import net.milosvasic.pussycat.data.ProgressObtain
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
@@ -20,7 +19,6 @@ import javax.swing.JViewport
 
 class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
 
-    var progress: ProgressObtain? = null
     val screenSize: Dimension = Toolkit.getDefaultToolkit().screenSize
     val scrollingEvents: Listeners<SCROLLING_EVENT> = Listeners.obtain()
 
@@ -29,11 +27,11 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         background = theme.getColor(TYPE.BASE, INTENSITY.DARK)
         border = theme.getBorder(this)
         verticalScrollBar.ui = PussycatScrollBarUI(theme)
-        horizontalScrollBar.ui = PussycatScrollBarUI(theme, true)
+        horizontalScrollBar.ui = PussycatScrollBarUI(theme)
         verticalScrollBar.unitIncrement = 3
         horizontalScrollBar.unitIncrement = 3
-        viewport.scrollMode = JViewport.BACKINGSTORE_SCROLL_MODE
         verticalScrollBar.addAdjustmentListener(this)
+        viewport.scrollMode = JViewport.BACKINGSTORE_SCROLL_MODE
     }
 
     override fun paintComponent(g: Graphics?) {
@@ -48,7 +46,7 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
         g?.fillRect(0, 0, width, height)
     }
 
-    inner class PussycatScrollBarUI(val theme: Theme, val isHorizontal: Boolean = false) : BasicScrollBarUI() {
+    inner class PussycatScrollBarUI(val theme: Theme) : BasicScrollBarUI() {
 
         override fun createDecreaseButton(orientation: Int): JButton {
             return createZeroButton()
@@ -73,15 +71,8 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
                 return
             }
             if (thumbBounds != null && g != null) {
-                val w: Int
-                val h: Int
-                if (isHorizontal) {
-                    w = thumbBounds.width
-                    h = thumbBounds.height
-                } else {
-                    w = 20
-                    h = 10
-                }
+                val w = thumbBounds.width
+                val h = thumbBounds.height
                 var color = theme.getColor(TYPE.MAIN_COLOR_1, INTENSITY.DARK)
                 if (isDragging) {
                     color = theme.getColor(TYPE.MAIN_COLOR_1, INTENSITY.MEDIUM)
@@ -93,18 +84,9 @@ class PussycatScrollPane(val theme: Theme) : JScrollPane(), AdjustmentListener {
                 qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY)
                 g2.setRenderingHints(qualityHints)
                 g2.color = color
-                if (isHorizontal) {
-                    val corners = 10
-                    g2.translate(thumbBounds.x, thumbBounds.y)
-                    g2.fillRoundRect(0, 0, w, h, corners, corners)
-                } else {
-                    var progressValue = thumbBounds.y
-                    if (progress != null) {
-                        progressValue = (progress as ProgressObtain).obtain(height)
-                    }
-                    g2.translate(thumbBounds.x, progressValue)
-                    g2.fillRect(0, 0, w, h)
-                }
+                val corners = 10
+                g2.translate(thumbBounds.x, thumbBounds.y)
+                g2.fillRoundRect(0, 0, w, h, corners, corners)
             }
         }
 

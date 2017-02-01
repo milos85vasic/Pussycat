@@ -9,7 +9,6 @@ import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
-import net.milosvasic.pussycat.data.ProgressObtain
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
@@ -38,7 +37,6 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun onComplete(success: Boolean) {
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
             mainWindow.requestBarrierReachedCallback = requestDeltaReachedCallback
-            mainWindow.setProgressObtain(progress)
             mainWindow.open()
         }
     }
@@ -59,13 +57,6 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             val amount = PussycatListItemsFactory.REQUEST_DELTA / 2
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow)
             pussycatListItemsFactory?.requestData(request)
-        }
-    }
-
-    private val progress = object : ProgressObtain {
-        override fun obtain(maximum: Int): Int {
-            val percentage = 0.5
-            return (maximum * percentage).toInt() // TODO: Introduce real calculation.
         }
     }
 
