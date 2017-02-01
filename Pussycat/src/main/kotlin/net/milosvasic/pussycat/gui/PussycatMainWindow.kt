@@ -183,13 +183,45 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val items = mutableListOf<PussycatIconButton?>()
         items.add(getGoTopButton(size))
         items.add(getGoBottomButton(size))
+        items.add(getPageTopButton(size))
+        items.add(getPageBottomButton(size))
         return items
+    }
+
+    private fun getPageTopButton(size: Int): PussycatIconButton? {
+        val action = ActionListener {
+            val vertical = scrollPane.verticalScrollBar
+            vertical.value = vertical.minimum
+        }
+        val definition = PussycatIconButtonDefinition(
+                size,
+                "page_top",
+                "page_top",
+                Labels.PAGE_TOP_BTN_TOOLTIP,
+                action
+        )
+        return getToolbarButton(definition)
+    }
+
+    private fun getPageBottomButton(size: Int): PussycatIconButton? {
+        val action = ActionListener {
+            val vertical = scrollPane.verticalScrollBar
+            vertical.value = vertical.maximum
+        }
+        val definition = PussycatIconButtonDefinition(
+                size,
+                "page_bottom",
+                "page_bottom",
+                Labels.PAGE_BOTTOM_BTN_TOOLTIP,
+                action
+        )
+        return getToolbarButton(definition)
     }
 
     private fun getGoTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            val vertical = scrollPane.verticalScrollBar
-            vertical.value = vertical.minimum
+//            val vertical = scrollPane.verticalScrollBar
+//            vertical.value = vertical.minimum
         }
         val definition = PussycatIconButtonDefinition(
                 size,
@@ -203,8 +235,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoBottomButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            val vertical = scrollPane.verticalScrollBar
-            vertical.value = vertical.maximum
+//            val vertical = scrollPane.verticalScrollBar
+//            vertical.value = vertical.maximum
         }
         val definition = PussycatIconButtonDefinition(
                 size,
