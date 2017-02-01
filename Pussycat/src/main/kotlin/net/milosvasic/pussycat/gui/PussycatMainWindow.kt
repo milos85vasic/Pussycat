@@ -197,7 +197,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 size,
                 "page_top",
                 Labels.PAGE_TOP_BTN_TOOLTIP,
-                action
+                action,
+                "page_top",
+                "page_top_disabled"
         )
         return getToolbarButton(definition)
     }
@@ -211,35 +213,41 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 size,
                 "page_bottom",
                 Labels.PAGE_BOTTOM_BTN_TOOLTIP,
-                action
+                action,
+                "page_bottom",
+                "page_bottom_disabled"
         )
         return getToolbarButton(definition)
     }
 
     private fun getGoTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-//            val vertical = scrollPane.verticalScrollBar
+            //            val vertical = scrollPane.verticalScrollBar
 //            vertical.value = vertical.minimum
         }
         val definition = PussycatIconButtonDefinition(
                 size,
                 "go_top",
                 Labels.GO_TOP_BTN_TOOLTIP,
-                action
+                action,
+                "go_top",
+                "go_top_disabled"
         )
         return getToolbarButton(definition)
     }
 
     private fun getGoBottomButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-//            val vertical = scrollPane.verticalScrollBar
+            //            val vertical = scrollPane.verticalScrollBar
 //            vertical.value = vertical.maximum
         }
         val definition = PussycatIconButtonDefinition(
                 size,
                 "go_bottom",
                 Labels.GO_BOTTOM_BTN_TOOLTIP,
-                action
+                action,
+                "go_bottom",
+                "go_bottom_disabled"
         )
         return getToolbarButton(definition)
     }
@@ -249,10 +257,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val icons = HashMap<Int, Image>()
         val iconDefault = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/${definition.defaultIcon}.png"))
         val iconActive = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/${definition.activeIcon}.png"))
+        val disabledActive = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/${definition.disabledIcon}.png"))
         val iconDefaultResized = iconDefault.getScaledInstance(size, size, Image.SCALE_SMOOTH)
         val iconActiveResized = iconActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
+        val iconDisabledResized = disabledActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
         icons.put(PussycatIconButton.STATE.DEFAULT.value, iconDefaultResized)
         icons.put(PussycatIconButton.STATE.ACTIVE.value, iconActiveResized)
+        icons.put(PussycatIconButton.STATE.DISABLED.value, iconDisabledResized)
         val button = PussycatIconButton(size, theme, icons)
         button.toolTipText = definition.toolTip
         button.addActionListener(definition.action)
