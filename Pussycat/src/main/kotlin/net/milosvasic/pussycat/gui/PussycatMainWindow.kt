@@ -289,7 +289,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                     val btn = btnGoBottom as PussycatIconButton
                     btn.setState(PussycatIconButton.STATE.DEFAULT)
                 }
-                if (lastItemIndex.get() > PussycatListItemsFactory.REQUEST_DELTA) {
+                // TODO: We need size here!
+                if (lastItemIndex.get() >= (PussycatListItemsFactory.REQUEST_DELTA * 1.5).toInt()) {
                     if (btnPageDown != null) {
                         val btn = btnPageDown as PussycatIconButton
                         btn.setState(PussycatIconButton.STATE.DEFAULT)
