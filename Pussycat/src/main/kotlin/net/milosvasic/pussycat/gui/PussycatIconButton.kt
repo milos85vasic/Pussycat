@@ -42,8 +42,8 @@ class PussycatIconButton private constructor(val size: Int, val theme: Theme, va
         icon = ImageIcon(icons[0])
     }
 
-    fun setState(state: Int) {
-        icon = ImageIcon(icons[state])
+    fun setState(state: STATE) {
+        icon = ImageIcon(icons[state.value])
     }
 
     enum class STATE(val value: Int) {
