@@ -11,6 +11,7 @@ import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
+import net.milosvasic.pussycat.gui.data.DataSizeObtain
 import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
 import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
@@ -37,6 +38,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun onComplete(success: Boolean) {
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
             mainWindow.requestBarrierReachedCallback = requestDeltaReachedCallback
+            mainWindow.dataSizeObtain = sizeObtain
             mainWindow.open()
         }
     }
@@ -81,6 +83,12 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun onEvent(value: Double?) {
             val s = String.format("%.0f", value)
             splashScreen.updateStatus("${Messages.PARSING}: $s%")
+        }
+    }
+
+    val sizeObtain = object : DataSizeObtain {
+        override fun getDataSize(): Int {
+            return data.get().size
         }
     }
 

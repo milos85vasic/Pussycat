@@ -3,8 +3,8 @@ package net.milosvasic.pussycat.gui
 
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
-import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.gui.data.DataSizeObtain
 import net.milosvasic.pussycat.gui.events.RequestBarrierReachedCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.factory.DIRECTION
@@ -23,6 +23,7 @@ import javax.swing.BoxLayout
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), PussycatListItemsRequestCallback {
 
     val subscriptions = Subscriptions()
+    var dataSizeObtain: DataSizeObtain? = null
     var requestBarrierReachedCallback: RequestBarrierReachedCallback? = null
 
     private val busy = AtomicBoolean()
@@ -281,24 +282,24 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     private fun updateNavigationButtons() {
-        if (btnGoTop != null) {
-            val toTop = btnGoTop as PussycatIconButton
-            if (!toTop.isEnabled && lastItemIndex.get() >= PussycatListItemsFactory.REQUEST_DELTA / 2) {
-                toTop.setState(PussycatIconButton.STATE.DEFAULT)
+        val sizeObtain = dataSizeObtain as DataSizeObtain
+        if (sizeObtain.getDataSize() >= PussycatListItemsFactory.REQUEST_DELTA) {
+            if (dataSizeObtain != null) {
+                if (btnGoTop != null) {
+                    val btn = btnGoTop as PussycatIconButton
+                    btn.setState(PussycatIconButton.STATE.DEFAULT)
+                }
                 if (btnGoBottom != null) {
                     val btn = btnGoBottom as PussycatIconButton
                     btn.setState(PussycatIconButton.STATE.DEFAULT)
                 }
-                // TODO: We need size here!
-                if (lastItemIndex.get() >= (PussycatListItemsFactory.REQUEST_DELTA * 1.5).toInt()) {
-                    if (btnPageDown != null) {
-                        val btn = btnPageDown as PussycatIconButton
-                        btn.setState(PussycatIconButton.STATE.DEFAULT)
-                    }
-                    if (btnPageUp != null) {
-                        val btn = btnPageUp as PussycatIconButton
-                        btn.setState(PussycatIconButton.STATE.DEFAULT)
-                    }
+                if (btnPageDown != null) {
+                    val btn = btnPageDown as PussycatIconButton
+                    btn.setState(PussycatIconButton.STATE.DEFAULT)
+                }
+                if (btnPageUp != null) {
+                    val btn = btnPageUp as PussycatIconButton
+                    btn.setState(PussycatIconButton.STATE.DEFAULT)
                 }
             }
         }
