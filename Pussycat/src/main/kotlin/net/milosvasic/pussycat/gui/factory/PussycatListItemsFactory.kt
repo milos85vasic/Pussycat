@@ -46,17 +46,11 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             Thread.currentThread().name = Labels.PROCESSING_THREAD
 
             fun processKey(key: Int): Boolean {
-                if (data[key] == null) {
-                    println("Processing [ $key ]") // TODO: Remove this.
-                    val item = raw[key]
-                    if (item != null) {
-                        val view = factory.obtain(item, key)
-                        data.put(key, view)
-                        raw.remove(key)
-                        return true
-                    }
-                } else {
-                    println("Key already processed [ $key ]") // TODO: Remove this.
+                val item = raw.remove(key)
+                if (item != null) {
+                    val view = factory.obtain(item, key)
+                    data.put(key, view)
+                    return true
                 }
                 return false
             }
@@ -67,13 +61,11 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 val amount = request.amount
                 if (request.direction == DIRECTION.DOWN) {
                     val to = from + amount
-//                    if (to >= data.values.size) {
-//                        to = data.values.size - 1
-//                    }
                     println("Requesting data $from $to ${request.direction}")  // TODO: Remove this.
                     for (key in from..to) {
-                        println("We will process key [ $key ]") // TODO: Remove this
-                        processKey(key)
+                        if (processKey(key)) {
+                            println("Key processed [ $key ][ from request ]") // TODO: Remove this
+                        }
                     }
                 } else {
                     var to = from - amount
@@ -82,8 +74,9 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     }
                     println("Requesting data $from $to ${request.direction}")  // TODO: Remove this.
                     for (key in from downTo to) {
-                        println("We will process key [ $key ]") // TODO: Remove this
-                        processKey(key)
+                        if (processKey(key)) {
+                            println("Key processed [ $key ][ from request ]") // TODO: Remove this
+                        }
                     }
                 }
 
@@ -91,16 +84,10 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
 
                 var key = 0
                 while (!Thread.currentThread().isInterrupted && !raw.isEmpty() && key <= REQUEST_DELTA) {
-                    println("Key [ $key ]") // TODO: Remove this.
-                    if (data[key] == null) {
-                        val item = raw[key]
-                        if (item != null) {
-                            val view = factory.obtain(item, key)
-                            data.put(key, view)
-                            raw.remove(key)
-                            key++
-                        }
+                    if (processKey(key)) {
+                        println("Key processed [ $key ][ main worker ]") // TODO: Remove this
                     }
+                    key++
                 }
 
             }
