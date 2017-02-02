@@ -11,8 +11,9 @@ import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
+import net.milosvasic.pussycat.gui.data.DataRequestCallback
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
-import net.milosvasic.pussycat.gui.events.DataRequestCallback
+import net.milosvasic.pussycat.gui.data.DataRequestStrategy
 import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
@@ -37,7 +38,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
-            mainWindow.dataRequestCallback = requestDeltaReachedCallback
+            mainWindow.dataRequestStrategy = dataRequestStrategy
             mainWindow.dataSizeObtain = sizeObtain
             mainWindow.open()
         }
@@ -46,28 +47,29 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val mainWindowStatusListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
-                requestDeltaReachedCallback.onRefresh()
+                dataRequestStrategy.refresh()
             }
         }
     }
 
-    val requestDeltaReachedCallback = object : DataRequestCallback {
-        override fun onRefresh() {
+    val dataRequestStrategy = object : DataRequestStrategy {
+        override fun refresh(callback : DataRequestCallback?) {
             val from = 0
             val amount = PussycatListItemsFactory.REQUEST_DELTA
-            val request = PussycatListItemsRequest(from, amount, DIRECTION.DOWN, mainWindow)
+            val request = PussycatListItemsRequest(from, amount, DIRECTION.DOWN, mainWindow, callback)
             pussycatListItemsFactory?.requestData(request)
         }
 
-        override fun onBarrierReached(from: Int, direction: DIRECTION) {
+        // TODO: Switch to requestData()
+        override fun barrierReached(from: Int, direction: DIRECTION, callback : DataRequestCallback?) {
             val amount = PussycatListItemsFactory.REQUEST_DELTA / 2
-            val request = PussycatListItemsRequest(from, amount, direction, mainWindow)
+            val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
             println("Barrier reached: ${request.from} ${request.amount} ${request.direction}") // TODO: Remove this.
             pussycatListItemsFactory?.requestData(request)
         }
 
-        override fun requestData(from: Int, amount: Int, direction: DIRECTION) {
-            val request = PussycatListItemsRequest(from, amount, direction, mainWindow)
+        override fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback?) {
+            val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
             pussycatListItemsFactory?.requestData(request)
         }
     }

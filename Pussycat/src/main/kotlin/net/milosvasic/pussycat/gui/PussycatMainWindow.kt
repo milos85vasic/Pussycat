@@ -4,13 +4,14 @@ package net.milosvasic.pussycat.gui
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.gui.data.DataRequestCallback
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
-import net.milosvasic.pussycat.gui.events.DataRequestCallback
+import net.milosvasic.pussycat.gui.data.DataRequestStrategy
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
-import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequestCallback
+import net.milosvasic.pussycat.gui.data.DataCallback
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
@@ -21,11 +22,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import javax.swing.BoxLayout
 
-abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), PussycatListItemsRequestCallback {
+abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), DataCallback {
 
     val subscriptions = Subscriptions()
     var dataSizeObtain: DataSizeObtain? = null
-    var dataRequestCallback: DataRequestCallback? = null
+    var dataRequestStrategy: DataRequestStrategy? = null
 
     private val busy = AtomicBoolean()
     private val ready = AtomicBoolean()
@@ -56,13 +57,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 SCROLLING_EVENT.TOP_DELTA_REACHED -> {
                     if (firstItemIndex.get() > 0 && !busy.get()) {
                         busy.set(true)
-                        dataRequestCallback?.onBarrierReached(firstItemIndex.get(), DIRECTION.UP)
+                        dataRequestStrategy?.barrierReached(firstItemIndex.get(), DIRECTION.UP)
                     }
                 }
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {
                     if (!busy.get()) {
                         busy.set(true)
-                        dataRequestCallback?.onBarrierReached(lastItemIndex.get())
+                        dataRequestStrategy?.barrierReached(lastItemIndex.get(), DIRECTION.DOWN)
                         checkListCapacity(DIRECTION.UP)
                     }
                 }
@@ -115,7 +116,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         super.close()
     }
 
-    override fun onData(items: List<PussycatListItem>, direction: DIRECTION) {
+    override fun onData(request: PussycatListItemsRequest, items: List<PussycatListItem>, direction: DIRECTION) {
         println("on data ${items.size} $direction") // TODO: Remove this.
         if (direction == DIRECTION.DOWN) {
             for (item in items) {
@@ -130,6 +131,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             }
         }
         updateNavigationButtons()
+        request.dataRequestCallback?.finished()
         busy.set(false)
     }
 
@@ -229,7 +231,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 vertical.value = vertical.minimum
                 lastItemIndex.set(0)
                 firstItemIndex.set(0)
-                dataRequestCallback?.onRefresh()
+                dataRequestStrategy?.refresh()
             } else {
                 val vertical = scrollPane.verticalScrollBar
                 vertical.value = vertical.minimum
@@ -248,23 +250,23 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoBottomButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-            println("- - - - - - -") // TODO: Remove this.
             if (dataSizeObtain != null) {
                 val sizeObtain = dataSizeObtain as DataSizeObtain
-                if (lastItemIndex.get() < sizeObtain.getDataSize() - (PussycatListItemsFactory.REQUEST_DELTA / 2)) {
-                    btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
-                    busy.set(true)
-                    list.removeAll()
-                    validate()
-                    val vertical = scrollPane.verticalScrollBar
-                    vertical.value = vertical.maximum
-                    lastItemIndex.set(sizeObtain.getDataSize() - 1)
-                    firstItemIndex.set(lastItemIndex.get() + 1)
-                    dataRequestCallback?.requestData(lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.UP)
-                } else {
-                    val vertical = scrollPane.verticalScrollBar
-                    vertical.value = vertical.maximum
+                btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
+                busy.set(true)
+                list.removeAll()
+                validate()
+                lastItemIndex.set(sizeObtain.getDataSize() - 1)
+                firstItemIndex.set(lastItemIndex.get() + 1)
+                val callback = object : DataRequestCallback {
+                    override fun finished() {
+                        val vertical = scrollPane.verticalScrollBar
+                        vertical.value = vertical.maximum
+                    }
                 }
+                dataRequestStrategy?.requestData(
+                        lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.UP, callback
+                )
             }
         }
         val definition = PussycatIconButtonDefinition(

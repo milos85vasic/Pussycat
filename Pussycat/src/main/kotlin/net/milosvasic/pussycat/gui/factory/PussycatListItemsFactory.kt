@@ -135,9 +135,9 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     addItem(x)
                 }
             }
-            
+
             println("Send data ${items.size} ${request.direction}") // TODO: Remove this.
-            callback.onData(items, request.direction)
+            callback.onData(request, items, request.direction)
         } else {
             println("No active request.") // TODO: Remove this.
         }
