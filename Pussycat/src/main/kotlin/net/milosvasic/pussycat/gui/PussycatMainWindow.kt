@@ -8,7 +8,7 @@ import net.milosvasic.pussycat.gui.data.DataRequestCallback
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
 import net.milosvasic.pussycat.gui.data.DataRequestStrategy
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
-import net.milosvasic.pussycat.gui.factory.DIRECTION
+import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.data.DataCallback

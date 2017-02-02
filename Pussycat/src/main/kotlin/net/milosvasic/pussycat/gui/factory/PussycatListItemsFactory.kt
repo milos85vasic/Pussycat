@@ -2,6 +2,7 @@ package net.milosvasic.pussycat.gui.factory
 
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.gui.data.DIRECTION
 import java.util.concurrent.*
 
 

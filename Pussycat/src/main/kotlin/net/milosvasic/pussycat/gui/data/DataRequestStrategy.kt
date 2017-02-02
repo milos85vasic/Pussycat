@@ -1,6 +1,6 @@
 package net.milosvasic.pussycat.gui.data
 
-import net.milosvasic.pussycat.gui.factory.DIRECTION
+import net.milosvasic.pussycat.gui.data.DIRECTION
 
 interface DataRequestStrategy {
 

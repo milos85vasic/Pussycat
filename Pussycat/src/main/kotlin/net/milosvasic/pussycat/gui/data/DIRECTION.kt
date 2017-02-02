@@ -1,4 +1,4 @@
-package net.milosvasic.pussycat.gui.factory
+package net.milosvasic.pussycat.gui.data
 
 enum class DIRECTION {
 
