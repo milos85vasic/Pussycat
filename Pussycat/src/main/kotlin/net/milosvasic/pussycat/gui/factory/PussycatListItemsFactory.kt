@@ -80,26 +80,16 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 if (to >= data.values.size) {
                     to = data.values.size - 1
                 }
-                if (data.keys.contains(from) && data.keys.contains(to)) {
-                    for (x in from..to) {
-                        items.add(data.values.elementAt(x))
-                    }
-                } else {
-                    println("Data not yet ready.") // TODO: Remove this.
-                    return
+                for (x in from..to) {
+                    items.add(data.values.elementAt(x))
                 }
             } else {
                 var to = from - amount
                 if (to < 0) {
                     to = 0
                 }
-                if (data.keys.contains(from) && data.keys.contains(to)) {
-                    for (x in from downTo to) {
-                        items.add(data.values.elementAt(x))
-                    }
-                } else {
-                    println("Data not yet ready.") // TODO: Remove this.
-                    return
+                for (x in from downTo to) {
+                    items.add(data.values.elementAt(x))
                 }
             }
             println("Send data ${items.size} ${request.direction}") // TODO: Remove this.

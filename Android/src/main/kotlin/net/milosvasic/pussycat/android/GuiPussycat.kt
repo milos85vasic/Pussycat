@@ -62,6 +62,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun onBarrierReached(from: Int, direction: DIRECTION) {
             val amount = PussycatListItemsFactory.REQUEST_DELTA / 2
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow)
+            println("Barrier reached: ${request.from} ${request.amount} ${request.direction}") // TODO: Remove this.
             pussycatListItemsFactory?.requestData(request)
         }
 

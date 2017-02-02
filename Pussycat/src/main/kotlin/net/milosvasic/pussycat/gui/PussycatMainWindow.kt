@@ -134,8 +134,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     override fun onDataRequestRejected(request: PussycatListItemsRequest) {
-        // TODO: Change this.
-        println("Request rejected.")
+        busy.set(false)
+        println("Request rejected.") // TODO: Remove this.
     }
 
     fun isReady(): Boolean {
