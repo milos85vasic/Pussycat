@@ -2411,9 +2411,9 @@
 12-21 03:47:11.725 5071-5071/? D/ConditionProviders.SCP: notifyCondition condition://android/schedule?days=1.2.3.4.5&start=22.0&end=7.0 STATE_TRUE reason=meetsSchedule
 12-21 03:47:11.726 5071-5071/? D/ConditionProviders.SCP: Scheduling evaluate for Wed Dec 21 07:00:00 GMT+01:00 2016 (1482300000000), in +3h12m48s275ms, now=Wed Dec 21 03:47:11 GMT+01:00 2016 (1482288431725)
 12-21 03:47:54.275 5071-5124/? I/ActivityManager: Start proc 17192:com.qualcomm.timeservice/1000 for broadcast com.qualcomm.timeservice/.TimeServiceBroadcastReceiver
-12-21 03:47:54.378 5071-3221/? I/ActivityManager: Start proc 17208:com.amazon.kindle/u0a1597 for broadcast com.amazon.kindle/com.amazon.identity.auth.device.storage.LambortishClock$ChangeTimestampsBroadcastReceiver
+12-21 03:47:54.378 5071-3221/? I/ActivityManager: Start proc 17208:com.amazon.kindle/u0a1597 for broadcast com.amazon.kindle/com.amazon.identity.auth.device.raw.LambortishClock$ChangeTimestampsBroadcastReceiver
 12-21 03:51:54.455 5071-19630/? W/BackupManagerService: dataChanged but no participant pkg='com.amazon.kindle' uid=11597
-12-21 03:51:54.611 5071-8102/? I/ActivityManager: Start proc 17346:com.amazon.mShop.android.shopping/u0a1217 for broadcast com.amazon.mShop.android.shopping/com.amazon.identity.auth.device.storage.LambortishClock$ChangeTimestampsBroadcastReceiver
+12-21 03:51:54.611 5071-8102/? I/ActivityManager: Start proc 17346:com.amazon.mShop.android.shopping/u0a1217 for broadcast com.amazon.mShop.android.shopping/com.amazon.identity.auth.device.raw.LambortishClock$ChangeTimestampsBroadcastReceiver
 12-21 03:51:54.803 17208-17367/? W/ActivityThread: ClassLoader.getResources: The class loader returned by Thread.getContextClassLoader() may fail for processes that host multiple applications. You should explicitly specify a context class loader. For example: Thread.setContextClassLoader(getClass().getClassLoader());
 12-21 03:51:55.427 5071-6968/? W/BackupManagerService: dataChanged but no participant pkg='com.amazon.kindle' uid=11597
 12-21 03:51:55.775 5071-8155/? D/ConnectivityService: Returning blocked NetworkInfo to uid=11217
@@ -2872,11 +2872,11 @@
 12-21 06:53:51.352 5071-5071/? D/ConditionProviders.SCP: notifyCondition condition://android/schedule?days=1.2.3.4.5&start=22.0&end=7.0 STATE_TRUE reason=meetsSchedule
 12-21 06:53:51.353 5071-5071/? D/ConditionProviders.SCP: Scheduling evaluate for Wed Dec 21 07:00:00 GMT+01:00 2016 (1482300000000), in +6m8s652ms, now=Wed Dec 21 06:53:51 GMT+01:00 2016 (1482299631348)
 12-21 06:53:51.714 5071-8151/? I/ActivityManager: Start proc 22755:com.qualcomm.timeservice/1000 for broadcast com.qualcomm.timeservice/.TimeServiceBroadcastReceiver
-12-21 06:53:51.802 5071-8100/? I/ActivityManager: Start proc 22771:com.amazon.kindle/u0a1597 for broadcast com.amazon.kindle/com.amazon.identity.auth.device.storage.LambortishClock$ChangeTimestampsBroadcastReceiver
+12-21 06:53:51.802 5071-8100/? I/ActivityManager: Start proc 22771:com.amazon.kindle/u0a1597 for broadcast com.amazon.kindle/com.amazon.identity.auth.device.raw.LambortishClock$ChangeTimestampsBroadcastReceiver
 12-21 06:53:51.803 5071-8100/? I/ActivityManager: Killing 19342:ru.yandex.disk:Metrica/u0a128 (adj 906): empty #17
 12-21 06:53:51.845 5071-21581/? D/ActivityManager: cleanUpApplicationRecord -- 19342
 12-21 06:54:00.069 5071-5123/? W/BackupManagerService: dataChanged but no participant pkg='com.amazon.kindle' uid=11597
-12-21 06:54:00.242 5071-12073/? I/ActivityManager: Start proc 22958:com.amazon.mShop.android.shopping/u0a1217 for broadcast com.amazon.mShop.android.shopping/com.amazon.identity.auth.device.storage.LambortishClock$ChangeTimestampsBroadcastReceiver
+12-21 06:54:00.242 5071-12073/? I/ActivityManager: Start proc 22958:com.amazon.mShop.android.shopping/u0a1217 for broadcast com.amazon.mShop.android.shopping/com.amazon.identity.auth.device.raw.LambortishClock$ChangeTimestampsBroadcastReceiver
 12-21 06:54:00.471 22771-22978/? W/ActivityThread: ClassLoader.getResources: The class loader returned by Thread.getContextClassLoader() may fail for processes that host multiple applications. You should explicitly specify a context class loader. For example: Thread.setContextClassLoader(getClass().getClassLoader());
 12-21 06:54:01.055 5071-23586/? W/BackupManagerService: dataChanged but no participant pkg='com.amazon.kindle' uid=11597
 12-21 06:54:02.187 5071-21582/? I/ActivityManager: Killing 20881:com.xing.android/u0a308 (adj 906): empty #17

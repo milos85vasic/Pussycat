@@ -64,7 +64,7 @@ E/MobileDataStateTracker(  649): default: Ignoring feature request because could
 E/MobileDataStateTracker(  649): default: Could not enable APN type "default"
 E/WifiDisplayController(  649): actionAtDisconnected, null display
 E/WifiDisplayController(  649): WFD disconnected, and WifiLock isn't Held!
-E/MountService(  649): mount service registerListener=android.os.storage.IMountServiceListener$Stub$Proxy@4221c220
+E/MountService(  649): mount service registerListener=android.os.raw.IMountServiceListener$Stub$Proxy@4221c220
 E/ActivityThread( 1272): Activity com.acer.android.oobe.AcerOOBEActivity has leaked IntentReceiver com.acer.android.oobe.AcerOOBEActivity$UserSwitchReceiver@41eb1048 that was originally registered here. Are you missing a call to unregisterReceiver()?
 E/ActivityThread( 1272): android.app.IntentReceiverLeaked: Activity com.acer.android.oobe.AcerOOBEActivity has leaked IntentReceiver com.acer.android.oobe.AcerOOBEActivity$UserSwitchReceiver@41eb1048 that was originally registered here. Are you missing a call to unregisterReceiver()?
 E/ActivityThread( 1272): 	at android.app.LoadedApk$ReceiverDispatcher.<init>(LoadedApk.java:835)
@@ -88,7 +88,7 @@ E/ActivityThread( 1272): 	at java.lang.reflect.Method.invoke(Method.java:515)
 E/ActivityThread( 1272): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:828)
 E/ActivityThread( 1272): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:644)
 E/ActivityThread( 1272): 	at dalvik.system.NativeStart.main(Native Method)
-E/MountService(  649): mount service registerListener=android.os.storage.IMountServiceListener$Stub$Proxy@4284d2f0
+E/MountService(  649): mount service registerListener=android.os.raw.IMountServiceListener$Stub$Proxy@4284d2f0
 E/MtpServer( 1572): void android::MtpServer::sendEvent(android::MtpEventCode, uint32_t): Without OpenSession to send event code = 0x4004, 
 E/MtpServer( 1572): MtpServer::run mFD: 73
 E/ActivityThread( 2079): Failed to find provider info for com.google.android.voicesearch
@@ -2668,25 +2668,25 @@ D/StorageNotification(  858): isAbleToShare - allowMassStorage:falseisEmulated:t
 D/StorageNotification(  858): isAbleToShare - allowMassStorage:trueisEmulated:false
 D/dalvikvm(  136): Zygote::ForkAndSpecialize : 5049
 D/dalvikvm(  136): create interp thread : stack size=128KB
-D/StorageNotification(  858): isAbleToShare - /storage/sdcard1 @ removed
+D/StorageNotification(  858): isAbleToShare - /raw/sdcard1 @ removed
 D/dalvikvm(  136): create new thread
 D/StorageNotification(  858): isAbleToShare - allowedShareNum:0
 D/StorageNotification(  858): updateUsbMassStorageNotification - isStorageCanShared=false,available=false
-D/VoldConnector(  649): SND -> {9 volume shared /storage/sdcard0 ums}
+D/VoldConnector(  649): SND -> {9 volume shared /raw/sdcard0 ums}
 D/dalvikvm( 5049): Zygote::ForkAndSpecialize : 0
 I/FrameworkListener(  121): onDataAvailable get 37 bytes 
-D/FrameworkListener(  121): dispatchCommand data = (9 volume shared /storage/sdcard0 ums)
-D/VoldCmdListener(  121): volume shared /storage/sdcard0 ums
+D/FrameworkListener(  121): dispatchCommand data = (9 volume shared /raw/sdcard0 ums)
+D/VoldCmdListener(  121): volume shared /raw/sdcard0 ums
 D/SocketClient(  121): SocketClient msg = Share disabled
 D/SocketClient(  121): SocketClient sendDatalocked done: 212 9 Share disabled
 D/VoldConnector(  649): RCV <- {212 9 Share disabled}
 D/dalvikvm(  136): new thread created
 D/dalvikvm(  136): update thread list
 D/VoldConnector(  649): RMV <- {212 9 Share disabled}
-D/VoldConnector(  649): SND -> {10 volume shared /storage/sdcard1 ums}
+D/VoldConnector(  649): SND -> {10 volume shared /raw/sdcard1 ums}
 I/FrameworkListener(  121): onDataAvailable get 38 bytes 
-D/FrameworkListener(  121): dispatchCommand data = (10 volume shared /storage/sdcard1 ums)
-D/VoldCmdListener(  121): volume shared /storage/sdcard1 ums
+D/FrameworkListener(  121): dispatchCommand data = (10 volume shared /raw/sdcard1 ums)
+D/VoldCmdListener(  121): volume shared /raw/sdcard1 ums
 D/SocketClient(  121): SocketClient msg = Share disabled
 D/SocketClient(  121): SocketClient sendDatalocked done: 212 10 Share disabled
 D/dalvikvm(  136): threadid=2: interp stack at 0x5ca4e000
@@ -2775,21 +2775,21 @@ D/StorageNotification(  858): onUsbMassStorageConnectionChangedAsync - mLastStat
 D/StorageNotification(  858): isAbleToShare - length:2
 D/StorageNotification(  858): isAbleToShare - allowMassStorage:falseisEmulated:true
 D/StorageNotification(  858): isAbleToShare - allowMassStorage:trueisEmulated:false
-D/StorageNotification(  858): isAbleToShare - /storage/sdcard1 @ removed
+D/StorageNotification(  858): isAbleToShare - /raw/sdcard1 @ removed
 D/StorageNotification(  858): isAbleToShare - allowedShareNum:0
 D/StorageNotification(  858): updateUsbMassStorageNotification - isStorageCanShared=false,available=false
-D/VoldConnector(  649): SND -> {11 volume shared /storage/sdcard0 ums}
+D/VoldConnector(  649): SND -> {11 volume shared /raw/sdcard0 ums}
 I/FrameworkListener(  121): onDataAvailable get 38 bytes 
-D/FrameworkListener(  121): dispatchCommand data = (11 volume shared /storage/sdcard0 ums)
-D/VoldCmdListener(  121): volume shared /storage/sdcard0 ums
+D/FrameworkListener(  121): dispatchCommand data = (11 volume shared /raw/sdcard0 ums)
+D/VoldCmdListener(  121): volume shared /raw/sdcard0 ums
 D/SocketClient(  121): SocketClient msg = Share disabled
 D/SocketClient(  121): SocketClient sendDatalocked done: 212 11 Share disabled
 D/VoldConnector(  649): RCV <- {212 11 Share disabled}
 D/VoldConnector(  649): RMV <- {212 11 Share disabled}
-D/VoldConnector(  649): SND -> {12 volume shared /storage/sdcard1 ums}
+D/VoldConnector(  649): SND -> {12 volume shared /raw/sdcard1 ums}
 I/FrameworkListener(  121): onDataAvailable get 38 bytes 
-D/FrameworkListener(  121): dispatchCommand data = (12 volume shared /storage/sdcard1 ums)
-D/VoldCmdListener(  121): volume shared /storage/sdcard1 ums
+D/FrameworkListener(  121): dispatchCommand data = (12 volume shared /raw/sdcard1 ums)
+D/VoldCmdListener(  121): volume shared /raw/sdcard1 ums
 D/SocketClient(  121): SocketClient msg = Share disabled
 D/SocketClient(  121): SocketClient sendDatalocked done: 212 12 Share disabled
 D/VoldConnector(  649): RCV <- {212 12 Share disabled}
@@ -2880,7 +2880,7 @@ V/MediaProvider( 1572): delete<<<: uri=content://media/none/mtp_connected, count
 D/ActivityThread( 1572): BDC-RECEIVER handled : 0 / ReceiverData{intent=Intent { act=android.hardware.usb.action.USB_STATE flg=0x20000010 cmp=com.android.providers.media/.MtpReceiver (has extras) } packageName=com.android.providers.media resultCode=0 resultData=null resultExtras=null}
 D/ActivityThread( 1572): SVC-UNBIND_SERVICE handled : 0 / BindServiceData{token=android.os.BinderProxy@41f6dad8 intent=Intent { cmp=com.android.providers.media/.MtpService }}
 D/ActivityThread( 1572): SVC-Destroying service: com.android.providers.media.MtpService@41f6fe00
-E/MountService(  649): mount service unregisterListener=android.os.storage.IMountServiceListener$Stub$Proxy@420409f0
+E/MountService(  649): mount service unregisterListener=android.os.raw.IMountServiceListener$Stub$Proxy@420409f0
 E/MountService(  649): mount service mListeners bl=com.android.server.MountService$MountServiceBinderListener@41f1e088
 E/MountService(  649): mount service mListeners bl=com.android.server.MountService$MountServiceBinderListener@42ce7790
 D/ActivityThread( 1572): SVC-STOP_SERVICE handled : 0 / android.os.BinderProxy@41f6dad8
@@ -2928,13 +2928,13 @@ D/KeyguardUpdateMonitor(  858): mSimState = ABSENT for simId = 0
 W/MtpService( 1572): updating state; keyguardManager.isKeyguardLocked()=false, keyguardManager.isKeyguardSecure()=false
 D/KeyguardViewMediator(  858): isInputRestricted: showing=false, needReshow=false, provisioned=true
 W/MtpService( 1572): updating state; isCurrentUser=true, mMtpDisabled=false
-E/MountService(  649): mount service registerListener=android.os.storage.IMountServiceListener$Stub$Proxy@42800040
+E/MountService(  649): mount service registerListener=android.os.raw.IMountServiceListener$Stub$Proxy@42800040
 W/MtpService( 1572): onCreate: volumes.length=2
-W/MtpService( 1572): onCreate: path of volumes[0]=/storage/sdcard0
+W/MtpService( 1572): onCreate: path of volumes[0]=/raw/sdcard0
 W/MtpService( 1572): onCreate: state of volumes[0]=mounted
-D/MtpService( 1572): addStorageLocked 65537 /storage/sdcard0
+D/MtpService( 1572): addStorageLocked 65537 /raw/sdcard0
 D/StorageManagerEx( 1572): getSdSwapState = 0
-W/MtpService( 1572): onCreate: path of volumes[1]=/storage/sdcard1
+W/MtpService( 1572): onCreate: path of volumes[1]=/raw/sdcard1
 W/MtpService( 1572): onCreate: state of volumes[1]=removed
 D/ActivityThread( 1572): SVC-CREATE_SERVICE handled : 0 / CreateServiceData{token=android.os.BinderProxy@42018548 className=com.android.providers.media.MtpService packageName=com.android.providers.media intent=null}
 D/ActivityThread( 1572): SVC-Calling onStartCommand: com.android.providers.media.MtpService@41fe0568, flags=0, startId=1
@@ -2953,13 +2953,13 @@ W/MtpService( 1572): starting MTP server in MTP mode
 W/MtpService( 1572): starting MTP server in mMtpDisabled = false
 V/MtpServer( 1572): MtpServer constructor: native_setup!!
 I/MtpServerJNI( 1572): Finish to setup MtpServer
-D/MtpService( 1572): addStorageLocked 65537 /storage/sdcard0
+D/MtpService( 1572): addStorageLocked 65537 /raw/sdcard0
 D/StorageManagerEx( 1572): getSdSwapState = 0
-D/MtpService( 1572): addStorageLocked: add storage /storage/sdcard0 into MtpDatabase
-D/MtpService( 1572): addStorageLocked: add storage /storage/sdcard0 into MtpServer
-E/MtpServerJNI( 1572): void android_mtp_MtpServer_add_storage(JNIEnv*, jobject, jobject), line 158: descriptionStr = Internal storage
-I/MtpStorage( 1572): MtpStorage id: 0x00010001 path: /storage/sdcard0
-D/MtpServer( 1572): void android::MtpServer::addStorage(android::MtpStorage*), storage->getStorageID() = 0x10001 
+D/MtpService( 1572): addStorageLocked: add raw /raw/sdcard0 into MtpDatabase
+D/MtpService( 1572): addStorageLocked: add raw /raw/sdcard0 into MtpServer
+E/MtpServerJNI( 1572): void android_mtp_MtpServer_add_storage(JNIEnv*, jobject, jobject), line 158: descriptionStr = Internal raw
+I/MtpStorage( 1572): MtpStorage id: 0x00010001 path: /raw/sdcard0
+D/MtpServer( 1572): void android::MtpServer::addStorage(android::MtpStorage*), raw->getStorageID() = 0x10001
 I/MtpServer( 1572): sendStoreAdded 00010001
 E/MtpServer( 1572): void android::MtpServer::sendEvent(android::MtpEventCode, uint32_t): Without OpenSession to send event code = 0x4004, 
 D/MtpServer( 1572): void android::MtpServer::addStorage(android::MtpStorage*), mStorages.size = 1 
@@ -7441,7 +7441,7 @@ D/OpenGLRenderer( 4973): prepareDirty (0.00, 0.00, 480.00, 854.00) opaque 1 <0x5
 V/Provider/Settings( 1199):  from settings cache , name = date_format , value = dd-MM-yyyy
 D/OpenGLRenderer( 4973): finish <0x5d30bee0>
 D/OpenGLRenderer( 4973): prepareDirty (0.00, 0.00, 480.00, 854.00) opaque 1 <0x5d30bee0>
-W/System.err( 1199): java.io.FileNotFoundException: /storage/sdcard0/Android/data/com.acer.android.widget.weatherwidget/fileLocationIdToWeatherDatastrUserInLocation.data: open failed: ENOENT (No such file or directory)
+W/System.err( 1199): java.io.FileNotFoundException: /raw/sdcard0/Android/data/com.acer.android.widget.weatherwidget/fileLocationIdToWeatherDatastrUserInLocation.data: open failed: ENOENT (No such file or directory)
 W/System.err( 1199): 	at libcore.io.IoBridge.open(IoBridge.java:453)
 W/System.err( 1199): 	at java.io.FileInputStream.<init>(FileInputStream.java:78)
 W/System.err( 1199): 	at java.io.FileInputStream.<init>(FileInputStream.java:105)

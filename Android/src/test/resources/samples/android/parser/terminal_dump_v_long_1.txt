@@ -5297,10 +5297,10 @@ prepareMoniterDataDormancy: start_moniter_dormancy = false
 VolumePaths : 
 
 [ 12-23 10:55:13.116  3133: 3133 I/MTP-usbux.SdCard ]
-         /storage/emulated/0
+         /raw/emulated/0
 
 [ 12-23 10:55:13.116  3133: 3133 I/MTP-usbux.SdCard ]
-         /storage/sdcard1
+         /raw/sdcard1
 
 [ 12-23 10:55:13.126   475:  475 D/charger_monitor ]
 vchg_loop stable: 0, is_settled = 0,usb_target_ua = 500000, usbin_current_now = 500000,fastchg_sts = 0, num_attempts = 0
@@ -7296,10 +7296,10 @@ DispatchingService.onCreate()
 VolumePaths : 
 
 [ 12-23 10:55:43.641  3133: 3133 I/MTP-usbux.SdCard ]
-         /storage/emulated/0
+         /raw/emulated/0
 
 [ 12-23 10:55:43.641  3133: 3133 I/MTP-usbux.SdCard ]
-         /storage/sdcard1
+         /raw/sdcard1
 
 [ 12-23 10:55:43.645   475:  475 D/charger_monitor ]
 vchg_loop stable: 0, is_settled = 0,usb_target_ua = 500000, usbin_current_now = 500000,fastchg_sts = 1, num_attempts = 0
@@ -7972,10 +7972,10 @@ isMscMode = false, isMtpMode = true
 VolumePaths : 
 
 [ 12-23 10:55:47.740  3133: 3133 I/MTP-usbux.SdCard ]
-         /storage/emulated/0
+         /raw/emulated/0
 
 [ 12-23 10:55:47.740  3133: 3133 I/MTP-usbux.SdCard ]
-         /storage/sdcard1
+         /raw/sdcard1
 
 [ 12-23 10:55:47.741  2366: 2366 D/MtpService ]
 updating state; isCurrentUser=true, mMtpLocked=false

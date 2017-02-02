@@ -2,8 +2,8 @@ package net.milosvasic.pussycat.gui.factory
 
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.content.Labels
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.LinkedBlockingQueue
+import java.util.*
+import java.util.concurrent.*
 
 
 class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
@@ -12,14 +12,14 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         val REQUEST_DELTA = 100
     }
 
-    private var processingThread: Thread? = null
-    private val queue = LinkedBlockingQueue<Pair<T, Int>>()
+    private val executor = Executor()
+    private val raw = ConcurrentHashMap<Int, T>()
+    private val data = LinkedHashMap<Int, PussycatListItem>()
     private var activeRequest: PussycatListItemsRequest? = null
-    private val data = ConcurrentHashMap<Int, PussycatListItem>()
 
     fun addRawData(value: T, index: Int) {
         if (!data.keys.contains(index)) {
-            queue.add(Pair(value, index))
+            raw.put(index, value)
             processData()
         }
     }
@@ -40,25 +40,31 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
     }
 
     private fun processData() {
-        if (processingThread == null) {
-            processingThread = Thread(Runnable {
-                Thread.currentThread().name = Labels.PROCESSING_THREAD
-                println(">>>>>> ${queue.size}") // TODO: Remove this
-                while (!Thread.currentThread().isInterrupted && !queue.isEmpty()) {
-                    val polledItem = queue.poll()
-                    val index = polledItem?.second
-                    if (index != null && data[index] == null) {
-                        val item = polledItem?.first
+        val task = Runnable {
+            Thread.currentThread().name = Labels.PROCESSING_THREAD
+            var processed = 0
+            while (!Thread.currentThread().isInterrupted && !raw.isEmpty() && processed < REQUEST_DELTA) {
+                val key = raw.keys().nextElement()
+                println("Key [ $key ]") // TODO: Remove this.
+                if (key != null) {
+                    if (data[key] == null) {
+                        val item = raw[key]
                         if (item != null) {
-                            val view = factory.obtain(item, index)
-                            data.put(index, view)
+                            val view = factory.obtain(item, key)
+                            data.put(key, view)
+                            raw.remove(key)
+                            processed++
                         }
                     }
                 }
-                processingThread = null
-                sendData()
-            })
-            processingThread?.start()
+            }
+            sendData()
+        }
+
+        try {
+            executor.submit(task)
+        } catch (e: RejectedExecutionException) {
+            // Ignore
         }
     }
 
@@ -74,23 +80,45 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 if (to >= data.values.size) {
                     to = data.values.size - 1
                 }
-                for (x in from..to) {
-                    items.add(data.values.elementAt(x))
+                if (data.keys.contains(from) && data.keys.contains(to)) {
+                    for (x in from..to) {
+                        items.add(data.values.elementAt(x))
+                    }
+                } else {
+                    println("Data not yet ready.") // TODO: Remove this.
+                    return
                 }
             } else {
                 var to = from - amount
                 if (to < 0) {
                     to = 0
                 }
-                for (x in from downTo to) {
-                    items.add(data.values.elementAt(x))
+                if (data.keys.contains(from) && data.keys.contains(to)) {
+                    for (x in from downTo to) {
+                        items.add(data.values.elementAt(x))
+                    }
+                } else {
+                    println("Data not yet ready.") // TODO: Remove this.
+                    return
                 }
             }
-            println(">>> 2 ${items.size}") // TODO: Remove this.
+            println("Send data ${items.size} ${request.direction}") // TODO: Remove this.
             callback.onData(items, request.direction)
             activeRequest = null
         } else {
-            println("No active request.") // TODO: Remove this.
+//            println("No active request.") // TODO: Remove this.
+        }
+    }
+
+    inner class Executor : ThreadPoolExecutor(1, 1, 0, TimeUnit.MILLISECONDS, LimitedQueue<Runnable>(1))
+
+    inner class LimitedQueue<T>(maxSize: Int) : LinkedBlockingQueue<T>(maxSize) {
+        override fun offer(e: T): Boolean {
+            if (size == 0) {
+                put(e)
+                return true
+            }
+            return false
         }
     }
 
