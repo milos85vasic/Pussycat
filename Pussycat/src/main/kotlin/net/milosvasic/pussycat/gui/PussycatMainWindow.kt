@@ -148,18 +148,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         return busy.get()
     }
 
-    fun appendPussycatListItem(item: PussycatListItem) {
-        list.add(item)
-        contentPane.validate()
-    }
-
-    fun prependPussycatListItem(item: PussycatListItem) {
-        list.add(item, 0)
-        contentPane.validate()
-        val vertical = scrollPane.verticalScrollBar
-        vertical.value += item.height
-    }
-
     abstract fun getMainMenuItems(): List<PussycatMenu>
 
     private fun updateStatus(status: Boolean) {
@@ -186,6 +174,33 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         pussycat.addMenuItem(about)
         items.add(pussycat)
         return items
+    }
+
+    private fun createMenuBar(barHeight: Int): PussycatBar {
+        val mainMenu = createMainMenu()
+        val menuBar = PussycatBar(theme, screenSize.width, barHeight)
+        for (item in mainMenu) {
+            menuBar.add(item, BorderLayout.WEST)
+        }
+        return menuBar
+    }
+
+    private fun createToolbar(barHeight: Int): PussycatToolbar {
+        val size = (barHeight * 0.8).toInt()
+        val toolBar = PussycatToolbar(theme, screenSize.width, barHeight)
+        btnGoTop = getGoTopButton(size)
+        btnGoBottom = getGoBottomButton(size)
+        btnPageUp = getPageTopButton(size)
+        btnPageDown = getPageBottomButton(size)
+        toolBar.add(btnGoTop)
+        toolBar.add(btnGoBottom)
+        toolBar.add(btnPageUp)
+        toolBar.add(btnPageDown)
+        btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
+        btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
+        btnPageUp?.setState(PussycatIconButton.STATE.DISABLED)
+        btnPageDown?.setState(PussycatIconButton.STATE.DISABLED)
+        return toolBar
     }
 
     private fun getPageTopButton(size: Int): PussycatIconButton? {
@@ -280,49 +295,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         return PussycatIconButton.create(theme, definition)
     }
 
-    private fun checkListCapacity(direction: DIRECTION) {
-        if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 2) {
-            for (x in 0..PussycatListItemsFactory.REQUEST_DELTA) {
-                if (direction == DIRECTION.UP) {
-                    list.remove(0)
-                    list.validate()
-                    firstItemIndex.incrementAndGet()
-                } else {
-                    list.remove(list.componentCount - 1)
-                    list.validate()
-                    lastItemIndex.decrementAndGet()
-                }
-            }
-        }
-    }
-
-    private fun createMenuBar(barHeight: Int): PussycatBar {
-        val mainMenu = createMainMenu()
-        val menuBar = PussycatBar(theme, screenSize.width, barHeight)
-        for (item in mainMenu) {
-            menuBar.add(item, BorderLayout.WEST)
-        }
-        return menuBar
-    }
-
-    private fun createToolbar(barHeight: Int): PussycatToolbar {
-        val size = (barHeight * 0.8).toInt()
-        val toolBar = PussycatToolbar(theme, screenSize.width, barHeight)
-        btnGoTop = getGoTopButton(size)
-        btnGoBottom = getGoBottomButton(size)
-        btnPageUp = getPageTopButton(size)
-        btnPageDown = getPageBottomButton(size)
-        toolBar.add(btnGoTop)
-        toolBar.add(btnGoBottom)
-        toolBar.add(btnPageUp)
-        toolBar.add(btnPageDown)
-        btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
-        btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
-        btnPageUp?.setState(PussycatIconButton.STATE.DISABLED)
-        btnPageDown?.setState(PussycatIconButton.STATE.DISABLED)
-        return toolBar
-    }
-
     private fun updateNavigationButtons() {
         val sizeObtain = dataSizeObtain as DataSizeObtain
         if (sizeObtain.getDataSize() >= PussycatListItemsFactory.REQUEST_DELTA) {
@@ -353,6 +325,34 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 }
             }
         }
+    }
+
+    private fun checkListCapacity(direction: DIRECTION) {
+        if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 2) {
+            for (x in 0..PussycatListItemsFactory.REQUEST_DELTA) {
+                if (direction == DIRECTION.UP) {
+                    list.remove(0)
+                    list.validate()
+                    firstItemIndex.incrementAndGet()
+                } else {
+                    list.remove(list.componentCount - 1)
+                    list.validate()
+                    lastItemIndex.decrementAndGet()
+                }
+            }
+        }
+    }
+
+    private fun appendPussycatListItem(item: PussycatListItem) {
+        list.add(item)
+        contentPane.validate()
+    }
+
+    private fun prependPussycatListItem(item: PussycatListItem) {
+        list.add(item, 0)
+        contentPane.validate()
+        val vertical = scrollPane.verticalScrollBar
+        vertical.value += item.height
     }
 
 }
