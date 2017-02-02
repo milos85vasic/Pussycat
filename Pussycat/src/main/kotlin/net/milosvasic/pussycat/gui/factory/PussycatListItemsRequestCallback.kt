@@ -6,4 +6,6 @@ interface PussycatListItemsRequestCallback {
 
     fun onData(items: List<PussycatListItem>, direction: DIRECTION = DIRECTION.DOWN)
 
+    fun onDataRequestRejected(request: PussycatListItemsRequest)
+
 }

@@ -4,7 +4,6 @@ import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.content.Labels
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.LinkedBlockingQueue
-import java.util.concurrent.atomic.AtomicInteger
 
 
 class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
@@ -13,8 +12,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         val REQUEST_DELTA = 100
     }
 
-    private var pollingThread: Thread? = null
-    private val requested = AtomicInteger(REQUEST_DELTA)
+    private var processingThread: Thread? = null
     private val queue = LinkedBlockingQueue<Pair<T, Int>>()
     private var activeRequest: PussycatListItemsRequest? = null
     private val data = ConcurrentHashMap<Int, PussycatListItem>()
@@ -28,34 +26,39 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
 
     fun requestData(request: PussycatListItemsRequest) {
         if (activeRequest != null) {
+            request.callback.onDataRequestRejected(request)
             return
         } else {
-            activeRequest = request
-            requested.set(request.from + request.amount)
-            processData()
+            processData(request)
         }
     }
 
+    private fun processData(request: PussycatListItemsRequest) {
+        println("Request accepted")  // TODO: Remove this
+        activeRequest = request
+        processData()
+    }
+
     private fun processData() {
-        if (pollingThread == null && data.size < requested.get() + REQUEST_DELTA) {
-            pollingThread = Thread(Runnable {
-                Thread.currentThread().name = Labels.POLLING_THREAD
-                while (!Thread.currentThread().isInterrupted && !queue.isEmpty() && data.size < requested.get() + REQUEST_DELTA) {
+        if (processingThread == null) {
+            processingThread = Thread(Runnable {
+                Thread.currentThread().name = Labels.PROCESSING_THREAD
+                println(">>>>>> ${queue.size}") // TODO: Remove this
+                while (!Thread.currentThread().isInterrupted && !queue.isEmpty()) {
                     val polledItem = queue.poll()
-                    val item = polledItem?.first
                     val index = polledItem?.second
-                    if (item != null && index != null) {
-                        val view = factory.obtain(item, index)
-                        data.put(index, view)
+                    if (index != null && data[index] == null) {
+                        val item = polledItem?.first
+                        if (item != null) {
+                            val view = factory.obtain(item, index)
+                            data.put(index, view)
+                        }
                     }
                 }
-                pollingThread = null
+                processingThread = null
                 sendData()
             })
-            pollingThread?.start()
-        }
-        if (data.size >= requested.get() + REQUEST_DELTA) {
-            sendData()
+            processingThread?.start()
         }
     }
 
@@ -65,29 +68,29 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             val from = request.from
             val amount = request.amount
             val callback = request.callback
-            if (from + amount <= requested.get()) {
-                val items = mutableListOf<PussycatListItem>()
-                if (request.direction == DIRECTION.DOWN) {
-                    var to = from + amount
-                    if (to >= data.values.size) {
-                        to = data.values.size - 1
-                    }
-                    for (x in from..to) {
-                        items.add(data.values.elementAt(x))
-                    }
-                } else {
-                    var to = from - amount
-                    if (to < 0) {
-                        to = 0
-                    }
-                    for (x in from downTo to) {
-                        items.add(data.values.elementAt(x))
-                    }
+            val items = mutableListOf<PussycatListItem>()
+            if (request.direction == DIRECTION.DOWN) {
+                var to = from + amount
+                if (to >= data.values.size) {
+                    to = data.values.size - 1
                 }
-                println(">>> 2") // TODO: Remove this.
-                callback.onData(items, request.direction)
-                activeRequest = null
+                for (x in from..to) {
+                    items.add(data.values.elementAt(x))
+                }
+            } else {
+                var to = from - amount
+                if (to < 0) {
+                    to = 0
+                }
+                for (x in from downTo to) {
+                    items.add(data.values.elementAt(x))
+                }
             }
+            println(">>> 2 ${items.size}") // TODO: Remove this.
+            callback.onData(items, request.direction)
+            activeRequest = null
+        } else {
+            println("No active request.") // TODO: Remove this.
         }
     }
 

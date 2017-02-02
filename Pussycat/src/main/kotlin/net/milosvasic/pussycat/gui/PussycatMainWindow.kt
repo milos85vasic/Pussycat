@@ -9,6 +9,7 @@ import net.milosvasic.pussycat.gui.events.DataRequestCallback
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.factory.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
+import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequestCallback
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
@@ -130,6 +131,11 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         }
         updateNavigationButtons()
         busy.set(false)
+    }
+
+    override fun onDataRequestRejected(request: PussycatListItemsRequest) {
+        // TODO: Change this.
+        println("Request rejected.")
     }
 
     fun isReady(): Boolean {
