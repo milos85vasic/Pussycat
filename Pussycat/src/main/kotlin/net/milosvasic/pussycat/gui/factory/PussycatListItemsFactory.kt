@@ -2,7 +2,6 @@ package net.milosvasic.pussycat.gui.factory
 
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.content.Labels
-import java.util.*
 import java.util.concurrent.*
 
 
@@ -12,13 +11,29 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         val REQUEST_DELTA = 100
     }
 
+    private val lock = Any()
+    private var workingThread: Thread? = null
     private val raw = ConcurrentHashMap<Int, T>()
     private val data = ConcurrentHashMap<Int, PussycatListItem>()
+
+    private val processingCallback = object : ProcessingCallback {
+        override fun onProcessingComplete() {
+            synchronized(lock) {
+                workingThread = null
+            }
+        }
+    }
 
     fun addRawData(value: T, index: Int) {
         if (!data.keys.contains(index)) {
             raw.put(index, value)
-            processData()
+            synchronized(lock) {
+                if (workingThread == null) {
+                    workingThread = processData(null, processingCallback)
+                } else {
+//                    println("Still processing") // TODO: Remove this
+                }
+            }
         }
     }
 
@@ -26,13 +41,13 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         processData(request)
     }
 
-    private fun processData(request: PussycatListItemsRequest? = null) {
+    private fun processData(request: PussycatListItemsRequest? = null, callback: ProcessingCallback? = null): Thread {
         val task = Runnable {
             Thread.currentThread().name = Labels.PROCESSING_THREAD
 
             fun processKey(key: Int): Boolean {
-                println("Key [ $key ]") // TODO: Remove this.
                 if (data[key] == null) {
+                    println("Processing [ $key ]") // TODO: Remove this.
                     val item = raw[key]
                     if (item != null) {
                         val view = factory.obtain(item, key)
@@ -40,6 +55,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                         raw.remove(key)
                         return true
                     }
+                } else {
+                    println("Key already processed [ $key ]") // TODO: Remove this.
                 }
                 return false
             }
@@ -49,11 +66,13 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 val from = request.from
                 val amount = request.amount
                 if (request.direction == DIRECTION.DOWN) {
-                    var to = from + amount
-                    if (to >= data.values.size) {
-                        to = data.values.size - 1
-                    }
+                    val to = from + amount
+//                    if (to >= data.values.size) {
+//                        to = data.values.size - 1
+//                    }
+                    println("Requesting data $from $to ${request.direction}")  // TODO: Remove this.
                     for (key in from..to) {
+                        println("We will process key [ $key ]") // TODO: Remove this
                         processKey(key)
                     }
                 } else {
@@ -61,7 +80,9 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     if (to < 0) {
                         to = 0
                     }
+                    println("Requesting data $from $to ${request.direction}")  // TODO: Remove this.
                     for (key in from downTo to) {
+                        println("We will process key [ $key ]") // TODO: Remove this
                         processKey(key)
                     }
                 }
@@ -69,7 +90,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             } else {
 
                 var key = 0
-                while (!Thread.currentThread().isInterrupted && !raw.isEmpty() && key < REQUEST_DELTA) {
+                while (!Thread.currentThread().isInterrupted && !raw.isEmpty() && key <= REQUEST_DELTA) {
                     println("Key [ $key ]") // TODO: Remove this.
                     if (data[key] == null) {
                         val item = raw[key]
@@ -83,9 +104,14 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 }
 
             }
+
             sendData(request)
+            callback?.onProcessingComplete()
         }
-        Thread(task).start()
+
+        val thread = Thread(task)
+        thread.start()
+        return thread
     }
 
 
@@ -115,20 +141,14 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             println("Send data ${items.size} ${request.direction}") // TODO: Remove this.
             callback.onData(items, request.direction)
         } else {
-//            println("No active request.") // TODO: Remove this.
+            println("No active request.") // TODO: Remove this.
         }
     }
 
-    inner class Executor : ThreadPoolExecutor(1, 1, 0, TimeUnit.MILLISECONDS, LimitedQueue<Runnable>(1))
+    private interface ProcessingCallback {
 
-    inner class LimitedQueue<T>(maxSize: Int) : LinkedBlockingQueue<T>(maxSize) {
-        override fun offer(e: T): Boolean {
-            if (size == 0) {
-                put(e)
-                return true
-            }
-            return false
-        }
+        fun onProcessingComplete()
+
     }
 
 }
