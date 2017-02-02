@@ -12,10 +12,8 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         val REQUEST_DELTA = 100
     }
 
-    private val executor = Executor()
     private val raw = ConcurrentHashMap<Int, T>()
-    private val data = LinkedHashMap<Int, PussycatListItem>()
-    private var activeRequest: PussycatListItemsRequest? = null
+    private val data = ConcurrentHashMap<Int, PussycatListItem>()
 
     fun addRawData(value: T, index: Int) {
         if (!data.keys.contains(index)) {
@@ -25,52 +23,74 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
     }
 
     fun requestData(request: PussycatListItemsRequest) {
-        if (activeRequest != null) {
-            request.callback.onDataRequestRejected(request)
-            return
-        } else {
-            processData(request)
-        }
+        processData(request)
     }
 
-    private fun processData(request: PussycatListItemsRequest) {
-        println("Request accepted")  // TODO: Remove this
-        activeRequest = request
-        processData()
-    }
-
-    private fun processData() {
+    private fun processData(request: PussycatListItemsRequest? = null) {
         val task = Runnable {
             Thread.currentThread().name = Labels.PROCESSING_THREAD
-            var processed = 0
-            while (!Thread.currentThread().isInterrupted && !raw.isEmpty() && processed < REQUEST_DELTA) {
-                val key = raw.keys().nextElement()
+
+            fun processKey(key: Int): Boolean {
                 println("Key [ $key ]") // TODO: Remove this.
-                if (key != null) {
+                if (data[key] == null) {
+                    val item = raw[key]
+                    if (item != null) {
+                        val view = factory.obtain(item, key)
+                        data.put(key, view)
+                        raw.remove(key)
+                        return true
+                    }
+                }
+                return false
+            }
+
+            if (request != null) {
+
+                val from = request.from
+                val amount = request.amount
+                if (request.direction == DIRECTION.DOWN) {
+                    var to = from + amount
+                    if (to >= data.values.size) {
+                        to = data.values.size - 1
+                    }
+                    for (key in from..to) {
+                        processKey(key)
+                    }
+                } else {
+                    var to = from - amount
+                    if (to < 0) {
+                        to = 0
+                    }
+                    for (key in from downTo to) {
+                        processKey(key)
+                    }
+                }
+
+            } else {
+
+                var key = 0
+                while (!Thread.currentThread().isInterrupted && !raw.isEmpty() && key < REQUEST_DELTA) {
+                    println("Key [ $key ]") // TODO: Remove this.
                     if (data[key] == null) {
                         val item = raw[key]
                         if (item != null) {
                             val view = factory.obtain(item, key)
                             data.put(key, view)
                             raw.remove(key)
-                            processed++
+                            key++
                         }
                     }
                 }
-            }
-            sendData()
-        }
 
-        try {
-            executor.submit(task)
-        } catch (e: RejectedExecutionException) {
-            // Ignore
+            }
+            sendData(request)
         }
+        Thread(task).start()
     }
 
-    private fun sendData() {
-        if (activeRequest != null) {
-            val request = activeRequest as PussycatListItemsRequest
+
+    private fun sendData(request: PussycatListItemsRequest? = null) {
+        if (request != null) {
             val from = request.from
             val amount = request.amount
             val callback = request.callback
@@ -94,7 +114,6 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             }
             println("Send data ${items.size} ${request.direction}") // TODO: Remove this.
             callback.onData(items, request.direction)
-            activeRequest = null
         } else {
 //            println("No active request.") // TODO: Remove this.
         }
