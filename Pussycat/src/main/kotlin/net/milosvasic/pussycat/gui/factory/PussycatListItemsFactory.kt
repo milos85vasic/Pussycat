@@ -108,13 +108,23 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             val amount = request.amount
             val callback = request.callback
             val items = mutableListOf<PussycatListItem>()
+
+            fun addItem(x: Int?) {
+                val item = data[x]
+                if (item != null) {
+                    items.add(item)
+                } else {
+                    println("Couldn't add null item") // TODO: Remove this.
+                }
+            }
+
             if (request.direction == DIRECTION.DOWN) {
                 var to = from + amount
                 if (to >= data.values.size) {
                     to = data.values.size - 1
                 }
                 for (x in from..to) {
-                    items.add(data.values.elementAt(x))
+                    addItem(x)
                 }
             } else {
                 var to = from - amount
@@ -122,9 +132,10 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     to = 0
                 }
                 for (x in from downTo to) {
-                    items.add(data.values.elementAt(x))
+                    addItem(x)
                 }
             }
+            
             println("Send data ${items.size} ${request.direction}") // TODO: Remove this.
             callback.onData(items, request.direction)
         } else {
