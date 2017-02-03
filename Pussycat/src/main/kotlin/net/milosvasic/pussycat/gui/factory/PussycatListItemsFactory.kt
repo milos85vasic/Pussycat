@@ -55,10 +55,9 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 val amount = request.amount
                 if (request.direction == DIRECTION.DOWN) {
                     val to = from + amount
-                    println("Requesting data $from $to ${request.direction}")  // TODO: Remove this.
                     for (key in from..to) {
                         if (processKey(key)) {
-                            println("Key processed [ $key ][ from request ]") // TODO: Remove this
+                            // Key processed
                         }
                     }
                 } else {
@@ -66,10 +65,9 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     if (to < 0) {
                         to = 0
                     }
-                    println("Requesting data $from $to ${request.direction}")  // TODO: Remove this.
                     for (key in from downTo to) {
                         if (processKey(key)) {
-                            println("Key processed [ $key ][ from request ]") // TODO: Remove this
+                            // Key processed
                         }
                     }
                 }
@@ -79,7 +77,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 var key = 0
                 while (!Thread.currentThread().isInterrupted && !raw.isEmpty() && key <= REQUEST_DELTA) {
                     if (processKey(key)) {
-                        println("Key processed [ $key ][ main worker ]") // TODO: Remove this
+                        // Key processed
                     }
                     key++
                 }
@@ -107,8 +105,6 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 val item = data[x]
                 if (item != null) {
                     items.add(item)
-                } else {
-                    println("Couldn't add null item") // TODO: Remove this.
                 }
             }
 
@@ -130,17 +126,12 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 }
             }
 
-            println("Send data ${items.size} ${request.direction}") // TODO: Remove this.
             callback.onData(request, items, request.direction)
-        } else {
-            println("No active request.") // TODO: Remove this.
         }
     }
 
     private interface ProcessingCallback {
-
         fun onProcessingComplete()
-
     }
 
 }
