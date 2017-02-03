@@ -12,28 +12,21 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         val REQUEST_DELTA = 100
     }
 
-    private val lock = Any()
     private var workingThread: Thread? = null
     private val raw = ConcurrentHashMap<Int, T>()
     private val data = ConcurrentHashMap<Int, PussycatListItem>()
 
     private val processingCallback = object : ProcessingCallback {
         override fun onProcessingComplete() {
-            synchronized(lock) {
-                workingThread = null
-            }
+            workingThread = null
         }
     }
 
     fun addRawData(value: T, index: Int) {
         if (!data.keys.contains(index)) {
             raw.put(index, value)
-            synchronized(lock) {
-                if (workingThread == null) {
-                    workingThread = processData(null, processingCallback)
-                } else {
-//                    println("Still processing") // TODO: Remove this
-                }
+            if (data.size < REQUEST_DELTA && workingThread == null) {
+                workingThread = processData(null, processingCallback)
             }
         }
     }
