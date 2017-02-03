@@ -38,7 +38,6 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
     private fun processData(request: PussycatListItemsRequest? = null, callback: ProcessingCallback? = null): Thread {
         val task = Runnable {
             Thread.currentThread().name = Labels.PROCESSING_THREAD
-
             fun processKey(key: Int): Boolean {
                 val item = raw.remove(key)
                 if (item != null) {
@@ -48,9 +47,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                 }
                 return false
             }
-
             if (request != null) {
-
                 val from = request.from
                 val amount = request.amount
                 if (request.direction == DIRECTION.DOWN) {
@@ -71,9 +68,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                         }
                     }
                 }
-
             } else {
-
                 var key = 0
                 while (!Thread.currentThread().isInterrupted && !raw.isEmpty() && key <= REQUEST_DELTA) {
                     if (processKey(key)) {
@@ -81,13 +76,10 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     }
                     key++
                 }
-
             }
-
             sendData(request)
             callback?.onProcessingComplete()
         }
-
         val thread = Thread(task)
         thread.start()
         return thread
@@ -100,14 +92,12 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             val amount = request.amount
             val callback = request.callback
             val items = mutableListOf<PussycatListItem>()
-
             fun addItem(x: Int?) {
                 val item = data[x]
                 if (item != null) {
                     items.add(item)
                 }
             }
-
             if (request.direction == DIRECTION.DOWN) {
                 var to = from + amount
                 if (to >= data.values.size) {
@@ -125,7 +115,6 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
                     addItem(x)
                 }
             }
-
             callback.onData(request, items, request.direction)
         }
     }
