@@ -12,14 +12,28 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         val REQUEST_DELTA = 100
     }
 
+    private val lock = Any()
+    private var workingThread: Thread? = null
     private val raw = ConcurrentHashMap<Int, T>()
     private val data = ConcurrentHashMap<Int, PussycatListItem>()
+
+    private val processingCallback = object : ProcessingCallback {
+        override fun onProcessingComplete() {
+            synchronized(lock) {
+                workingThread = null
+            }
+        }
+    }
 
     fun addRawData(value: T, index: Int) {
         if (!data.keys.contains(index)) {
             raw.put(index, value)
-            if (data.size < REQUEST_DELTA) {
-                processData()
+            synchronized(lock) {
+                if (workingThread == null) {
+                    workingThread = processData(null, processingCallback)
+                } else {
+//                    println("Still processing") // TODO: Remove this
+                }
             }
         }
     }
@@ -28,7 +42,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         processData(request)
     }
 
-    private fun processData(request: PussycatListItemsRequest? = null) {
+    private fun processData(request: PussycatListItemsRequest? = null, callback: ProcessingCallback? = null): Thread {
         val task = Runnable {
             Thread.currentThread().name = Labels.PROCESSING_THREAD
 
@@ -80,9 +94,12 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             }
 
             sendData(request)
+            callback?.onProcessingComplete()
         }
 
-        Thread(task).start()
+        val thread = Thread(task)
+        thread.start()
+        return thread
     }
 
 
@@ -123,8 +140,14 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             println("Send data ${items.size} ${request.direction}") // TODO: Remove this.
             callback.onData(request, items, request.direction)
         } else {
-            println("No active request. ${Thread.currentThread().id}") // TODO: Remove this.
+            println("No active request.") // TODO: Remove this.
         }
+    }
+
+    private interface ProcessingCallback {
+
+        fun onProcessingComplete()
+
     }
 
 }
