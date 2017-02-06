@@ -47,27 +47,12 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val mainWindowStatusListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
-                dataRequestStrategy.refresh()
+                dataRequestStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
             }
         }
     }
 
     val dataRequestStrategy = object : DataRequestStrategy {
-        override fun refresh(callback : DataRequestCallback?) {
-            val from = 0
-            val amount = PussycatListItemsFactory.REQUEST_DELTA
-            val request = PussycatListItemsRequest(from, amount, DIRECTION.DOWN, mainWindow, callback)
-            pussycatListItemsFactory?.requestData(request)
-        }
-
-        // TODO: Switch to requestData()
-        override fun barrierReached(from: Int, direction: DIRECTION, callback : DataRequestCallback?) {
-            val amount = PussycatListItemsFactory.REQUEST_DELTA / 2
-            val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
-            println("Barrier reached: ${request.from} ${request.amount} ${request.direction}") // TODO: Remove this.
-            pussycatListItemsFactory?.requestData(request)
-        }
-
         override fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback?) {
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
             pussycatListItemsFactory?.requestData(request)

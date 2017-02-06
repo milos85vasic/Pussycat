@@ -57,13 +57,17 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 SCROLLING_EVENT.TOP_DELTA_REACHED -> {
                     if (firstItemIndex.get() > 0 && !busy.get()) {
                         busy.set(true)
-                        dataRequestStrategy?.barrierReached(firstItemIndex.get(), DIRECTION.UP)
+                        dataRequestStrategy?.requestData(
+                                firstItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.UP
+                        )
                     }
                 }
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {
                     if (!busy.get()) {
                         busy.set(true)
-                        dataRequestStrategy?.barrierReached(lastItemIndex.get(), DIRECTION.DOWN)
+                        dataRequestStrategy?.requestData(
+                                lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.DOWN
+                        )
                         checkListCapacity(DIRECTION.UP)
                     }
                 }
@@ -117,7 +121,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     override fun onData(request: PussycatListItemsRequest, items: List<PussycatListItem>, direction: DIRECTION) {
-        println("on data ${items.size} $direction") // TODO: Remove this.
         if (direction == DIRECTION.DOWN) {
             for (item in items) {
                 appendPussycatListItem(item)
@@ -137,7 +140,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     override fun onDataRequestRejected(request: PussycatListItemsRequest) {
         busy.set(false)
-        println("Request rejected.") // TODO: Remove this.
     }
 
     fun isReady(): Boolean {
@@ -246,7 +248,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 vertical.value = vertical.minimum
                 lastItemIndex.set(0)
                 firstItemIndex.set(0)
-                dataRequestStrategy?.refresh()
+                dataRequestStrategy?.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
             } else {
                 val vertical = scrollPane.verticalScrollBar
                 vertical.value = vertical.minimum
