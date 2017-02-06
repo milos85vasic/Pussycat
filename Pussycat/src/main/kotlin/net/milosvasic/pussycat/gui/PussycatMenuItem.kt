@@ -48,6 +48,7 @@ class PussycatMenuItem(val theme: Theme, val title: String) : JMenuItem(title), 
     }
 
     override fun mouseReleased(e: MouseEvent?) {
+        foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
         return
     }
 
