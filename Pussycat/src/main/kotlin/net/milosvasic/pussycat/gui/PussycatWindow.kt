@@ -3,12 +3,15 @@ package net.milosvasic.pussycat.gui
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
+import net.milosvasic.pussycat.os.OS
 import java.awt.BorderLayout
+import java.awt.Dimension
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import javax.swing.JFrame
 import java.awt.Window
+import java.awt.Toolkit
 
 
 abstract class PussycatWindow(val theme: Theme) : JFrame() {
@@ -16,6 +19,14 @@ abstract class PussycatWindow(val theme: Theme) : JFrame() {
     private var favicon: BufferedImage? = null
 
     init {
+        if (OS.isMacOS()) {
+            val toolkit = Toolkit.getDefaultToolkit()
+            val screenSize = toolkit.screenSize
+            val scnMax = toolkit.getScreenInsets(graphicsConfiguration)
+            val top = scnMax.top
+            val bottom = scnMax.bottom
+            minimumSize = Dimension(screenSize.width, screenSize.height - bottom - top)
+        }
         extendedState = JFrame.MAXIMIZED_BOTH
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
     }
