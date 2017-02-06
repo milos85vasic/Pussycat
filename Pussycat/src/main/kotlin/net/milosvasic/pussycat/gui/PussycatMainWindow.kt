@@ -194,6 +194,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         btnGoBottom = getGoBottomButton(size)
         btnPageUp = getPageTopButton(size)
         btnPageDown = getPageBottomButton(size)
+        toolBar.add(getRefreshButton(size))
         toolBar.add(btnGoTop)
         toolBar.add(btnGoBottom)
         toolBar.add(btnPageUp)
@@ -293,6 +294,19 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 action,
                 "go_bottom",
                 "go_bottom_disabled"
+        )
+        return PussycatIconButton.create(theme, definition)
+    }
+
+    private fun getRefreshButton(size: Int): PussycatIconButton? {
+        val action = ActionListener {
+
+        }
+        val definition = PussycatIconButtonDefinition(
+                size,
+                "refresh",
+                Labels.REFRESH_BTN_TOOLTIP,
+                action
         )
         return PussycatIconButton.create(theme, definition)
     }
