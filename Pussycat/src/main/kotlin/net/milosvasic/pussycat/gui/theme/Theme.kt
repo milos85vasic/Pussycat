@@ -12,6 +12,8 @@ import javax.swing.border.Border
 
 abstract class Theme {
 
+    abstract fun getName(): String
+
     abstract fun getColor(type: TYPE, intensity: INTENSITY): Color
 
     abstract fun getColor(type: TYPE, intensity: INTENSITY, opacity: Int): Color

@@ -18,6 +18,10 @@ open class Darcula : Theme() {
 
     private val fonts = HashMap<String, Font>()
 
+    override fun getName(): String {
+        return this.javaClass.simpleName
+    }
+
     override fun getColor(type: TYPE, intensity: INTENSITY): Color {
         return getColor(type, intensity, 255)
     }
@@ -244,40 +248,40 @@ open class Darcula : Theme() {
     private fun getFontName(weight: FONT_WEIGHT): String {
         return when (weight) {
             FONT_WEIGHT.BLACK -> {
-                "fonts/Roboto-Black.ttf"
+                "Darcula/fonts/Roboto-Black.ttf"
             }
             FONT_WEIGHT.BLACK_ITALIC -> {
-                "fonts/Roboto-BlackItalic.ttf"
+                "Darcula/fonts/Roboto-BlackItalic.ttf"
             }
             FONT_WEIGHT.BOLD -> {
-                "fonts/Roboto-Bold.ttf"
+                "Darcula/fonts/Roboto-Bold.ttf"
             }
             FONT_WEIGHT.BOLD_ITALIC -> {
-                "fonts/Roboto-BoldItalic.ttf"
+                "Darcula/fonts/Roboto-BoldItalic.ttf"
             }
             FONT_WEIGHT.ITALIC -> {
-                "fonts/Roboto-Italic.ttf"
+                "Darcula/fonts/Roboto-Italic.ttf"
             }
             FONT_WEIGHT.LIGHT -> {
-                "fonts/Roboto-Light.ttf"
+                "Darcula/fonts/Roboto-Light.ttf"
             }
             FONT_WEIGHT.LIGHT_ITALIC -> {
-                "fonts/Roboto-LightItalic.ttf"
+                "Darcula/fonts/Roboto-LightItalic.ttf"
             }
             FONT_WEIGHT.MEDIUM -> {
-                "fonts/Roboto-Medium.ttf"
+                "Darcula/fonts/Roboto-Medium.ttf"
             }
             FONT_WEIGHT.MEDIUM_ITALIC -> {
-                "fonts/Roboto-MediumItalic.ttf"
+                "Darcula/fonts/Roboto-MediumItalic.ttf"
             }
             FONT_WEIGHT.THIN -> {
-                "fonts/Roboto-Thin.ttf"
+                "Darcula/fonts/Roboto-Thin.ttf"
             }
             FONT_WEIGHT.THIN_ITALIC -> {
-                "fonts/Roboto-ThinItalic.ttf"
+                "Darcula/fonts/Roboto-ThinItalic.ttf"
             }
             else -> {
-                "fonts/Roboto-Regular.ttf"
+                "Darcula/fonts/Roboto-Regular.ttf"
             }
         }
     }

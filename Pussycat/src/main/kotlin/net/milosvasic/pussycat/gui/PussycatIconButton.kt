@@ -20,9 +20,9 @@ class PussycatIconButton private constructor(val size: Int, val theme: Theme, va
             val size = definition.size
             val icons = HashMap<Int, Image>()
             val clazz = PussycatIconButtonDefinition::class.java
-            val iconDefault = ImageIO.read(clazz.classLoader.getResourceAsStream("icons/${definition.defaultIcon}.png"))
-            val iconActive = ImageIO.read(clazz.classLoader.getResourceAsStream("icons/${definition.activeIcon}.png"))
-            val disabledActive = ImageIO.read(clazz.classLoader.getResourceAsStream("icons/${definition.disabledIcon}.png"))
+            val iconDefault = ImageIO.read(clazz.classLoader.getResourceAsStream("${theme.getName()}/icons/${definition.defaultIcon}.png"))
+            val iconActive = ImageIO.read(clazz.classLoader.getResourceAsStream("${theme.getName()}/icons/${definition.activeIcon}.png"))
+            val disabledActive = ImageIO.read(clazz.classLoader.getResourceAsStream("${theme.getName()}/icons/${definition.disabledIcon}.png"))
             val iconDefaultResized = iconDefault.getScaledInstance(size, size, Image.SCALE_SMOOTH)
             val iconActiveResized = iconActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
             val iconDisabledResized = disabledActive.getScaledInstance(size, size, Image.SCALE_SMOOTH)
