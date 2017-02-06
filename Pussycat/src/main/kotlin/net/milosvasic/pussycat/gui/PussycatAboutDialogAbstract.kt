@@ -21,11 +21,19 @@ abstract class PussycatAboutDialogAbstract(val information: ApplicationInformati
     protected var favicon: BufferedImage? = null
 
     fun open() {
-        val screenSize = Toolkit.getDefaultToolkit().screenSize
-        setLocation(
-                (screenSize.width / 2) - (splashWidth / 2),
-                (screenSize.height / 2) - (splashHeight / 2)
-        )
+        if (owner.isVisible) {
+            val screenLocation = owner.locationOnScreen
+            setLocation(
+                    screenLocation.x + (owner.width / 2) - (splashWidth / 2),
+                    screenLocation.y + (owner.height / 2) - (splashHeight / 2)
+            )
+        } else {
+            val screenSize = Toolkit.getDefaultToolkit().screenSize
+            setLocation(
+                    (screenSize.width / 2) - (splashWidth / 2),
+                    (screenSize.height / 2) - (splashHeight / 2)
+            )
+        }
         setSize(splashWidth, splashHeight)
         val body = PussycatSplashPanel(splashWidth, splashHeight)
         val header = generateHeader()
