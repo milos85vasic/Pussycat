@@ -114,12 +114,19 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         initialize(args)
     }
 
+    override fun execute(executable: COMMAND, params: Array<String>) {
+        super.execute(executable, params)
+        when (executable) {
+            COMMAND.RESET -> mainWindow.refresh()
+        }
+    }
+
     override fun status() {
 
     }
 
     override fun clear() {
-
+        mainWindow.clear()
     }
 
     override fun printLine(text: String) {

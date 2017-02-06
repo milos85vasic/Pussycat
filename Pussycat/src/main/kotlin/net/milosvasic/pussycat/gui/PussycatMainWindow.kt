@@ -34,8 +34,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         get() = field
         set(value) {
             field = value
-            enableBtn(btnClear)
-            enableBtn(btnRefresh)
+            updateNavigationButtons()
         }
 
     private val busy = AtomicBoolean()
@@ -162,6 +161,28 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         return busy.get()
     }
 
+    fun clear() {
+        busy.set(true)
+        list.removeAll()
+        validate()
+        updateNavigationButtons()
+        lastItemIndex.set(0)
+        firstItemIndex.set(0)
+        busy.set(false)
+    }
+
+    fun refresh() {
+        busy.set(true)
+        list.removeAll()
+        validate()
+        updateNavigationButtons()
+        val vertical = scrollPane.verticalScrollBar
+        vertical.value = vertical.minimum
+        lastItemIndex.set(0)
+        firstItemIndex.set(0)
+        dataRequestStrategy?.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+    }
+
     abstract fun getMainMenuItems(): List<PussycatMenu>
 
     private fun updateStatus(status: Boolean) {
@@ -214,17 +235,15 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         toolBar.add(btnGoBottom)
         toolBar.add(btnPageUp)
         toolBar.add(btnPageDown)
-        btnClear?.setState(PussycatIconButton.STATE.DISABLED)
-        btnRefresh?.setState(PussycatIconButton.STATE.DISABLED)
-        btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
-        btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
-        btnPageUp?.setState(PussycatIconButton.STATE.DISABLED)
-        btnPageDown?.setState(PussycatIconButton.STATE.DISABLED)
+        updateNavigationButtons()
         return toolBar
     }
 
     private fun getPageTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
+            if (list.componentCount == 0) {
+                return@ActionListener
+            }
             val vertical = scrollPane.verticalScrollBar
             vertical.value = vertical.minimum
         }
@@ -241,6 +260,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getPageBottomButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
+            if (list.componentCount == 0) {
+                return@ActionListener
+            }
             val vertical = scrollPane.verticalScrollBar
             vertical.value = vertical.maximum
         }
@@ -257,6 +279,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
+            if (list.componentCount == 0) {
+                return@ActionListener
+            }
             if (firstItemIndex.get() > 0) {
                 refresh()
             } else {
@@ -277,12 +302,15 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getGoBottomButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
+            if (list.componentCount == 0) {
+                return@ActionListener
+            }
             if (dataSizeObtain != null) {
                 val sizeObtain = dataSizeObtain as DataSizeObtain
-                btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
                 busy.set(true)
                 list.removeAll()
                 validate()
+                updateNavigationButtons()
                 lastItemIndex.set(sizeObtain.getDataSize() - 1)
                 firstItemIndex.set(lastItemIndex.get() + 1)
                 val callback = object : DataRequestCallback {
@@ -310,7 +338,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun getRefreshButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
             commandCallback?.execute(COMMAND.RESET)
-            refresh()
         }
         val definition = PussycatIconButtonDefinition(
                 size,
@@ -327,12 +354,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val action = ActionListener {
             if (commandCallback != null) {
                 commandCallback?.execute(COMMAND.CLEAR)
-                busy.set(true)
-                list.removeAll()
-                validate()
-                lastItemIndex.set(0)
-                firstItemIndex.set(0)
-                busy.set(false)
             }
         }
         val definition = PussycatIconButtonDefinition(
@@ -347,6 +368,20 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     private fun updateNavigationButtons() {
+        if (commandCallback != null) {
+            enableBtn(btnClear)
+            enableBtn(btnRefresh)
+        } else {
+            disableBtn(btnClear)
+            disableBtn(btnRefresh)
+        }
+        if (list.componentCount == 0) {
+            disableBtn(btnGoTop)
+            disableBtn(btnGoBottom)
+            disableBtn(btnPageDown)
+            disableBtn(btnPageUp)
+            return
+        }
         val sizeObtain = dataSizeObtain as DataSizeObtain
         if (sizeObtain.getDataSize() >= PussycatListItemsFactory.REQUEST_DELTA) {
             if (dataSizeObtain != null) {
@@ -374,18 +409,6 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         }
     }
 
-    private fun refresh() {
-        btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
-        busy.set(true)
-        list.removeAll()
-        validate()
-        val vertical = scrollPane.verticalScrollBar
-        vertical.value = vertical.minimum
-        lastItemIndex.set(0)
-        firstItemIndex.set(0)
-        dataRequestStrategy?.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
-    }
-
     private fun appendPussycatListItem(item: PussycatListItem) {
         list.add(item)
         contentPane.validate()
@@ -404,6 +427,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 button.setState(PussycatIconButton.STATE.DEFAULT)
             }
         }
+    }
+
+    private fun disableBtn(button: PussycatIconButton?) {
+        button?.setState(PussycatIconButton.STATE.DISABLED)
     }
 
 }
