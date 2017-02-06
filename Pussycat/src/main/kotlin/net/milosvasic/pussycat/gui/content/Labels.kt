@@ -16,5 +16,6 @@ object Labels {
     val PAGE_BOTTOM_BTN_TOOLTIP = "Page down."
     val ANCHOR_BTN_TOOLTIP = "Anchor scrollbar to latest data."
     val REFRESH_BTN_TOOLTIP = "Refresh."
+    val CLEAN_BTN_TOOLTIP = "Clean."
 
 }
