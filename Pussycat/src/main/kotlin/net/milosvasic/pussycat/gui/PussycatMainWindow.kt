@@ -103,10 +103,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             System.setProperty("com.apple.mac.useScreenMenuBar", "true")
             System.setProperty("apple.laf.useScreenMenuBar", "true")
             val app = Application.getApplication()
-            app.setAboutHandler {
-                val aboutDialog = PussycatAboutDialog(information, theme, this)
-                aboutDialog.open()
-            }
+            app.removeAboutMenuItem()
             enableOSXFullscreen()
             requestOSXFullscreen(this)
         }
