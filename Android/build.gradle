@@ -34,8 +34,6 @@ dependencies {
     compile 'com.android.tools.ddms:ddmlib:25.2.0'
     compile "com.google.code.gson:gson:2.8.0"
     compile "com.github.salomonbrys.kotson:kotson:2.3.0"
-
-    compile group: 'com.apple', name: 'AppleJavaExtensions', version: '1.4'
 }
 
 mainClassName = "net.milosvasic.pussycat.android.MainKt"
