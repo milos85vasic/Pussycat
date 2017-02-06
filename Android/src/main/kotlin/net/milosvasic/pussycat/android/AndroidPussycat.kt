@@ -147,8 +147,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
                         countBytes(line)
                     }
                 }
-                println("DATA COUNT: ${data.get().size}") // TODO: Remove this.
-                apply(data.get(), "")
+                onParsingComplete()
                 if (!loadingSuccess) {
                     printLine("\nPussycat, serialization problems detected during data loading. Some logcat lines may missing.\n")
                 }
@@ -262,6 +261,10 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
 
     open protected fun publishFilesystemLoadingProgress(percent: Double) {
         SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.notify(percent)
+    }
+
+    open protected fun onParsingComplete() {
+        apply(data.get(), "")
     }
 
     private fun filterByLogLevel(params: Array<out String?>) {

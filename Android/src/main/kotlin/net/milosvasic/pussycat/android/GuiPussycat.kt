@@ -140,7 +140,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     override fun printLine(line: AndroidLogCatMessage) {
-        pussycatListItemsFactory?.addRawData(line, data.get().indexOf(line))
+        // pussycatListItemsFactory?.addRawData(line, data.get().indexOf(line)) // TODO: Handle this.
     }
 
     override fun getPrintableLogLevelValue(): String {
@@ -149,6 +149,11 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     override fun getPrintableFilterValue(): String {
         return ""
+    }
+
+    override fun onParsingComplete() {
+        println("DATA COUNT: ${data.get().size}") // TODO: Remove this and publish data count information.
+        data.get().forEachIndexed { i, msg -> pussycatListItemsFactory?.addRawData(msg, i) }
     }
 
     private fun initialize(args: Array<String>) {
