@@ -11,6 +11,7 @@ import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
+import net.milosvasic.pussycat.gui.commands.CommandCallback
 import net.milosvasic.pussycat.gui.data.DataRequestCallback
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
 import net.milosvasic.pussycat.gui.data.DataRequestStrategy
@@ -47,6 +48,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val mainWindowStatusListener = object : Listener<Boolean> {
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
+                mainWindow.commandCallback = commandCallback
                 dataRequestStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
             }
         }
@@ -56,6 +58,12 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback?) {
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
             pussycatListItemsFactory?.requestData(request)
+        }
+    }
+
+    val commandCallback = object : CommandCallback {
+        override fun execute(command: COMMAND) {
+            this@GuiPussycat.execute(command)
         }
     }
 

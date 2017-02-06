@@ -3,6 +3,8 @@ package net.milosvasic.pussycat.gui
 
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.application.ApplicationInformation
+import net.milosvasic.pussycat.core.COMMAND
+import net.milosvasic.pussycat.gui.commands.CommandCallback
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.data.DataRequestCallback
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
@@ -28,6 +30,14 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     var dataSizeObtain: DataSizeObtain? = null
     var dataRequestStrategy: DataRequestStrategy? = null
 
+    var commandCallback: CommandCallback? = null
+        get() = field
+        set(value) {
+            field = value
+            enableBtn(btnClear)
+            enableBtn(btnRefresh)
+        }
+
     private val busy = AtomicBoolean()
     private val ready = AtomicBoolean()
     private val list = PussycatList(theme)
@@ -40,6 +50,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private var btnPageDown: PussycatIconButton? = null
     private var btnGoTop: PussycatIconButton? = null
     private var btnGoBottom: PussycatIconButton? = null
+    private var btnClear: PussycatIconButton? = null
+    private var btnRefresh: PussycatIconButton? = null
 
     class Subscriptions {
         val STATUS: Listeners<Boolean> = Listeners.obtain()
@@ -190,16 +202,20 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun createToolbar(barHeight: Int): PussycatToolbar {
         val size = (barHeight * 0.8).toInt()
         val toolBar = PussycatToolbar(theme, screenSize.width, barHeight)
+        btnRefresh = getRefreshButton(size)
+        btnClear = getClearButton(size)
         btnGoTop = getGoTopButton(size)
         btnGoBottom = getGoBottomButton(size)
         btnPageUp = getPageTopButton(size)
         btnPageDown = getPageBottomButton(size)
-        toolBar.add(getRefreshButton(size))
-        toolBar.add(getCleanButton(size))
+        toolBar.add(btnRefresh)
+        toolBar.add(btnClear)
         toolBar.add(btnGoTop)
         toolBar.add(btnGoBottom)
         toolBar.add(btnPageUp)
         toolBar.add(btnPageDown)
+        btnClear?.setState(PussycatIconButton.STATE.DISABLED)
+        btnRefresh?.setState(PussycatIconButton.STATE.DISABLED)
         btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
         btnGoBottom?.setState(PussycatIconButton.STATE.DISABLED)
         btnPageUp?.setState(PussycatIconButton.STATE.DISABLED)
@@ -242,15 +258,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun getGoTopButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
             if (firstItemIndex.get() > 0) {
-                btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
-                busy.set(true)
-                list.removeAll()
-                validate()
-                val vertical = scrollPane.verticalScrollBar
-                vertical.value = vertical.minimum
-                lastItemIndex.set(0)
-                firstItemIndex.set(0)
-                dataRequestStrategy?.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+                refresh()
             } else {
                 val vertical = scrollPane.verticalScrollBar
                 vertical.value = vertical.minimum
@@ -301,26 +309,39 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun getRefreshButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-
+            commandCallback?.execute(COMMAND.RESET)
+            refresh()
         }
         val definition = PussycatIconButtonDefinition(
                 size,
                 "refresh",
                 Labels.REFRESH_BTN_TOOLTIP,
-                action
+                action,
+                "refresh",
+                "refresh_disabled"
         )
         return PussycatIconButton.create(theme, definition)
     }
 
-    private fun getCleanButton(size: Int): PussycatIconButton? {
+    private fun getClearButton(size: Int): PussycatIconButton? {
         val action = ActionListener {
-
+            if (commandCallback != null) {
+                commandCallback?.execute(COMMAND.CLEAR)
+                busy.set(true)
+                list.removeAll()
+                validate()
+                lastItemIndex.set(0)
+                firstItemIndex.set(0)
+                busy.set(false)
+            }
         }
         val definition = PussycatIconButtonDefinition(
                 size,
                 "clean",
-                Labels.CLEAN_BTN_TOOLTIP,
-                action
+                Labels.CLEAR_BTN_TOOLTIP,
+                action,
+                "clean",
+                "clean_disabled"
         )
         return PussycatIconButton.create(theme, definition)
     }
@@ -329,30 +350,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val sizeObtain = dataSizeObtain as DataSizeObtain
         if (sizeObtain.getDataSize() >= PussycatListItemsFactory.REQUEST_DELTA) {
             if (dataSizeObtain != null) {
-                if (btnGoTop != null) {
-                    val btn = btnGoTop as PussycatIconButton
-                    if (!btn.isEnabled) {
-                        btn.setState(PussycatIconButton.STATE.DEFAULT)
-                    }
-                }
-                if (btnGoBottom != null) {
-                    val btn = btnGoBottom as PussycatIconButton
-                    if (!btn.isEnabled) {
-                        btn.setState(PussycatIconButton.STATE.DEFAULT)
-                    }
-                }
-                if (btnPageDown != null) {
-                    val btn = btnPageDown as PussycatIconButton
-                    if (!btn.isEnabled) {
-                        btn.setState(PussycatIconButton.STATE.DEFAULT)
-                    }
-                }
-                if (btnPageUp != null) {
-                    val btn = btnPageUp as PussycatIconButton
-                    if (!btn.isEnabled) {
-                        btn.setState(PussycatIconButton.STATE.DEFAULT)
-                    }
-                }
+                enableBtn(btnGoTop)
+                enableBtn(btnGoBottom)
+                enableBtn(btnPageDown)
+                enableBtn(btnPageUp)
             }
         }
     }
@@ -373,6 +374,18 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         }
     }
 
+    private fun refresh() {
+        btnGoTop?.setState(PussycatIconButton.STATE.DISABLED)
+        busy.set(true)
+        list.removeAll()
+        validate()
+        val vertical = scrollPane.verticalScrollBar
+        vertical.value = vertical.minimum
+        lastItemIndex.set(0)
+        firstItemIndex.set(0)
+        dataRequestStrategy?.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+    }
+
     private fun appendPussycatListItem(item: PussycatListItem) {
         list.add(item)
         contentPane.validate()
@@ -383,6 +396,14 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         contentPane.validate()
         val vertical = scrollPane.verticalScrollBar
         vertical.value += item.height
+    }
+
+    private fun enableBtn(button: PussycatIconButton?) {
+        if (button != null) {
+            if (!button.isEnabled) {
+                button.setState(PussycatIconButton.STATE.DEFAULT)
+            }
+        }
     }
 
 }
