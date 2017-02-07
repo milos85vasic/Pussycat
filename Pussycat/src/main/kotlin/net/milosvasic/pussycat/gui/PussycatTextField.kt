@@ -7,18 +7,29 @@ import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.RenderingHints
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import javax.swing.JTextField
 
 
-class PussycatTextField(val theme: Theme) : JTextField() {
+class PussycatTextField(val theme: Theme) : JTextField(), ActionListener {
+
+    var hint: PussycatTextFieldHint? = null
+        get() = field
+        set(value) {
+            field = value
+            toolTipText = value?.getHint()
+        }
 
     init {
         isOpaque = true
+        toolTipText = hint?.getHint()
         border = theme.getBorder(this)
-        font = theme.getFont(FONT_WEIGHT.REGULAR, theme.getFontSize())
         background = theme.getColor(TYPE.BASE, INTENSITY.LIGHT)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
         caretColor = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
+        font = theme.getFont(FONT_WEIGHT.REGULAR, theme.getFontSize())
+        addActionListener(this)
     }
 
     override fun paintComponent(g: Graphics?) {
@@ -31,6 +42,10 @@ class PussycatTextField(val theme: Theme) : JTextField() {
         val g2 = g as Graphics2D
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
         super.paintBorder(g2)
+    }
+
+    override fun actionPerformed(e: ActionEvent?) {
+        println("Submit: $text") // TODO: Remove this.
     }
 
 }

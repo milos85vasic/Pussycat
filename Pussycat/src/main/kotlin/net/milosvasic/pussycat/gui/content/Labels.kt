@@ -18,5 +18,7 @@ object Labels {
     val PROCESSING_THREAD = "Processing thread."
     val GO_BOTTOM_BTN_TOOLTIP = "Go to the bottom."
     val ANCHOR_BTN_TOOLTIP = "Anchor scrollbar to latest data."
+    val TEXT_FIELD_FILTER_HINT = "Filter applied:"
+    val TEXT_FIELD_FILTER_HINT_EMPTY = "Type your filter and hit enter to apply."
 
 }

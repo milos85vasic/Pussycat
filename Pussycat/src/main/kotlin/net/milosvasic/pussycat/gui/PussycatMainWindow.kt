@@ -14,6 +14,7 @@ import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.data.DataCallback
+import net.milosvasic.pussycat.gui.filtering.FilterObtain
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import net.milosvasic.pussycat.listeners.Listener
@@ -39,6 +40,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             field = value
             updateNavigationButtons()
         }
+
+    var filterObtain = object : FilterObtain {
+        override fun getFilterValue(): String = ""
+    }
 
     private val busy = AtomicBoolean()
     private val ready = AtomicBoolean()
@@ -434,6 +439,11 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun initFilterField() {
         filterField.columns = 50
+        filterField.hint = object : PussycatTextFieldHint {
+            override fun getHint(): String {
+                return filterObtain.getFilterValue()
+            }
+        }
     }
 
     private fun enableBtn(button: PussycatIconButton?) {

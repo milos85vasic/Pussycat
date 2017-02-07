@@ -12,15 +12,18 @@ import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.*
 import net.milosvasic.pussycat.gui.commands.CommandCallback
+import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.data.DataRequestCallback
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
 import net.milosvasic.pussycat.gui.data.DataRequestStrategy
 import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
+import net.milosvasic.pussycat.gui.filtering.FilterObtain
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
+import net.milosvasic.pussycat.utils.Text
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
@@ -41,6 +44,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
             mainWindow.dataRequestStrategy = dataRequestStrategy
             mainWindow.dataSizeObtain = sizeObtain
+            mainWindow.filterObtain = filterObtain
             mainWindow.open()
         }
     }
@@ -64,6 +68,17 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val commandCallback = object : CommandCallback {
         override fun execute(command: COMMAND) {
             this@GuiPussycat.execute(command)
+        }
+    }
+
+    val filterObtain = object : FilterObtain {
+        override fun getFilterValue(): String {
+            val filter = data.getFilterPattern()
+            return if (Text.isEmpty(filter)) {
+                Labels.TEXT_FIELD_FILTER_HINT_EMPTY
+            } else {
+                "${Labels.TEXT_FIELD_FILTER_HINT} $filter"
+            }
         }
     }
 
