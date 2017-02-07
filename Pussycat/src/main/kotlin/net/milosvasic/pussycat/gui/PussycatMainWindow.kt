@@ -15,6 +15,8 @@ import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.data.DataCallback
 import net.milosvasic.pussycat.gui.theme.Theme
+import net.milosvasic.pussycat.gui.theme.color.INTENSITY
+import net.milosvasic.pussycat.gui.theme.color.TYPE
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
@@ -23,6 +25,8 @@ import java.awt.event.ActionListener
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import javax.swing.BoxLayout
+import javax.swing.border.CompoundBorder
+import javax.swing.border.EmptyBorder
 
 abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), DataCallback {
 
@@ -42,6 +46,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private val list = PussycatList(theme)
     private val lastItemIndex = AtomicInteger(0)
     private val firstItemIndex = AtomicInteger(0)
+    private val footerLeft = PussycatLabel(theme)
     private val scrollPane = PussycatScrollPane(theme)
     private val screenSize: Dimension = Toolkit.getDefaultToolkit().screenSize
 
@@ -108,6 +113,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             requestOSXFullscreen(this)
         }
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)
+        footerLeft.border = CompoundBorder(footerLeft.border, EmptyBorder(2, 10, 0, 0))
+        footerBar.add(footerLeft)
         add(headerBar, BorderLayout.PAGE_START)
         val content = PussycatContent(theme)
         scrollPane.setViewportView(list)
@@ -178,6 +185,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         lastItemIndex.set(0)
         firstItemIndex.set(0)
         dataRequestStrategy?.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+    }
+
+    fun updateDataCount(count: Int){
+        footerLeft.text = "${Labels.DATA_LOADED}: $count"
     }
 
     abstract fun getMainMenuItems(): List<PussycatMenu>

@@ -152,7 +152,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     override fun onParsingComplete() {
-        println("DATA COUNT: ${data.get().size}") // TODO: Remove this and publish data count information.
+        mainWindow.updateDataCount(data.get().size)
         data.get().forEachIndexed { i, msg -> pussycatListItemsFactory?.addRawData(msg, i) }
     }
 

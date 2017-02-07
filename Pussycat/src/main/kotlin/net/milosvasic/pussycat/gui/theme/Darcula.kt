@@ -56,9 +56,9 @@ open class Darcula : Theme() {
         return when (type) {
             TYPE.BASE -> {
                 when (intensity) {
-                    INTENSITY.LIGHT -> Color.WHITE
-                    INTENSITY.MEDIUM -> Color.WHITE
-                    INTENSITY.DARK -> Color.WHITE
+                    INTENSITY.LIGHT -> Color(201, 201, 201)
+                    INTENSITY.MEDIUM -> Color(201, 201, 201)
+                    INTENSITY.DARK -> Color(201, 201, 201)
                 }
             }
             TYPE.MAIN_COLOR_1 -> {
