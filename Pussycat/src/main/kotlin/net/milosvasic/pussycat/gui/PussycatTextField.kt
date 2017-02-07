@@ -18,6 +18,7 @@ class PussycatTextField(val theme: Theme) : JTextField() {
         font = theme.getFont(FONT_WEIGHT.REGULAR, theme.getFontSize())
         background = theme.getColor(TYPE.BASE, INTENSITY.LIGHT)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
+        caretColor = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
     }
 
     override fun paintComponent(g: Graphics?) {
