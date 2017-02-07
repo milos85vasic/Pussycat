@@ -29,7 +29,9 @@ import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
+import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
@@ -37,6 +39,7 @@ import javax.swing.WindowConstants
 class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPussycat() {
 
     private var favicon: BufferedImage? = null
+    private val filterApplying = AtomicBoolean(false)
     val mainWindow = GuiPussycatMainWindow(information, theme)
     val pussycatListItemFactory = GuiPussycatListItemFactory(theme)
     var pussycatListItemsFactory: PussycatListItemsFactory<AndroidLogCatMessage>? = null
@@ -180,24 +183,26 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         data.get().forEachIndexed { i, msg -> pussycatListItemsFactory?.addRawData(msg, i) }
     }
 
-    override fun onFilterApplied(data: CopyOnWriteArrayList<AndroidLogCatMessage>) {
-        // TODO: Adapt implementation.
-        var filterOk = false
-        val indexes = mutableListOf<Int>()
-        data
-                .filter { this.data.evaluate(it) }
-                .forEach { msg ->
-                    filterOk = true
-                    if (this.data.getLogLevel() != null) {
-                        if (msg.logLevel == this.data.getLogLevel()) {
-                            indexes.add(data.indexOf(msg))
+    override fun onFilterPatternSet(data: CopyOnWriteArrayList<AndroidLogCatMessage>) {
+        if (!filterApplying.get()) {
+            Thread(Runnable {
+                Thread.currentThread().name = Labels.DATA_FILTERING_THREAD
+                filterApplying.set(true)
+                val indexes = mutableListOf<Int>()
+                data
+                        .filter { this.data.evaluate(it) }
+                        .forEach { msg ->
+                            if (this.data.getLogLevel() != null) {
+                                if (msg.logLevel == this.data.getLogLevel()) {
+                                    indexes.add(data.indexOf(msg))
+                                }
+                            } else {
+                                indexes.add(data.indexOf(msg))
+                            }
                         }
-                    } else {
-                        indexes.add(data.indexOf(msg))
-                    }
-                }
-        if (!filterOk) {
-            // Notify we do not have items
+                mainWindow.onFilteringResult(indexes)
+                filterApplying.set(false)
+            }).start()
         }
     }
 

@@ -2,6 +2,6 @@ package net.milosvasic.pussycat.gui.filtering
 
 interface FilterCallback {
 
-    fun onResults(indexes: List<Int>)
+    fun onFilteringResult(indexes: List<Int>)
 
 }

@@ -189,7 +189,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
             }
             printLine("Pussycat, no data available [ $noDataMessage ]")
         } else {
-            onFilterApplied(data)
+            onFilterPatternSet(data)
         }
         refreshing.set(false)
     }
@@ -243,7 +243,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
 
     abstract protected fun executeFilesystemRunnable(runnable: Runnable)
 
-    open protected fun onFilterApplied(data: CopyOnWriteArrayList<AndroidLogCatMessage>) {
+    open protected fun onFilterPatternSet(data: CopyOnWriteArrayList<AndroidLogCatMessage>) {
         var x = 0
         fun printLineAndIncrement(line: AndroidLogCatMessage) {
             printLine(line)

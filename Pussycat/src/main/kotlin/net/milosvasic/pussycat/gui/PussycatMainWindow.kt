@@ -14,6 +14,7 @@ import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.data.DataCallback
+import net.milosvasic.pussycat.gui.filtering.FilterCallback
 import net.milosvasic.pussycat.gui.filtering.FilteringStrategy
 import net.milosvasic.pussycat.gui.filtering.FilterObtain
 import net.milosvasic.pussycat.gui.theme.Theme
@@ -29,7 +30,7 @@ import javax.swing.BoxLayout
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
-abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), DataCallback {
+abstract class PussycatMainWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), DataCallback, FilterCallback {
 
     val subscriptions = Subscriptions()
     var dataSizeObtain: DataSizeObtain? = null
@@ -163,6 +164,16 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     override fun onDataRequestRejected(request: PussycatListItemsRequest) {
         busy.set(false)
+    }
+
+    override fun onFilteringResult(indexes: List<Int>) {
+        if (indexes.isEmpty()) {
+            println("No data!") // TODO: Handle this properly.
+        } else {
+            for (x in indexes) { // TODO: Handle this properly.
+                println("$x")
+            }
+        }
     }
 
     fun isReady(): Boolean {
