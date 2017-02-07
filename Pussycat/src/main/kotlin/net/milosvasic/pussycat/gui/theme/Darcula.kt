@@ -8,10 +8,12 @@ import net.milosvasic.pussycat.logging.LOG_TYPE
 import java.awt.Color
 import java.awt.Font
 import java.util.*
+import javax.swing.BorderFactory
 import javax.swing.JComponent
 import javax.swing.border.Border
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
+import javax.swing.border.TitledBorder
 
 
 open class Darcula : Theme() {
@@ -228,22 +230,25 @@ open class Darcula : Theme() {
     override fun getBorder(comp: JComponent): Border {
         return when (comp) {
             is PussycatContent -> {
-                CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
+                EmptyBorder(5, 5, 5, 5)
             }
             is PussycatListItem -> {
-                CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
+                EmptyBorder(5, 5, 5, 5)
             }
             is PussycatMenu -> {
-                CompoundBorder(comp.border, EmptyBorder(10, 10, 10, 10))
+                EmptyBorder(10, 10, 10, 10)
             }
             is PussycatToolbar -> {
                 EmptyBorder(0, 13, 0, 13)
             }
             is PussycatTextField -> {
-                CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(getColor(TYPE.MAIN_COLOR_1, INTENSITY.MEDIUM), 2),
+                        EmptyBorder(5, 5, 5, 5)
+                )
             }
             else -> {
-                CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
+                EmptyBorder(0, 0, 0, 0)
             }
         }
     }
