@@ -15,8 +15,6 @@ import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.data.DataCallback
 import net.milosvasic.pussycat.gui.theme.Theme
-import net.milosvasic.pussycat.gui.theme.color.INTENSITY
-import net.milosvasic.pussycat.gui.theme.color.TYPE
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
@@ -49,6 +47,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private val firstItemIndex = AtomicInteger(0)
     private val footerLeft = PussycatLabel(theme)
     private val scrollPane = PussycatScrollPane(theme)
+    private val filterField = PussycatTextField(theme)
     private val screenSize: Dimension = Toolkit.getDefaultToolkit().screenSize
 
     private var btnPageUp: PussycatIconButton? = null
@@ -233,6 +232,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun createToolbar(barHeight: Int): PussycatToolbar {
         val size = (barHeight * 0.8).toInt()
         val toolBar = PussycatToolbar(theme, screenSize.width, barHeight)
+        initFilterField()
+        toolBar.add(filterField)
         btnRefresh = getRefreshButton(size)
         btnClear = getClearButton(size)
         btnGoTop = getGoTopButton(size)
@@ -429,6 +430,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         contentPane.validate()
         val vertical = scrollPane.verticalScrollBar
         vertical.value += item.height
+    }
+
+    private fun initFilterField() {
+        filterField.columns = 50
     }
 
     private fun enableBtn(button: PussycatIconButton?) {

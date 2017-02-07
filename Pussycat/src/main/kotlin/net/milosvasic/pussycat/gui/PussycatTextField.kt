@@ -13,8 +13,9 @@ class PussycatTextField(val theme: Theme) : JTextField() {
 
     init {
         isOpaque = true
+        border = theme.getBorder(this)
         font = theme.getFont(FONT_WEIGHT.REGULAR, theme.getFontSize())
-        background = theme.getColor(TYPE.BASE, INTENSITY.MEDIUM)
+        background = theme.getColor(TYPE.BASE, INTENSITY.LIGHT)
         foreground = theme.getTextColor(TYPE.BASE, INTENSITY.MEDIUM)
     }
 

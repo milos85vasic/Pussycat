@@ -239,6 +239,9 @@ open class Darcula : Theme() {
             is PussycatToolbar -> {
                 EmptyBorder(0, 13, 0, 13)
             }
+            is PussycatTextField -> {
+                CompoundBorder(comp.border, EmptyBorder(5, 5, 5, 5))
+            }
             else -> {
                 CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
             }
