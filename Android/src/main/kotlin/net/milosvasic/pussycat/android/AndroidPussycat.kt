@@ -189,23 +189,7 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
             }
             printLine("Pussycat, no data available [ $noDataMessage ]")
         } else {
-            var x = 0
-            fun printLineAndIncrement(line: AndroidLogCatMessage) {
-                printLine(line)
-                x++
-            }
-            for (line in data) {
-                if (this.data.evaluate(line)) {
-                    if (this.data.getLogLevel() != null) {
-                        if (line.logLevel == this.data.getLogLevel()) {
-                            printLineAndIncrement(line)
-                        }
-                    } else {
-                        printLineAndIncrement(line)
-                    }
-                }
-            }
-            if (x == 0) printLine("Pussycat, ${Messages.NO_DATA_MATCHING_PARAMETERS} [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
+            onFilterApplied(data)
         }
         refreshing.set(false)
     }
@@ -258,6 +242,26 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
     abstract protected fun getPrintableFilterValue(): String
 
     abstract protected fun executeFilesystemRunnable(runnable: Runnable)
+
+    open protected fun onFilterApplied(data: CopyOnWriteArrayList<AndroidLogCatMessage>) {
+        var x = 0
+        fun printLineAndIncrement(line: AndroidLogCatMessage) {
+            printLine(line)
+            x++
+        }
+        for (line in data) {
+            if (this.data.evaluate(line)) {
+                if (this.data.getLogLevel() != null) {
+                    if (line.logLevel == this.data.getLogLevel()) {
+                        printLineAndIncrement(line)
+                    }
+                } else {
+                    printLineAndIncrement(line)
+                }
+            }
+        }
+        if (x == 0) printLine("Pussycat, ${Messages.NO_DATA_MATCHING_PARAMETERS} [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
+    }
 
     open protected fun publishFilesystemLoadingProgress(percent: Double) {
         SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.notify(percent)

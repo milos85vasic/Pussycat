@@ -29,6 +29,7 @@ import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
+import java.util.concurrent.CopyOnWriteArrayList
 import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
@@ -177,6 +178,27 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     override fun onParsingComplete() {
         mainWindow.updateDataCount(data.get().size)
         data.get().forEachIndexed { i, msg -> pussycatListItemsFactory?.addRawData(msg, i) }
+    }
+
+    override fun onFilterApplied(data: CopyOnWriteArrayList<AndroidLogCatMessage>) {
+        // TODO: Adapt implementation.
+        var x = 0
+        fun printLineAndIncrement(line: AndroidLogCatMessage) {
+            printLine(line)
+            x++
+        }
+        for (line in data) {
+            if (this.data.evaluate(line)) {
+                if (this.data.getLogLevel() != null) {
+                    if (line.logLevel == this.data.getLogLevel()) {
+                        printLineAndIncrement(line)
+                    }
+                } else {
+                    printLineAndIncrement(line)
+                }
+            }
+        }
+        if (x == 0) printLine("Pussycat, ${Messages.NO_DATA_MATCHING_PARAMETERS} [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
     }
 
     private fun initialize(args: Array<String>) {
