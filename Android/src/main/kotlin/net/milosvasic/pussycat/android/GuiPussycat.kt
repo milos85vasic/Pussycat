@@ -65,6 +65,10 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     val dataRequestStrategy = object : DataRequestStrategy {
+        override fun limitToIndexes(indexes: List<Int>) {
+            pussycatListItemsFactory?.applyIndexLimits(indexes)
+        }
+
         override fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback?) {
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
             pussycatListItemsFactory?.requestData(request)

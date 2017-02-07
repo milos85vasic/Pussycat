@@ -14,6 +14,7 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
 
     private var workingThread: Thread? = null
     private val raw = ConcurrentHashMap<Int, T>()
+    private val indexLimits = CopyOnWriteArrayList<Int>()
     private val data = ConcurrentHashMap<Int, PussycatListItem>()
 
     private val processingCallback = object : ProcessingCallback {
@@ -33,6 +34,11 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
 
     fun requestData(request: PussycatListItemsRequest) {
         processData(request)
+    }
+
+    fun applyIndexLimits(indexes: List<Int>) {
+        indexLimits.clear()
+        indexLimits.addAll(indexes)
     }
 
     private fun processData(request: PussycatListItemsRequest? = null, callback: ProcessingCallback? = null): Thread {

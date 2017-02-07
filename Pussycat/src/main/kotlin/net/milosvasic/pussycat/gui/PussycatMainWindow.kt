@@ -170,9 +170,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         if (indexes.isEmpty()) {
             println("No data!") // TODO: Handle this properly.
         } else {
-            for (x in indexes) { // TODO: Handle this properly.
-                println("$x")
-            }
+            dataRequestStrategy?.limitToIndexes(indexes)
         }
     }
 
