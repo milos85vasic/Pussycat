@@ -19,6 +19,7 @@ import net.milosvasic.pussycat.gui.data.DataRequestStrategy
 import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
+import net.milosvasic.pussycat.gui.filtering.FilterCallback
 import net.milosvasic.pussycat.gui.filtering.FilterObtain
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
@@ -45,6 +46,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             mainWindow.dataRequestStrategy = dataRequestStrategy
             mainWindow.dataSizeObtain = sizeObtain
             mainWindow.filterObtain = filterObtain
+            mainWindow.filterCallback = filterCallback
             mainWindow.open()
         }
     }
@@ -68,6 +70,12 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val commandCallback = object : CommandCallback {
         override fun execute(command: COMMAND) {
             this@GuiPussycat.execute(command)
+        }
+    }
+
+    val filterCallback = object : FilterCallback {
+        override fun filter(value: String) {
+            data.apply(value)
         }
     }
 
