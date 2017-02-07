@@ -17,6 +17,7 @@ import net.milosvasic.pussycat.gui.data.DataCallback
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
+import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
@@ -108,12 +109,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             System.setProperty("com.apple.mac.useScreenMenuBar", "true")
             System.setProperty("apple.laf.useScreenMenuBar", "true")
             val app = Application.getApplication()
-            app.removeAboutMenuItem()
+            @Suppress("DEPRECATION") app.removeAboutMenuItem()
             enableOSXFullscreen()
             requestOSXFullscreen(this)
         }
         val footerBar = PussycatBar(theme, screenSize.width, barHeight)
         footerLeft.border = CompoundBorder(footerLeft.border, EmptyBorder(2, 10, 0, 0))
+        footerLeft.font = theme.getFont(FONT_WEIGHT.REGULAR, (theme.getFontSize() * 0.9).toFloat())
         footerBar.add(footerLeft)
         add(headerBar, BorderLayout.PAGE_START)
         val content = PussycatContent(theme)
@@ -187,7 +189,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         dataRequestStrategy?.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
     }
 
-    fun updateDataCount(count: Int){
+    fun updateDataCount(count: Int) {
         footerLeft.text = "${Labels.DATA_LOADED}: $count"
     }
 
