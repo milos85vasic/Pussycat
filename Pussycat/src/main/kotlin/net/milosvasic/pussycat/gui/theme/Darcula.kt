@@ -13,7 +13,6 @@ import javax.swing.JComponent
 import javax.swing.border.Border
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
-import javax.swing.border.TitledBorder
 
 
 open class Darcula : Theme() {
@@ -248,7 +247,7 @@ open class Darcula : Theme() {
                 )
             }
             else -> {
-                EmptyBorder(0, 0, 0, 0)
+                CompoundBorder(comp.border, EmptyBorder(0, 0, 0, 0))
             }
         }
     }
