@@ -182,23 +182,23 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     override fun onFilterApplied(data: CopyOnWriteArrayList<AndroidLogCatMessage>) {
         // TODO: Adapt implementation.
-        var x = 0
-        fun printLineAndIncrement(line: AndroidLogCatMessage) {
-            printLine(line)
-            x++
-        }
-        for (line in data) {
-            if (this.data.evaluate(line)) {
-                if (this.data.getLogLevel() != null) {
-                    if (line.logLevel == this.data.getLogLevel()) {
-                        printLineAndIncrement(line)
-                    }
-                } else {
-                    printLineAndIncrement(line)
+        var filterOk = false
+        data
+                .filter { this.data.evaluate(it) }
+                .forEachIndexed { i, msg ->
+                    filterOk = true
+                    println("Index filter [ $i ][ ${msg.msg} ]")
+//                    if (this.data.getLogLevel() != null) {
+//                        if (it.logLevel == this.data.getLogLevel()) {
+//                            printLineAndIncrement(it)
+//                        }
+//                    } else {
+//                        printLineAndIncrement(it)
+//                    }
                 }
-            }
+        if (!filterOk) {
+            // Notify we do not have items
         }
-        if (x == 0) printLine("Pussycat, ${Messages.NO_DATA_MATCHING_PARAMETERS} [ filter: ${this.data.getFilterPattern()} ][ log level: ${getPrintableLogLevelValue()} ]")
     }
 
     private fun initialize(args: Array<String>) {
