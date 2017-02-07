@@ -19,7 +19,7 @@ import net.milosvasic.pussycat.gui.data.DataRequestStrategy
 import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
-import net.milosvasic.pussycat.gui.filtering.FilterCallback
+import net.milosvasic.pussycat.gui.filtering.FilteringStrategy
 import net.milosvasic.pussycat.gui.filtering.FilterObtain
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
@@ -47,7 +47,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             mainWindow.dataRequestStrategy = dataRequestStrategy
             mainWindow.dataSizeObtain = sizeObtain
             mainWindow.filterObtain = filterObtain
-            mainWindow.filterCallback = filterCallback
+            mainWindow.filteringStrategy = filterCallback
             mainWindow.open()
         }
     }
@@ -74,7 +74,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         }
     }
 
-    val filterCallback = object : FilterCallback {
+    val filterCallback = object : FilteringStrategy {
         override fun filter(value: String) {
             data.apply(value)
         }
@@ -183,18 +183,18 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     override fun onFilterApplied(data: CopyOnWriteArrayList<AndroidLogCatMessage>) {
         // TODO: Adapt implementation.
         var filterOk = false
+        val indexes = mutableListOf<Int>()
         data
                 .filter { this.data.evaluate(it) }
-                .forEachIndexed { i, msg ->
+                .forEach { msg ->
                     filterOk = true
-                    println("Index filter [ $i ][ ${msg.msg} ]")
-//                    if (this.data.getLogLevel() != null) {
-//                        if (it.logLevel == this.data.getLogLevel()) {
-//                            printLineAndIncrement(it)
-//                        }
-//                    } else {
-//                        printLineAndIncrement(it)
-//                    }
+                    if (this.data.getLogLevel() != null) {
+                        if (msg.logLevel == this.data.getLogLevel()) {
+                            indexes.add(data.indexOf(msg))
+                        }
+                    } else {
+                        indexes.add(data.indexOf(msg))
+                    }
                 }
         if (!filterOk) {
             // Notify we do not have items

@@ -14,7 +14,7 @@ import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
 import net.milosvasic.pussycat.gui.data.DataCallback
-import net.milosvasic.pussycat.gui.filtering.FilterCallback
+import net.milosvasic.pussycat.gui.filtering.FilteringStrategy
 import net.milosvasic.pussycat.gui.filtering.FilterObtain
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
@@ -33,7 +33,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     val subscriptions = Subscriptions()
     var dataSizeObtain: DataSizeObtain? = null
-    var filterCallback: FilterCallback? = null
+    var filteringStrategy: FilteringStrategy? = null
     var dataRequestStrategy: DataRequestStrategy? = null
 
     var commandCallback: CommandCallback? = null
@@ -447,7 +447,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             }
         }
         filterField.addActionListener {
-            filterCallback?.filter(filterField.text)
+            filteringStrategy?.filter(filterField.text)
         }
     }
 
