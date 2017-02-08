@@ -456,16 +456,26 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
 
     private fun appendPussycatListItem(item: PussycatListItem) {
         if (!list.components.contains(item)) {
+
+            if (item.index - lastItemIndex.get() != 1) {                                             // TODO: Remove this
+                println("APPEND INVALID INDEXES [ ${lastItemIndex.get()} ][ ${item.index} ]")        // TODO: Remove this
+            }                                                                                        // TODO: Remove this
+
             list.add(item)
             contentPane.validate()
             lastItemIndex.set(item.index)
         } else {
-            println("Append, already contains [ ${item.index} ]") // TODO: Remove this
+//            println("Append, already contains [ ${item.index} ]") // TODO: Remove this
         }
     }
 
     private fun prependPussycatListItem(item: PussycatListItem) {
         if (!list.components.contains(item)) {
+
+            if (firstItemIndex.get() - item.index != 1) {                                             // TODO: Remove this
+                println("PREPEND INVALID INDEXES [ ${firstItemIndex.get()} ][ ${item.index} ]")       // TODO: Remove this
+            }                                                                                         // TODO: Remove this
+
             list.add(item, 0)
             contentPane.validate()
             val vertical = scrollPane.verticalScrollBar
@@ -473,7 +483,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             firstItemIndex.set(item.index)
             checkListCapacity(DIRECTION.DOWN)
         } else {
-            println("Prepend, already contains [ ${item.index} ]") // TODO: Remove this
+//            println("Prepend, already contains [ ${item.index} ]") // TODO: Remove this
         }
     }
 
