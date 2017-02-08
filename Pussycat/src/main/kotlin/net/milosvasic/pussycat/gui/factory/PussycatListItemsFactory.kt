@@ -4,7 +4,6 @@ import net.milosvasic.pussycat.core.data.Data
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.data.DIRECTION
-import net.milosvasic.pussycat.gui.data.DataSizeObtain
 import java.util.concurrent.*
 
 
@@ -29,14 +28,14 @@ class PussycatListItemsFactory<T>(val dataSource: Data<T>, val factory: Pussycat
         if (!data.keys.contains(index)) {
             raw.put(index, value)
             if (data.size < REQUEST_DELTA && workingThread == null) {
-                println("RAW DATA") // TODO: Remove this
+//                println("RAW DATA") // TODO: Remove this
                 workingThread = processData(null, processingCallback)
             }
         }
     }
 
     fun requestData(request: PussycatListItemsRequest) {
-        println("PROCESS DATA [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this
+//        println("PROCESS DATA [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this
         processData(request)
     }
 
