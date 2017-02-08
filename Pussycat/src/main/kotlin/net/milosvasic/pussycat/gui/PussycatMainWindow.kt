@@ -104,7 +104,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                     }
                 }
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {
-                    if (!busy.get()) {
+                    if (lastItemIndex.get() < dataRequestStrategy.getLastIndex() && !busy.get()) {
                         busy.set(true)
                         dataRequestStrategy.requestData(
                                 lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.DOWN

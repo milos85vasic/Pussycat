@@ -28,12 +28,14 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
         if (!data.keys.contains(index)) {
             raw.put(index, value)
             if (data.size < REQUEST_DELTA && workingThread == null) {
+                println("RAW DATA") // TODO: Remove this
                 workingThread = processData(null, processingCallback)
             }
         }
     }
 
     fun requestData(request: PussycatListItemsRequest) {
+        println("PROCESS DATA [ ${request.from} ][ ${request.amount} ]") // TODO: Remove this
         processData(request)
     }
 
