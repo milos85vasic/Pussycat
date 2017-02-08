@@ -164,13 +164,16 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     override fun onData(request: PussycatListItemsRequest, items: List<PussycatListItem>, direction: DIRECTION) {
         if (direction == DIRECTION.DOWN) {
             for (item in items) {
+//                println("Appending [ ${item.index} ]") // TODO: Remove this.
                 appendPussycatListItem(item)
             }
         } else {
             for (item in items) {
+//                println("Prepending [ ${item.index} ]") // TODO: Remove this.
                 prependPussycatListItem(item)
             }
         }
+//        println("- - - - - - - - - - - - - - - ") // TODO: Remove this.
         updateNavigationButtons()
         request.dataRequestCallback?.finished()
         busy.set(false)
@@ -452,18 +455,26 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     private fun appendPussycatListItem(item: PussycatListItem) {
-        list.add(item)
-        contentPane.validate()
-        lastItemIndex.set(item.index)
+        if (!list.components.contains(item)) {
+            list.add(item)
+            contentPane.validate()
+            lastItemIndex.set(item.index)
+        } else {
+            println("Append, already contains [ ${item.index} ]") // TODO: Remove this
+        }
     }
 
     private fun prependPussycatListItem(item: PussycatListItem) {
-        list.add(item, 0)
-        contentPane.validate()
-        val vertical = scrollPane.verticalScrollBar
-        vertical.value += item.height
-        firstItemIndex.set(item.index)
-        checkListCapacity(DIRECTION.DOWN)
+        if (!list.components.contains(item)) {
+            list.add(item, 0)
+            contentPane.validate()
+            val vertical = scrollPane.verticalScrollBar
+            vertical.value += item.height
+            firstItemIndex.set(item.index)
+            checkListCapacity(DIRECTION.DOWN)
+        } else {
+            println("Prepend, already contains [ ${item.index} ]") // TODO: Remove this
+        }
     }
 
     private fun initFilterField() {
