@@ -484,10 +484,14 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun prependPussycatListItem(item: PussycatListItem) {
         if (!list.components.contains(item)) {
 
-            val first = list.getComponent(0) as PussycatListItem                                      // TODO: Remove this
-            if (first.index - item.index != 1) {                                                      // TODO: Remove this
-                println("PREPEND INVALID INDEXES [ ${firstItemIndex.get()} ][ ${item.index} ]")       // TODO: Remove this
-            }                                                                                         // TODO: Remove this
+            if (!list.components.isEmpty()) {                                                             // TODO: Remove this
+                val first = list.getComponent(0) as PussycatListItem                                      // TODO: Remove this
+                if (first.index - item.index != 1) {                                                      // TODO: Remove this
+                    println("PREPEND INVALID INDEXES [ ${firstItemIndex.get()} ][ ${item.index} ]")       // TODO: Remove this
+                }                                                                                         // TODO: Remove this
+            } else {                                                                                      // TODO: Remove this
+                println("No components added.")                                                           // TODO: Remove this
+            }
 
             list.add(item, 0)
             contentPane.validate()
