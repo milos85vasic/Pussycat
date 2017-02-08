@@ -66,24 +66,18 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val dataRequestStrategy = object : DataRequestStrategy {
         override fun getFirstIndex(): Int {
             var index = 0
-            pussycatListItemsFactory?.let {
-                factory ->
-                {
-                    println("Let factory ok first") // TODO: Remove this.
-                    index = factory.getFirstindex()
-                }
+            if (pussycatListItemsFactory != null) {
+                val factory = pussycatListItemsFactory as PussycatListItemsFactory<AndroidLogCatMessage>
+                index = factory.getFirstindex()
             }
             return index
         }
 
         override fun getLastIndex(): Int {
             var index = data.get().size - 1
-            pussycatListItemsFactory?.let {
-                factory ->
-                {
-                    println("Let factory ok last") // TODO: Remove this.
-                    index = factory.getLastIndex()
-                }
+            if (pussycatListItemsFactory != null) {
+                val factory = pussycatListItemsFactory as PussycatListItemsFactory<AndroidLogCatMessage>
+                index = factory.getLastIndex()
             }
             return index
         }
