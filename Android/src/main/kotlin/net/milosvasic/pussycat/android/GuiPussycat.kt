@@ -29,7 +29,6 @@ import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
-import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
@@ -70,8 +69,20 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             pussycatListItemsFactory?.let {
                 factory ->
                 {
-                    println("Let factory ok") // TODO: Remove this.
+                    println("Let factory ok first") // TODO: Remove this.
                     index = factory.getFirstindex()
+                }
+            }
+            return index
+        }
+
+        override fun getLastIndex(): Int {
+            var index = data.get().size - 1
+            pussycatListItemsFactory?.let {
+                factory ->
+                {
+                    println("Let factory ok last") // TODO: Remove this.
+                    index = factory.getLastIndex()
                 }
             }
             return index
@@ -84,6 +95,12 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback?) {
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
             pussycatListItemsFactory?.requestData(request)
+        }
+    }
+
+    val sizeObtain = object : DataSizeObtain {
+        override fun getDataSize(): Int {
+            return data.get().size
         }
     }
 
@@ -114,7 +131,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
-        pussycatListItemsFactory = PussycatListItemsFactory(pussycatListItemFactory)
+        pussycatListItemsFactory = PussycatListItemsFactory(sizeObtain, pussycatListItemFactory)
     }
 
     val eventsListener = object : Listener<EVENT> {
@@ -131,12 +148,6 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun onEvent(value: Double?) {
             val s = String.format("%.0f", value)
             splashScreen.updateStatus("${Messages.PARSING}: $s%")
-        }
-    }
-
-    val sizeObtain = object : DataSizeObtain {
-        override fun getDataSize(): Int {
-            return data.get().size
         }
     }
 

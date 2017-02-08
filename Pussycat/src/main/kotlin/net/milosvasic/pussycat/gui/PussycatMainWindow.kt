@@ -41,6 +41,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             return 0
         }
 
+        override fun getLastIndex(): Int {
+            return 0
+        }
+
         override fun limitToIndexes(indexes: List<Int>) {
         }
 
@@ -319,7 +323,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             if (list.componentCount == 0) {
                 return@ActionListener
             }
-            if (firstItemIndex.get() > 0) {
+            if (firstItemIndex.get() > dataRequestStrategy.getFirstIndex()) {
                 refresh()
             } else {
                 val vertical = scrollPane.verticalScrollBar
@@ -343,12 +347,11 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 return@ActionListener
             }
             if (dataSizeObtain != null) {
-                val sizeObtain = dataSizeObtain as DataSizeObtain
                 busy.set(true)
                 list.removeAll()
                 validate()
                 updateNavigationButtons()
-                lastItemIndex.set(sizeObtain.getDataSize() - 1)
+                lastItemIndex.set(dataRequestStrategy.getLastIndex())
                 firstItemIndex.set(lastItemIndex.get() + 1)
                 val callback = object : DataRequestCallback {
                     override fun finished() {

@@ -3,10 +3,11 @@ package net.milosvasic.pussycat.gui.factory
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.data.DIRECTION
+import net.milosvasic.pussycat.gui.data.DataSizeObtain
 import java.util.concurrent.*
 
 
-class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
+class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: PussycatListItemFactory<T>) {
 
     companion object {
         val REQUEST_DELTA = 100
@@ -46,6 +47,13 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
             return indexLimits[0]
         }
         return 0
+    }
+
+    fun getLastIndex(): Int {
+        if (!indexLimits.isEmpty()) {
+            return indexLimits.last()
+        }
+        return dataSize.getDataSize() - 1
     }
 
     private fun processData(request: PussycatListItemsRequest? = null, callback: ProcessingCallback? = null): Thread {
