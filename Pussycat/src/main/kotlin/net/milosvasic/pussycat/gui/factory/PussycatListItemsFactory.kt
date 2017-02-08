@@ -42,7 +42,7 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
         indexLimits.addAll(indexes)
     }
 
-    fun getFirstindex(): Int {
+    fun getFirstIndex(): Int {
         if (!indexLimits.isEmpty()) {
             return indexLimits[0]
         }

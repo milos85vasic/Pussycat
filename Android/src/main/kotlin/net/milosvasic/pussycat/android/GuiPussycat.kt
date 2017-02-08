@@ -68,7 +68,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             var index = 0
             if (pussycatListItemsFactory != null) {
                 val factory = pussycatListItemsFactory as PussycatListItemsFactory<AndroidLogCatMessage>
-                index = factory.getFirstindex()
+                index = factory.getFirstIndex()
             }
             return index
         }
