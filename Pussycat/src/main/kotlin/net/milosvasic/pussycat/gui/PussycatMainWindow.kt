@@ -462,6 +462,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         contentPane.validate()
         val vertical = scrollPane.verticalScrollBar
         vertical.value += item.height
+        firstItemIndex.set(item.index)
     }
 
     private fun initFilterField() {
