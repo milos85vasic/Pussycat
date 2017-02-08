@@ -69,24 +69,30 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
                 return false
             }
             if (request != null) {
+                var key = -1
+                var processed = 0
+                val keyOk: Boolean
                 val from = request.from
                 val amount = request.amount
+                fun getNextKey(): Int {
+                    // TODO: Take into account index limits.
+                    if (request.direction == DIRECTION.DOWN) {
+                        return ++key
+                    } else {
+                        return --key
+                    }
+                }
                 if (request.direction == DIRECTION.DOWN) {
-                    val to = from + amount
-                    for (key in from..to) {
-                        if (processKey(key)) {
-                            // Key processed
-                        }
-                    }
+                    key = from - 1
+                    keyOk = key <= getLastIndex()
                 } else {
-                    var to = from - amount
-                    if (to < 0) {
-                        to = 0
-                    }
-                    for (key in from downTo to) {
-                        if (processKey(key)) {
-                            // Key processed
-                        }
+                    key = from + 1
+                    keyOk = key >= getFirstIndex()
+                }
+                while (processed <= amount && keyOk) {
+                    key = getNextKey()
+                    if (processKey(key)) {
+                        processed++
                     }
                 }
             } else {
@@ -109,31 +115,41 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
 
     private fun sendData(request: PussycatListItemsRequest? = null) {
         if (request != null) {
-            val from = request.from
+            var key: Int
+            var added = 0
+            var keyOk = true
             val amount = request.amount
             val callback = request.callback
             val items = mutableListOf<PussycatListItem>()
-            fun addItem(x: Int?) {
+            fun addItem(x: Int) {
                 val item = data[x]
                 if (item != null) {
                     items.add(item)
+                    added++
                 }
             }
             if (request.direction == DIRECTION.DOWN) {
-                var to = from + amount
-                if (to >= data.values.size) {
-                    to = data.values.size - 1
-                }
-                for (x in from..to) {
-                    addItem(x)
-                }
+                key = request.from - 1
             } else {
-                var to = from - amount
-                if (to < 0) {
-                    to = 0
+                key = request.from + 1
+            }
+            fun getNextKey(): Int {
+                // TODO: Take into account index limits.
+                if (request.direction == DIRECTION.DOWN) {
+                    return ++key
+                } else {
+                    return --key
                 }
-                for (x in from downTo to) {
-                    addItem(x)
+            }
+            while (added <= amount && keyOk) {
+                key = getNextKey()
+                if (request.direction == DIRECTION.DOWN) {
+                    keyOk = key <= getLastIndex()
+                } else {
+                    keyOk = key >= getFirstIndex()
+                }
+                if (keyOk) {
+                    addItem(key)
                 }
             }
             callback.onData(request, items, request.direction)
