@@ -8,7 +8,7 @@ import net.milosvasic.pussycat.gui.commands.CommandCallback
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.data.DataRequestCallback
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
-import net.milosvasic.pussycat.gui.data.DataRequestStrategy
+import net.milosvasic.pussycat.gui.data.DataStrategy
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
 import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
@@ -36,7 +36,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     var dataSizeObtain: DataSizeObtain? = null
     var filteringStrategy: FilteringStrategy? = null
 
-    var dataRequestStrategy = object : DataRequestStrategy {
+    var dataStrategy = object : DataStrategy {
         override fun getFirstIndex(): Int {
             return 0
         }
@@ -96,17 +96,17 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                     // bottom reached
                 }
                 SCROLLING_EVENT.TOP_DELTA_REACHED -> {
-                    if (firstItemIndex.get() > dataRequestStrategy.getFirstIndex() && !busy.get()) {
+                    if (firstItemIndex.get() > dataStrategy.getFirstIndex() && !busy.get()) {
                         busy.set(true)
-                        dataRequestStrategy.requestData(
+                        dataStrategy.requestData(
                                 firstItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.UP
                         )
                     }
                 }
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {
-                    if (lastItemIndex.get() < dataRequestStrategy.getLastIndex() && !busy.get()) {
+                    if (lastItemIndex.get() < dataStrategy.getLastIndex() && !busy.get()) {
                         busy.set(true)
-                        dataRequestStrategy.requestData(
+                        dataStrategy.requestData(
                                 lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.DOWN
                         )
                         checkListCapacity(DIRECTION.UP)
@@ -187,7 +187,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         if (indexes.isEmpty()) {
             println("No data!") // TODO: Handle this properly.
         } else {
-            dataRequestStrategy.limitToIndexes(indexes)
+            dataStrategy.limitToIndexes(indexes)
         }
     }
 
@@ -204,8 +204,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         list.removeAll()
         validate()
         updateNavigationButtons()
-        lastItemIndex.set(dataRequestStrategy.getFirstIndex())
-        firstItemIndex.set(dataRequestStrategy.getFirstIndex())
+        lastItemIndex.set(dataStrategy.getFirstIndex())
+        firstItemIndex.set(dataStrategy.getFirstIndex())
         busy.set(false)
     }
 
@@ -216,9 +216,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         updateNavigationButtons()
         val vertical = scrollPane.verticalScrollBar
         vertical.value = vertical.minimum
-        lastItemIndex.set(dataRequestStrategy.getFirstIndex())
-        firstItemIndex.set(dataRequestStrategy.getFirstIndex())
-        dataRequestStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+        lastItemIndex.set(dataStrategy.getFirstIndex())
+        firstItemIndex.set(dataStrategy.getFirstIndex())
+        dataStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
     }
 
     fun updateDataCount(count: Int) {
@@ -326,7 +326,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             if (list.componentCount == 0) {
                 return@ActionListener
             }
-            if (firstItemIndex.get() > dataRequestStrategy.getFirstIndex()) {
+            if (firstItemIndex.get() > dataStrategy.getFirstIndex()) {
                 refresh()
             } else {
                 val vertical = scrollPane.verticalScrollBar
@@ -354,7 +354,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 list.removeAll()
                 validate()
                 updateNavigationButtons()
-                lastItemIndex.set(dataRequestStrategy.getLastIndex())
+                lastItemIndex.set(dataStrategy.getLastIndex())
                 firstItemIndex.set(lastItemIndex.get() + 1)
                 val callback = object : DataRequestCallback {
                     override fun finished() {
@@ -362,7 +362,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                         vertical.value = vertical.maximum
                     }
                 }
-                dataRequestStrategy.requestData(
+                dataStrategy.requestData(
                         lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.UP, callback
                 )
             }

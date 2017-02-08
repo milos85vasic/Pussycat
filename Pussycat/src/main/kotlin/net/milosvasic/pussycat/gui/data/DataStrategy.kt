@@ -1,7 +1,7 @@
 package net.milosvasic.pussycat.gui.data
 
 
-interface DataRequestStrategy {
+interface DataStrategy {
 
     fun getFirstIndex(): Int
 

@@ -15,7 +15,7 @@ import net.milosvasic.pussycat.gui.commands.CommandCallback
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.data.DataRequestCallback
 import net.milosvasic.pussycat.gui.data.DataSizeObtain
-import net.milosvasic.pussycat.gui.data.DataRequestStrategy
+import net.milosvasic.pussycat.gui.data.DataStrategy
 import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
@@ -46,7 +46,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
-            mainWindow.dataRequestStrategy = dataRequestStrategy
+            mainWindow.dataStrategy = dataStrategy
             mainWindow.dataSizeObtain = sizeObtain
             mainWindow.filterObtain = filterObtain
             mainWindow.filteringStrategy = filterCallback
@@ -58,12 +58,12 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         override fun onEvent(value: Boolean?) {
             if (value != null && value) {
                 mainWindow.commandCallback = commandCallback
-                dataRequestStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+                dataStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
             }
         }
     }
 
-    val dataRequestStrategy = object : DataRequestStrategy {
+    val dataStrategy = object : DataStrategy {
         override fun getFirstIndex(): Int {
             var index = 0
             if (pussycatListItemsFactory != null) {
