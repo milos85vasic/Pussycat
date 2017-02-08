@@ -148,13 +148,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         if (direction == DIRECTION.DOWN) {
             for (item in items) {
                 appendPussycatListItem(item)
-                lastItemIndex.incrementAndGet()
             }
         } else {
             for (item in items) {
                 prependPussycatListItem(item)
-                firstItemIndex.decrementAndGet()
-                checkListCapacity(DIRECTION.DOWN)
             }
         }
         updateNavigationButtons()
@@ -426,11 +423,13 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                 if (direction == DIRECTION.UP) {
                     list.remove(0)
                     list.validate()
-                    firstItemIndex.incrementAndGet()
+                    val firstItem = list.getComponent(0) as PussycatListItem
+                    firstItemIndex.set(firstItem.index)
                 } else {
                     list.remove(list.componentCount - 1)
                     list.validate()
-                    lastItemIndex.decrementAndGet()
+                    val lastItem = list.getComponent(list.componentCount - 1) as PussycatListItem
+                    lastItemIndex.set(lastItem.index)
                 }
             }
         }
@@ -439,6 +438,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun appendPussycatListItem(item: PussycatListItem) {
         list.add(item)
         contentPane.validate()
+        lastItemIndex.set(item.index)
     }
 
     private fun prependPussycatListItem(item: PussycatListItem) {

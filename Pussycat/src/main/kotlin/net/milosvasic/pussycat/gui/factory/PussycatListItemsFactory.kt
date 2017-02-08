@@ -41,6 +41,13 @@ class PussycatListItemsFactory<T>(val factory: PussycatListItemFactory<T>) {
         indexLimits.addAll(indexes)
     }
 
+    fun getFirstindex(): Int {
+        if (!indexLimits.isEmpty()) {
+            return indexLimits[0]
+        }
+        return 0
+    }
+
     private fun processData(request: PussycatListItemsRequest? = null, callback: ProcessingCallback? = null): Thread {
         val task = Runnable {
             Thread.currentThread().name = Labels.PROCESSING_THREAD
