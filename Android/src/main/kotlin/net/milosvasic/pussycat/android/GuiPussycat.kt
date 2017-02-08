@@ -90,6 +90,10 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
             pussycatListItemsFactory?.requestData(request)
         }
+
+        override fun releaseData(index: Int) {
+            pussycatListItemsFactory?.releaseData(index)
+        }
     }
 
     val sizeObtain = object : DataSizeObtain {
@@ -125,7 +129,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
-        pussycatListItemsFactory = PussycatListItemsFactory(sizeObtain, pussycatListItemFactory)
+        pussycatListItemsFactory = PussycatListItemsFactory(data, pussycatListItemFactory)
     }
 
     val eventsListener = object : Listener<EVENT> {

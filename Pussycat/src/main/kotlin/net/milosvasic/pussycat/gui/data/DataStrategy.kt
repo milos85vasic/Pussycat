@@ -11,4 +11,6 @@ interface DataStrategy {
 
     fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback? = null)
 
+    fun releaseData(index: Int)
+
 }

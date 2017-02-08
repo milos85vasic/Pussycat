@@ -1,5 +1,6 @@
 package net.milosvasic.pussycat.gui.factory
 
+import net.milosvasic.pussycat.core.data.Data
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.content.Labels
 import net.milosvasic.pussycat.gui.data.DIRECTION
@@ -7,7 +8,7 @@ import net.milosvasic.pussycat.gui.data.DataSizeObtain
 import java.util.concurrent.*
 
 
-class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: PussycatListItemFactory<T>) {
+class PussycatListItemsFactory<T>(val dataSource: Data<T>, val factory: PussycatListItemFactory<T>) {
 
     companion object {
         val REQUEST_DELTA = 100
@@ -39,6 +40,13 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
         processData(request)
     }
 
+    fun releaseData(index: Int) {
+        val item = data.remove(index)
+        if (item != null) {
+            addRawData(dataSource.get()[index], index)
+        }
+    }
+
     fun applyIndexLimits(indexes: List<Int>) {
         indexLimits.clear()
         indexLimits.addAll(indexes)
@@ -55,7 +63,7 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
         if (!indexLimits.isEmpty()) {
             return indexLimits.last()
         }
-        return dataSize.getDataSize() - 1
+        return dataSource.get().size - 1
     }
 
     private fun processData(request: PussycatListItemsRequest? = null, callback: ProcessingCallback? = null): Thread {
@@ -71,7 +79,7 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
                 return false
             }
             if (request != null) {
-                var key : Int
+                var key: Int
                 var keyOk = true
                 var processed = 0
                 val from = request.from

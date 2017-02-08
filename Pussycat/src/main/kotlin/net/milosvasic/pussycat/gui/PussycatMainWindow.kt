@@ -52,6 +52,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             val request = PussycatListItemsRequest(from, amount, direction, this@PussycatMainWindow)
             onDataRequestRejected(request)
         }
+
+        override fun releaseData(index: Int) {
+        }
     }
 
     var commandCallback: CommandCallback? = null
@@ -440,15 +443,19 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         if (list.componentCount >= PussycatListItemsFactory.REQUEST_DELTA * 2) {
             for (x in 0..PussycatListItemsFactory.REQUEST_DELTA) {
                 if (direction == DIRECTION.UP) {
+                    val itemToRelease = list.getComponent(0) as PussycatListItem
                     list.remove(0)
                     list.validate()
                     val firstItem = list.getComponent(0) as PussycatListItem
                     firstItemIndex.set(firstItem.index)
+                    dataStrategy.releaseData(itemToRelease.index)
                 } else {
+                    val itemToRelease = list.getComponent(list.componentCount - 1) as PussycatListItem
                     list.remove(list.componentCount - 1)
                     list.validate()
                     val lastItem = list.getComponent(list.componentCount - 1) as PussycatListItem
                     lastItemIndex.set(lastItem.index)
+                    dataStrategy.releaseData(itemToRelease.index)
                 }
             }
         }
