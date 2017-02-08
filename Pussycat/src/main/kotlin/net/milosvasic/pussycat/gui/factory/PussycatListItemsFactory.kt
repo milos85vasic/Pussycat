@@ -69,11 +69,16 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
                 return false
             }
             if (request != null) {
-                var key = -1
+                var key : Int
+                var keyOk = true
                 var processed = 0
-                val keyOk: Boolean
                 val from = request.from
                 val amount = request.amount
+                if (request.direction == DIRECTION.DOWN) {
+                    key = from - 1
+                } else {
+                    key = from + 1
+                }
                 fun getNextKey(): Int {
                     // TODO: Take into account index limits.
                     if (request.direction == DIRECTION.DOWN) {
@@ -82,16 +87,14 @@ class PussycatListItemsFactory<T>(val dataSize: DataSizeObtain, val factory: Pus
                         return --key
                     }
                 }
-                if (request.direction == DIRECTION.DOWN) {
-                    key = from - 1
-                    keyOk = key <= getLastIndex()
-                } else {
-                    key = from + 1
-                    keyOk = key >= getFirstIndex()
-                }
                 while (processed <= amount && keyOk) {
                     key = getNextKey()
-                    if (processKey(key)) {
+                    if (request.direction == DIRECTION.DOWN) {
+                        keyOk = key <= getLastIndex()
+                    } else {
+                        keyOk = key >= getFirstIndex()
+                    }
+                    if (keyOk && processKey(key)) {
                         processed++
                     }
                 }
