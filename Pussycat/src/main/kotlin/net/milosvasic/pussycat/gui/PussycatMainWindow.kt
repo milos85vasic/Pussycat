@@ -79,11 +79,17 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                     // bottom reached
                 }
                 SCROLLING_EVENT.TOP_DELTA_REACHED -> {
-                    if (firstItemIndex.get() > 0 && !busy.get()) {
-                        busy.set(true)
-                        dataRequestStrategy?.requestData(
-                                firstItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.UP
-                        )
+                    dataRequestStrategy?.let {
+                        requestStrategy ->
+                        {
+                            println("LET OK TOP") // TODO: Remove this.
+                            if (firstItemIndex.get() > requestStrategy.getFirstIndex() && !busy.get()) {
+                                busy.set(true)
+                                requestStrategy.requestData(
+                                        firstItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.UP
+                                )
+                            }
+                        }
                     }
                 }
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {

@@ -65,6 +65,18 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
     }
 
     val dataRequestStrategy = object : DataRequestStrategy {
+        override fun getFirstIndex(): Int {
+            var index = 0
+            pussycatListItemsFactory?.let {
+                factory ->
+                {
+                    println("Let factory ok") // TODO: Remove this.
+                    index = factory.getFirstindex()
+                }
+            }
+            return index
+        }
+
         override fun limitToIndexes(indexes: List<Int>) {
             pussycatListItemsFactory?.applyIndexLimits(indexes)
         }
