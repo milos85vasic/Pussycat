@@ -457,9 +457,14 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun appendPussycatListItem(item: PussycatListItem) {
         if (!list.components.contains(item)) {
 
-            if (item.index - lastItemIndex.get() != 1) {                                             // TODO: Remove this
-                println("APPEND INVALID INDEXES [ ${lastItemIndex.get()} ][ ${item.index} ]")        // TODO: Remove this
-            }                                                                                        // TODO: Remove this
+            if (!list.components.isEmpty()) {                                                            // TODO: Remove this
+                val last = list.getComponent(list.componentCount - 1) as PussycatListItem                // TODO: Remove this
+                if (item.index - last.index != 1) {                                                      // TODO: Remove this
+                    println("APPEND INVALID INDEXES [ ${lastItemIndex.get()} ][ ${item.index} ]")        // TODO: Remove this
+                }                                                                                        // TODO: Remove this
+            } else {                                                                                     // TODO: Remove this
+                println("No components added.")                                                          // TODO: Remove this
+            }                                                                                            // TODO: Remove this
 
             list.add(item)
             contentPane.validate()
@@ -472,7 +477,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     private fun prependPussycatListItem(item: PussycatListItem) {
         if (!list.components.contains(item)) {
 
-            if (firstItemIndex.get() - item.index != 1) {                                             // TODO: Remove this
+            val first = list.getComponent(0) as PussycatListItem                                      // TODO: Remove this
+            if (first.index - item.index != 1) {                                                      // TODO: Remove this
                 println("PREPEND INVALID INDEXES [ ${firstItemIndex.get()} ][ ${item.index} ]")       // TODO: Remove this
             }                                                                                         // TODO: Remove this
 
