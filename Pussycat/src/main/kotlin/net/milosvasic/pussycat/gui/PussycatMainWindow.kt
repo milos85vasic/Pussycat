@@ -35,7 +35,20 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     val subscriptions = Subscriptions()
     var dataSizeObtain: DataSizeObtain? = null
     var filteringStrategy: FilteringStrategy? = null
-    var dataRequestStrategy: DataRequestStrategy? = null
+
+    var dataRequestStrategy = object : DataRequestStrategy {
+        override fun getFirstIndex(): Int {
+            return 0
+        }
+
+        override fun limitToIndexes(indexes: List<Int>) {
+        }
+
+        override fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback?) {
+            val request = PussycatListItemsRequest(from, amount, direction, this@PussycatMainWindow)
+            onDataRequestRejected(request)
+        }
+    }
 
     var commandCallback: CommandCallback? = null
         get() = field
@@ -79,23 +92,17 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                     // bottom reached
                 }
                 SCROLLING_EVENT.TOP_DELTA_REACHED -> {
-                    dataRequestStrategy?.let {
-                        requestStrategy ->
-                        {
-                            println("LET OK TOP") // TODO: Remove this.
-                            if (firstItemIndex.get() > requestStrategy.getFirstIndex() && !busy.get()) {
-                                busy.set(true)
-                                requestStrategy.requestData(
-                                        firstItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.UP
-                                )
-                            }
-                        }
+                    if (firstItemIndex.get() > dataRequestStrategy.getFirstIndex() && !busy.get()) {
+                        busy.set(true)
+                        dataRequestStrategy.requestData(
+                                firstItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.UP
+                        )
                     }
                 }
                 SCROLLING_EVENT.BOTTOM_DELTA_REACHED -> {
                     if (!busy.get()) {
                         busy.set(true)
-                        dataRequestStrategy?.requestData(
+                        dataRequestStrategy.requestData(
                                 lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA / 2, DIRECTION.DOWN
                         )
                         checkListCapacity(DIRECTION.UP)
@@ -173,7 +180,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         if (indexes.isEmpty()) {
             println("No data!") // TODO: Handle this properly.
         } else {
-            dataRequestStrategy?.limitToIndexes(indexes)
+            dataRequestStrategy.limitToIndexes(indexes)
         }
     }
 
@@ -190,8 +197,8 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         list.removeAll()
         validate()
         updateNavigationButtons()
-        lastItemIndex.set(0)
-        firstItemIndex.set(0)
+        lastItemIndex.set(dataRequestStrategy.getFirstIndex())
+        firstItemIndex.set(dataRequestStrategy.getFirstIndex())
         busy.set(false)
     }
 
@@ -202,9 +209,9 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         updateNavigationButtons()
         val vertical = scrollPane.verticalScrollBar
         vertical.value = vertical.minimum
-        lastItemIndex.set(0)
-        firstItemIndex.set(0)
-        dataRequestStrategy?.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+        lastItemIndex.set(dataRequestStrategy.getFirstIndex())
+        firstItemIndex.set(dataRequestStrategy.getFirstIndex())
+        dataRequestStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
     }
 
     fun updateDataCount(count: Int) {
@@ -349,7 +356,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
                         vertical.value = vertical.maximum
                     }
                 }
-                dataRequestStrategy?.requestData(
+                dataRequestStrategy.requestData(
                         lastItemIndex.get(), PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.UP, callback
                 )
             }
