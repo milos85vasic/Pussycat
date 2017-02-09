@@ -89,7 +89,6 @@ class PussycatListItemsFactory<T>(val dataSource: Data<T>, val factory: Pussycat
                     key = from + 1
                 }
                 fun getNextKey(): Int {
-                    // TODO: Take into account index limits.
                     if (request.direction == DIRECTION.DOWN) {
                         return ++key
                     } else {
@@ -102,6 +101,9 @@ class PussycatListItemsFactory<T>(val dataSource: Data<T>, val factory: Pussycat
                         keyOk = key <= getLastIndex()
                     } else {
                         keyOk = key >= getFirstIndex()
+                    }
+                    if (!indexLimits.isEmpty() && !indexLimits.contains(key)) {
+                        continue
                     }
                     if (keyOk && processKey(key)) {
                         processed++
@@ -146,7 +148,6 @@ class PussycatListItemsFactory<T>(val dataSource: Data<T>, val factory: Pussycat
                 key = request.from + 1
             }
             fun getNextKey(): Int {
-                // TODO: Take into account index limits.
                 if (request.direction == DIRECTION.DOWN) {
                     return ++key
                 } else {
@@ -159,6 +160,9 @@ class PussycatListItemsFactory<T>(val dataSource: Data<T>, val factory: Pussycat
                     keyOk = key <= getLastIndex()
                 } else {
                     keyOk = key >= getFirstIndex()
+                }
+                if (!indexLimits.isEmpty() && !indexLimits.contains(key)) {
+                    continue
                 }
                 if (keyOk) {
                     addItem(key)

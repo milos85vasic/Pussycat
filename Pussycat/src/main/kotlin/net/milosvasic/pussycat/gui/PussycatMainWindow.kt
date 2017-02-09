@@ -191,6 +191,10 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
             println("No data!") // TODO: Handle this properly.
         } else {
             dataStrategy.limitToIndexes(indexes)
+            lastItemIndex.set(dataStrategy.getFirstIndex())
+            firstItemIndex.set(dataStrategy.getFirstIndex())
+            dataStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+            refresh()
         }
     }
 
