@@ -46,3 +46,6 @@ jar {
 }
 
 sourceSets.main.java.srcDirs += 'src/main/kotlin'
+
+version = 1.0
+jar.archiveName = "Tools_V" + version + ".jar"

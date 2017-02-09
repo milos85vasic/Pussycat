@@ -20,3 +20,6 @@ repositories {
 dependencies.compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 sourceSets.main.java.srcDirs += 'src/main/kotlin'
+
+version = 1.0
+jar.archiveName = "Pussycat_Apache_V" + version + ".jar"

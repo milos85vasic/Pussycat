@@ -34,3 +34,6 @@ dependencies {
 }
 
 sourceSets.main.java.srcDirs += 'src/main/kotlin'
+
+version = 1.0
+jar.archiveName = "Pussycat_Lib_V" + version + ".jar"
