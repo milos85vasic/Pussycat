@@ -22,6 +22,7 @@ import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
+import net.milosvasic.pussycat.utils.Text
 import java.awt.*
 import java.awt.event.ActionListener
 import java.util.concurrent.atomic.AtomicBoolean
@@ -217,15 +218,19 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
     }
 
     fun refresh() {
-        busy.set(true)
-        list.removeAll()
-        validate()
-        updateNavigationButtons()
-        val vertical = scrollPane.verticalScrollBar
-        vertical.value = vertical.minimum
-        lastItemIndex.set(dataStrategy.getFirstIndex())
-        firstItemIndex.set(dataStrategy.getFirstIndex())
-        dataStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+        if (!Text.isEmpty(filterField.text)) {
+            filteringStrategy?.filter(filterField.text)
+        } else {
+            busy.set(true)
+            list.removeAll()
+            validate()
+            updateNavigationButtons()
+            val vertical = scrollPane.verticalScrollBar
+            vertical.value = vertical.minimum
+            lastItemIndex.set(dataStrategy.getFirstIndex())
+            firstItemIndex.set(dataStrategy.getFirstIndex())
+            dataStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
+        }
     }
 
     fun updateDataCount(count: Int) {
