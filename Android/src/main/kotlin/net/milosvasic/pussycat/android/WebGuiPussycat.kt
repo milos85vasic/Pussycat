@@ -5,7 +5,7 @@ import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
-import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
+import net.milosvasic.pussycat.android.gui.GuiPussycatMainWebWindow
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
@@ -40,7 +40,7 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme) : Androi
 
     private var favicon: BufferedImage? = null
     private val filterApplying = AtomicBoolean(false)
-    val mainWindow = GuiPussycatMainWindow(information, theme)
+    val mainWindow = GuiPussycatMainWebWindow(information, theme)
     val pussycatListItemFactory = GuiPussycatListItemFactory(theme)
     var pussycatListItemsFactory: PussycatListItemsFactory<AndroidLogCatMessage>? = null
 
