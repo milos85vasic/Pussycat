@@ -32,8 +32,8 @@ dependencies {
 
     compile group: 'com.apple', name: 'AppleJavaExtensions', version: '1.4'
 
-    compile files('libs/Logger_V1.1.0.jar')
-    compile files('libs/Dispatcher_V1.0.0_Alpha_2.jar')
+    compile files('libs/Logger_V1.1.1.jar')
+    compile files('libs/Dispatcher_V1.0.0_Alpha_3.jar')
 }
 
 sourceSets.main.java.srcDirs += 'src/main/kotlin'
