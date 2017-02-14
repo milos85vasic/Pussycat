@@ -6,24 +6,22 @@ import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.gui.commands.CommandCallback
 import net.milosvasic.pussycat.gui.content.Labels
-import net.milosvasic.pussycat.gui.data.DataRequestCallback
-import net.milosvasic.pussycat.gui.data.DataSizeObtain
-import net.milosvasic.pussycat.gui.data.DataStrategy
+import net.milosvasic.pussycat.gui.data.*
 import net.milosvasic.pussycat.gui.events.SCROLLING_EVENT
-import net.milosvasic.pussycat.gui.data.DIRECTION
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
-import net.milosvasic.pussycat.gui.data.DataCallback
 import net.milosvasic.pussycat.gui.filtering.FilterCallback
-import net.milosvasic.pussycat.gui.filtering.FilteringStrategy
 import net.milosvasic.pussycat.gui.filtering.FilterObtain
+import net.milosvasic.pussycat.gui.filtering.FilteringStrategy
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.gui.theme.font.FONT_WEIGHT
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.listeners.Listeners
 import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Text
-import java.awt.*
+import java.awt.BorderLayout
+import java.awt.Dimension
+import java.awt.Toolkit
 import java.awt.event.ActionListener
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
@@ -257,7 +255,7 @@ abstract class PussycatMainWindow(val information: ApplicationInformation, theme
         val pussycat = PussycatMenu(theme, Labels.PUSSYCAT)
         val about = PussycatMenuItem(theme, Labels.ABOUT)
         about.addActionListener {
-            val aboutDialog = PussycatAboutDialog(information, theme, this)
+            val aboutDialog = PussycatAboutDialog(information, theme)
             aboutDialog.open()
         }
         pussycat.addMenuItem(about)

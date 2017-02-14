@@ -8,7 +8,6 @@ import net.milosvasic.pussycat.gui.theme.UI_INTERACTION_TYPE
 import net.milosvasic.pussycat.gui.theme.color.INTENSITY
 import net.milosvasic.pussycat.gui.theme.color.TYPE
 import java.awt.Color
-import java.awt.Frame
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JButton
@@ -18,7 +17,7 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-class PussycatAboutDialog(information: ApplicationInformation, theme: Theme, owner: Frame?) : PussycatAboutDialogAbstract(information, theme) {
+class PussycatAboutDialog(information: ApplicationInformation, theme: Theme) : PussycatAboutDialogAbstract(information, theme) {
 
     val closeButton = JButton()
 

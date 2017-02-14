@@ -34,10 +34,10 @@ class WebGuiPussycat(host: String, port: Int, information: ApplicationInformatio
 
     private val server = PussycatServer(port)
     private var favicon: BufferedImage? = null
-    val location = URI("http://$host:$port")
+    private val location = URI("http://$host:$port")
     private val filterApplying = AtomicBoolean(false)
-    val pussycatListItemFactory = GuiPussycatListItemFactory(theme)
-    var pussycatListItemsFactory: PussycatListItemsFactory<AndroidLogCatMessage>? = null
+    private val pussycatListItemFactory = GuiPussycatListItemFactory(theme)
+    private var pussycatListItemsFactory: PussycatListItemsFactory<AndroidLogCatMessage>? = null
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
