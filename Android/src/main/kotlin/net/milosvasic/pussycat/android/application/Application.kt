@@ -1,8 +1,8 @@
 package net.milosvasic.pussycat.android.application
 
 import net.milosvasic.pussycat.android.AndroidPussycat
-import net.milosvasic.pussycat.android.GuiPussycat
 import net.milosvasic.pussycat.android.TerminalPussycat
+import net.milosvasic.pussycat.android.WebGuiPussycat
 import net.milosvasic.pussycat.application.APPLICATION_TYPE
 import net.milosvasic.pussycat.application.ApplicationAbstract
 import net.milosvasic.pussycat.application.ApplicationInformation
@@ -26,7 +26,8 @@ class Application(args: Array<String>) : ApplicationAbstract(args) {
             System.setProperty("apple.awt.application.name", information.name)
         }
         type = APPLICATION_TYPE.GUI
-        for (arg in args) {
+        args.forEach {
+            arg ->
             if (arg.trim() == "--terminal") {
                 type = APPLICATION_TYPE.CLI
             }
@@ -35,7 +36,7 @@ class Application(args: Array<String>) : ApplicationAbstract(args) {
             pussy = TerminalPussycat()
         } else {
             val theme = Darcula()
-            pussy = GuiPussycat(information, theme)
+            pussy = WebGuiPussycat(information, theme)
         }
     }
 
