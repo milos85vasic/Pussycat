@@ -5,7 +5,6 @@ import com.android.ddmlib.logcat.LogCatMessage
 import net.milosvasic.pussycat.android.data.parser.LogCatMessageParser
 import net.milosvasic.pussycat.core.common.DataFilter
 import net.milosvasic.pussycat.core.data.StringData
-import net.milosvasic.pussycat.logging.LOG_TYPE
 import net.milosvasic.pussycat.utils.Text
 import java.util.concurrent.CopyOnWriteArrayList
 

@@ -5,27 +5,21 @@ import com.android.ddmlib.IDevice
 import com.android.ddmlib.Log
 import com.android.ddmlib.logcat.LogCatListener
 import com.android.ddmlib.logcat.LogCatReceiverTask
+import com.github.salomonbrys.kotson.fromJson
 import com.google.gson.Gson
+import net.milosvasic.pussycat.PUSSYCAT_MODE
 import net.milosvasic.pussycat.PussycatAbstract
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
-import net.milosvasic.pussycat.core.COMMAND
-import net.milosvasic.pussycat.logging.ConsoleLogger
-import net.milosvasic.pussycat.utils.Text
-import java.io.File
-import java.util.concurrent.atomic.AtomicBoolean
-import com.github.salomonbrys.kotson.*
-import com.sun.org.apache.xalan.internal.utils.SecuritySupport
 import net.milosvasic.pussycat.content.Messages
-import net.milosvasic.pussycat.PUSSYCAT_MODE
+import net.milosvasic.pussycat.core.COMMAND
 import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Files
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.util.*
+import net.milosvasic.pussycat.utils.Text
+import java.io.File
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.atomic.AtomicBoolean
 
 
 abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidData>() {
@@ -58,18 +52,17 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
         if (messages != null) {
             data.addData(messages)
             if (!refreshing.get()) {
-                for (message in messages) {
-                    val androidMessage = AndroidLogCatMessage.getFrom(message)
-                    if (data.evaluate(androidMessage)) printLine(androidMessage)
-                }
+                messages
+                        .map { AndroidLogCatMessage.getFrom(it) }
+                        .filter { data.evaluate(it) }
+                        .forEach { printLine(it) }
             }
         }
     }
 
     init {
+        initData()
         device = null
-        data = AndroidData(this)
-        logger = ConsoleLogger()
         TAG = AndroidPussycat::class
     }
 
@@ -232,6 +225,8 @@ abstract class AndroidPussycat : PussycatAbstract<AndroidLogCatMessage, AndroidD
             println("Pussycat, export [ COMPLETED ]")
         }).start()
     }
+
+    abstract protected fun initData()
 
     abstract protected fun printLine(text: String, logLevel: Log.LogLevel)
 

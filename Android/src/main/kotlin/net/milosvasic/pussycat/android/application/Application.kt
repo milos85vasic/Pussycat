@@ -12,6 +12,7 @@ import net.milosvasic.pussycat.os.OS
 
 class Application(args: Array<String>) : ApplicationAbstract(args) {
 
+    var port = 2507
     var type: APPLICATION_TYPE? = null
     var pussy: AndroidPussycat? = null
 
@@ -30,13 +31,16 @@ class Application(args: Array<String>) : ApplicationAbstract(args) {
             arg ->
             if (arg.trim() == "--terminal") {
                 type = APPLICATION_TYPE.CLI
-            }
+            } else
+                if (arg.trim().startsWith("--port=")) {
+                    port = arg.replace("--port=", "").toInt()
+                }
         }
         if (type == APPLICATION_TYPE.CLI) {
             pussy = TerminalPussycat()
         } else {
             val theme = Darcula()
-            pussy = WebGuiPussycat(information, theme)
+            pussy = WebGuiPussycat(information, theme, port)
         }
     }
 

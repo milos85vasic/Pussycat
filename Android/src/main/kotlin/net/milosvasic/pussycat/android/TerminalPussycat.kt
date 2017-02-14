@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.android
 import com.android.ddmlib.Log
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
+import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.color.Color
 import net.milosvasic.pussycat.events.EVENT
@@ -44,6 +45,10 @@ class TerminalPussycat : AndroidPussycat() {
                 configuration.getExitRoutine().run()
             }
         }
+    }
+
+    override fun initData() {
+        data = AndroidData(this)
     }
 
     override fun start(args: Array<String>) {

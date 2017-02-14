@@ -16,8 +16,8 @@ import java.util.concurrent.CopyOnWriteArrayList
 abstract class PussycatAbstract<T, D : Data<T>> : Execute<COMMAND, String>, DataFilter<CopyOnWriteArrayList<T>, String> {
 
     protected lateinit var data: D
+    protected val logger = Logger()
     protected lateinit var TAG: KClass<*>
-    protected lateinit var logger: Logger
     protected var color: String = Color.BLACK
     protected var mode: PUSSYCAT_MODE? = null
 

@@ -3,6 +3,7 @@ package net.milosvasic.pussycat.android
 import com.android.ddmlib.Log
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
+import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWebWindow
@@ -27,6 +28,7 @@ import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
 import net.milosvasic.pussycat.utils.Text
+import net.milosvasic.pussycat.web.PussycatServer
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
@@ -36,8 +38,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
 import javax.swing.WindowConstants
 
-class WebGuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPussycat() {
+class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: Int) : AndroidPussycat() {
 
+    private val server = PussycatServer(port)
     private var favicon: BufferedImage? = null
     private val filterApplying = AtomicBoolean(false)
     val mainWindow = GuiPussycatMainWebWindow(information, theme)
@@ -46,6 +49,11 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme) : Androi
 
     val splashScreenCallback: OnSplashComplete = object : OnSplashComplete {
         override fun onComplete(success: Boolean) {
+            try {
+                server.start()
+            } catch (e: Exception) {
+                logger.e(TAG, "${Labels.ERROR}: $e")
+            }
             mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
             mainWindow.dataStrategy = dataStrategy
             mainWindow.dataSizeObtain = sizeObtain
@@ -136,6 +144,11 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme) : Androi
     val eventsListener = object : Listener<EVENT> {
         override fun onEvent(value: EVENT?) {
             if (value == EVENT.STOP) {
+                try {
+                    server.stop()
+                } catch (e: Exception) {
+                    logger.e(TAG, "${Labels.ERROR}: $e")
+                }
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
                 mainWindow.subscriptions.STATUS.unsubscribe(mainWindowStatusListener)
@@ -148,6 +161,10 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme) : Androi
             val s = String.format("%.0f", value)
             splashScreen.updateStatus("${Messages.PARSING}: $s%")
         }
+    }
+
+    override fun initData() {
+        data = AndroidData(this)
     }
 
     override fun start(args: Array<String>) {
