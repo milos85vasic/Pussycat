@@ -8,10 +8,12 @@ class PussycatServer(port: Int) {
 
     private val dispatcher = Dispatcher(Labels.PUSSYCAT, port)
 
+    @Synchronized
     fun start() {
         dispatcher.start()
     }
 
+    @Synchronized
     fun stop() {
         dispatcher.stop()
     }

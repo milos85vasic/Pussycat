@@ -144,11 +144,6 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
     val eventsListener = object : Listener<EVENT> {
         override fun onEvent(value: EVENT?) {
             if (value == EVENT.STOP) {
-                try {
-                    server.stop()
-                } catch (e: Exception) {
-                    logger.e(TAG, "${Labels.ERROR}: $e")
-                }
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
                 mainWindow.subscriptions.STATUS.unsubscribe(mainWindowStatusListener)
@@ -321,6 +316,11 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
                                 println("Open file ...")
                             }
                             COMMAND.STOP -> {
+                                try {
+                                    server.stop()
+                                } catch (e: Exception) {
+                                    logger.e(TAG, "${Labels.ERROR}: $e")
+                                }
                                 execute(command)
                                 splashScreen.close()
                                 mainWindow.close()

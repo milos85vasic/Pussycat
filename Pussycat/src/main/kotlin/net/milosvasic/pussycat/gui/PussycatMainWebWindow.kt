@@ -28,7 +28,7 @@ import javax.swing.BoxLayout
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
-abstract class PussycatMainWebWindow (val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), DataCallback, FilterCallback {
+abstract class PussycatMainWebWindow(val information: ApplicationInformation, theme: Theme) : PussycatWindow(theme), DataCallback, FilterCallback {
 
     val subscriptions = Subscriptions()
     var dataSizeObtain: DataSizeObtain? = null
@@ -469,44 +469,20 @@ abstract class PussycatMainWebWindow (val information: ApplicationInformation, t
 
     private fun appendPussycatListItem(item: PussycatListItem) {
         if (!list.components.contains(item)) {
-
-            if (!list.components.isEmpty()) {                                                            // TODO: Remove this
-                val last = list.getComponent(list.componentCount - 1) as PussycatListItem                // TODO: Remove this
-                if (item.index - last.index != 1) {                                                      // TODO: Remove this
-                    println("APPEND INVALID INDEXES [ ${lastItemIndex.get()} ][ ${item.index} ]")        // TODO: Remove this
-                }                                                                                        // TODO: Remove this
-            } else {                                                                                     // TODO: Remove this
-                println("No components added.")                                                          // TODO: Remove this
-            }                                                                                            // TODO: Remove this
-
             list.add(item)
             contentPane.validate()
             lastItemIndex.set(item.index)
-        } else {
-//            println("Append, already contains [ ${item.index} ]") // TODO: Remove this
         }
     }
 
     private fun prependPussycatListItem(item: PussycatListItem) {
         if (!list.components.contains(item)) {
-
-            if (!list.components.isEmpty()) {                                                             // TODO: Remove this
-                val first = list.getComponent(0) as PussycatListItem                                      // TODO: Remove this
-                if (first.index - item.index != 1) {                                                      // TODO: Remove this
-                    println("PREPEND INVALID INDEXES [ ${firstItemIndex.get()} ][ ${item.index} ]")       // TODO: Remove this
-                }                                                                                         // TODO: Remove this
-            } else {                                                                                      // TODO: Remove this
-                println("No components added.")                                                           // TODO: Remove this
-            }
-
             list.add(item, 0)
             contentPane.validate()
             val vertical = scrollPane.verticalScrollBar
             vertical.value += item.height
             firstItemIndex.set(item.index)
             checkListCapacity(DIRECTION.DOWN)
-        } else {
-//            println("Prepend, already contains [ ${item.index} ]") // TODO: Remove this
         }
     }
 
