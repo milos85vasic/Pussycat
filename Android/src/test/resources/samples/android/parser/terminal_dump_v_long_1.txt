@@ -9916,7 +9916,7 @@ Found multiple library tables, ignoring...
 getRunningAppProcesses: caller 10112 does not hold REAL_GET_TASKS; limiting output
 
 [ 12-23 10:56:02.935 19724:19724 I/WebViewFactory ]
-Loading com.google.android.webview version 43.0.2357.121 (code 2357121)
+Loading com.google.android.webView version 43.0.2357.121 (code 2357121)
 
 [ 12-23 10:56:02.939 19724:19724 W/ResourceType ]
 Found multiple library tables, ignoring...
@@ -14468,7 +14468,7 @@ Exposure of experiment com.facebook.timeline.contacts.TimelineContactDBPreloadEx
 Found multiple library tables, ignoring...
 
 [ 12-23 10:57:34.600 21296:21414 I/WebViewFactory ]
-Loading com.google.android.webview version 43.0.2357.121 (code 2357121)
+Loading com.google.android.webView version 43.0.2357.121 (code 2357121)
 
 [ 12-23 10:57:34.609 21296:21414 W/ResourceType ]
 Found multiple library tables, ignoring...
@@ -19272,10 +19272,10 @@ addAppToken: AppWindowToken{2777f26c token=Token{25f6f1f ActivityRecord{2686f2be
 Decided to run without swap.
 
 [ 12-23 10:58:24.965 22886:22886 I/WebViewFactory ]
-Loading com.google.android.webview version 43.0.2357.121 (code 2357121)
+Loading com.google.android.webView version 43.0.2357.121 (code 2357121)
 
 [ 12-23 10:58:24.970 22860:22860 I/WebViewFactory ]
-Loading com.google.android.webview version 43.0.2357.121 (code 2357121)
+Loading com.google.android.webView version 43.0.2357.121 (code 2357121)
 
 [ 12-23 10:58:24.982 22886:22886 W/ResourceType ]
 Found multiple library tables, ignoring...

@@ -126,7 +126,7 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
         }
     }
 
-    val splashScreen = PussycatSplashScreen(information, theme, mainWindow, splashScreenCallback)
+    val splashScreen = PussycatSplashScreen(information, theme, splashScreenCallback)
 
     init {
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))

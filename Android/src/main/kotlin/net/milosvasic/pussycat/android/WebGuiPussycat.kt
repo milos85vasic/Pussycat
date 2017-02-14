@@ -6,7 +6,6 @@ import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
-import net.milosvasic.pussycat.android.gui.GuiPussycatMainWebWindow
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
@@ -14,36 +13,29 @@ import net.milosvasic.pussycat.events.EVENT
 import net.milosvasic.pussycat.gui.OnSplashComplete
 import net.milosvasic.pussycat.gui.PussycatMenuItemDefinition
 import net.milosvasic.pussycat.gui.PussycatSplashScreen
-import net.milosvasic.pussycat.gui.commands.CommandCallback
 import net.milosvasic.pussycat.gui.content.Labels
-import net.milosvasic.pussycat.gui.data.DIRECTION
-import net.milosvasic.pussycat.gui.data.DataRequestCallback
-import net.milosvasic.pussycat.gui.data.DataSizeObtain
-import net.milosvasic.pussycat.gui.data.DataStrategy
 import net.milosvasic.pussycat.gui.factory.PussycatListItemsFactory
-import net.milosvasic.pussycat.gui.factory.PussycatListItemsRequest
-import net.milosvasic.pussycat.gui.filtering.FilterObtain
-import net.milosvasic.pussycat.gui.filtering.FilteringStrategy
 import net.milosvasic.pussycat.gui.theme.Theme
 import net.milosvasic.pussycat.listeners.Listener
 import net.milosvasic.pussycat.os.OS
-import net.milosvasic.pussycat.utils.Text
 import net.milosvasic.pussycat.web.PussycatServer
+import java.awt.Desktop
 import java.awt.MenuItem
 import java.awt.PopupMenu
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
+import java.net.URI
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.imageio.ImageIO
-import javax.swing.WindowConstants
+import javax.swing.JFrame
 
-class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: Int) : AndroidPussycat() {
+class WebGuiPussycat(host: String, port: Int, information: ApplicationInformation, theme: Theme) : AndroidPussycat() {
 
     private val server = PussycatServer(port)
     private var favicon: BufferedImage? = null
+    val location = URI("http://$host:$port")
     private val filterApplying = AtomicBoolean(false)
-    val mainWindow = GuiPussycatMainWebWindow(information, theme)
     val pussycatListItemFactory = GuiPussycatListItemFactory(theme)
     var pussycatListItemsFactory: PussycatListItemsFactory<AndroidLogCatMessage>? = null
 
@@ -54,89 +46,77 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
             } catch (e: Exception) {
                 logger.e(TAG, "${Labels.ERROR}: $e")
             }
-            mainWindow.subscriptions.STATUS.subscribe(mainWindowStatusListener)
-            mainWindow.dataStrategy = dataStrategy
-            mainWindow.dataSizeObtain = sizeObtain
-            mainWindow.filterObtain = filterObtain
-            mainWindow.filteringStrategy = filterCallback
-            mainWindow.open()
+            Desktop.getDesktop().browse(location)
         }
     }
 
-    val mainWindowStatusListener = object : Listener<Boolean> {
-        override fun onEvent(value: Boolean?) {
-            if (value != null && value) {
-                mainWindow.commandCallback = commandCallback
-                dataStrategy.requestData(0, PussycatListItemsFactory.REQUEST_DELTA, DIRECTION.DOWN)
-            }
-        }
-    }
+    // TODO: Switch to API calls
+//    val dataStrategy = object : DataStrategy {
+//        override fun getFirstIndex(): Int {
+//            var index = 0
+//            if (pussycatListItemsFactory != null) {
+//                val factory = pussycatListItemsFactory as PussycatListItemsFactory<AndroidLogCatMessage>
+//                index = factory.getFirstIndex()
+//            }
+//            return index
+//        }
+//
+//        override fun getLastIndex(): Int {
+//            var index = data.get().size - 1
+//            if (pussycatListItemsFactory != null) {
+//                val factory = pussycatListItemsFactory as PussycatListItemsFactory<AndroidLogCatMessage>
+//                index = factory.getLastIndex()
+//            }
+//            return index
+//        }
+//
+//        override fun limitToIndexes(indexes: List<Int>) {
+//            pussycatListItemsFactory?.applyIndexLimits(indexes)
+//        }
+//
+//        override fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback?) {
+//            val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
+//            pussycatListItemsFactory?.requestData(request)
+//        }
+//
+//        override fun releaseData(index: Int) {
+//            pussycatListItemsFactory?.releaseData(index)
+//        }
+//    }
 
-    val dataStrategy = object : DataStrategy {
-        override fun getFirstIndex(): Int {
-            var index = 0
-            if (pussycatListItemsFactory != null) {
-                val factory = pussycatListItemsFactory as PussycatListItemsFactory<AndroidLogCatMessage>
-                index = factory.getFirstIndex()
-            }
-            return index
-        }
+//    val sizeObtain = object : DataSizeObtain {
+//        override fun getDataSize(): Int {
+//            return data.get().size
+//        }
+//    }
 
-        override fun getLastIndex(): Int {
-            var index = data.get().size - 1
-            if (pussycatListItemsFactory != null) {
-                val factory = pussycatListItemsFactory as PussycatListItemsFactory<AndroidLogCatMessage>
-                index = factory.getLastIndex()
-            }
-            return index
-        }
+//    val commandCallback = object : CommandCallback {
+//        override fun execute(command: COMMAND) {
+//            this@WebGuiPussycat.execute(command)
+//        }
+//    }
 
-        override fun limitToIndexes(indexes: List<Int>) {
-            pussycatListItemsFactory?.applyIndexLimits(indexes)
-        }
+//    val filterCallback = object : FilteringStrategy {
+//        override fun filter(value: String) {
+//            data.apply(value)
+//        }
+//    }
 
-        override fun requestData(from: Int, amount: Int, direction: DIRECTION, callback: DataRequestCallback?) {
-            val request = PussycatListItemsRequest(from, amount, direction, mainWindow, callback)
-            pussycatListItemsFactory?.requestData(request)
-        }
+//    val filterObtain = object : FilterObtain {
+//        override fun getFilterValue(): String {
+//            val filter = data.getFilterPattern()
+//            return if (Text.isEmpty(filter)) {
+//                Labels.TEXT_FIELD_FILTER_HINT_EMPTY
+//            } else {
+//                "${Labels.TEXT_FIELD_FILTER_HINT} $filter"
+//            }
+//        }
+//    }
 
-        override fun releaseData(index: Int) {
-            pussycatListItemsFactory?.releaseData(index)
-        }
-    }
-
-    val sizeObtain = object : DataSizeObtain {
-        override fun getDataSize(): Int {
-            return data.get().size
-        }
-    }
-
-    val commandCallback = object : CommandCallback {
-        override fun execute(command: COMMAND) {
-            this@WebGuiPussycat.execute(command)
-        }
-    }
-
-    val filterCallback = object : FilteringStrategy {
-        override fun filter(value: String) {
-            data.apply(value)
-        }
-    }
-
-    val filterObtain = object : FilterObtain {
-        override fun getFilterValue(): String {
-            val filter = data.getFilterPattern()
-            return if (Text.isEmpty(filter)) {
-                Labels.TEXT_FIELD_FILTER_HINT_EMPTY
-            } else {
-                "${Labels.TEXT_FIELD_FILTER_HINT} $filter"
-            }
-        }
-    }
-
-    val splashScreen = PussycatSplashScreen(information, theme, mainWindow, splashScreenCallback)
+    val splashScreen = PussycatSplashScreen(information, theme, splashScreenCallback)
 
     init {
+        splashScreen.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         favicon = ImageIO.read(javaClass.classLoader.getResourceAsStream("icons/Favicon.png"))
         pussycatListItemsFactory = PussycatListItemsFactory(data, pussycatListItemFactory)
     }
@@ -146,7 +126,22 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
             if (value == EVENT.STOP) {
                 SUBSCRIPTIONS.EVENTS.unsubscribe(this)
                 SUBSCRIPTIONS.FILESYSTEM_LOADING_PROGRESS.unsubscribe(filesystemProgressListener)
-                mainWindow.subscriptions.STATUS.unsubscribe(mainWindowStatusListener)
+                /*
+
+                String originalHandle = driver.getWindowHandle();
+
+                //Do something to open new tabs
+
+                for(String handle : driver.getWindowHandles()) {
+                    if (!handle.equals(originalHandle)) {
+                        driver.switchTo().window(handle);
+                        driver.close();
+                    }
+                }
+
+                driver.switchTo().window(originalHandle);
+
+                * */
             }
         }
     }
@@ -164,7 +159,7 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
 
     override fun start(args: Array<String>) {
         if (configuration.exitOnStop) {
-            mainWindow.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+            // TODO: Handle this.
         }
         splashScreen.start()
 
@@ -182,7 +177,9 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
     override fun execute(executable: COMMAND, params: Array<String>) {
         super.execute(executable, params)
         when (executable) {
-            COMMAND.RESET -> mainWindow.refresh()
+            COMMAND.RESET -> {
+                // TODO: Execute api call
+            }
         }
     }
 
@@ -191,7 +188,7 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
     }
 
     override fun clear() {
-        mainWindow.clear()
+        // TODO: Execute api call
     }
 
     override fun printLine(text: String) {
@@ -217,7 +214,7 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
     }
 
     override fun onParsingComplete() {
-        mainWindow.updateDataCount(data.get().size)
+        //        mainWindow.updateDataCount(data.get().size) // TODO: Execute api call
         data.get().forEachIndexed { i, msg -> pussycatListItemsFactory?.addRawData(msg, i) }
     }
 
@@ -238,7 +235,7 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
                                 indexes.add(data.indexOf(msg))
                             }
                         }
-                mainWindow.onFilteringResult(indexes)
+//                mainWindow.onFilteringResult(indexes) // TODO: Execute api call
                 filterApplying.set(false)
             }).start()
         }
@@ -287,7 +284,7 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
 
     private fun initPopupMenu() {
         val items = getPopupMenuItems()
-        mainWindow.addPopUpMenuItems(items)
+//        mainWindow.addPopUpMenuItems(items) // TODO: Execute api call
         if (OS.isMacOS()) {
             val popupMenu = PopupMenu()
             for (item in items) {
@@ -323,7 +320,6 @@ class WebGuiPussycat(information: ApplicationInformation, theme: Theme, port: In
                                 }
                                 execute(command)
                                 splashScreen.close()
-                                mainWindow.close()
                             }
                             else -> {
                                 execute(command)

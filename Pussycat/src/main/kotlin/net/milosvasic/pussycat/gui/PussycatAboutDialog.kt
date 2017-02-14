@@ -18,7 +18,7 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-class PussycatAboutDialog(information: ApplicationInformation, theme: Theme, owner: Frame?) : PussycatAboutDialogAbstract(information, theme, owner) {
+class PussycatAboutDialog(information: ApplicationInformation, theme: Theme, owner: Frame?) : PussycatAboutDialogAbstract(information, theme) {
 
     val closeButton = JButton()
 

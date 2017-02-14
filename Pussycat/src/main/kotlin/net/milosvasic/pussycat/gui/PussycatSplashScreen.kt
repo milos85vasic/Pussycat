@@ -10,12 +10,16 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-class PussycatSplashScreen(information: ApplicationInformation, theme: Theme, owner: Frame?, val callback: OnSplashComplete) : PussycatAboutDialogAbstract(information, theme, owner) {
+class PussycatSplashScreen(information: ApplicationInformation, theme: Theme, val callback: OnSplashComplete) : PussycatAboutDialogAbstract(information, theme) {
 
     var progress = ""
     var footer: JLabel? = null
     private var status = "Loading"
     private val finished = AtomicBoolean()
+
+    init {
+        isUndecorated = true
+    }
 
     fun start() {
         open()
@@ -34,7 +38,7 @@ class PussycatSplashScreen(information: ApplicationInformation, theme: Theme, ow
 
     fun finish() {
         finished.set(true)
-        close()
+        isVisible = false
     }
 
     fun updateStatus(newStatus: String) {

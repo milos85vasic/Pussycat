@@ -40,7 +40,7 @@ class Application(args: Array<String>) : ApplicationAbstract(args) {
             pussy = TerminalPussycat()
         } else {
             val theme = Darcula()
-            pussy = WebGuiPussycat(information, theme, port)
+            pussy = WebGuiPussycat("127.0.0.1", port, information, theme)
         }
     }
 

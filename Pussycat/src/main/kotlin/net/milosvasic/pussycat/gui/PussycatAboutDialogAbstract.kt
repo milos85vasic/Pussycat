@@ -6,34 +6,36 @@ import java.awt.*
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
-import javax.swing.JComponent
-import javax.swing.JLabel
-import javax.swing.JWindow
-import javax.swing.SwingConstants
+import javax.swing.*
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 
-abstract class PussycatAboutDialogAbstract(val information: ApplicationInformation, val theme: Theme, owner: Frame?) : JWindow(owner) {
+abstract class PussycatAboutDialogAbstract(val information: ApplicationInformation, val theme: Theme) : JFrame() {
 
     protected val splashWidth = 640
     protected val splashHeight = 389
     protected var favicon: BufferedImage? = null
 
     fun open() {
-        if (owner.isVisible) {
-            val screenLocation = owner.locationOnScreen
-            setLocation(
-                    screenLocation.x + (owner.width / 2) - (splashWidth / 2),
-                    screenLocation.y + (owner.height / 2) - (splashHeight / 2)
-            )
-        } else {
-            val screenSize = Toolkit.getDefaultToolkit().screenSize
-            setLocation(
-                    (screenSize.width / 2) - (splashWidth / 2),
-                    (screenSize.height / 2) - (splashHeight / 2)
-            )
-        }
+//        if (owner.isVisible) {
+//            val screenLocation = owner.locationOnScreen
+//            setLocation(
+//                    screenLocation.x + (owner.width / 2) - (splashWidth / 2),
+//                    screenLocation.y + (owner.height / 2) - (splashHeight / 2)
+//            )
+//        } else {
+//            val screenSize = Toolkit.getDefaultToolkit().screenSize
+//            setLocation(
+//                    (screenSize.width / 2) - (splashWidth / 2),
+//                    (screenSize.height / 2) - (splashHeight / 2)
+//            )
+//        }
+        val screenSize = Toolkit.getDefaultToolkit().screenSize
+        setLocation(
+                (screenSize.width / 2) - (splashWidth / 2),
+                (screenSize.height / 2) - (splashHeight / 2)
+        )
         setSize(splashWidth, splashHeight)
         val body = PussycatSplashPanel(splashWidth, splashHeight)
         val header = generateHeader()
