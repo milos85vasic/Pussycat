@@ -81,3 +81,4 @@ samples/*
 build/*
 
 .gradle/*
+!libs/*jar
