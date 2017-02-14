@@ -5,6 +5,7 @@ import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.gui.PussycatListItem
 import net.milosvasic.pussycat.gui.factory.PussycatListItemFactory
 import net.milosvasic.pussycat.gui.theme.Theme
+import net.milosvasic.pussycat.logging.LOG_TYPE
 
 class GuiPussycatListItemFactory(val theme: Theme) : PussycatListItemFactory<AndroidLogCatMessage> {
 

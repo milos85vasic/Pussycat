@@ -5,6 +5,7 @@ import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.application.ApplicationInformation
 import com.apple.eawt.Application
 import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
+import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
 import net.milosvasic.pussycat.android.gui.GuiPussycatMainWindow
 import net.milosvasic.pussycat.content.Messages
@@ -147,6 +148,10 @@ class GuiPussycat(information: ApplicationInformation, theme: Theme) : AndroidPu
             val s = String.format("%.0f", value)
             splashScreen.updateStatus("${Messages.PARSING}: $s%")
         }
+    }
+
+    override fun initData() {
+        data = AndroidData(this)
     }
 
     override fun start(args: Array<String>) {
