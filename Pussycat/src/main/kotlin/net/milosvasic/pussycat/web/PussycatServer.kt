@@ -7,12 +7,12 @@ import net.milosvasic.dispatcher.response.Response
 import net.milosvasic.dispatcher.response.ResponseFactory
 import net.milosvasic.dispatcher.route.*
 import net.milosvasic.pussycat.gui.content.Labels
-import net.milosvasic.pussycat.resources.PussycatServerResourceProvider
+import net.milosvasic.pussycat.resources.ResourceProvider
 import java.io.InputStream
 import java.util.*
 
 
-class PussycatServer(port: Int, resourceProvider: PussycatServerResourceProvider) {
+class PussycatServer(port: Int, resourceProvider: ResourceProvider) {
 
     //    private val logger = Logger()
     //    private val TAG = PussycatServer::class
@@ -26,6 +26,12 @@ class PussycatServer(port: Int, resourceProvider: PussycatServerResourceProvider
         val assetParameter = DynamicRouteElement(Labels.ROUTE_ASSET)
         val assetsRoute = AssetsRoute.Builder()
                 .addRouteElement(StaticRouteElement(Labels.FOLDER_ASSETS))
+                .addRouteElement(assetParameter)
+                .build()
+
+        val javascriptRoute = AssetsRoute.Builder()
+                .addRouteElement(StaticRouteElement(Labels.FOLDER_ASSETS))
+                .addRouteElement(StaticRouteElement(Labels.FOLDER_JAVASCRIPT))
                 .addRouteElement(assetParameter)
                 .build()
 
@@ -44,12 +50,23 @@ class PussycatServer(port: Int, resourceProvider: PussycatServerResourceProvider
             override fun getContent(params: HashMap<RouteElement, String>): Asset {
                 val assetName = params[assetParameter]
                 val input = resourceProvider.getResource("${Labels.FOLDER_ASSETS}/$assetName")
-                return Asset(getBytes(input), 200)
+                return Asset(getBytes(input))
+            }
+        }
+
+        val javascriptFactory = object : AssetFactory {
+            override fun getContent(params: HashMap<RouteElement, String>): Asset {
+                val assetName = params[assetParameter]
+                val input = resourceProvider.getResource(
+                        "${Labels.FOLDER_ASSETS}/${Labels.FOLDER_JAVASCRIPT}/$assetName"
+                )
+                return Asset(getBytes(input))
             }
         }
 
         dispatcher.registerRoute(rootRoute, homepage)
         dispatcher.registerRoute(assetsRoute, assetsFactory)
+        dispatcher.registerRoute(javascriptRoute, javascriptFactory)
     }
 
     @Synchronized

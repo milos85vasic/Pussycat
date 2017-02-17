@@ -15,6 +15,7 @@ object Labels {
     val ROUTE_ASSET = "Asset"
     val FOLDER_ASSETS = "assets"
     val FOLDER_WEB_ROOT = "html"
+    val FOLDER_JAVASCRIPT = "js"
     val CLEAR_BTN_TOOLTIP = "Clear."
     val PAGE_WEB_ROOT = "index.html"
     val FILE_FAVICON = "favicon.ico"
