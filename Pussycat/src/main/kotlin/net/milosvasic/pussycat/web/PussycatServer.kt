@@ -23,10 +23,10 @@ class PussycatServer(port: Int, resourceProvider: PussycatServerResourceProvider
                 .addRouteElement(RootRouteElement())
                 .build()
 
-        val assets = StaticRouteElement(Labels.FOLDER_ASSETS)
+        val assetParameter = DynamicRouteElement(Labels.ROUTE_ASSET)
         val assetsRoute = AssetsRoute.Builder()
-                .addRouteElement(assets)
-                .addRouteElement(DynamicRouteElement(Labels.ROUTE_ASSET))
+                .addRouteElement(StaticRouteElement(Labels.FOLDER_ASSETS))
+                .addRouteElement(assetParameter)
                 .build()
 
         val homepage = object : ResponseFactory {
@@ -42,7 +42,7 @@ class PussycatServer(port: Int, resourceProvider: PussycatServerResourceProvider
 
         val assetsFactory = object : AssetFactory {
             override fun getContent(params: HashMap<RouteElement, String>): Asset {
-                val assetName = params[assets]
+                val assetName = params[assetParameter]
                 val input = resourceProvider.getResource("${Labels.FOLDER_ASSETS}/$assetName")
                 return Asset(getBytes(input), 200)
             }
