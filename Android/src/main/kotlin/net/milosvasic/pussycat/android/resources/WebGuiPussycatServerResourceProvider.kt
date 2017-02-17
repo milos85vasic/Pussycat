@@ -1,7 +1,7 @@
 package net.milosvasic.pussycat.android.resources
 
 import net.milosvasic.pussycat.gui.content.Labels
-import net.milosvasic.pussycat.web.PussycatServerResourceProvider
+import net.milosvasic.pussycat.resources.PussycatServerResourceProvider
 import java.io.InputStream
 
 class WebGuiPussycatServerResourceProvider : PussycatServerResourceProvider() {

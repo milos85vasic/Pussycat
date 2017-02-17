@@ -1,6 +1,7 @@
-package net.milosvasic.pussycat.web
+package net.milosvasic.pussycat.resources
 
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.web.ResourceProvider
 import java.io.InputStream
 
 abstract class PussycatServerResourceProvider : ResourceProvider {

@@ -6,6 +6,7 @@ import net.milosvasic.pussycat.android.command.ANDROID_COMMAND
 import net.milosvasic.pussycat.android.data.AndroidData
 import net.milosvasic.pussycat.android.data.AndroidLogCatMessage
 import net.milosvasic.pussycat.android.gui.GuiPussycatListItemFactory
+import net.milosvasic.pussycat.android.resources.WebGuiPussycatServerResourceProvider
 import net.milosvasic.pussycat.application.ApplicationInformation
 import net.milosvasic.pussycat.content.Messages
 import net.milosvasic.pussycat.core.COMMAND
@@ -32,7 +33,8 @@ import javax.swing.JFrame
 
 class WebGuiPussycat(host: String, port: Int, information: ApplicationInformation, theme: Theme) : AndroidPussycat() {
 
-    private val server = PussycatServer(port)
+    private val resourceProvider = WebGuiPussycatServerResourceProvider()
+    private val server = PussycatServer(port, resourceProvider)
     private var favicon: BufferedImage? = null
     private val location = URI("http://$host:$port")
     private val filterApplying = AtomicBoolean(false)

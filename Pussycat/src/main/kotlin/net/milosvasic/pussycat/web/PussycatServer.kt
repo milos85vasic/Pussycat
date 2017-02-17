@@ -7,6 +7,7 @@ import net.milosvasic.dispatcher.response.Response
 import net.milosvasic.dispatcher.response.ResponseFactory
 import net.milosvasic.dispatcher.route.*
 import net.milosvasic.pussycat.gui.content.Labels
+import net.milosvasic.pussycat.resources.PussycatServerResourceProvider
 import java.io.InputStream
 import java.util.*
 
@@ -31,7 +32,11 @@ class PussycatServer(port: Int, resourceProvider: PussycatServerResourceProvider
         val homepage = object : ResponseFactory {
             override fun getResponse(params: HashMap<RouteElement, String>): Response {
                 val input = resourceProvider.getResource("${Labels.FOLDER_WEB_ROOT}/${Labels.PAGE_WEB_ROOT}")
-                return Response(String(input.readBytes()))
+                val bytes = input?.readBytes()
+                if (bytes != null) {
+                    return Response(String(bytes))
+                }
+                return Response("")
             }
         }
 
