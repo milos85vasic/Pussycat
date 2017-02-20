@@ -13,6 +13,7 @@ object Labels {
     val PUSSYCAT = "Pussycat"
     val COMMANDS = "Commands"
     val ROUTE_ASSET = "Asset"
+    val FOLDER_ICONS = "icons"
     val FOLDER_ASSETS = "assets"
     val FOLDER_WEB_ROOT = "html"
     val FOLDER_JAVASCRIPT = "js"
